@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {},
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "isolatedModules": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true,
+    "addMissingImports": true
+  },
+  "javascript.updateImportsOnFileMove.enabled": "prompt"
+}
+
+// "@environments/*": ["./src/environments/*"],
+// "@services/*": ["./src/app/services/*"]

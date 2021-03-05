@@ -1,0 +1,10 @@
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    npm install -D babel-loader @babel/core @babel/preset-env webpack
+
+
+    //tat cors
+
+     open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security --disable-site-isolation-trials
+
