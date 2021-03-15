@@ -6,6 +6,7 @@ const AuthModule = () => {
         <>
             {/* <p>AuthModule</p> */}
             <AuthRoutes />
+
         </>
     )
 }

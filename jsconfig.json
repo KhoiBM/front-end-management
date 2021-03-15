@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {},
     "module": "commonjs",
     "target": "es6",
@@ -11,13 +11,5 @@
     "skipLibCheck": true
   },
   "exclude": ["node_modules"],
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true,
-    "addMissingImports": true
-  },
-  "javascript.updateImportsOnFileMove.enabled": "prompt"
+  "include": ["src", "src/**/*", "src/**/*.js", ".babelrc"]
 }
-
-// "@environments/*": ["./src/environments/*"],
-// "@services/*": ["./src/app/services/*"]

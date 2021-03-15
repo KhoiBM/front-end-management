@@ -8,3 +8,40 @@
 
      open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security --disable-site-isolation-trials
 
+
+
+
+//draft
+// "@environments/*": ["./src/environments/*"],
+// "@services/*": ["./src/app/services/*"]
+// ,
+//   "editor.codeActionsOnSave": {
+//     "source.fixAll": true,
+//     "source.organizeImports": true,
+//     "addMissingImports": true
+//   },
+//   "javascript.updateImportsOnFileMove.enabled": "prompt",
+
+
+ "@modules": "./src/app/modules",
+                    "@services": "./src/app/services",
+                    "@store": "./src/app/store",
+                    "@store/*": "./src/app/store/*",
+                    "@extras/*": "./src/app/extras/*",
+                    "@view-models": "./src/app/view-models",
+                    "@app/*": "./src/app/*"
+
+
+
+
+                        "axios": "^0.21.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "web-vitals": "^1.0.1"
+
+
+    

@@ -7,6 +7,13 @@
   width: 100%;
   height: 100%;
   overflow: scroll;
+  background-color: var(--bg-primary-color-main);
+  background-color: var(--bg-primary-color-main);
+  background-image: url(../../../../assets/image/bg_auth.jpeg);
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+  transition: all 0.3s ease 0s;
 }
 .signup-wrapper {
   display: flex;
@@ -21,9 +28,10 @@
   width: 20rem;
   min-height: 500px;
   height: auto;
-  border: 1px solid var(--color-black);
+  border: 0 solid var(--border-color-main);
   border-radius: 4px;
   position: relative;
+  background-color: #fff;
 }
 .logo-wrapper {
   margin-top: 1rem;
@@ -64,8 +72,9 @@
   align-items: center;
   overflow: scroll;
   cursor: pointer;
-  border: 1px solid var(--color-black);
+  border: 0 solid var(--border-color-main);
   border-radius: 4px;
+  background-color: #fff;
   color: rgb(28, 32, 34);
 }
 .btn-nav-signin {
@@ -94,7 +103,7 @@
 .btn-signup {
   width: 100%;
   height: 40px;
-  border: 2px solid var(--primary-color-main);
+  border: 1px solid var(--primary-color-main);
   border-radius: 1px;
   margin-top: 2rem;
   background-color: var(--primary-color-main);
@@ -126,17 +135,18 @@
 }
 .input-text {
   width: 100%;
-  height: 30px;
+  height: 40px;
   outline: none;
-  border: 1px solid #000;
+  border: 0 solid var(--border-color-main);
   border-radius: 4px;
   text-indent: 5px;
   text-decoration: none;
   font-style: italic;
   font-weight: 500;
+  background-color: var(--bg-secondary-color-main);
 }
 .input-text:focus {
-  border: 1px solid var(--primary-color-main);
+  border-bottom: 2px solid var(--primary-color-main);
 }
 
 .label-title-input {
