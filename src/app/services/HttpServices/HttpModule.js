@@ -12,7 +12,7 @@ export const useHttpModule = (headers = {}) => {
 
     instance.interceptors.request.use(
         async (value) => {
-            value.headers.common['authorization'] = `Bearer ${localStorage.getItem('token')}`;
+            value.headers.common['authorization'] = `Bearer ${localStorage.getItem('pps-token')}`;
             return Promise.resolve(value);
         }, (error) => {
             console.log("error request axios")

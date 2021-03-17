@@ -2,13 +2,15 @@
 /* eslint-disable no-unused-labels */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper } from '@material-ui/core'
+import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper, InputAdornment, IconButton, Input, OutlinedInput } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
 import PageHeader from 'src/app/modules/core/components/PageHeader'
 import { useForm } from 'src/app/utils'
+import { MdVisibilityOff, MdVisibility } from 'react-icons/md'
+import clsx from 'clsx';
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -98,10 +100,29 @@ const initialFValues = {
     password: "",
     rePassword: "",
     roleID: "1",
+    showPassword: false,
+    showRePassword: false
 }
 const AddAccountForm = (props) => {
     const classes = useStyles();
+
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
+
+
+    const handleClickShowPassword = () => {
+        setFormData({ ...formData, showPassword: !formData.showPassword });
+    };
+    const handleClickShowRePassword = () => {
+        setFormData({ ...formData, showRePassword: !formData.showRePassword });
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+    const handleMouseDownRePassword = (event) => {
+        event.preventDefault();
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("formdata: " + JSON.stringify(formData))
@@ -172,7 +193,8 @@ const AddAccountForm = (props) => {
                                     helperText={helperValid.email}
                                     required
                                 />
-                                <TextField
+
+                                {/* <TextField
                                     variant='outlined'
                                     label="Mật khẩu"
                                     value={formData.password}
@@ -181,8 +203,10 @@ const AddAccountForm = (props) => {
                                     error={helperValid.password ? true : false}
                                     helperText={helperValid.password}
                                     required
-                                />
-                                <TextField
+                                    type={formData.showPassword ? 'text' : 'password'}
+                                /> */}
+
+                                {/* <TextField
                                     variant='outlined'
                                     label="Nhập lại mật khẩu"
                                     value={formData.rePassword}
@@ -191,7 +215,60 @@ const AddAccountForm = (props) => {
                                     error={helperValid.rePassword ? true : false}
                                     helperText={helperValid.rePassword}
                                     required
-                                />
+                                /> */}
+
+
+                                <FormControl variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-password">Mật khẩu</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-password"
+                                        type={formData.showPassword ? 'text' : 'password'}
+                                        value={formData.password}
+                                        name="password"
+                                        onChange={handleInputChange}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {formData.showPassword ? <MdVisibility /> : <MdVisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        labelWidth={70}
+                                    />
+                                </FormControl>
+
+
+                                <FormControl variant="outlined">
+                                    <InputLabel htmlFor="outlined-adornment-rePassword">Nhập lại mật khẩu</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-rePassword"
+                                        type={formData.showRePassword ? 'text' : 'password'}
+                                        value={formData.rePassword}
+                                        name="rePassword"
+                                        onChange={handleInputChange}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowRePassword}
+                                                    onMouseDown={handleMouseDownRePassword}
+                                                    edge="end"
+                                                >
+                                                    {formData.showRePassword ? <MdVisibility /> : <MdVisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        labelWidth={130}
+                                    />
+                                </FormControl>
+
+
+
                                 <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="roleID-label">
