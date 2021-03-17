@@ -6,7 +6,7 @@ import PageHeader from '../PageHeader'
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ProfileServices } from 'src/app/services/CoreServices/ProfileServices/ProfileServices'
-import useForm from 'src/app/utils/handles/useForm'
+
 import { useHistory } from 'react-router-dom'
 import {
     DatePicker,
@@ -14,6 +14,7 @@ import {
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
+import { useForm } from 'src/app/utils'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -98,6 +99,7 @@ const useStyles = makeStyles(theme => ({
     },
     genderGroup: {
         display: "flex",
+        // color: "red"
     }
 }))
 const initialFValues = {
@@ -242,8 +244,8 @@ const Profile = () => {
                                 <FormControl component="fieldset">
                                     <FormLabel component="legend">Giới tính</FormLabel>
                                     <RadioGroup aria-label="gender" name="gender" value={formData.gender} onChange={handleInputChange} className={classes.genderGroup}>
-                                        <FormControlLabel value={"female"} control={<Radio />} label="Nữ" />
-                                        <FormControlLabel value={"male"} control={<Radio />} label="Nam" />
+                                        <FormControlLabel value={"female"} control={<Radio color='primary' />} label="Nữ" />
+                                        <FormControlLabel value={"male"} control={<Radio color='primary' />} label="Nam" />
                                     </RadioGroup>
                                 </FormControl>
                                 <TextField

@@ -21,6 +21,7 @@ html,
   --primary-color-dark: #de5a2e;
   --error-color-main: #f44336;
   --secondary-color-main: #48b7e2;
+  --tertiary-color-main: #b6e2f3;
   overflow: "scroll";
 }
 body {

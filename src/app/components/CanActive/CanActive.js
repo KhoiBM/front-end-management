@@ -14,10 +14,8 @@ const CanActive = (props) => {
         console.log("role:" + role);
         console.log("isRole:" + props.isRole);
         if (role != props.isRole) {
-            // showSnackbar("Không có quyền truy cập vào trang này", "error")
             toast.error("Không có quyền truy cập")
             history.push("/auth/signin")
-
         }
     }, [])
     return null

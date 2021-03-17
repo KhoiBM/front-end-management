@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core';
 import config from 'src/environments/config';
 
-const useForm = (initialFValues) => {
+export const useForm = (initialFValues) => {
     const regexPassword = config.useRegex.regexPassword
     const regexPhone = config.useRegex.regexPhone
 
@@ -35,6 +35,7 @@ const useForm = (initialFValues) => {
     const validation = (fieldValues = formData) => {
         const temp = { ...helperValid };
         if ('username' in fieldValues) temp.username = fieldValues.username && fieldValues.username.length > 0 ? "" : "Tên người dùng là bắt buộc"
+        if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
         if ('email' in fieldValues) temp.email = fieldValues.email && fieldValues.email.length > 0 && config.useRegex.regexEmail.test(fieldValues.email) ? "" : "Email không hợp lệ"
         if ('password' in fieldValues) temp.password = fieldValues.password && fieldValues.password.length >= 8 && fieldValues.password.length <= 20 && regexPassword.test(fieldValues.password) ? "" : "Mật khẩu là bắt buộc ( 8 đến 20 ký tự) - Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
         if ('rePassword' in fieldValues) {
@@ -76,7 +77,7 @@ const useForm = (initialFValues) => {
     }
 }
 
-export default useForm
+
 
 // const useStyles = makeStyles(theme => ({
 //     rootForm: {

@@ -2,13 +2,13 @@
 /* eslint-disable no-unused-labels */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import useForm, { Form } from 'src/app/utils/handles/useForm'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
 import PageHeader from 'src/app/modules/core/components/PageHeader'
+import { useForm } from 'src/app/utils'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -36,14 +36,16 @@ const useStyles = makeStyles(theme => ({
     buttonSave: {
         cursor: "pointer",
         marginTop: theme.spacing(2),
+        color: "#fff",
         '&:hover': {
             backgroundColor: theme.palette.primary.main,
+            // backgroundColor: "var(--secondary-color-main)",
             boxShadow: "rgb(0 0 0 / 10 %) 0px 0.3rem 1rem",
             transform: "scale(1.015)",
 
         },
         '&:focus': {
-            outline: "1px dashed var(--primary-color-dark)",
+            // outline: "1px dashed var(--primary-color-dark)",
             outlineOffset: "4px",
         }
     },
@@ -72,6 +74,7 @@ const useStyles = makeStyles(theme => ({
         right: theme.spacing(2),
         top: theme.spacing(2),
         color: "var(--primary-color-main)",
+        // color: "var(--secondary-color-main)",
         transform: "scale(2)",
         transition: " all 0.3s ease 0s"
 
@@ -79,9 +82,10 @@ const useStyles = makeStyles(theme => ({
     iconClose: {
         '&:hover': {
             color: "var(--primary-color-dark)",
+            // color: "var(--secondary-color-main)",
         },
         '&:focus': {
-            outline: "1px dashed var(--primary-color-dark)",
+            // outline: "1px dashed var(--primary-color-dark)",
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
@@ -102,37 +106,57 @@ const initialFValues = {
     password: "",
     rePassword: "",
     roleID: "1",
+    roleName: "",
     isActive: true
 }
 const EditAccountForm = (props) => {
-    const { recordForEdit } = props
     const classes = useStyles();
-    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        console.log("formdata: " + JSON.stringify(formData))
-        const enableSubmit = validation(formData)
-        if (enableSubmit) {
-            try {
-                const response = await (await ManageAccountServices.editAccount(formData)).data
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } catch (err) {
-                toast.error(config.useMessage.fetchApiFailure)
-            }
 
-        } else {
-            toast.error(config.useMessage.invalidData);
-        }
-    }
+    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
+
+    const { recordForEdit } = props
+
+
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
         }
     }, [])
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log("formdata: " + JSON.stringify(formData))
+        const enableSubmit = validation(formData)
+        if (enableSubmit) {
+
+            edit()
+
+        } else {
+            toast.error(config.useMessage.invalidData);
+        }
+    }
+
+    const edit = async () => {
+        try {
+            const response = await (await ManageAccountServices.editAccount(formData)).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Reponse is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+        }
+    }
+
     return (
         <>
             {/* <p>editform</p> */}
@@ -231,7 +255,9 @@ const EditAccountForm = (props) => {
                             </Grid>
                         </Grid>
                         <div className={classes.buttonSaveWrapper}>
+
                             <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonSave}>Lưu</Button>
+
                         </div>
                     </form>
 

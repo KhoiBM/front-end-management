@@ -60,7 +60,7 @@ const SideMenuBar = (props) => {
     const theme = useTheme();
     // const { path } = useRouteMatch();
     // console.log(path)
-    console.log("props.opendrawer: " + props.openDrawer)
+    // console.log("props.opendrawer: " + props.openDrawer)
 
     return (
         <>

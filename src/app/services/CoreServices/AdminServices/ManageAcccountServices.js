@@ -20,7 +20,7 @@ export class ManageAccountServices {
                     result: config.useResultStatus.SUCCESS,
                     info: {
                         records: [
-                            { id: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", role: "manager", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { id: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", roleName: "manager", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
                             { id: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
                             { id: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
                             { id: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
@@ -36,7 +36,11 @@ export class ManageAccountServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-                    records: [{ id: 6, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true }, { id: 10, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: true }, { id: 7, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true }, { id: 8, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true }, { id: 9, username: "khoibm", email: "fsad@gmail.com", roleID: "1", role: "customer", isActive: true }],
+                    records: [{ id: 6, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true },
+                    { id: 10, username: "khoibm", email: "fsad@gmail.com", roleID: "3", roleName: "businessStaff", isActive: true },
+                    { id: 7, username: "khoibm", email: "fsad@gmail.com", roleID: "4", roleName: "technicalStaff", isActive: true },
+                    { id: 8, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true },
+                    { id: 9, username: "khoibm", email: "fsad@gmail.com", roleID: "1", roleName: "customer", isActive: true }],
                     totalPage: 20,
                     page: data.page
                 }

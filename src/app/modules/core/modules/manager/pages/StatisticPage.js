@@ -5,17 +5,19 @@ import MainBar from '../../../components/MainBar';
 import { useLocation } from 'react-router-dom';
 import { ManageStatistic } from '../components/Manage/index'
 import { makeStyles } from '@material-ui/core';
+import { useOpendrawer } from 'src/app/utils';
+
+
 
 const StatisticPage = () => {
     const userRole = config.useUserRole.manager;
-    let location = useLocation();
-
+    const { openDrawerByLink } = useOpendrawer()
     return (
         <>
             {/* <p>StatisticPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
             <Loader />
-            <MainBar userRole={userRole} openDrawerByLink={location.state.openDrawer} >
+            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageStatistic />
             </MainBar>
         </>

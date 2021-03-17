@@ -39,7 +39,7 @@ const StyledTableCell = withStyles((theme) => ({
     }
 }))(TableCell);
 
-const useTable = (records, headCells) => {
+export const useTable = (records, headCells) => {
     const classes = useStyles();
     const TblContainer = props => (
         <TableContainer component={Paper} elevation={0} className={classes.tableContainer}>
@@ -64,4 +64,4 @@ const useTable = (records, headCells) => {
     return { TblContainer, TblHead }
 }
 
-export default useTable
+

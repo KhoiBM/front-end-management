@@ -41,6 +41,7 @@ export const NavLinkMenu = ({ text, icon, link, openDrawer }) => {
                 }
 
             } style={{ textDecoration: "none", color: "#fff" }} activeClassName={classes.activeNavLink}>
+
                 <ListItem button >
 
                     <Tooltip TransitionComponent={Zoom} placement="top" title={text}>
@@ -51,14 +52,13 @@ export const NavLinkMenu = ({ text, icon, link, openDrawer }) => {
                             {icon}
                         </ListItemIcon>
                     </Tooltip>
+
                     <ListItemText>
-
                         <Typography variant={"subtitle2"} className={classes.linkItemText}>{text}</Typography>
-
-
                     </ListItemText>
 
                 </ListItem>
+
             </NavLink >
 
         </>

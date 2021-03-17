@@ -10,7 +10,13 @@ const useStyles = makeStyles((theme) => ({
         '& > *': {
             marginTop: theme.spacing(2),
 
+        },
+        '& .MuiPagination-ul .MuiButtonBase-root': {
+            // background: "#fff",
+
+            // border: "1px solid #fff"
         }
+
     }
 }));
 const PaginationBar = (props) => {
@@ -18,13 +24,14 @@ const PaginationBar = (props) => {
     // const [page, setPage] = useState(1);
     const handleChangePagination = (event, value) => {
         // setPage(value);
-        console.log(value)
+        // console.log(value)
         props.setPage(value)
     };
     return (
         <>
 
             <div className={classes.root}>
+                {/* <Pagination count={props.totalPage} variant="outlined" shape="rounded" color="secondary" onChange={handleChangePagination} showFirstButton showLastButton /> */}
                 <Pagination count={props.totalPage} variant="outlined" shape="rounded" color="primary" onChange={handleChangePagination} showFirstButton showLastButton />
             </div>
         </>

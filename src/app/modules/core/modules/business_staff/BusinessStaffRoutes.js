@@ -2,6 +2,9 @@ import React from 'react'
 import NoMatch from 'src/app/components/NoMatch';
 import { useRouteMatch, Route, Redirect, Switch } from 'react-router-dom';
 import BusinessStaffPage from './pages/BusinessStaffPage'
+import BusinessStaffProcessOrderPage from './pages/BusinessStaffProcessOrderPage'
+import ManageCustomersRawProductPage from './pages/ManageCustomersRawProductPage'
+import ManageCustomersRawProductImportationPage from './pages/ManageCustomersRawProductImportationPage'
 const BusinessStaffRoutes = () => {
     const { path } = useRouteMatch();
     return (
@@ -10,6 +13,9 @@ const BusinessStaffRoutes = () => {
             <Switch>
                 <Route exact path={path} render={() => <Redirect to={`${path}/home`} />} />
                 <Route path={`${path}/home`} component={BusinessStaffPage} />
+                <Route path={`${path}/business_staff_process_order`} component={BusinessStaffProcessOrderPage} />
+                <Route path={`${path}/manage_customer’s_raw_product`} component={ManageCustomersRawProductPage} />
+                <Route path={`${path}/manage_customer’s_raw_product_importation`} component={ManageCustomersRawProductImportationPage} />
                 <Route component={NoMatch} />
             </Switch>
         </>

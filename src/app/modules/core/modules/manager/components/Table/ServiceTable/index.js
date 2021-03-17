@@ -2,13 +2,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
-import useTable from 'src/app/utils/handles/useTable';
 import { toast } from 'react-toastify';
 import PaginationBar from '../../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
 import { uuid } from 'uuidv4';
+import { useTable } from 'src/app/utils';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -45,7 +45,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const ServiceTable = (props) => {
     const classes = useStyles();
-    const headCells = ['ID', "Tên dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã dịch vụ', "Tên dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const [records, setRecords] = useState([])
     const { TblContainer, TblHead } = useTable(records, headCells);
     const [switchCheck, setSwitchCheck] = useState({});
@@ -56,7 +56,7 @@ export const ServiceTable = (props) => {
     const [first, setFirst] = useState(true)
     const handleChangePagination = (event, value) => {
         setPage(value);
-        console.log(page)
+        // console.log(page)
     };
     // console.log("page:" + page)
     const handleChangeSwitch = (event) => {
@@ -68,19 +68,18 @@ export const ServiceTable = (props) => {
 
     const loadInit = async () => {
         try {
-            const data = await (await ManageServiceServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const records = data.info.records
+            const response = await (await ManageServiceServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+            const records = response.info.records
 
             const switchObj = records.reduce((acc, curr) => {
-                acc[`switchID:${curr.id}`] = curr.isActive
+                acc[`switchID:${curr.serviceID}`] = curr.isActive
                 return acc
             }, {})
             // console.log("switchObj: " + JSON.stringify(switchObj));
             setSwitchCheck({ ...switchCheck, ...switchObj });
             setRecords(records)
-            setTotalPage(data.info.totalPage)
+            setTotalPage(response.info.totalPage)
             // console.log("page: " + page)
-            console.log("page: " + data.info.page)
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }
@@ -114,8 +113,8 @@ export const ServiceTable = (props) => {
 
     const activeOrDeActive = async (row, event) => {
         const data = {
-            id: row.id,
-            isActive: !switchCheck[`switchID:${row.id}`]
+            id: row.serviceID,
+            isActive: !switchCheck[`switchID:${row.serviceID}`]
         }
         // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {
@@ -124,9 +123,9 @@ export const ServiceTable = (props) => {
         //     console.log('active')
         // }
         try {
-            const response = switchCheck[`switchID:${row.id}`] ? await (await ManageServiceServices.deActive(data)).data : await (await ManageServiceServices.active(data)).data
+            const response = switchCheck[`switchID:${row.serviceID}`] ? await (await ManageServiceServices.deActive(data)).data : await (await ManageServiceServices.active(data)).data
             if (response.result == config.useResultStatus.SUCCESS) {
-                toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
+                toast.success(`${!switchCheck[`switchID:${row.serviceID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
                 setRefresh(!refresh)
             } else {
                 toast.error(config.useMessage.resultFailure)
@@ -154,10 +153,10 @@ export const ServiceTable = (props) => {
                         {records.map((row) => {
                             return (
 
-                                <StyledTableRow key={row.id}>
+                                <StyledTableRow key={row.serviceID}>
 
-                                    <StyledTableCell component="th" scope="row">
-                                        {row.id}
+                                    <StyledTableCell>
+                                        {row.serviceID}
                                     </StyledTableCell>
                                     <StyledTableCell >{row.serviceName}</StyledTableCell>
                                     <StyledTableCell >{row.description}</StyledTableCell>
@@ -165,9 +164,9 @@ export const ServiceTable = (props) => {
                                     <StyledTableCell>
                                         <Switch
                                             color="primary"
-                                            checked={switchCheck[`switchID:${row.id}`]}
+                                            checked={switchCheck[`switchID:${row.serviceID}`]}
                                             onChange={handleChangeSwitch}
-                                            name={`switchID:${row.id}`}
+                                            name={`switchID:${row.serviceID}`}
                                             onClick={handleChangeStatus(row)}
                                         />
                                     </StyledTableCell>

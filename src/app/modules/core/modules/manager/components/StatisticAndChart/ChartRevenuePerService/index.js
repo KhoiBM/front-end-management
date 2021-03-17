@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Paper, makeStyles, Typography, AppBar, Tabs, Tab, Box } from '@material-ui/core'
 import Chart from "react-apexcharts";
 
+import { useTab } from 'src/app/utils'
+
 const useStyles = makeStyles(theme => ({
     rootChart: {
         // border: "1px solid red",
@@ -34,52 +36,14 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
 
     },
-    tablePanel: {
-        width: "100%",
-        // backgroundColor: "red",
-    },
-    TabContainer: {
-        background: "#fff"
-    }
 }))
 
-function a11yProps(index) {
-    return {
-        id: `tab-${index}`
-    };
-}
-
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-    const classes = useStyles();
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`tabpanel-${index}`}
-            {...other}
-            className={classes.tablePanel}
-        >
-            {value === index && (
-                <Box p={3}>
-                    {children}
-                </Box>
-            )}
-        </div>
-    );
-}
 
 const ChartRevenuePerService = () => {
     const classes = useStyles();
 
-    const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-
+    const { TabPanel, TabBar, value, handleChange } = useTab()
     const [series, setSeries] = useState(
         [
             {
@@ -102,13 +66,7 @@ const ChartRevenuePerService = () => {
         <>
             <div className={classes.chartContainer}>
                 <div className={classes.rootTab}>
-                    <AppBar position="static" className={classes.TabContainer}>
-                        <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
-                            <Tab label="Tuần" {...a11yProps(0)} />
-                            <Tab label="Tháng" {...a11yProps(1)} />
-                            <Tab label="Năm" {...a11yProps(2)} />
-                        </Tabs>
-                    </AppBar>
+                    <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
                     <TabPanel value={value} index={0}>
                         <Paper className={classes.rootChart}>
                             <Typography variant={"subtitle1"} className={classes.titleChart} color="textSecondary">Tuần</Typography>

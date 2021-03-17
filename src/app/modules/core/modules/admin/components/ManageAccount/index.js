@@ -26,13 +26,14 @@ const useStyles = makeStyles(theme => ({
         cursor: "pointer",
         marginTop: theme.spacing(2),
         '&:hover': {
-            backgroundColor: theme.palette.primary.main,
+            // backgroundColor: theme.palette.primary.main,
+            backgroundColor: "#fff",
             boxShadow: "rgb(0 0 0 / 10 %) 0px 0.3rem 1rem",
             transform: "scale(1.015)",
 
         },
         '&:focus': {
-            outline: "1px dashed var(--primary-color-dark)",
+            // outline: "1px dashed var(--primary-color-dark)",
             outlineOffset: "4px",
         }
     }
@@ -55,24 +56,28 @@ const ManageAccount = () => {
     }
 
     return (
-        <>
+        <>  {!openEditForm && !openAddForm &&
             <Paper elevation={2} className={classes.mainContainer}>
 
-                {!openEditForm && !openAddForm &&
-                    <>
-                        <div className={classes.buttonAddWrapper}>
-                            <Button variant="contained" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm tài khoản</Button>
-                        </div>
-                        <AccountTable handleEdit={handleEdit} />
-                    </>}
 
-                {openEditForm && <EditAccountForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />
+                <>
+                    <div className={classes.buttonAddWrapper}>
+                        {/* <Button variant="outlined" color="secondary" onClick={handleAdd} className={classes.buttonAdd}>Thêm tài khoản</Button> */}
+                        <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm tài khoản</Button>
+                    </div>
+                    <AccountTable handleEdit={handleEdit} />
+                </>
 
-                }
-                {openAddForm && <AddAccountForm handleCloseForm={handleCloseForm} />
 
-                }
+
             </Paper>
+        }
+            {openEditForm && <EditAccountForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />
+
+            }
+            {openAddForm && <AddAccountForm handleCloseForm={handleCloseForm} />
+
+            }
         </>
     )
 }

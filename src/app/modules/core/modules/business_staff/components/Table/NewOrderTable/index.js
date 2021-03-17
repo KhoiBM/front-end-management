@@ -2,13 +2,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl } from '@material-ui/core';
-import useTable from 'src/app/utils/handles/useTable';
+
 import { toast } from 'react-toastify';
 import PaginationBar from '../../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BusinessStaffProcessOrderServices } from '../../../../../../../services/CoreServices/BusinessStaffServices';
 import config from '../../../../../../../../environments/config';
 import { uuid } from 'uuidv4';
+import { useTable } from 'src/app/utils';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -45,7 +46,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const NewOrderTable = (props) => {
     const classes = useStyles();
-    const headCells = ['ID', "Tên tài khoản", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã đơn hàng', "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const [records, setRecords] = useState([])
     const { TblContainer, TblHead } = useTable(records, headCells);
     const [switchCheck, setSwitchCheck] = useState({});
@@ -73,23 +74,23 @@ export const NewOrderTable = (props) => {
     };
     useEffect(() => {
         loadInit()
+        // console.log("load")
     }, [page])
 
     const loadInit = async () => {
         try {
-            const data = await (await BusinessStaffProcessOrderServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const records = data.info.records
+            const response = await (await BusinessStaffProcessOrderServices.viewNewOrder({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+            const records = response.info.records
 
             const switchObj = records.reduce((acc, curr) => {
-                acc[`switchID:${curr.id}`] = curr.isActive
+                acc[`switchID:${curr.orderID}`] = curr.statusPayment
                 return acc
             }, {})
             // console.log("switchObj: " + JSON.stringify(switchObj));
             setSwitchCheck({ ...switchCheck, ...switchObj });
             setRecords(records)
-            setTotalPage(data.info.totalPage)
+            setTotalPage(response.info.totalPage)
             // console.log("page: " + page)
-            console.log("page: " + data.info.page)
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }
@@ -98,20 +99,6 @@ export const NewOrderTable = (props) => {
 
     useEffect(async () => {
         // if (!first) {
-        //     const data = await (await ManageAccountServices.viewAccountTest({ filterBy: "all", page: page })).data
-        //     const records = data.info.records
-
-        //     const switchObj = records.reduce((acc, curr) => {
-        //         acc[`switchID:${curr.id}`] = curr.isActive
-        //         return acc
-        //     }, {})
-
-        //     // console.log("switchObj: " + JSON.stringify(switchObj));
-        //     setSwitchCheck({ ...switchCheck, ...switchObj });
-        //     setRecords(records)
-        //     setTotalPage(data.info.totalPage)
-        //     // console.log("page: " + page)
-        //     console.log("page: " + data.info.page)
         // }
         // setFirst(false)
     }, [refresh])
@@ -123,8 +110,8 @@ export const NewOrderTable = (props) => {
 
     const checkPayMent = async (row, event) => {
         const data = {
-            id: row.id,
-            isActive: !switchCheck[`switchID:${row.id}`]
+            id: row.orderID,
+            isActive: !switchCheck[`switchID:${row.orderID}`]
         }
         // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {
@@ -133,9 +120,10 @@ export const NewOrderTable = (props) => {
         //     console.log('active')
         // }
         try {
-            const response = switchCheck[`switchID:${row.id}`] ? await (await BusinessStaffProcessOrderServices.checkPayment(data)).data : await (await BusinessStaffProcessOrderServices.checkPayment(data)).data
+            // switchCheck[`switchID:${row.id}`] ? 
+            const response = await (await BusinessStaffProcessOrderServices.checkPayment(data)).data
             if (response.result == config.useResultStatus.SUCCESS) {
-                toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
+                toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
                 setRefresh(!refresh)
             } else {
                 toast.error(config.useMessage.resultFailure)
@@ -154,72 +142,81 @@ export const NewOrderTable = (props) => {
     }
     return (
         <>
-            {/* <p>Table</p> */}
+            <p>NewOrderTable</p>
 
             <div className={classes.tableWrapper}>
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => {
-                            return (
+                        {records.map((row) => (
+                            <StyledTableRow key={row.orderID}>
 
-                                <StyledTableRow key={row.id}>
+                                <StyledTableCell>{row.orderID}</StyledTableCell>
+                                <StyledTableCell >{row.customerID}</StyledTableCell>
 
-                                    <StyledTableCell component="th" scope="row">
-                                        {row.id}
-                                    </StyledTableCell>
-                                    <StyledTableCell >{row.username}</StyledTableCell>
-                                    <StyledTableCell >{row.note}</StyledTableCell>
-                                    <>
-                                        <FormControl variant="outlined" >
-                                            <InputLabel id="statusOrder-label">
+                                <StyledTableCell >{row.note}</StyledTableCell>
+                                <StyledTableCell >{row.statusOrder}</StyledTableCell>
+                                {/* <>
+                                    <FormControl variant="outlined" >
+                                        <InputLabel id="statusOrder-label">
 
-                                            </InputLabel>
-                                            <Select
-                                                labelId="statusOrder-label"
-                                                id="statusOrder"
-                                                value={statusOrder}
-                                                onChange={handleStatusOrderChange}
-                                                name="statusOrder"
-                                            >
-                                                <MenuItem value={1}>Khách hàng</MenuItem>
-                                                <MenuItem value={2}>Quản lý</MenuItem>
-                                                <MenuItem value={3}>Nhân viên kinh doanh</MenuItem>
-                                                <MenuItem value={4}>Nhân viên kỹ thuật</MenuItem>
-                                            </Select>
-                                            <FormHelperText></FormHelperText>
-                                        </FormControl>
-                                    </>
-                                    <StyledTableCell>
-                                        <Switch
-                                            color="primary"
-                                            checked={switchCheck[`switchID:${row.id}`]}
-                                            onChange={handleChangeSwitch}
-                                            name={`switchID:${row.id}`}
-                                            onClick={handleChangeStatus(row)}
-                                        />
-                                    </StyledTableCell>
+                                        </InputLabel>
+                                        <Select
+                                            labelId="statusOrder-label"
+                                            id="statusOrder"
+                                            value={statusOrder}
+                                            onChange={handleStatusOrderChange}
+                                            name="statusOrder"
+                                        >
+                                            <MenuItem value={1}>Đang xử lý</MenuItem>
+                                            <MenuItem value={2}></MenuItem>
+                                            <MenuItem value={3}></MenuItem>
+                                            <MenuItem value={4}></MenuItem>
+                                        </Select>
+                                        <FormHelperText></FormHelperText>
+                                    </FormControl>
+                                </> */}
+                                <StyledTableCell>
+                                    <Switch
+                                        color="primary"
+                                        checked={switchCheck[`switchID:${row.orderID}`]}
+                                        onChange={handleChangeSwitch}
+                                        name={`switchID:${row.orderID}`}
+                                        onClick={handleChangeStatus(row)}
+                                    />
+                                </StyledTableCell>
 
+                                <StyledTableCell >{row.shipAt}</StyledTableCell>
+                                <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell>
 
-                                    <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                    <StyledTableCell >{row.updatedAt}</StyledTableCell>
-
-
-                                    <StyledTableCell >
-                                        <Button onClick={(event) => {
-                                            event.stopPropagation()
-                                            props.handleEdit(row)
-                                        }
-                                        }>
-                                            <AiOutlineEdit />
-                                        </Button>
-                                    </StyledTableCell>
+                                <StyledTableCell >{row.createdAt}</StyledTableCell>
+                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
-                                </StyledTableRow>
+                                <StyledTableCell >
+                                    <Button onClick={(event) => {
+                                        event.stopPropagation()
+                                        // props.handleEdit(row)
+                                    }
+                                    }>
+                                        {/* <AiOutlineEdit /> */}
+                                        Chấp nhận
+                                    </Button>
+                                    <Button style={{ marginLeft: "8px" }} onClick={(event) => {
+                                        event.stopPropagation()
+                                        // props.handleEdit(row)
+                                    }
+                                    }>
+                                        {/* <AiOutlineEdit /> */}
+                                        Từ chối
+                                    </Button>
+                                </StyledTableCell>
 
-                            )
-                        }
+
+                            </StyledTableRow>
+
+                        )
+
                         )
                         }
                     </TableBody>

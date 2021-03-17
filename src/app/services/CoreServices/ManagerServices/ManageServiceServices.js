@@ -15,103 +15,146 @@ export class ManageServiceServices {
 
 
     static view = (data) => {
+        return useHttpModule().get(config.useApiPath.api.manageServiceServices.view, data)
+        // if (data.page == 1) {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         serviceID: "1",
+        //                         serviceName: "abcd",
+        //                         description: "abcd",
+        //                         isActive: true,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     },
+        //                     {
+        //                         serviceID: "2",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: true,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     }
+        //                     ,
+        //                     {
+        //                         serviceID: "3",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: true,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     }
+        //                     ,
+        //                     {
+        //                         serviceID: "4",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: true,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     }
+        //                     ,
+        //                     {
+        //                         serviceID: "5",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: true,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //             }
+        //         }
+        //     })
+        // } else {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         serviceID: "6",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: false,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     },
+        //                     {
+        //                         serviceID: "7",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: false,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     }, {
+        //                         serviceID: "8",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: false,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     }, {
+        //                         serviceID: "9",
+        //                         serviceName: "abc",
+        //                         description: "abc",
+        //                         isActive: false,
+        //                         createdAt: "03-02-2021",
+        //                         updatedAt: "03-02-2021",
+        //                     },
+        //                 ],
+        //                 totalPage: 20
+        //             }
+        //         }
+        //     })
+        // }
+    }
+    static getAll = (data) => {
         // return useHttpModule().get(config.useApiPath.api., data)
-        if (data.page == 1) {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                id: "1",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            },
-                            {
-                                id: "2",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                            ,
-                            {
-                                id: "3",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                            ,
-                            {
-                                id: "4",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                            ,
-                            {
-                                id: "5",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                        ],
-                        totalPage: 20
-                    }
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+                    records: [
+                        {
+                            serviceID: "6",
+                            serviceName: "abc",
+                            description: "abc",
+                            isActive: false,
+                            createdAt: "03-02-2021",
+                            updatedAt: "03-02-2021",
+                        },
+                        {
+                            serviceID: "7",
+                            serviceName: "abc",
+                            description: "abc",
+                            isActive: false,
+                            createdAt: "03-02-2021",
+                            updatedAt: "03-02-2021",
+                        }, {
+                            serviceID: "8",
+                            serviceName: "abc",
+                            description: "abc",
+                            isActive: false,
+                            createdAt: "03-02-2021",
+                            updatedAt: "03-02-2021",
+                        }, {
+                            serviceID: "9",
+                            serviceName: "abc",
+                            description: "abc",
+                            isActive: false,
+                            createdAt: "03-02-2021",
+                            updatedAt: "03-02-2021",
+                        },
+                    ]
+
                 }
-            })
-        } else {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                id: "6",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: false,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            },
-                            {
-                                id: "7",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: false,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }, {
-                                id: "8",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: false,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }, {
-                                id: "9",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: false,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            },
-                        ],
-                        totalPage: 20
-                    }
-                }
-            })
-        }
+            }
+        })
     }
     static add = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
@@ -124,6 +167,7 @@ export class ManageServiceServices {
             }
         })
     }
+
 
 
     static edit = (data) => {

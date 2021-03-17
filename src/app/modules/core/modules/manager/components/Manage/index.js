@@ -1,5 +1,5 @@
 export * from './ManageStatistic'
-export * from './ManageServices'
+export * from './ManageService'
 export * from './ManageRawProductImportation'
 export * from './ManageRawProduct'
 export * from './ManageCategory'

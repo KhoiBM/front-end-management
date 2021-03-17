@@ -8,11 +8,18 @@ import { FcProcess } from 'react-icons/fc'
 const useApiPath = {
     "apiEndpoint": "https://5ociiz2m81.execute-api.ap-southeast-1.amazonaws.com/dev/",
     "api": {
-        "signIn": "user/login",
-        "signUp": "user/signup",
-        "confirmCode": "user/confirm-email",
-        "forgotPassword": "",
-        "confirmForgotPassword": ""
+        "auth": {
+            "signIn": "user/login",
+            "signUp": "user/signup",
+            "confirmCode": "user/confirm-email",
+            "forgotPassword": "",
+            "confirmForgotPassword": ""
+        },
+        "manageServiceServices": {
+            view: ""
+        },
+
+
     }
 }
 const useRoleName = {
@@ -96,7 +103,7 @@ const useUserRole = {
         {
             text: "Quản lý sản phẩm đã in",
             icon: < RiProductHuntLine />,
-            link: "manage_printed_product  "
+            link: "manage_printed_product"
         },
 
 

@@ -5,17 +5,17 @@ import config from 'src/environments/config'
 import MainBar from '../../../components/MainBar'
 import { useLocation } from 'react-router-dom'
 import { ManageCategory } from '../components/Manage'
+import { useOpendrawer } from 'src/app/utils'
 
 const ManageCategoryPage = () => {
     const userRole = config.useUserRole.manager;
-    let location = useLocation();
-
+    const { openDrawerByLink } = useOpendrawer()
     return (
         <>
             {/* <p>ManagerPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
             <Loader />
-            <MainBar userRole={userRole} openDrawerByLink={location.state.openDrawer} >
+            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageCategory />
             </MainBar>
         </>

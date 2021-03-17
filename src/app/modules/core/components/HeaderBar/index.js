@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Typography, ListItemIcon, ListItem, ListItemText, List, Divider, useTheme, Drawer, Zoom, Tooltip, MenuList } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Typography, ListItemIcon, ListItem, ListItemText, List, Divider, useTheme, Drawer, Zoom, Tooltip, MenuList, Badge } from '@material-ui/core'
 import { RiAccountBoxLine, RiNotification2Line } from 'react-icons/ri';
 import { MdSupervisorAccount, MdChevronLeft, MdChevronRight, MdMenu } from 'react-icons/md'
 import clsx from 'clsx';
@@ -11,6 +11,9 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthService } from 'src/app/services/AuthServices/AuthService';
 import { AiOutlineProfile, AiOutlineLogout } from 'react-icons/ai';
+
+import brandLogo from 'src/app/assets/image/brand.svg';
+import { invert } from 'underscore';
 
 const drawerWidth = config.useStyles.drawerWidth;
 
@@ -37,6 +40,27 @@ const useStyles = makeStyles((theme) => ({
     hide: {
         display: "none"
     },
+    logoContainer: {
+        width: "800px",
+        margin: "0 auto",
+        transition: "all 50s ease 0s"
+
+    },
+    logoWrapper: {
+
+
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        // border: "1px solid var(--color-black)",
+        transition: "all 50s ease 0s"
+    }
+    ,
+    brandLogo: {
+        width: "25px",
+        height: "auto",
+        filter: "invert(100%)",
+    }
 
 }));
 
@@ -92,6 +116,11 @@ const HeaderBar = (props) => {
                     >
                         <MdMenu />
                     </IconButton>
+                    <div className={classes.logoContainer}>
+                        <div className={classes.logoWrapper}>
+                            <img src={brandLogo} className={classes.brandLogo} alt="logo of brand" />
+                        </div >
+                    </div>
 
 
                     <div style={{
@@ -112,6 +141,7 @@ const HeaderBar = (props) => {
                             {
                                 role != useRoleName.administrator &&
                                 <Tooltip TransitionComponent={Zoom} placement="left" title="Thông báo">
+
                                     <IconButton
                                         aria-label="noti"
                                         aria-controls="noti-appbar"
@@ -119,8 +149,18 @@ const HeaderBar = (props) => {
                                         onClick={handleMenuNoti}
                                         color="inherit"
                                     >
-                                        <RiNotification2Line />
+                                        <Badge
+                                            anchorOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'right',
+                                            }}
+                                            badgeContent={999}
+                                            color="secondary"                                        >
+                                            <RiNotification2Line />
+                                        </Badge>
                                     </IconButton>
+
+
                                 </Tooltip>
 
                             }
@@ -150,7 +190,7 @@ const HeaderBar = (props) => {
                                 </MenuList>
 
                             </Menu> */}
-                        </div>
+                        </div >
 
 
 
@@ -211,9 +251,9 @@ const HeaderBar = (props) => {
 
 
 
-                    </div>
-                </Toolbar>
-            </AppBar>
+                    </div >
+                </Toolbar >
+            </AppBar >
         </>
     )
 }

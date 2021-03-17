@@ -4,21 +4,22 @@ import config from 'src/environments/config';
 import Loader from 'src/app/components/Loader/Loader';
 import MainBar from '../../../components/MainBar';
 import { useLocation } from 'react-router-dom';
-import { ManageServices } from '../components/Manage';
+import { ManageService } from '../components/Manage';
+import { useOpendrawer } from 'src/app/utils';
 
-const ManageServicesPage = () => {
+const ManageServicePage = () => {
     const userRole = config.useUserRole.manager;
-    let location = useLocation();
+    const { openDrawerByLink } = useOpendrawer()
     return (
         <>
             {/* <p>ManagerPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
             <Loader />
-            <MainBar userRole={userRole} openDrawerByLink={location.state.openDrawer} >
-                <ManageServices />
+            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
+                <ManageService />
             </MainBar>
         </>
     )
 }
 
-export default ManageServicesPage
+export default ManageServicePage

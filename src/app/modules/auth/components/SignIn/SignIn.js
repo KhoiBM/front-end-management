@@ -42,7 +42,7 @@ const SignIn = ({ toggle, isVisible }) => {
         document.title = 'Đăng nhập';
     }, [])
     useEffect(() => {
-        console.log("ValueResponse: " + JSON.stringify(response));
+        // console.log("ValueResponse: " + JSON.stringify(response));
 
     })
 
@@ -95,7 +95,7 @@ const SignIn = ({ toggle, isVisible }) => {
         event.preventDefault();
         const enableSubmit = validation(formData, regexPassword);
         // const enableSubmit = true;
-        console.log("enableSubmit: " + enableSubmit);
+        // console.log("enableSubmit: " + enableSubmit);
         if (enableSubmit) {
             signIn(formData, dispatch);
         } else {
