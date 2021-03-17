@@ -18,6 +18,9 @@ const useApiPath = {
         "manageServiceServices": {
             view: ""
         },
+        "manageRawProductServices": {
+            view: "homepage/get-list-product"
+        }
 
 
     }

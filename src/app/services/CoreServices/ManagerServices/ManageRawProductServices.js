@@ -15,30 +15,30 @@ export class ManageRawProductServices {
 
 
     static view = (data) => {
-        // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    records: [
-                        {
-                            rawProductID: 1,
-                            rawProductName: "abc",
-                            unitPrice: 1,
-                            totalQuantity: 10,
-                            size: "M",
-                            color: "xanh",
-                            description: "d",
-                            categoryName: "ad",
-                            createdAt: "03-03-2021",
-                            updatedAt: "03-03-2021"
+        return useHttpModule().post(config.useApiPath.api.manageRawProductServices.view, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             records: [
+        //                 {
+        //                     rawProductID: 1,
+        //                     rawProductName: "abc",
+        //                     unitPrice: 1,
+        //                     totalQuantity: 10,
+        //                     size: "M",
+        //                     color: "xanh",
+        //                     description: "d",
+        //                     categoryName: "ad",
+        //                     createdAt: "03-03-2021",
+        //                     updatedAt: "03-03-2021"
 
-                        }
-                    ]
+        //                 }
+        //             ]
 
-                }
-            }
-        })
+        //         }
+        //     }
+        // })
     }
     static viewDetail = (data) => {
         // return useHttpModule().get(config.useApiPath.api., data)
