@@ -1,5 +1,0 @@
-export * from './AcceptedOrderTable'
-export * from './CanceledOrderTable'
-export * from './NewOrderTable'
-export * from './CustomersRawProductImportationTable'
-export * from './CustomersRawProductTable'
