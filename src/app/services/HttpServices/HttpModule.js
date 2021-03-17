@@ -5,10 +5,14 @@ export const useHttpModule = (headers = {}) => {
         baseURL: `${config.useApiPath.apiEndpoint}`,
         headers: headers
     });
+    // const instance = axios.create({
+    //     baseURL: `${config.useApiPath.apiEndpoint}`,
+
+    // });
 
     instance.interceptors.request.use(
         async (value) => {
-            value.headers.common['authorization'] = `Bearer ${localStorage.getItem('pps-token')}`;
+            value.headers.common['authorization'] = `Bearer ${localStorage.getItem('token')}`;
             return Promise.resolve(value);
         }, (error) => {
             console.log("error request axios")

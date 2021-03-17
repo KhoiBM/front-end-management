@@ -64,14 +64,16 @@ export const RawProductTable = (props) => {
 
     const loadInit = async () => {
         try {
+            localStorage.setItem("token", "eyJraWQiOiJSTmkrS25iRXEyXC9nWkIwbFhoekt1TnJnekpYaldXb00rV1RtdndTQ1c1ST0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI2NWRlMWNiMC0xMDNiLTQ1MTEtYmNlYy0yNTQ3YjlmZGExODkiLCJldmVudF9pZCI6ImJjOTA1OWRiLWRhMmEtNDgyNC1hMTk4LTAwY2NmMzJiMTIwMCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2MTU5ODgzOTEsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMV80SWF6OUtFTFMiLCJleHAiOjE2MTU5OTE5OTEsImlhdCI6MTYxNTk4ODM5MSwianRpIjoiNGIzNzMxODQtMjMzZS00YzQwLTgzNjItNDAwNWZiYjY1OTFmIiwiY2xpZW50X2lkIjoiNThwNnM1aDBqZWJlY29yY2Z1cmhwYnM4MWciLCJ1c2VybmFtZSI6InZ1dnUifQ.qr4Zh1TwO1YifTtu-Q-NPXvzZWqLaD-yTaqOgdWqiP6ruOoK7OB0m-2KMsIXlwghpUW83w2r3Qe37_rxv8uQWJYxLLGdg6XVV439Pmm5kOy3f99auNvs8NiAJxyy1a-b2N2eUIvvm6a04zAruyIunHPaX7Feqnw7C-Vazwkz5peCwyUO9Q9NdjMfYoOxlliC1X2UoE_E-F8d2gHyzfe6sZqjW-XptIZkdjPDxCL3tv4-nSEaA1-1S4UqwkSX2x71zBFunOdZNHdwTFGjOKSwp7a-kdY8No80nTE9f_8x18b-lYJ-BWu44K-b3M3peiRukgzrBWOfCZ9xyWn6u0Ks6Q")
             // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
             const response = await (await ManageRawProductServices.view({
                 "category": ["1", "2"],
                 "offset": "1",
                 "limit": "3"
             })).data
-            const records = response.info.rawProductLists
 
+            console.log("response: " + JSON.stringify(response))
+            const records = response.info.rawProductLists
             setRecords(records)
             // setTotalPage(response.info.totalPage)
             // console.log("page: " + page)
