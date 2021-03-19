@@ -242,7 +242,17 @@ export const AddAccountForm = (props) => {
                                         }
                                         labelWidth={70}
                                         required
+                                        error={helperValid.password ? true : false}
                                     />
+                                    <FormHelperText style={{
+                                        color: "#f44336",
+                                        marginLeft: "14px",
+                                        marginRight: "14px",
+                                        marginBottom: '16px'
+
+                                    }}>{helperValid.password}
+                                    </FormHelperText>
+
                                 </FormControl>
 
 
@@ -268,7 +278,16 @@ export const AddAccountForm = (props) => {
                                         }
                                         labelWidth={130}
                                         required
+                                        error={helperValid.rePassword ? true : false}
                                     />
+                                    <FormHelperText style={{
+                                        color: "#f44336",
+                                        marginLeft: "14px",
+                                        marginRight: "14px",
+                                        marginBottom: '16px'
+
+                                    }}>{helperValid.rePassword}
+                                    </FormHelperText>
                                 </FormControl>
 
 

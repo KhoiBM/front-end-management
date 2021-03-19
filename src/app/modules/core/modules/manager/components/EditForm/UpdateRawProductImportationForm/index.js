@@ -100,8 +100,6 @@ const initialFValues = {
     quantity: 0,
     providedBy: "",
     createdAt: new Date()
-
-
 }
 export const UpdateRawProductImportationForm = (props) => {
     const classes = useStyles();

@@ -242,6 +242,7 @@ export const EditAccountForm = (props) => {
                                     type='password'
                                 /> */}
 
+
                                 <FormControl variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Mật khẩu</InputLabel>
                                     <OutlinedInput
@@ -263,7 +264,18 @@ export const EditAccountForm = (props) => {
                                             </InputAdornment>
                                         }
                                         labelWidth={70}
+                                        required
+                                        error={helperValid.password ? true : false}
                                     />
+                                    <FormHelperText style={{
+                                        color: "#f44336",
+                                        marginLeft: "14px",
+                                        marginRight: "14px",
+                                        marginBottom: '16px'
+
+                                    }}>{helperValid.password}
+                                    </FormHelperText>
+
                                 </FormControl>
 
 
@@ -288,7 +300,17 @@ export const EditAccountForm = (props) => {
                                             </InputAdornment>
                                         }
                                         labelWidth={130}
+                                        required
+                                        error={helperValid.rePassword ? true : false}
                                     />
+                                    <FormHelperText style={{
+                                        color: "#f44336",
+                                        marginLeft: "14px",
+                                        marginRight: "14px",
+                                        marginBottom: '16px'
+
+                                    }}>{helperValid.rePassword}
+                                    </FormHelperText>
                                 </FormControl>
 
 
