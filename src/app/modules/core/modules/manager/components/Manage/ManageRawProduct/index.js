@@ -60,6 +60,7 @@ export const ManageRawProduct = () => {
         setKeywords(event.target.value)
         if (!event.target.value || event.target.value == null || event.target.value == undefined || event.target.value.length < 0) {
             setClickSearch(!clickSearch)
+            setSearchAction(false)
         }
         // console.log("keywords: " + keywords)
     }
@@ -98,7 +99,7 @@ export const ManageRawProduct = () => {
                             </div>
                         </div>
 
-                        <RawProductTable handleEdit={handleEdit} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} />
+                        <RawProductTable handleEdit={handleEdit} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
                     </>
 
                 </Paper>

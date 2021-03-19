@@ -316,19 +316,19 @@ export const EditAccountForm = (props) => {
                                     </FormControl>
                                 </>
 
-                                <div className={classes.switchContainer}>
-                                    <FormControlLabel
-                                        label="Trạng thái:"
-                                        labelPlacement="start"
-                                        control={<Switch
-                                            color="primary"
-                                            checked={formData.isActive}
-                                            onChange={handleInputChange}
-                                            name="isActive"
-                                        />}
-                                    />
-                                    <FormHelperText>{helperValid.isActive}</FormHelperText>
-                                </div>
+                                {/* <div className={classes.switchContainer}> */}
+                                <FormControlLabel
+                                    label="Trạng thái:"
+                                    labelPlacement="start"
+                                    control={<Switch
+                                        color="primary"
+                                        checked={formData.isActive}
+                                        onChange={handleInputChange}
+                                        name="isActive"
+                                    />}
+                                />
+                                <FormHelperText>{helperValid.isActive}</FormHelperText>
+                                {/* </div> */}
 
                             </Grid>
                         </Grid>

@@ -100,7 +100,7 @@ const initialFValues = {
     size: '',
     color: '',
     description: '',
-    categoryID: 1,
+    categoryID: "",
     isActive: true,
     updatedAt: new Date()
 }
@@ -263,21 +263,31 @@ export const EditRawProductForm = (props) => {
                                 <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
-
+                                            Thể loại
                                         </InputLabel>
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
-                                            value={parseInt(formData.categoryID, 10)}
+                                            value={formData.categoryID
+                                            }
                                             onChange={handleInputChange}
                                             name="categoryID"
+                                            labelWidth={60}
+                                            required
                                         >
                                             {
-                                                categoryRecords.map(val => <MenuItem value={parseInt(val.categoryID, 10)} key={val.categoryID}>{val.categoryName}</MenuItem>)
+                                                categoryRecords.map(val => <MenuItem value={val.categoryID} key={val.categoryID}>{val.categoryName}</MenuItem>)
                                             }
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px',
+
+                                        }}>{helperValid.categoryID}
+                                        </FormHelperText>
                                     </FormControl>
                                 </>
                                 {/* <div>

@@ -97,7 +97,7 @@ const initialFValues = {
     categoryID: '',
     categoryName: '',
     description: '',
-    serviceID: 1,
+    serviceID: "",
     isActive: true,
     updatedAt: new Date()
 }
@@ -106,7 +106,7 @@ export const EditCategoryForm = (props) => {
 
     const [serviceRecords, setServiceRecords] = useState([])
 
-    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
+    const { formData, setFormData, handleInputChange, helperValid = null, setHelperValid, validation } = useForm(initialFValues)
 
 
     const { recordForEdit } = props
@@ -116,23 +116,14 @@ export const EditCategoryForm = (props) => {
         if (recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
         }
-    }, [])
-
-    useEffect(() => {
         loadInit()
     }, [])
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log("formdata: " + JSON.stringify(formData))
+    // useEffect(() => {
 
-        const enableSubmit = validation(formData)
-        if (enableSubmit) {
-            edit()
-        } else {
-            toast.error(config.useMessage.invalidData);
-        }
-    }
+    // }, [])
+
+
 
 
     const loadInit = async () => {
@@ -141,7 +132,7 @@ export const EditCategoryForm = (props) => {
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    console.log("recordsService: " + JSON.stringify(response.info.records))
+                    // console.log("recordsService: " + JSON.stringify(response.info.records))
                     setServiceRecords(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
@@ -155,6 +146,19 @@ export const EditCategoryForm = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log("formdata: " + JSON.stringify(formData))
+
+        const enableSubmit = validation(formData)
+        if (enableSubmit) {
+            edit()
+        } else {
+            toast.error(config.useMessage.invalidData);
+        }
+    }
+
     const edit = async () => {
         try {
             const response = await (await ManageCategoryServices.edit(formData)).data
@@ -218,27 +222,43 @@ export const EditCategoryForm = (props) => {
                                     multiline
                                 />
 
+
                                 <>
                                     <FormControl variant="outlined" >
-                                        <InputLabel id="serviceID-label">
-
+                                        <InputLabel id="serviceID-label" error={helperValid.serviceID ? true : false}>
+                                            Dịch vụ
                                         </InputLabel>
                                         <Select
                                             labelId="serviceID-label"
                                             id="serviceID"
-                                            value={parseInt(formData.serviceID, 10)}
+                                            value={(() => {
+                                                return formData.serviceID
+                                            })()
+                                            }
+
                                             onChange={handleInputChange}
                                             name="serviceID"
+                                            labelWidth={60}
+                                            required
+                                            error={helperValid.serviceID ? true : false}
                                         >
                                             {
-                                                serviceRecords.map(val => (<MenuItem value={parseInt(val.serviceID, 10)} key={parseInt(val.serviceID, 10)}>{val.serviceName}</MenuItem>))
+                                                serviceRecords.map(val => (<MenuItem value={val.serviceID} key={val.serviceID}>{val.serviceName}</MenuItem>))
                                             }
 
 
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px',
+
+                                        }}>{helperValid.serviceID}
+                                        </FormHelperText>
                                     </FormControl>
+
                                 </>
                                 <div>
                                     <FormControlLabel

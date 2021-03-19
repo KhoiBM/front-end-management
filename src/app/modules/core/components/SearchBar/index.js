@@ -50,10 +50,15 @@ export const SearchBar = (props) => {
 
                     if (!props.keywords || props.keywords == null || props.keywords == undefined || props.keywords.length < 0) {
                         props.setSearchAction(false)
+
                         props.setClickSearch(!props.clickSearch)
+                        // props.setClickSearch(false)
                     } else {
-                        props.setClickSearch(!props.clickSearch)
                         props.setSearchAction(true)
+
+                        props.setClickSearch(!props.clickSearch)
+                        // props.setClickSearch(true)
+
                     }
 
 

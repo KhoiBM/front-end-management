@@ -143,7 +143,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, Tooltip, Zoom } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
@@ -189,7 +189,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const RawProductTable = (props) => {
     const classes = useStyles();
-    const { keywords, searchAction, setSearchAction, clickSearch } = props
+    const { keywords, searchAction, setSearchAction, clickSearch, setClickSearch } = props
 
     const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
@@ -224,23 +224,6 @@ export const RawProductTable = (props) => {
         setPage(value);
         // console.log(page)
     };
-    useEffect(() => {
-        // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        setPage(1)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-
-                search()
-            } else {
-                loadInit()
-            }
-        } else {
-            loadInit()
-        }
-
-    }, [clickSearch])
-
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
@@ -257,6 +240,24 @@ export const RawProductTable = (props) => {
 
     }, [page])
 
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        setPage(1)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+
+    }, [clickSearch])
+
+
+
     const loadInit = async () => {
         try {
             const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -270,7 +271,6 @@ export const RawProductTable = (props) => {
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }
-
     }
     const search = async () => {
         try {
@@ -341,23 +341,34 @@ export const RawProductTable = (props) => {
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
                                 <StyledTableCell >
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
-                                    </Button>
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation();
-                                        // ((row) => {
-                                        // })()
-                                        setOpenDialog(true)
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
 
-                                    }
-                                    }>
-                                        <AiOutlineDelete />
-                                    </Button>
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            props.handleEdit(row)
+                                        }
+                                        }>
+                                            <AiOutlineEdit />
+                                        </Button>
+
+                                    </Tooltip>
+
+
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Xoá">
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation();
+                                            // ((row) => {
+                                            // })()
+                                            setOpenDialog(true)
+                                            deleteAction(row.rawProductID)
+                                        }
+                                        }>
+                                            <AiOutlineDelete />
+                                        </Button>
+
+                                    </Tooltip>
+
                                 </StyledTableCell>
 
                             </StyledTableRow>
@@ -368,7 +379,7 @@ export const RawProductTable = (props) => {
                     </TableBody>
                 </TblContainer>
             </div>
-            <ConfirmDeleteDialog openDialog={openDialog} handleCloseDialog={handleCloseDialog} isConfirm={isConfirm} setIsConfirm={setIsConfirm} deleteAction={deleteAction(row.rawProductID)} />
+            <ConfirmDeleteDialog openDialog={openDialog} handleCloseDialog={handleCloseDialog} isConfirm={isConfirm} setIsConfirm={setIsConfirm} />
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />

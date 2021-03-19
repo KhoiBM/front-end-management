@@ -98,7 +98,7 @@ const initialFValues = {
     categoryID: '',
     categoryName: '',
     description: '',
-    serviceID: 1,
+    serviceID: "",
     isActive: true,
     createdAt: new Date()
 }
@@ -132,7 +132,7 @@ export const AddCategoryForm = (props) => {
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    console.log("recordsService: " + JSON.stringify(response.info.records))
+                    // console.log("recordsService: " + JSON.stringify(response.info.records))
                     setServiceRecords(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
@@ -195,8 +195,6 @@ export const AddCategoryForm = (props) => {
                                     required
                                 />
 
-
-
                                 <TextField
                                     variant='outlined'
                                     label="Mô tả"
@@ -211,24 +209,43 @@ export const AddCategoryForm = (props) => {
 
                                 <>
                                     <FormControl variant="outlined" >
-                                        <InputLabel id="serviceID-label">
-
+                                        <InputLabel id="serviceID-label" error={helperValid.serviceID ? true : false}>
+                                            Dịch vụ
                                         </InputLabel>
                                         <Select
                                             labelId="serviceID-label"
                                             id="serviceID"
-                                            value={parseInt(formData.serviceID, 10)}
+                                            value={formData.serviceID &&
+                                                formData.serviceID != null && formData.serviceID.length > 0
+                                                ? formData.serviceID
+                                                : serviceRecords != null && serviceRecords.length > 0
+                                                    ? (() => {
+                                                        setFormData({ ...formData, serviceID: serviceRecords[0].serviceID });
+                                                        return serviceRecords[0].serviceID
+                                                    })()
+                                                    : ""}
+
                                             onChange={handleInputChange}
                                             name="serviceID"
+                                            labelWidth={60}
+                                            required
+                                            error={helperValid.serviceID ? true : false}
                                         >
                                             {
-                                                serviceRecords.map(val => (<MenuItem value={parseInt(val.serviceID, 10)} key={parseInt(val.serviceID, 10)}>{val.serviceName}</MenuItem>))
+                                                serviceRecords.map(val => (<MenuItem value={val.serviceID} key={val.serviceID}>{val.serviceName}</MenuItem>))
                                             }
 
 
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px',
+
+                                        }}>{helperValid.serviceID}
+                                        </FormHelperText>
                                     </FormControl>
                                 </>
                                 {/* <div>
@@ -244,7 +261,6 @@ export const AddCategoryForm = (props) => {
                                     />
                                     <FormHelperText>{helperValid.isActive}</FormHelperText>
                                 </div> */}
-
 
                             </Grid>
                         </Grid>

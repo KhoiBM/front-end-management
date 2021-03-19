@@ -99,7 +99,7 @@ const initialFValues = {
     size: '',
     color: '',
     description: '',
-    categoryID: 1,
+    categoryID: "",
     isActive: true,
     createdAt: new Date()
 }
@@ -131,7 +131,7 @@ export const AddRawProductForm = (props) => {
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    console.log("recordsCategory: " + JSON.stringify(response.info.records))
+                    // console.log("recordsCategory: " + JSON.stringify(response.info.records))
                     setCategoryRecords(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
@@ -251,21 +251,41 @@ export const AddRawProductForm = (props) => {
                                 <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
-
+                                            Thể loại
                                         </InputLabel>
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
-                                            value={parseInt(formData.categoryID, 10)}
+                                            value={formData.categoryID &&
+                                                formData.categoryID != null && formData.categoryID.length > 0
+                                                ? formData.categoryID
+                                                : categoryRecords != null && categoryRecords.length > 0
+                                                    ? (() => {
+                                                        setFormData({ ...formData, categoryID: categoryRecords[0].categoryID });
+                                                        return categoryRecords[0].categoryID
+                                                    })()
+                                                    : ""
+
+
+                                            }
                                             onChange={handleInputChange}
                                             name="categoryID"
+                                            labelWidth={60}
+                                            required
                                         >
                                             {
-                                                categoryRecords.map(val => <MenuItem value={parseInt(val.categoryID, 10)} key={val.categoryID}>{val.categoryName}</MenuItem>)
+                                                categoryRecords.map(val => <MenuItem value={val.categoryID} key={val.categoryID}>{val.categoryName}</MenuItem>)
                                             }
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px',
+
+                                        }}>{helperValid.categoryID}
+                                        </FormHelperText>
                                     </FormControl>
                                 </>
                                 {/* <div>

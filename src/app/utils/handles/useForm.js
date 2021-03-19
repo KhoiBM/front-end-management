@@ -17,9 +17,11 @@ export const useForm = (initialFValues) => {
         let value = event.target.type == 'checkbox'
             ? event.target.checked
             : event.target.value;
+
         if (name == "gender") {
             // value = Boolean(value)
             // console.log(Boolean(value))
+            value = value == "female" ? true : false
         }
 
         console.log(name + ": " + value)
@@ -35,9 +37,8 @@ export const useForm = (initialFValues) => {
     const validation = (fieldValues = formData) => {
         const temp = { ...helperValid };
         if ('username' in fieldValues) temp.username = fieldValues.username && fieldValues.username.length > 0 ? "" : "Tên người dùng là bắt buộc"
-        if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
         if ('email' in fieldValues) temp.email = fieldValues.email && fieldValues.email.length > 0 && config.useRegex.regexEmail.test(fieldValues.email) ? "" : "Email không hợp lệ"
-        if ('password' in fieldValues) temp.password = fieldValues.password && fieldValues.password.length >= 8 && fieldValues.password.length <= 20 && regexPassword.test(fieldValues.password) ? "" : "Mật khẩu là bắt buộc ( 8 đến 20 ký tự) - Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
+        if ('password' in fieldValues) temp.password = fieldValues.password && fieldValues.password.length >= 8 && fieldValues.password.length <= 20 && regexPassword.test(fieldValues.password) ? "" : "Mật khẩu là bắt buộc (8 đến 20 ký tự) - Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
         if ('rePassword' in fieldValues) {
             temp.rePassword = fieldValues.rePassword
                 && fieldValues.rePassword.length >= 8
@@ -55,17 +56,27 @@ export const useForm = (initialFValues) => {
             }
 
         }
+
         if ('dob' in fieldValues) {
-            // const currentYear = new Date().getFullYear();
-            // const compareYear = currentYear >= selectedDob.getFullYear();
+            const currentYear = new Date().getFullYear();
+            const compareYear = currentYear >= dobSelected.getFullYear();
             // console.log("validDob: " + compareYear)
-            // temp.dob = compareYear ? "" : "Ngày sinh không hợp lệ"
+            temp.dob = compareYear ? "" : "Ngày sinh không hợp lệ"
         }
 
-        // if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName && fieldValues.firstName.length > 0 ? "" : "Tên là bắt buộc"
-        // if ('lastName' in fieldValues) temp.lastName = fieldValues.lastName && fieldValues.lastName.length > 0 ? "" : "Họ là bắt buộc"
-        // if ('address' in fieldValues) temp.address = fieldValues.address && fieldValues.address.length > 0 ? "" : "Địa chỉ là bắt buộc"
-        // if ('phone' in fieldValues) temp.phone = fieldValues.phone && fieldValues.phone.length > 9 && fieldValues.phone.length < 12 && regexPhone.test(fieldValues.phone) ? "" : "Số điện thoại không hợp lệ"
+        if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName && fieldValues.firstName.length > 0 ? "" : "Tên là bắt buộc"
+        if ('lastName' in fieldValues) temp.lastName = fieldValues.lastName && fieldValues.lastName.length > 0 ? "" : "Họ là bắt buộc"
+        if ('address' in fieldValues) temp.address = fieldValues.address && fieldValues.address.length > 0 ? "" : "Địa chỉ là bắt buộc"
+        if ('phone' in fieldValues) temp.phone = fieldValues.phone && fieldValues.phone.length > 9 && fieldValues.phone.length < 12 && regexPhone.test(fieldValues.phone) ? "" : "Số điện thoại không hợp lệ"
+
+
+
+
+        if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
+        // if ('serviceID' in fieldValues) temp.serviceID = fieldValues.serviceID && fieldValues.serviceID.length > 0 ? "" : "Vui lòng chọn dịch vụ"
+        // if ('rawProductID' in fieldValues) temp.rawProductID = fieldValues.rawProductID && fieldValues.rawProductID.length > 0 ? "" : "Vui lòng chọn trong danh sách"
+
+
 
 
         setHelperValid({ ...temp });
@@ -73,7 +84,7 @@ export const useForm = (initialFValues) => {
     }
 
     return {
-        formData, setFormData, handleInputChange, helperValid, validation, dobSelected, setDobSelected, handleChangeDob
+        formData, setFormData, handleInputChange, helperValid, validation, dobSelected, setDobSelected, handleChangeDob, setHelperValid
     }
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl, Tooltip, Zoom } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -202,14 +202,17 @@ export const AcceptedOrderTable = (props) => {
 
 
                                 <StyledTableCell >
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        // props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái">
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            // props.handleEdit(row)
+                                        }
+                                        }>
+                                            <AiOutlineEdit />
 
-                                    </Button>
+                                        </Button>
+                                    </Tooltip>
+
 
                                     {/* <>
                                         <Button style={{ marginLeft: "8px" }} onClick={(event) => {

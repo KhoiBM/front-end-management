@@ -121,7 +121,7 @@ const initialFValues = {
     // avatar_Url: "",
     phone: "",
     dob: "",
-    gender: "male",
+    gender: false,
     address: "",
 }
 
@@ -161,11 +161,11 @@ export const Profile = () => {
 
 
         // const enableSubmit = true
+        // gender: formData.gender == "male" ? false : true,
         if (enableSubmit) {
             try {
                 const data = {
                     ...formData,
-                    gender: formData.gender == "male" ? false : true,
                     dob: format(dobSelected, "dd-MM-yyyy")
                 }
                 console.log("data: " + JSON.stringify(data))
@@ -233,12 +233,14 @@ export const Profile = () => {
                                         format="dd-MM-yyyy"
                                         label="Ngày sinh"
                                         views={["year", "month", "date"]}
+                                        error={helperValid.dob ? true : false}
                                     />
                                     <FormHelperText style={{
                                         color: "#f44336",
                                         marginLeft: "14px",
                                         marginRight: "14px",
                                         marginBottom: '16px',
+                                        marginTop: "-20px"
 
                                     }}>{helperValid.dob}
                                     </FormHelperText>
@@ -246,7 +248,7 @@ export const Profile = () => {
 
                                 <FormControl component="fieldset">
                                     <FormLabel component="legend">Giới tính</FormLabel>
-                                    <RadioGroup aria-label="gender" name="gender" value={formData.gender} onChange={handleInputChange} className={classes.genderGroup}>
+                                    <RadioGroup aria-label="gender" name="gender" value={formData.gender ? "female" : "male"} onChange={handleInputChange} className={classes.genderGroup}>
                                         <FormControlLabel value={"female"} control={<Radio color='primary' />} label="Nữ" />
                                         <FormControlLabel value={"male"} control={<Radio color='primary' />} label="Nam" />
                                     </RadioGroup>

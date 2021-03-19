@@ -26,8 +26,8 @@ export class ManageCategoryServices {
                                 categoryID: "1",
                                 categoryName: "abc",
                                 description: 'abc',
-                                serviceID: 1,
-                                serviceName: "abc",
+                                serviceID: 6,
+                                serviceName: "abc6",
                                 isActive: true,
                                 createdAt: "02-02-2020",
                                 updatedAt: "02-02-2020"
@@ -37,8 +37,8 @@ export class ManageCategoryServices {
                                 categoryID: "2",
                                 categoryName: "abc2",
                                 description: 'abc',
-                                serviceID: 1,
-                                serviceName: "abc",
+                                serviceID: 7,
+                                serviceName: "abc7",
                                 isActive: true,
                                 createdAt: "02-02-2020",
                                 updatedAt: "02-02-2020"
@@ -49,8 +49,8 @@ export class ManageCategoryServices {
                                 categoryID: "3",
                                 categoryName: "abc3",
                                 description: 'abc',
-                                serviceID: 1,
-                                serviceName: "abc",
+                                serviceID: 8,
+                                serviceName: "abc8",
                                 isActive: true,
                                 createdAt: "02-02-2020",
                                 updatedAt: "02-02-2020"

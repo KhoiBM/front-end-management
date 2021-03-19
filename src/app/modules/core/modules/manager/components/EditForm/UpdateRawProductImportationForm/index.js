@@ -108,7 +108,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
-    const [recordsRawProduct, setRecordsRawProduct] = useState([])
+    const [rawProductRecords, setRawProductRecords] = useState([])
 
 
     // useEffect(() => {
@@ -129,7 +129,9 @@ export const UpdateRawProductImportationForm = (props) => {
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     const records = response.info.records
-                    setRecordsRawProduct(records)
+                    // console.log("records[0].rawProductID: " + records[0].rawProductID)
+                    setFormData({ ...formData, rawProductID: records[0].rawProductID })
+                    setRawProductRecords(records)
                     // toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -201,19 +203,24 @@ export const UpdateRawProductImportationForm = (props) => {
                                 <>
                                     <FormControl variant="outlined" className={classes.formSelectControl}>
                                         <InputLabel id="rawProductID-label">
-
+                                            Sản phẩm thô
                                         </InputLabel>
                                         <Select
                                             labelId="rawProductID-label"
                                             id="rawProductID"
-                                            value={formData.rawProductID != null && formData.rawProductID != undefined && formData.rawProductID.length > 0 ? parseInt(formData.rawProductID, 10) : recordsRawProduct != null && recordsRawProduct != undefined && recordsRawProduct.length > 0 ? recordsRawProduct[0].rawProductID : ""}
+                                            value={formData.rawProductID
+
+                                            }
+
                                             onChange={handleInputChange}
                                             name="rawProductID"
                                             className={classes.formSelectContainer}
+                                            labelWidth={105}
+                                        // error={helperValid.rawProductID}
                                         >
                                             {
-                                                recordsRawProduct.map(val =>
-                                                    (<MenuItem value={parseInt(val.rawProductID, 10)} key={parseInt(val.rawProductID, 10)}>
+                                                rawProductRecords.map(val =>
+                                                    (<MenuItem value={val.rawProductID} key={val.rawProductID}>
                                                         <Box>
                                                             <Typography>  {`Mã sản phẩm thô: ${val.rawProductID}`}</Typography>
                                                             <Typography>  {`Tên sản phẩm thô: ${val.rawProductName}`}</Typography>
@@ -224,7 +231,16 @@ export const UpdateRawProductImportationForm = (props) => {
 
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px'
+
+                                        }}>
+                                            {/* {helperValid.rawProductID} */}
+                                        </FormHelperText>
+
                                     </FormControl>
                                 </>
                                 <TextField
@@ -247,6 +263,7 @@ export const UpdateRawProductImportationForm = (props) => {
                                     error={helperValid.providedBy ? true : false}
                                     helperText={helperValid.providedBy}
                                     required
+                                    multiline
                                 />
 
                             </Grid>

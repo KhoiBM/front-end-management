@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, Tooltip, Zoom } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices } from '../../../../../../../services/CoreServices/ManagerServices';
@@ -188,13 +188,18 @@ export const ServiceTable = (props) => {
 
 
                                     <StyledTableCell >
-                                        <Button onClick={(event) => {
-                                            event.stopPropagation()
-                                            props.handleEdit(row)
-                                        }
-                                        }>
-                                            <AiOutlineEdit />
-                                        </Button>
+                                        <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
+
+                                            <Button onClick={(event) => {
+                                                event.stopPropagation()
+                                                props.handleEdit(row)
+                                            }
+                                            }>
+                                                <AiOutlineEdit />
+                                            </Button>
+
+                                        </Tooltip>
+
                                     </StyledTableCell>
 
 
