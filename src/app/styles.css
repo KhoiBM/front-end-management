@@ -17,10 +17,11 @@ html,
   --color-black: #000;
   --color-black-1: rgb(28, 32, 34);
   --color-white: #fff;
-  --primary-color-main: #e27348;
-  --primary-color-dark: #de5a2e;
+  --primary-color-main: #48b7e2;
   --error-color-main: #f44336;
-  --secondary-color-main: #48b7e2;
+  /* --secondary-color-main: #e27348; */
+  --secondary-color-main: #478de3;
+  /* --secondary-color-dark: #de5a2e; */
   --tertiary-color-main: #b6e2f3;
   overflow: "scroll";
 }
@@ -29,6 +30,7 @@ body {
   color: #000;
   overflow-x: hidden;
   overflow-y: scroll;
+  overflow: scroll;
   /* width: 100%;
   height: 100%; */
   background-color: rgba(249, 250, 251, var(--bg-opacity));

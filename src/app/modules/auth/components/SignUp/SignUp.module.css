@@ -56,10 +56,10 @@
   color: var(--primary-color-main);
 }
 .icon-close:hover {
-  color: var(--primary-color-dark);
+  color: var(--secondary-color-main);
 }
 .icon-close:focus {
-  outline: 1px dashed var(--primary-color-dark);
+  /* outline: 1px dashed var(--secondary-color-main); */
 }
 .signin-nav-wrapper {
   width: 22rem;
@@ -117,20 +117,18 @@
   transition: all 0.3s ease 0s;
 }
 .btn-signup:hover {
-  background-color: var(--primary-color-dark);
+  background-color: var(--secondary-color-main);
+  border: 1px solid var(--secondary-color-main);
   /* color: #000; */
   box-shadow: rgb(0 0 0 / 10%) 0px 0.3rem 1rem;
   cursor: pointer;
   transform: scale(1.015);
 }
 .btn-signup:focus {
-  outline: 1px dashed var(--primary-color-dark);
+  /* outline: 1px dashed var(--secondary-color-main); */
   outline-offset: 4px;
 }
 .label-input {
-  /* border: 1px solid yellow; */
-  width: 98%;
-  height: 30px;
   color: rgb(28, 32, 34);
 }
 .input-text {

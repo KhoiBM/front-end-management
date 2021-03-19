@@ -39,6 +39,18 @@ export class NotificationServices {
         })
     }
 
+    static countNotificationIsToRead = (data) => {
+        // return useHttpModule().post(config.useApiPath.api., data)
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+
+                }
+            }
+        })
+    }
+
 
 
 }

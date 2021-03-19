@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
 import { useForm } from 'src/app/utils'
-import { ManageRawProductImportationServices, ManageRawProductServices } from 'src/app/services'
+import { ManageRawProductServices, ManageCustomersRawProductImportationServices } from 'src/app/services'
 import { PageHeader } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -64,8 +64,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
+        position: "relative",
+        overflow: "scroll",
 
 
     },
@@ -122,7 +122,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
 
         try {
             // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const response = await (await ManageRawProductServices.getAll({ filterBy: "all" })).data
+            const response = await (await ManageRawProductServices.getAllCustomersRawProduct({ filterBy: "all" })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -158,7 +158,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
     const update = async () => {
 
         try {
-            const response = await (await ManageRawProductImportationServices.update(formData)).data
+            const response = await (await ManageCustomersRawProductImportationServices.update(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {

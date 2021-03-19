@@ -64,8 +64,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
+        position: "relative",
+        overflow: "scroll",
 
 
     },
@@ -208,7 +208,7 @@ export const EditServiceForm = (props) => {
                             </Grid>
                         </Grid>
                         <div className={classes.buttonWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Lưu</Button>
                         </div>
                     </form>
                 </Paper>

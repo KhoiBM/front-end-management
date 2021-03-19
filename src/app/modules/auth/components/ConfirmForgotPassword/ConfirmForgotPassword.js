@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 
-import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink } from '../../styles/styles'
-import { FormWrapper, InputLabel, InputText } from './ConfirmForgotPasswordElements'
+import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink, InputLabel } from '../../styles/styles'
+import { FormWrapper, InputText } from './ConfirmForgotPasswordElements'
 
 import { RiCloseFill } from 'react-icons/ri'
 import HelperValidation from '../HelperValidation/HelperValidation'

@@ -5,12 +5,11 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
-import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import PageHeader from 'src/app/modules/core/components/PageHeader'
 import { useForm } from 'src/app/utils'
-import { ManageCategory } from '../../../../manager/components'
-import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
+import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
+import { PageHeader } from 'src/app/modules/core/components'
+import { ManageCustomersRawProduct } from '../../Manage'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -65,8 +64,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
+        position: "relative",
+        overflow: "scroll",
 
 
     },
@@ -101,7 +100,7 @@ const initialFValues = {
     size: '',
     color: '',
     description: '',
-    categoryID: 1,
+    categoryID: "",
     isActive: true,
     createdAt: new Date()
 }
@@ -133,7 +132,7 @@ export const AddCustomersRawProductForm = (props) => {
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    console.log("recordsCategory: " + JSON.stringify(response.info.records))
+                    // console.log("recordsCategory: " + JSON.stringify(response.info.records))
                     setCategoryRecords(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
@@ -149,7 +148,7 @@ export const AddCustomersRawProductForm = (props) => {
     }
     const add = async () => {
         try {
-            const response = await (await ManageRawProductServices.add(formData)).data
+            const response = await (await ManageCustomersRawProductServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -179,7 +178,7 @@ export const AddCustomersRawProductForm = (props) => {
                     </div >
 
                     <PageHeader>
-                        Thêm sản phẩm thô
+                        Thêm sản phẩm thô của khách hàng
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
@@ -253,21 +252,41 @@ export const AddCustomersRawProductForm = (props) => {
                                 <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
-
+                                            Thể loại
                                         </InputLabel>
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
-                                            value={parseInt(formData.categoryID, 10)}
+                                            value={formData.categoryID &&
+                                                formData.categoryID != null && formData.categoryID.length > 0
+                                                ? formData.categoryID
+                                                : categoryRecords != null && categoryRecords.length > 0
+                                                    ? (() => {
+                                                        setFormData({ ...formData, categoryID: categoryRecords[0].categoryID });
+                                                        return categoryRecords[0].categoryID
+                                                    })()
+                                                    : ""
+
+
+                                            }
                                             onChange={handleInputChange}
                                             name="categoryID"
+                                            labelWidth={60}
+                                            required
                                         >
                                             {
-                                                categoryRecords.map(val => <MenuItem value={parseInt(val.categoryID, 10)} key={val.categoryID}>{val.categoryName}</MenuItem>)
+                                                categoryRecords.map(val => <MenuItem value={val.categoryID} key={val.categoryID}>{val.categoryName}</MenuItem>)
                                             }
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px',
+
+                                        }}>{helperValid.categoryID}
+                                        </FormHelperText>
                                     </FormControl>
                                 </>
                                 {/* <div>

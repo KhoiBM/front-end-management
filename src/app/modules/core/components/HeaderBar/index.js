@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen
         }),
         // backgroundColor: theme.palette.common.white
+        backgroundColor: "var(--secondary-color-main)"
+
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -60,8 +62,12 @@ const useStyles = makeStyles((theme) => ({
         width: "25px",
         height: "auto",
         filter: "invert(100%)",
+    }, icon: {
+        // filter: "invert(100%)",
+    },
+    badgeNoti: {
+        // textColor: "#fff"
     }
-
 }));
 
 export const HeaderBar = (props) => {
@@ -101,6 +107,7 @@ export const HeaderBar = (props) => {
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: props.openDrawer
                 })}
+            // color="primary"
             >
                 <Toolbar>
 
@@ -155,8 +162,9 @@ export const HeaderBar = (props) => {
                                                 horizontal: 'right',
                                             }}
                                             badgeContent={999}
-                                            color="secondary"                                        >
-                                            <RiNotification2Line />
+                                            className={classes.badgeNoti}
+                                            color="error"           >
+                                            <RiNotification2Line className={classes.icon} />
                                         </Badge>
                                     </IconButton>
 
@@ -208,7 +216,7 @@ export const HeaderBar = (props) => {
                                     onClick={handleMenuAccount}
                                     color="inherit"
                                 >
-                                    <RiAccountBoxLine />
+                                    <RiAccountBoxLine className={classes.icon} />
                                 </IconButton>
                             </Tooltip>
 

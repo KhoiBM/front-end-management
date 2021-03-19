@@ -17,9 +17,10 @@ position: absolute;
   background-size: cover;
   background-attachment: fixed;
   transition: all 0.3s ease 0s;
+
 `
 export const ButtonConfirm = styled.button`
-  width: 80%;
+width: 90%;
   height: 50px;
   border: 2px solid var(--primary-color-main);
   border-radius: 1px;
@@ -36,14 +37,15 @@ export const ButtonConfirm = styled.button`
 
 
   &:hover {
-  background-color: var(--primary-color-dark);
+    background-color: var(--secondary-color-main);
+  border: 1px solid var(--secondary-color-main);
   box-shadow: rgb(0 0 0 / 10%) 0px 0.3rem 1rem;
   cursor: pointer;
   transform: scale(1.015);
   }
 
   &:focus {
-  /* outline: 1px dashed var(--primary-color-dark); */
+  /* outline: 1px dashed var(--secondary-color-main); */
   outline-offset: 4px;
 }
  `
@@ -51,8 +53,8 @@ export const ButtonConfirm = styled.button`
 
 export const IconWrapper = styled.div`
 position: absolute;
-right: 8px;
-top: 8px;
+  right: 8px;
+  top: 8px;
 
 `
 
@@ -62,9 +64,16 @@ transform: scale(2) !important;
 transition: all 0.3s ease 0s;
 
   &:hover {
-  color: var(--primary-color-dark);
+    color: var(--secondary-color-main);
 }
   &:focus{
-  /* outline: 1px dashed var(--primary-color-dark); */
+  /* outline: 1px dashed var(--secondary-color-main); */
 }
+
+`
+
+export const InputLabel = styled.label`
+width: 90%;
+margin-top:8px;
+margin-bottom:8px;
 `

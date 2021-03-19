@@ -6,7 +6,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { useForm } from 'src/app/utils'
-import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
+import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
 import { RiCloseFill } from 'react-icons/ri'
 import { PageHeader } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
@@ -63,8 +63,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
+        position: "relative",
+        overflow: "scroll",
 
 
     },
@@ -99,7 +99,7 @@ const initialFValues = {
     size: '',
     color: '',
     description: '',
-    categoryID: 1,
+    categoryID: '',
     isActive: true,
     updatedAt: new Date()
 }
@@ -142,7 +142,7 @@ export const EditCustomersRawProductForm = (props) => {
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    console.log("recordsCategory: " + JSON.stringify(response.info.records))
+                    // console.log("recordsCategory: " + JSON.stringify(response.info.records))
                     setCategoryRecords(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
@@ -158,7 +158,7 @@ export const EditCustomersRawProductForm = (props) => {
     }
     const add = async () => {
         try {
-            const response = await (await ManageRawProductServices.add(formData)).data
+            const response = await (await ManageCustomersRawProductServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -188,7 +188,7 @@ export const EditCustomersRawProductForm = (props) => {
                     </div >
 
                     <PageHeader>
-                        Thêm sản phẩm thô của khách hàng
+                        Chỉnh sửa sản phẩm thô của khách hàng
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
@@ -262,21 +262,31 @@ export const EditCustomersRawProductForm = (props) => {
                                 <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
-
+                                            Thể loại
                                         </InputLabel>
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
-                                            value={parseInt(formData.categoryID, 10)}
+                                            value={formData.categoryID
+                                            }
                                             onChange={handleInputChange}
                                             name="categoryID"
+                                            labelWidth={60}
+                                            required
                                         >
                                             {
-                                                categoryRecords.map(val => <MenuItem value={parseInt(val.categoryID, 10)} key={val.categoryID}>{val.categoryName}</MenuItem>)
+                                                categoryRecords.map(val => <MenuItem value={val.categoryID} key={val.categoryID}>{val.categoryName}</MenuItem>)
                                             }
 
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        <FormHelperText style={{
+                                            color: "#f44336",
+                                            marginLeft: "14px",
+                                            marginRight: "14px",
+                                            marginBottom: '16px',
+
+                                        }}>{helperValid.categoryID}
+                                        </FormHelperText>
                                     </FormControl>
                                 </>
                                 {/* <div>
@@ -297,7 +307,7 @@ export const EditCustomersRawProductForm = (props) => {
                             </Grid>
                         </Grid>
                         <div className={classes.buttonWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Lưu</Button>
                         </div>
                     </form>
                 </Paper>

@@ -16,8 +16,10 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: "nowrap",
-        overflow: "hidden"
+        overflowX: "hidden",
 
+        border: "0px solid var()",
+        overflowY: "scroll"
 
     },
     drawerOpen: {
@@ -27,21 +29,24 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.enteringScreen
         }),
 
-        background: "#48B7E2 !important",
-        overflow: "hidden"
+        background: "var(--primary-color-main) !important",
+        overflowX: "hidden",
+        border: "0px solid ",
+        overflowY: "scroll"
     },
     drawerClose: {
         transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen
         }),
-        overflowX: "hidden",
         width: theme.spacing(7) + 1,
         [theme.breakpoints.up("sm")]: {
             width: theme.spacing(9) + 1
         },
-        background: "#48B7E2 !important",
-        overflow: "hidden"
+        background: "var(--primary-color-main)  !important",
+        overflowX: "hidden",
+        border: "0px solid ",
+        overflowY: "scroll"
     },
     toolbar: {
         display: "flex",
@@ -50,8 +55,10 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
-        background: "#B6E2F3 !important",
+        background: "var(--tertiary-color-main) !important",
         // background: "#fff",
+        border: "0px solid "
+
     }
 }));
 
@@ -88,7 +95,7 @@ export const SideMenuBar = (props) => {
                     </IconButton>
                 </div>
 
-                <Divider />
+                {/* <Divider /> */}
 
                 <List>
                     {props.userRole.map(({ text, icon, link }, index) => (

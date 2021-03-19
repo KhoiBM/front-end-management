@@ -9,9 +9,9 @@ import HelperValidation from '../HelperValidation/HelperValidation'
 import { useQueryURL } from 'src/app/utils/handles/index'
 import { toast } from 'react-toastify'
 
-import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink } from '../../styles/styles'
+import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink, InputLabel } from '../../styles/styles'
 
-import { FormWrapper, InputLabel, InputText } from './ForgotPasswordElements'
+import { FormWrapper, InputText } from './ForgotPasswordElements'
 
 const ForgotPassword = () => {
     // const { showSnackbar } = useShowSnackbar()

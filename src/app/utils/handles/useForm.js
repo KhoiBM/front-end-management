@@ -23,6 +23,13 @@ export const useForm = (initialFValues) => {
             // console.log(Boolean(value))
             value = value == "female" ? true : false
         }
+        if (name == "totalQuantityOfPrintedProduct") {
+            if (Number(value) < 1) {
+                value = 1
+            } else {
+
+            }
+        }
 
         console.log(name + ": " + value)
         setFormData({ ...formData, [name]: value });

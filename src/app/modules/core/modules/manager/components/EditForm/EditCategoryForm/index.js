@@ -65,8 +65,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
+        position: "relative",
+        overflow: "scroll",
 
 
     },

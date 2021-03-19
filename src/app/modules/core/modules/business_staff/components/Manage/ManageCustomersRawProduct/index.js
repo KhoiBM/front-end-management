@@ -6,6 +6,7 @@ import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { CustomersRawProductTable } from '../../Table';
 import { EditCustomersRawProductForm } from '../../EditForm';
+import { AddCustomersRawProductForm } from '../../AddForm';
 
 // import { CustomersRawProductTable } from '../../Table/CustomersRawProductTable'
 const useStyles = makeStyles(theme => ({
@@ -65,8 +66,7 @@ export const ManageCustomersRawProduct = () => {
 
                     <>
                         <div className={classes.buttonAddWrapper}>
-                            {/* <Button variant="outlined" color="secondary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button> */}
-                            {/* <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button> */}
+                            <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button>
                         </div>
                         <CustomersRawProductTable handleEdit={handleEdit} />
                     </>
@@ -74,7 +74,7 @@ export const ManageCustomersRawProduct = () => {
             }
 
             {openEditForm && <EditCustomersRawProductForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}
-            {/* {openAddForm && <AddServiceForm handleCloseForm={handleCloseForm} />} */}
+            {openAddForm && <AddCustomersRawProductForm handleCloseForm={handleCloseForm} />}
 
         </>
     )

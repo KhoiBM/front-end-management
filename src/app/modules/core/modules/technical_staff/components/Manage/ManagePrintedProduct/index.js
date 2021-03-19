@@ -5,6 +5,8 @@ import { makeStyles, Paper, Button } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { PrintedProductTable } from '../../Table';
+import { AddPrintedProductForm } from '../../AddForm';
+import { EditPrintedProductForm } from '../../EditForm';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -57,21 +59,22 @@ export const ManagePrintedProduct = () => {
 
     return (
         <>
-            <Paper elevation={2} className={classes.mainContainer}>
+            {!openEditForm && !openAddForm && <Paper elevation={2} className={classes.mainContainer}>
 
-                {!openEditForm && !openAddForm &&
-                    <>
-                        <div className={classes.buttonAddWrapper}>
-                            {/* <Button variant="outlined" color="secondary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button> */}
-                            <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm đã in</Button>
-                        </div>
-                        <PrintedProductTable handleEdit={handleEdit} />
-                    </>
-                }
 
-                {/* {openEditForm && <EditServiceForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />} */}
-                {/* {openAddForm && <AddServiceForm handleCloseForm={handleCloseForm} />} */}
+                <>
+                    <div className={classes.buttonAddWrapper}>
+                        {/* <Button variant="outlined" color="secondary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button> */}
+                        <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm đã in</Button>
+                    </div>
+                    <PrintedProductTable handleEdit={handleEdit} />
+                </>
             </Paper>
+            }
+
+            {openEditForm && <EditPrintedProductForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}
+            {openAddForm && <AddPrintedProductForm handleCloseForm={handleCloseForm} />}
+
         </>
     )
 }

@@ -46,7 +46,7 @@ const StyledTableRow = withStyles((theme) => ({
 export const PrintedProductTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã sản phẩm đã in', "Mã đơn hàng", "Mã sản phẩm thô", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã sản phẩm đã in', "Mã đơn hàng", "Mã sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -99,6 +99,8 @@ export const PrintedProductTable = (props) => {
                                 <StyledTableCell>{row.orderID}</StyledTableCell>
                                 <StyledTableCell>{row.rawProductID}</StyledTableCell>
 
+                                <StyledTableCell>{row.printedProductName}</StyledTableCell>
+
                                 <StyledTableCell >{row.totalQuantity}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>
                                 <StyledTableCell >{row.note}</StyledTableCell>
@@ -147,7 +149,7 @@ export const PrintedProductTable = (props) => {
 
 
             <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} />
+                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
             </div>
         </>
     );

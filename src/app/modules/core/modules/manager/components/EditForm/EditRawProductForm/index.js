@@ -64,9 +64,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
-
+        position: "relative",
+        overflow: "scroll",
 
     },
     iconCloseWrapper: {
@@ -143,7 +142,7 @@ export const EditRawProductForm = (props) => {
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    console.log("recordsCategory: " + JSON.stringify(response.info.records))
+                    // console.log("recordsCategory: " + JSON.stringify(response.info.records))
                     setCategoryRecords(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
@@ -189,7 +188,7 @@ export const EditRawProductForm = (props) => {
                     </div >
 
                     <PageHeader>
-                        Thêm sản phẩm thô
+                        Chỉnh sửa sản phẩm thô
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
@@ -308,7 +307,7 @@ export const EditRawProductForm = (props) => {
                             </Grid>
                         </Grid>
                         <div className={classes.buttonWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Lưu</Button>
                         </div>
                     </form>
                 </Paper>

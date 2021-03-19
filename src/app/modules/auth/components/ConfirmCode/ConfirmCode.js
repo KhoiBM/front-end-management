@@ -12,8 +12,8 @@ import config from 'src/environments/config';
 import { RiCloseFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 
-import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink } from '../../styles/styles'
-import { FormWrapper, InputLabel, InputText } from './ConfirmCodeElements';
+import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink, InputLabel } from '../../styles/styles'
+import { FormWrapper, InputText } from './ConfirmCodeElements';
 
 const ConfirmCode = (props) => {
     // const { showSnackbar } = useShowSnackbar()

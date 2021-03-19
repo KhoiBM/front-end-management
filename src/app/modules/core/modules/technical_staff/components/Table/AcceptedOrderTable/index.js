@@ -240,7 +240,7 @@ export const AcceptedOrderTable = (props) => {
 
 
             <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} />
+                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
             </div>
         </>
     );

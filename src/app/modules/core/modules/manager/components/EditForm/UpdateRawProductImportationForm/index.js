@@ -64,8 +64,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0
+        position: "relative",
+        overflow: "scroll",
 
 
     },
@@ -122,7 +122,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
         try {
             // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const response = await (await ManageRawProductServices.getAll({ filterBy: "all" })).data
+            const response = await (await ManageRawProductServices.getAllStudioRawProduct({ filterBy: "all" })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {

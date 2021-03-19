@@ -70,4 +70,28 @@ export class TechnicalStaffProcessOrderServices {
             }
         })
     }
+
+    static getAllOrder = (data) => {
+        // return useHttpModule().post(config.useApiPath.api., data)
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+                    records:
+                        [
+                            {
+                                orderID: 1,
+                            },
+                            {
+                                orderID: 2,
+                            },
+                            {
+                                orderID: 3,
+                            }
+                        ]
+
+                }
+            }
+        })
+    }
 }

@@ -5,10 +5,10 @@ import { Container, Typography } from '@material-ui/core'
 export const PageHeader = (props) => {
     return (
         <>
-            <Container>
-                {/* <Typography variant={"h5"} color={"secondary"}>{props.children}</Typography> */}
-                <Typography variant={"h5"} color={"primary"}>{props.children}</Typography>
-            </Container>
+
+            {/* <Typography variant={"h5"} color={"secondary"}>{props.children}</Typography> */}
+            <Typography variant={"h5"} color={"primary"}>{props.children}</Typography>
+
         </>
     )
 }

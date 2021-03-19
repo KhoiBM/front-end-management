@@ -85,6 +85,7 @@ const useStyles = makeStyles(theme => ({
     },
     buttonSave: {
         cursor: "pointer",
+        color: "#fff",
         marginTop: theme.spacing(2),
         '&:hover': {
             backgroundColor: theme.palette.primary.main,
@@ -93,7 +94,7 @@ const useStyles = makeStyles(theme => ({
 
         },
         '&:focus': {
-            outline: "1px dashed var(--primary-color-dark)",
+            // outline: "1px dashed var(--primary-color-dark)",
             outlineOffset: "4px",
         }
     },

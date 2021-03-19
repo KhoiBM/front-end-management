@@ -19,10 +19,12 @@ const AppModule = () => {
     const theme = createMuiTheme({
         palette: {
             primary: {
-                main: "#e27348",
+                main: "#48B7E2 ",
             },
             secondary: {
-                main: "#48B7E2 ",
+
+                // main: "#e27348",
+                main: "#478de3",
             },
             background: {
                 default: "rgba(249, 250, 251, var(--bg-opacity))"
