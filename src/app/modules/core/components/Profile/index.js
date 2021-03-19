@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Button, Paper, TextField, Grid, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText } from '@material-ui/core'
 import { RiCloseFill } from 'react-icons/ri'
-import PageHeader from '../PageHeader'
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ProfileServices } from 'src/app/services/CoreServices/ProfileServices/ProfileServices'
@@ -15,6 +14,7 @@ import format from 'date-fns/format'
 import parse from 'date-fns/parse'
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
 import { useForm } from 'src/app/utils'
+import { PageHeader } from '../PageHeader'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     bg: {
         backgroundImage: `url(${bgAuth})`,
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center top",
+        backgroundSize: "cover",
         backgroundAttachment: "fixed",
         // background: "red"
         // overflowY: "hidden"
@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
             color: "var(--primary-color-dark)",
         },
         '&:focus': {
-            outline: "1px dashed var(--primary-color-dark)",
+            // outline: "1px dashed var(--primary-color-dark)",
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
@@ -102,16 +102,7 @@ const useStyles = makeStyles(theme => ({
         // color: "red"
     }
 }))
-const initialFValues = {
-    id: '',
-    firstName: "",
-    lastName: "",
-    // avatar_Url: "",
-    phone: "",
-    dob: "",
-    gender: "male",
-    address: "",
-}
+
 // const FormControlLabelWrapper = props => {
 //     const { ...labelProps } = props;
 //     return (
@@ -122,7 +113,19 @@ const initialFValues = {
 //         />
 //     );
 // };
-const Profile = () => {
+
+const initialFValues = {
+    profileID: '',
+    firstName: "",
+    lastName: "",
+    // avatar_Url: "",
+    phone: "",
+    dob: "",
+    gender: "male",
+    address: "",
+}
+
+export const Profile = () => {
     const history = useHistory()
     const classes = useStyles()
     const { formData, setFormData, handleInputChange, helperValid = null, validation, dobSelected, setDobSelected, handleChangeDob } = useForm(initialFValues)
@@ -132,14 +135,14 @@ const Profile = () => {
     useEffect(async () => {
         document.body.classList.add(classes.bg)
         try {
-            const response = await (await ProfileServices.viewProfile()).data
+            const response = await (await ProfileServices.view()).data
             if (response.result == config.useResultStatus.SUCCESS) {
                 // console.log(JSON.stringify(response.info.record))
                 setRecord({ ...response.info.record })
                 setFormData({ ...formData, ...response.info.record })
 
                 const formatDob = parse(response.info.record.dob, 'dd-MM-yyyy', new Date())
-                // console.log(formatDob)
+                console.log(formatDob)
 
                 setDobSelected(formatDob)
 
@@ -166,7 +169,7 @@ const Profile = () => {
                     dob: format(dobSelected, "dd-MM-yyyy")
                 }
                 console.log("data: " + JSON.stringify(data))
-                const response = await (await ProfileServices.editProfile(data)).data
+                const response = await (await ProfileServices.edit(data)).data
                 if (response.result == config.useResultStatus.SUCCESS) {
                     toast.success("Thành công")
                 } else {
@@ -272,5 +275,3 @@ const Profile = () => {
         </>
     )
 }
-
-export default Profile

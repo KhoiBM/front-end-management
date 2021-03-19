@@ -7,10 +7,11 @@ import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import PageHeader from 'src/app/modules/core/components/PageHeader'
 import { useForm } from 'src/app/utils'
 import { MdVisibilityOff, MdVisibility } from 'react-icons/md'
 import clsx from 'clsx';
+import { PageHeader } from 'src/app/modules/core/components'
+
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -27,14 +28,14 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
-    buttonSaveWrapper: {
+    buttonWrapper: {
         // border: "1px solid red",
         width: '100%',
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "flex-end"
     },
-    buttonSave: {
+    button: {
         cursor: "pointer",
         marginTop: theme.spacing(2),
         color: "#fff",
@@ -94,16 +95,17 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const initialFValues = {
-    id: '',
+    accountID: '',
     username: "",
     email: "",
     password: "",
     rePassword: "",
     roleID: "1",
     showPassword: false,
-    showRePassword: false
+    showRePassword: false,
+    createdAt: new Date()
 }
-const AddAccountForm = (props) => {
+export const AddAccountForm = (props) => {
     const classes = useStyles();
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -138,21 +140,21 @@ const AddAccountForm = (props) => {
 
     const add = async () => {
         try {
-            const response = await (await ManageAccountServices.addAccount(formData)).data
+            const response = await (await ManageAccountServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
-                    // toast.success("Thành công")
+                    toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
             } else {
-                throw new Error("Reponse is null or undefined")
+                throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
 
     }
@@ -239,6 +241,7 @@ const AddAccountForm = (props) => {
                                             </InputAdornment>
                                         }
                                         labelWidth={70}
+                                        required
                                     />
                                 </FormControl>
 
@@ -264,6 +267,7 @@ const AddAccountForm = (props) => {
                                             </InputAdornment>
                                         }
                                         labelWidth={130}
+                                        required
                                     />
                                 </FormControl>
 
@@ -271,8 +275,8 @@ const AddAccountForm = (props) => {
 
                                 <>
                                     <FormControl variant="outlined" >
-                                        <InputLabel id="roleID-label">
-
+                                        <InputLabel id="roleID-label" >
+                                            Vai trò
                                         </InputLabel>
                                         <Select
                                             labelId="roleID-label"
@@ -280,13 +284,15 @@ const AddAccountForm = (props) => {
                                             value={formData.roleID}
                                             onChange={handleInputChange}
                                             name="roleID"
+                                            labelWidth={50}
+                                            required
                                         >
                                             <MenuItem value={1}>Khách hàng</MenuItem>
                                             <MenuItem value={2}>Quản lý</MenuItem>
                                             <MenuItem value={3}>Nhân viên kinh doanh</MenuItem>
                                             <MenuItem value={4}>Nhân viên kỹ thuật</MenuItem>
                                         </Select>
-                                        <FormHelperText></FormHelperText>
+                                        {/* <FormHelperText>{helperValid.roleID}</FormHelperText> */}
                                     </FormControl>
                                 </>
 
@@ -306,9 +312,9 @@ const AddAccountForm = (props) => {
 
                             </Grid>
                         </Grid>
-                        <div className={classes.buttonSaveWrapper}>
+                        <div className={classes.buttonWrapper}>
                             {/* <Button type="submit" variant="contained" color="secondary" size="large" className={classes.buttonSave}>Thêm mới</Button> */}
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonSave}>Thêm mới</Button>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
                         </div>
                     </form>
                 </Paper>
@@ -318,5 +324,3 @@ const AddAccountForm = (props) => {
         </>
     )
 }
-
-export default AddAccountForm

@@ -68,7 +68,6 @@ export const ManageService = () => {
                     </>
 
 
-
                 </Paper>
             }
             {openEditForm && <EditServiceForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}

@@ -2,7 +2,7 @@
 import React from 'react'
 import { Container, Typography } from '@material-ui/core'
 
-const PageHeader = (props) => {
+export const PageHeader = (props) => {
     return (
         <>
             <Container>
@@ -12,5 +12,3 @@ const PageHeader = (props) => {
         </>
     )
 }
-
-export default PageHeader

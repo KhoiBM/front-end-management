@@ -2,10 +2,10 @@
 import CanActive from 'src/app/components/CanActive/CanActive'
 import Loader from 'src/app/components/Loader/Loader'
 import config from 'src/environments/config'
-import MainBar from '../../../components/MainBar'
-import ManageAccount from '../components/ManageAccount'
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { ManageAccount } from '../components'
+import { MainBar } from '../../../components'
 const ManageAccountPage = () => {
     const userRole = config.useUserRole.administrator;
     let location = useLocation();

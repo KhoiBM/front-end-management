@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import config from 'src/environments/config';
 import Loader from 'src/app/components/Loader/Loader';
-import MainBar from '../../../components/MainBar';
 import { useLocation } from 'react-router-dom';
 import { ManageStatistic } from '../components/Manage/index'
 import { makeStyles } from '@material-ui/core';
 import { useOpendrawer } from 'src/app/utils';
+import { MainBar } from '../../../components';
 
 
 

@@ -7,9 +7,10 @@ import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import PageHeader from 'src/app/modules/core/components/PageHeader'
 import { useForm } from 'src/app/utils'
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
+import { PageHeader } from 'src/app/modules/core/components'
+
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -101,16 +102,19 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 const initialFValues = {
-    id: '',
+    accountID: '',
     username: "",
     email: "",
     password: "",
     rePassword: "",
     roleID: "1",
     roleName: "",
-    isActive: true
+    isActive: true,
+    showPassword: false,
+    showRePassword: false,
+    updatedAt: new Date()
 }
-const EditAccountForm = (props) => {
+export const EditAccountForm = (props) => {
     const classes = useStyles();
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -140,17 +144,17 @@ const EditAccountForm = (props) => {
 
     const edit = async () => {
         try {
-            const response = await (await ManageAccountServices.editAccount(formData)).data
+            const response = await (await ManageAccountServices.edit(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
-                    // toast.success("Thành công")
+                    toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
             } else {
-                throw new Error("Reponse is null or undefined")
+                throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
@@ -292,7 +296,7 @@ const EditAccountForm = (props) => {
                                 <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="roleID-label">
-
+                                            Vai trò
                                         </InputLabel>
                                         <Select
                                             labelId="roleID-label"
@@ -300,6 +304,8 @@ const EditAccountForm = (props) => {
                                             value={formData.roleID}
                                             onChange={handleInputChange}
                                             name="roleID"
+                                            labelWidth={50}
+                                            required
                                         >
                                             <MenuItem value={1}>Khách hàng</MenuItem>
                                             <MenuItem value={2}>Quản lý</MenuItem>
@@ -323,6 +329,7 @@ const EditAccountForm = (props) => {
                                     />
                                     <FormHelperText>{helperValid.isActive}</FormHelperText>
                                 </div>
+
                             </Grid>
                         </Grid>
                         <div className={classes.buttonSaveWrapper}>
@@ -337,5 +344,3 @@ const EditAccountForm = (props) => {
         </>
     )
 }
-
-export default EditAccountForm

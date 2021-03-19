@@ -14,7 +14,57 @@ position: absolute;
   overflow: scroll;
   background-image: url(${bgAuth});
   background-repeat: no-repeat;
-  background-position: center top;
+  background-size: cover;
   background-attachment: fixed;
   transition: all 0.3s ease 0s;
+`
+export const ButtonConfirm = styled.button`
+  width: 80%;
+  height: 50px;
+  border: 2px solid var(--primary-color-main);
+  border-radius: 1px;
+  margin-top: 2rem;
+  background-color: var(--primary-color-main);
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 700;
+  transition: all 0.3s ease 0s;
+
+
+  &:hover {
+  background-color: var(--primary-color-dark);
+  box-shadow: rgb(0 0 0 / 10%) 0px 0.3rem 1rem;
+  cursor: pointer;
+  transform: scale(1.015);
+  }
+
+  &:focus {
+  /* outline: 1px dashed var(--primary-color-dark); */
+  outline-offset: 4px;
+}
+ `
+
+
+export const IconWrapper = styled.div`
+position: absolute;
+right: 8px;
+top: 8px;
+
+`
+
+export const IconLink = styled.div`
+color: var(--primary-color-main);
+transform: scale(2) !important;
+transition: all 0.3s ease 0s;
+
+  &:hover {
+  color: var(--primary-color-dark);
+}
+  &:focus{
+  /* outline: 1px dashed var(--primary-color-dark); */
+}
 `

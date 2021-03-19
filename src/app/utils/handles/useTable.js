@@ -6,8 +6,9 @@ import { Table, TableContainer, makeStyles, Paper, Typography, TableRow, TableHe
 
 const useStyles = makeStyles(theme => ({
     tableContainer: {
-        width: "95%",
+        width: "97%",
         marginTop: theme.spacing(10),
+        // backgroundColor: "red"
 
     },
     table: {

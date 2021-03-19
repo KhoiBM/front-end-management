@@ -5,11 +5,10 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { uuid } from 'uuidv4';
 import { useTable } from 'src/app/utils';
 import { ManagePrintedProductServices } from 'src/app/services';
 import config from 'src/environments/config';
-import PaginationBar from 'src/app/modules/core/components/PaginationBar';
+import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -46,14 +45,20 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const PrintedProductTable = (props) => {
     const classes = useStyles();
+
     const headCells = ['Mã sản phẩm đã in', "Mã đơn hàng", "Mã sản phẩm thô", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const [records, setRecords] = useState([])
-    const { TblContainer, TblHead } = useTable(records, headCells);
-    const [totalPage, setTotalPage] = useState(10);
+
     const [page, setPage] = useState(1);
-    const [rowPerPage, setRowPerPage] = useState(5);
+    const [limit, setLimit] = useState(5);
+
+    const [records, setRecords] = useState([])
+    const [totalPage, setTotalPage] = useState(1);
+
+    const { TblContainer, TblHead } = useTable(records, headCells);
+
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
+
     const handleChangePagination = (event, value) => {
         setPage(value);
         // console.log(page)
@@ -64,7 +69,7 @@ export const PrintedProductTable = (props) => {
 
     const loadInit = async () => {
         try {
-            const response = await (await ManagePrintedProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+            const response = await (await ManagePrintedProductServices.view({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
 
             setRecords(records)

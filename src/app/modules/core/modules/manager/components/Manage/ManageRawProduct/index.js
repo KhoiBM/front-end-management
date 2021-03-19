@@ -1,12 +1,13 @@
 
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles, Paper, Button } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { RawProductTable } from '../../Table/index'
 import { AddRawProductForm } from '../../AddForm/index';
 import { EditRawProductForm } from '../../EditForm';
+import { SearchBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -17,14 +18,24 @@ const useStyles = makeStyles(theme => ({
         position: "relative"
 
     },
-    buttonAddWrapper: {
+    actionContainer: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(6),
+    },
+    actionWrapper: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        // paddingRight: theme.spacing(6),
+        // paddingLeft: theme.spacing(8),
+        // marginRight: theme.spacing(8),
+        // background: '#B6E2F3',
+        width: "97%",
+
     },
     buttonAdd: {
         cursor: "pointer",
-        marginTop: theme.spacing(2),
         '&:hover': {
             // backgroundColor: theme.palette.primary.main,
             backgroundColor: "#fff",
@@ -40,9 +51,29 @@ const useStyles = makeStyles(theme => ({
 }));
 export const ManageRawProduct = () => {
     const classes = useStyles();
+
+    const [clickSearch, setClickSearch] = useState(false)
+    const [searchAction, setSearchAction] = useState(false)
+    const [keywords, setKeywords] = useState("")
+
+    const handleKeywordsChange = (event) => {
+        setKeywords(event.target.value)
+        if (!event.target.value || event.target.value == null || event.target.value == undefined || event.target.value.length < 0) {
+            setClickSearch(!clickSearch)
+        }
+        // console.log("keywords: " + keywords)
+    }
+
+
     const [openEditForm, setOpenEditForm] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
     const [recordForEdit, setRecordForEdit] = useState(0)
+
+    // useEffect(() => {
+    //     // console.log("render")
+    //     // console.log("searchAction: " + searchAction)
+    // }, [searchAction, setSearchAction, keywords])
+
     const handleEdit = (row) => {
         setOpenEditForm(true);
         setRecordForEdit(row)
@@ -59,14 +90,15 @@ export const ManageRawProduct = () => {
         <>
             {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>
-
-
                     <>
-                        <div className={classes.buttonAddWrapper}>
-                            {/* <Button variant="outlined" color="secondary" onClick={handleAdd} className={classes.buttonAdd}>Thêm dịch vụ</Button> */}
-                            <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô</Button>
+                        <div className={classes.actionContainer}>
+                            <div className={classes.actionWrapper}>
+                                <SearchBar keywords={keywords} handleKeywordsChange={handleKeywordsChange} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
+                                <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô</Button>
+                            </div>
                         </div>
-                        <RawProductTable handleEdit={handleEdit} />
+
+                        <RawProductTable handleEdit={handleEdit} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} />
                     </>
 
                 </Paper>

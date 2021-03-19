@@ -1,15 +1,19 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { ConfirmFormContainer } from '../../styles/styles'
-import { FormWrapper, IconWrapper, IconLink, InputLabel, InputText, ButtonConfirm } from './ConfirmForgotPasswordElements'
+
+import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink } from '../../styles/styles'
+import { FormWrapper, InputLabel, InputText } from './ConfirmForgotPasswordElements'
+
 import { RiCloseFill } from 'react-icons/ri'
 import HelperValidation from '../HelperValidation/HelperValidation'
 import { useAuthAction } from 'src/app/stores/actions'
 import { useStore, useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import config from 'src/environments/config'
-import { useShowSnackbar, useQueryURL } from 'src/app/utils/handles/index'
+
 import { toast } from 'react-toastify'
+import { useQueryURL } from 'src/app/utils'
+
 const ConfirmForgotPassword = () => {
     // const { showSnackbar } = useShowSnackbar()
     let query = useQueryURL();
@@ -105,7 +109,7 @@ const ConfirmForgotPassword = () => {
                             required
                             autoComplete="on"
                             onChange={handleChange}
-                            placeholder="vui lòng nhập code vào đây"
+                            placeholder="vui lòng nhập Code vào đây"
 
                         />
                     </InputLabel >

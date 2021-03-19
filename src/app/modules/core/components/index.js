@@ -1,5 +1,10 @@
-export * from './SideMenuBar'
+
 export * from './HeaderBar'
 export * from './MainBar'
-export * from './PageHeader'
 export * from './NavLinkMenu'
+export * from './PageHeader'
+export * from './PaginationBar'
+export * from './Profile'
+export * from './SideMenuBar'
+export * from './SearchBar'
+export * from './ConfirmDeleteDialog'

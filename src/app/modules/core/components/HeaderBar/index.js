@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const HeaderBar = (props) => {
+export const HeaderBar = (props) => {
     const history = useHistory();
     const classes = useStyles();
 
@@ -258,7 +258,7 @@ const HeaderBar = (props) => {
     )
 }
 
-export default HeaderBar
+
 
 
 

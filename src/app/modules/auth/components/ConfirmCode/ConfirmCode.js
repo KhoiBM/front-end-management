@@ -3,8 +3,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import HelperValidation from '../HelperValidation/HelperValidation'
-import { ConfirmFormContainer } from '../../styles/styles'
-import { useShowSnackbar } from 'src/app/utils/handles/useShowSnackbar';
+
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useStore, useSelector } from 'react-redux';
 import { useAuthAction } from 'src/app/stores/actions';
@@ -12,7 +11,10 @@ import { useQueryURL } from 'src/app/utils/handles/useQueryURL';
 import config from 'src/environments/config';
 import { RiCloseFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
-import { FormWrapper, IconWrapper, IconLink, InputLabel, InputText, ButtonConfirm } from './ConfirmCodeElements';
+
+import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink } from '../../styles/styles'
+import { FormWrapper, InputLabel, InputText } from './ConfirmCodeElements';
+
 const ConfirmCode = (props) => {
     // const { showSnackbar } = useShowSnackbar()
     let query = useQueryURL();
@@ -92,7 +94,7 @@ const ConfirmCode = (props) => {
                             required
                             autoComplete="on"
                             onChange={handleChange}
-                            placeholder="vui lòng nhập code vào đây"
+                            placeholder="vui lòng nhập Code vào đây"
                         />
                     </InputLabel >
                     {helperValid.confirmCode && helperValid.confirmCode.length > 0 ? <HelperValidation>{helperValid.confirmCode}</HelperValidation> : ""}

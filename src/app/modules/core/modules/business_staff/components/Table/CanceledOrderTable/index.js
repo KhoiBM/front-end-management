@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
-import PaginationBar from '../../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BusinessStaffProcessOrderServices } from '../../../../../../../services/CoreServices/BusinessStaffServices';
 import config from '../../../../../../../../environments/config';
 import { uuid } from 'uuidv4';
 import { useTable } from 'src/app/utils';
+import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -46,13 +46,19 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const CanceledOrderTable = (props) => {
     const classes = useStyles();
+
     const headCells = ['Mã đơn hàng', "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const [records, setRecords] = useState([])
-    const { TblContainer, TblHead } = useTable(records, headCells);
-    const [switchCheck, setSwitchCheck] = useState({});
-    const [totalPage, setTotalPage] = useState(10);
+
     const [page, setPage] = useState(1);
-    const [rowPerPage, setRowPerPage] = useState(5);
+    const [limit, setLimit] = useState(5);
+
+    const [records, setRecords] = useState([])
+    const [totalPage, setTotalPage] = useState(1);
+
+    const { TblContainer, TblHead } = useTable(records, headCells);
+
+    const [switchCheck, setSwitchCheck] = useState({});
+
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
 
@@ -78,7 +84,7 @@ export const CanceledOrderTable = (props) => {
 
     const loadInit = async () => {
         try {
-            const response = await (await BusinessStaffProcessOrderServices.viewCanceledOrder({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+            const response = await (await BusinessStaffProcessOrderServices.viewCanceledOrder({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
 
             const switchObj = records.reduce((acc, curr) => {
@@ -107,38 +113,7 @@ export const CanceledOrderTable = (props) => {
         // await checkPayMent(row, event)
     }
 
-    // const checkPayMent = async (row, event) => {
-    //     const data = {
-    //         id: row.id,
-    //         isActive: !switchCheck[`switchID:${row.id}`]
-    //     }
-    //     // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
-    //     // if (switchCheck[`switchID:${row.id}`]) {
-    //     //     console.log('deactive')
-    //     // } else {
-    //     //     console.log('active')
-    //     // }
-    //     try {
-    //         // switchCheck[`switchID:${row.id}`] ? 
-    //         const response = await (await BusinessStaffProcessOrderServices.checkPayment(data)).data
-    //         if (response.result == config.useResultStatus.SUCCESS) {
-    //             toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
-    //             setRefresh(!refresh)
-    //         } else {
-    //             toast.error(config.useMessage.resultFailure)
-    //             setSwitchCheck({
-    //                 ...switchCheck,
-    //                 [event.target.name]: event.target.checked
-    //             })
-    //         }
-    //     } catch (err) {
-    //         toast.error(config.useMessage.fetchApiFailure)
-    //         setSwitchCheck({
-    //             ...switchCheck,
-    //             [event.target.name]: event.target.checked
-    //         })
-    //     }
-    // }
+
     return (
         <>
             <p>CanceledOrderTable</p>

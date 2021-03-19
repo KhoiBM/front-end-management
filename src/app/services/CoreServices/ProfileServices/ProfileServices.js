@@ -13,15 +13,15 @@ export class ProfileServices {
     //         }
     //     })
     // }
-    static viewProfile = () => {
-        // return useHttpModule().get(config.useApiPath.api., data)
+    static view = () => {
+        // return useHttpModule().get(config.useApiPath.api.view, data)
 
         return Promise.resolve({
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
                     record: {
-                        id: 1,
+                        profileID: 1,
                         firstName: "khoi",
                         lastName: "bui",
                         phone: "0387741552",
@@ -39,8 +39,8 @@ export class ProfileServices {
 
 
 
-    static editProfile = (data) => {
-        // return useHttpModule().post(config.useApiPath.api.editProfile, data)
+    static edit = (data) => {
+        // return useHttpModule().post(config.useApiPath.api.edit, data)
         return Promise.resolve({
             data: {
                 result: config.useResultStatus.SUCCESS,

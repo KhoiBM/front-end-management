@@ -3,12 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
 import { toast } from 'react-toastify';
-import PaginationBar from '../../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { uuid } from 'uuidv4';
 import { useTable } from 'src/app/utils';
+import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -45,30 +44,30 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const ServiceTable = (props) => {
     const classes = useStyles();
+
     const headCells = ['Mã dịch vụ', "Tên dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const [records, setRecords] = useState([])
-    const { TblContainer, TblHead } = useTable(records, headCells);
-    const [switchCheck, setSwitchCheck] = useState({});
-    const [totalPage, setTotalPage] = useState(10);
+
     const [page, setPage] = useState(1);
-    const [rowPerPage, setRowPerPage] = useState(5);
+    const [limit, setLimit] = useState(5);
+
+    const [records, setRecords] = useState([])
+    const [totalPage, setTotalPage] = useState(1);
+
+    const { TblContainer, TblHead } = useTable(records, headCells);
+
+    const [switchCheck, setSwitchCheck] = useState({});
+
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
-    // console.log("page:" + page)
-    const handleChangeSwitch = (event) => {
-        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
-    };
+
+
     useEffect(() => {
         loadInit()
     }, [page])
 
     const loadInit = async () => {
         try {
-            const response = await (await ManageServiceServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+            const response = await (await ManageServiceServices.view({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
 
             const switchObj = records.reduce((acc, curr) => {
@@ -85,6 +84,17 @@ export const ServiceTable = (props) => {
         }
 
     }
+
+    const handleChangePagination = (event, value) => {
+        setPage(value);
+        // console.log(page)
+    };
+
+    // console.log("page:" + page)
+    const handleChangeSwitch = (event) => {
+        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
+    };
+
 
     useEffect(async () => {
         // if (!first) {
@@ -142,6 +152,7 @@ export const ServiceTable = (props) => {
             })
         }
     }
+
     return (
         <>
             {/* <p>Table</p> */}

@@ -5,12 +5,11 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
-import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import PageHeader from 'src/app/modules/core/components/PageHeader'
 import { useForm } from 'src/app/utils'
 import { ManageServices } from '../../../../manager/components'
 import { ManageServiceServices } from 'src/app/services'
+import { PageHeader } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),

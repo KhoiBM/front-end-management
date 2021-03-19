@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
     }
 }));
-const PaginationBar = (props) => {
+export const PaginationBar = (props) => {
     const classes = useStyles();
     // const [page, setPage] = useState(1);
     const handleChangePagination = (event, value) => {
@@ -32,9 +32,8 @@ const PaginationBar = (props) => {
 
             <div className={classes.root}>
                 {/* <Pagination count={props.totalPage} variant="outlined" shape="rounded" color="secondary" onChange={handleChangePagination} showFirstButton showLastButton /> */}
-                <Pagination count={props.totalPage} variant="outlined" shape="rounded" color="primary" onChange={handleChangePagination} showFirstButton showLastButton />
+                <Pagination count={props.totalPage} page={props.page} variant="outlined" shape="rounded" color="primary" onChange={handleChangePagination} showFirstButton showLastButton />
             </div>
         </>
     )
 }
-export default PaginationBar

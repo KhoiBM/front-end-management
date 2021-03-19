@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
-import AccountTable from '../AccountTable'
 import { makeStyles, Paper, Button } from '@material-ui/core';
-import EditAccountForm from '../EditAccountForm';
-import AddAccountForm from '../AddAccountForm'
-import { RiCloseFill } from 'react-icons/ri';
-import zIndex from '@material-ui/core/styles/zIndex';
+import { EditAccountForm } from '../EditAccountForm';
+import { AddAccountForm } from '../AddAccountForm';
+import { AccountTable } from '../AccountTable';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -38,16 +36,17 @@ const useStyles = makeStyles(theme => ({
         }
     }
 }));
-const ManageAccount = () => {
+export const ManageAccount = () => {
     const classes = useStyles();
     const [openEditForm, setOpenEditForm] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
     const [recordForEdit, setRecordForEdit] = useState(0)
+
     const handleEdit = (row) => {
         setOpenEditForm(true);
         setRecordForEdit(row)
     }
-    const handleAdd = (row) => {
+    const handleAdd = () => {
         setOpenAddForm(true);
     }
     const handleCloseForm = () => {
@@ -59,16 +58,12 @@ const ManageAccount = () => {
         <>  {!openEditForm && !openAddForm &&
             <Paper elevation={2} className={classes.mainContainer}>
 
-
                 <>
                     <div className={classes.buttonAddWrapper}>
-                        {/* <Button variant="outlined" color="secondary" onClick={handleAdd} className={classes.buttonAdd}>Thêm tài khoản</Button> */}
                         <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm tài khoản</Button>
                     </div>
                     <AccountTable handleEdit={handleEdit} />
                 </>
-
-
 
             </Paper>
         }
@@ -82,4 +77,4 @@ const ManageAccount = () => {
     )
 }
 
-export default ManageAccount
+

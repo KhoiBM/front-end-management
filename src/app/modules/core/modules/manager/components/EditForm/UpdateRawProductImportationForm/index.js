@@ -6,9 +6,9 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import PageHeader from 'src/app/modules/core/components/PageHeader'
 import { useForm } from 'src/app/utils'
 import { ManageRawProductImportationServices, ManageRawProductServices } from 'src/app/services'
+import { PageHeader } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),

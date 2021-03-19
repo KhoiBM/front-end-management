@@ -8,10 +8,9 @@ import config from 'src/environments/config'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Typography, ListItemIcon, ListItem, ListItemText, List, Divider, useTheme, Drawer, Hidden } from '@material-ui/core'
 import { RiAccountBoxLine } from 'react-icons/ri';
 import { MdSupervisorAccount, MdChevronLeft, MdChevronRight, MdMenu } from 'react-icons/md'
-import HeaderBar from '../HeaderBar'
-import SideMenuBar from '../SideMenuBar'
-
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
+import { HeaderBar } from '../HeaderBar'
+import { SideMenuBar } from '../SideMenuBar'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     bg: {
         backgroundImage: `url(${bgAuth})`,
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center top",
+        backgroundSize: "cover",
         backgroundAttachment: "fixed",
         // background: "red"
         // overflowY: "hidden"
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MainBar = (props) => {
+export const MainBar = (props) => {
     const classes = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleDrawerOpen = () => {
@@ -87,6 +86,3 @@ const MainBar = (props) => {
 
 
 
-
-
-export default MainBar

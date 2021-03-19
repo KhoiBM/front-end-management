@@ -7,7 +7,7 @@ import { MdChevronRight, MdChevronLeft, MdSupervisorAccount } from 'react-icons/
 import config from 'src/environments/config'
 import clsx from 'clsx';
 import { Link, NavLink, useRouteMatch } from 'react-router-dom'
-import { NavLinkMenu } from '../NavLinkMenu/NavLinkMenu'
+import { NavLinkMenu } from '../NavLinkMenu'
 const drawerWidth = config.useStyles.drawerWidth;
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SideMenuBar = (props) => {
+export const SideMenuBar = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     // const { path } = useRouteMatch();
@@ -100,9 +100,6 @@ const SideMenuBar = (props) => {
         </>
     )
 }
-
-export default SideMenuBar
-
 
 
 

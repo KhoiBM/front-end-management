@@ -2,14 +2,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
-
 import { toast } from 'react-toastify';
-import PaginationBar from '../../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices, ManageCategoryServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { uuid } from 'uuidv4';
 import { useTable } from 'src/app/utils';
+import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -46,30 +44,29 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const CategoryTable = (props) => {
     const classes = useStyles();
+
     const headCells = ['Mã thể loại', "Tên thể loại", "Mô tả", "Trạng thái", "Tên dịch vụ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+
     const [records, setRecords] = useState([])
+    const [totalPage, setTotalPage] = useState(1);
+
     const { TblContainer, TblHead } = useTable(records, headCells);
     const [switchCheck, setSwitchCheck] = useState({});
-    const [totalPage, setTotalPage] = useState(10);
-    const [page, setPage] = useState(1);
-    const [rowPerPage, setRowPerPage] = useState(5);
+
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
-    // console.log("page:" + page)
-    const handleChangeSwitch = (event) => {
-        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
-    };
+
+
     useEffect(() => {
         loadInit()
     }, [page])
 
     const loadInit = async () => {
         try {
-            const response = await (await ManageCategoryServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+            const response = await (await ManageCategoryServices.view({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
 
             const switchObj = records.reduce((acc, curr) => {
@@ -89,6 +86,16 @@ export const CategoryTable = (props) => {
 
     useEffect(async () => {
     }, [refresh])
+
+
+    const handleChangePagination = (event, value) => {
+        setPage(value);
+        // console.log(page)
+    };
+    // console.log("page:" + page)
+    const handleChangeSwitch = (event) => {
+        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
+    };
 
     // console.log("switchCheck: " + JSON.stringify(switchCheck));
     const handleChangeStatus = (row) => async (event) => {
@@ -126,6 +133,7 @@ export const CategoryTable = (props) => {
             })
         }
     }
+
     return (
         <>
             {/* <p>Table</p> */}

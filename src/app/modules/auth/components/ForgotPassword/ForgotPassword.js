@@ -8,8 +8,11 @@ import config from 'src/environments/config'
 import HelperValidation from '../HelperValidation/HelperValidation'
 import { useQueryURL } from 'src/app/utils/handles/index'
 import { toast } from 'react-toastify'
-import { ConfirmFormContainer } from '../../styles/styles'
-import { FormWrapper, IconWrapper, IconLink, InputLabel, InputText, ButtonConfirm } from './ForgotPasswordElements'
+
+import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink } from '../../styles/styles'
+
+import { FormWrapper, InputLabel, InputText } from './ForgotPasswordElements'
+
 const ForgotPassword = () => {
     // const { showSnackbar } = useShowSnackbar()
     let query = useQueryURL();
@@ -31,7 +34,7 @@ const ForgotPassword = () => {
             console.log("valueResponse: " + JSON.stringify(response));
             if (response.result == config.useResultStatus.SUCCESS) {
                 // showSnackbar('Vui lòng nhập code để đổi mật khẩu', 'info');
-                toast.info('Vui lòng nhập code để đổi mật khẩu')
+                toast.info('Vui lòng nhập Code để đổi mật khẩu')
                 history.push(`/auth/confirm_forgotpassword?username=${formData.username}`);
             }
             else {
@@ -77,7 +80,14 @@ const ForgotPassword = () => {
                 <FormWrapper onSubmit={handleSubmit} noValidate>
                     <IconWrapper>
                         <IconLink onClick={() => history.goBack()}>
-                            <RiCloseFill />
+                            <RiCloseFill style={{
+                                // transform: "scale(2)",
+                                // transition: " all 0.3s ease 0s",
+                                // fontSize: "2rem",
+
+                            }} />
+
+
                         </IconLink>
                     </IconWrapper>
                     <InputLabel htmlFor="username" >

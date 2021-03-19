@@ -7,9 +7,9 @@ import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServic
 
 import config from 'src/environments/config';
 import { toast } from 'react-toastify';
-import PaginationBar from '../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { useTable } from 'src/app/utils';
+import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -44,16 +44,24 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 
-const AccountTable = (props) => {
+export const AccountTable = (props) => {
     const classes = useStyles();
+
     const headCells = ['Mã tài khoản', "Tên người dùng", "Email", "Vai trò", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const [records, setRecords] = useState([])
-    const { TblContainer, TblHead } = useTable(records, headCells);
+
     const [switchCheck, setSwitchCheck] = useState({});
-    const [totalPage, setTotalPage] = useState(10);
+
     const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+
+    const [records, setRecords] = useState([])
+    const [totalPage, setTotalPage] = useState(1);
+
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
+
+    const { TblContainer, TblHead } = useTable(records, headCells);
+
 
     useEffect(async () => {
         loadInit()
@@ -61,7 +69,6 @@ const AccountTable = (props) => {
 
     useEffect(async () => {
         // if (!first) {
-        //     const data = await (await ManageAccountServices.viewAccountTest({ filterBy: "all", page: page })).data
 
         // }
         // setFirst(false)
@@ -71,14 +78,14 @@ const AccountTable = (props) => {
     const loadInit = async () => {
 
         try {
-            const response = await (await ManageAccountServices.viewAccount({ filterBy: "all", page: page })).data
+            const response = await (await ManageAccountServices.view({ filterBy: "all", page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     const records = response.info.records
 
                     const switchObj = records.reduce((acc, curr) => {
-                        acc[`switchID:${curr.id}`] = curr.isActive
+                        acc[`switchID:${curr.accountID}`] = curr.isActive
                         return acc
                     }, {})
 
@@ -93,11 +100,11 @@ const AccountTable = (props) => {
                     toast.error(config.useMessage.resultFailure)
                 }
             } else {
-                throw new Error("Reponse is null or undefined")
+                throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
 
     }
@@ -117,10 +124,96 @@ const AccountTable = (props) => {
 
     const handleChangeStatus = (row) => async (event) => {
         const data = {
-            id: row.id,
-            isActive: !switchCheck[`switchID:${row.id}`]
+            id: row.accountID,
+            isActive: !switchCheck[`switchID:${row.accountID}`]
         }
-        // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
+
+        try {
+            const response = switchCheck[`switchID:${row.accountID}`] ? await (await ManageAccountServices.deActive(data)).data : await (await ManageAccountServices.active(data)).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
+                    setRefresh(!refresh)
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                    setSwitchCheck({
+                        ...switchCheck,
+                        [event.target.name]: event.target.checked
+                    })
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            setSwitchCheck({
+                ...switchCheck,
+                [event.target.name]: event.target.checked
+            })
+        }
+
+    }
+
+    return (
+        <>
+            {/* <p>AccountTable</p> */}
+
+            <div className={classes.tableWrapper}>
+                <TblContainer>
+                    <TblHead />
+                    <TableBody>
+                        {records.map((row) => (
+                            <StyledTableRow key={row.accountID}>
+                                <StyledTableCell>{row.accountID}</StyledTableCell>
+                                <StyledTableCell>{row.username}</StyledTableCell>
+                                <StyledTableCell>{row.email}</StyledTableCell>
+                                <StyledTableCell>{row.roleName}</StyledTableCell>
+
+                                <StyledTableCell>
+                                    <Switch
+                                        color="primary"
+                                        checked={switchCheck[`switchID:${row.accountID}`]}
+                                        onChange={handleChangeSwitch}
+                                        name={`switchID:${row.accountID}`}
+                                        onClick={handleChangeStatus(row)}
+                                    />
+                                </StyledTableCell>
+
+                                <StyledTableCell >{row.createdAt}</StyledTableCell>
+                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+
+                                <StyledTableCell >
+                                    <Button onClick={(event) => {
+                                        event.stopPropagation()
+                                        props.handleEdit(row)
+                                    }
+                                    }>
+                                        <AiOutlineEdit />
+                                    </Button>
+                                </StyledTableCell>
+
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </TblContainer>
+            </div>
+
+            <div className={classes.paginationContainer}>
+                <PaginationBar totalPage={totalPage} setPage={setPage} />
+            </div>
+
+        </>
+    );
+}
+
+
+
+
+
+ // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {
         //     console.log('deactive')
         // } else {
@@ -144,83 +237,3 @@ const AccountTable = (props) => {
         //         [event.target.name]: event.target.checked
         //     })
         // }
-
-        try {
-            const response = switchCheck[`switchID:${row.id}`] ? await (await ManageAccountServices.deActiveAccount(data)).data : await (await ManageAccountServices.activeAccount(data)).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
-                    setRefresh(!refresh)
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                    setSwitchCheck({
-                        ...switchCheck,
-                        [event.target.name]: event.target.checked
-                    })
-                }
-            } else {
-                throw new Error("Reponse is null or undefined")
-            }
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-            setSwitchCheck({
-                ...switchCheck,
-                [event.target.name]: event.target.checked
-            })
-        }
-
-    }
-    return (
-        <>
-            {/* <p>AccountTable</p> */}
-
-            <div className={classes.tableWrapper}>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {records.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.id}
-                                </StyledTableCell>
-                                <StyledTableCell >{row.username}</StyledTableCell>
-                                <StyledTableCell >{row.email}</StyledTableCell>
-                                <StyledTableCell >{row.roleName}</StyledTableCell>
-                                <StyledTableCell>
-                                    <Switch
-                                        color="primary"
-                                        checked={switchCheck[`switchID:${row.id}`]}
-                                        onChange={handleChangeSwitch}
-                                        name={`switchID:${row.id}`}
-                                        onClick={handleChangeStatus(row)}
-                                    />
-                                </StyledTableCell>
-
-                                <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
-                                <StyledTableCell >
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
-                                    </Button>
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                </TblContainer>
-            </div>
-            <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} />
-            </div>
-        </>
-    );
-}
-
-
-export default AccountTable

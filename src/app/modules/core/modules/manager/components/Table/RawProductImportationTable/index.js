@@ -6,12 +6,12 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
-import PaginationBar from '../../../../../components/PaginationBar';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageRawProductServices, ManageRawProductImportationServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
 import { uuid } from 'uuidv4';
 import { useTable } from 'src/app/utils';
+import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -50,23 +50,19 @@ export const RawProductImportationTable = (props) => {
     const classes = useStyles();
     // const headCells = ['ID', "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ['Mã nhập', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
-    const [records, setRecords] = useState([
-        {
-            id: 1,
-            rawProductName: "afb",
-            quantity: 1,
-            providedBy: "abvc",
-            createdAt: '02-02-2020',
-            updatedAt: '02-02-2020'
 
-        }
-    ])
-    const { TblContainer, TblHead } = useTable(records, headCells);
-    const [totalPage, setTotalPage] = useState(10);
     const [page, setPage] = useState(1);
-    const [rowPerPage, setRowPerPage] = useState(5);
+    const [limit, setLimit] = useState(5);
+
+    const [records, setRecords] = useState([])
+    const [totalPage, setTotalPage] = useState(1);
+
+    const { TblContainer, TblHead } = useTable(records, headCells);
+
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
+
+
     const handleChangePagination = (event, value) => {
         setPage(value);
         // console.log(page)
@@ -77,13 +73,12 @@ export const RawProductImportationTable = (props) => {
 
     const loadInit = async () => {
         try {
-            const data = await (await ManageRawProductImportationServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const records = data.info.records
+            const response = await (await ManageRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
+            const records = response.info.records
 
             setRecords(records)
-            setTotalPage(data.info.totalPage)
+            setTotalPage(response.info.totalPage)
             // console.log("page: " + page)
-            // console.log("page: " + data.info.page)
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }

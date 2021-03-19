@@ -12,7 +12,7 @@ export class ManageAccountServices {
     //         }
     //     })
     // }
-    static viewAccount = (data) => {
+    static view = (data) => {
         // return useHttpModule().get(config.useApiPath.api., data)
         if (data.page == 1) {
             return Promise.resolve({
@@ -20,11 +20,11 @@ export class ManageAccountServices {
                     result: config.useResultStatus.SUCCESS,
                     info: {
                         records: [
-                            { id: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", roleName: "manager", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 5, username: "khoibm", email: "fsad@gmail.com", roleID: "1", role: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
+                            { accountID: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", roleName: "manager", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 5, username: "khoibm", email: "fsad@gmail.com", roleID: "1", role: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
                         totalPage: 20,
                         page: data.page
                     }
@@ -36,11 +36,11 @@ export class ManageAccountServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-                    records: [{ id: 6, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true },
-                    { id: 10, username: "khoibm", email: "fsad@gmail.com", roleID: "3", roleName: "businessStaff", isActive: true },
-                    { id: 7, username: "khoibm", email: "fsad@gmail.com", roleID: "4", roleName: "technicalStaff", isActive: true },
-                    { id: 8, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true },
-                    { id: 9, username: "khoibm", email: "fsad@gmail.com", roleID: "1", roleName: "customer", isActive: true }],
+                    records: [{ accountID: 6, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true },
+                    { accountID: 10, username: "khoibm", email: "fsad@gmail.com", roleID: "3", roleName: "businessStaff", isActive: true },
+                    { accountID: 7, username: "khoibm", email: "fsad@gmail.com", roleID: "4", roleName: "technicalStaff", isActive: true },
+                    { accountID: 8, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true },
+                    { accountID: 9, username: "khoibm", email: "fsad@gmail.com", roleID: "1", roleName: "customer", isActive: true }],
                     totalPage: 20,
                     page: data.page
                 }
@@ -58,11 +58,11 @@ export class ManageAccountServices {
                     result: config.useResultStatus.SUCCESS,
                     info: {
                         records: [
-                            { id: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { id: 5, username: "khoibm", email: "fsad@gmail.com", roleID: "1", role: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
+                            { accountID: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 5, username: "khoibm", email: "fsad@gmail.com", roleID: "1", role: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
                         totalPage: 20,
                         page: data.page
                     }
@@ -82,7 +82,7 @@ export class ManageAccountServices {
             }
         })
     }
-    static addAccount = (data) => {
+    static add = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
         return Promise.resolve({
             data: {
@@ -91,7 +91,7 @@ export class ManageAccountServices {
             }
         })
     }
-    static editAccount = (data) => {
+    static edit = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
         return Promise.resolve({
             data: {
@@ -100,7 +100,7 @@ export class ManageAccountServices {
             }
         })
     }
-    static activeAccount = (data) => {
+    static active = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
 
         return Promise.resolve({
@@ -112,7 +112,7 @@ export class ManageAccountServices {
         })
     }
 
-    static deActiveAccount = (data) => {
+    static deActive = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
         return Promise.resolve({
             data: {

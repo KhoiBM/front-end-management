@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import config from 'src/environments/config';
 import Loader from 'src/app/components/Loader/Loader';
-import MainBar from '../../../components/MainBar';
 import { useLocation } from 'react-router-dom';
 import { ManageService } from '../components/Manage';
 import { useOpendrawer } from 'src/app/utils';
+import { MainBar } from '../../../components';
 
 const ManageServicePage = () => {
     const userRole = config.useUserRole.manager;
