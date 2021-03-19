@@ -4,6 +4,7 @@ import { AUTH_TYPE } from "../types";
 export const useAuthAction = () => {
 
     const signIn = (data) => {
+
         return { type: AUTH_TYPE.SIGNIN.FETCH, payload: { data } };
     };
     const signInSuccess = (data) => {

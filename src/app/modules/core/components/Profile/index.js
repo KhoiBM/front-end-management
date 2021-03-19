@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
         width: "100%",
+
         // overflow: "scroll",
         // border: "1px solid red",
         '& .MuiFormControl-root': {
@@ -36,9 +37,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         zIndex: 999,
-        position: "absolute",
-        top: 0,
-        // overflow: "scroll",
+        position: "relative",
+        overflow: "scroll",
 
     },
     bg: {
@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3),
         position: "relative",
         // background: "blue",
-        // overflow: "scroll",
+        overflow: "scroll",
 
     },
     iconCloseWrapper: {
@@ -101,6 +101,26 @@ const useStyles = makeStyles(theme => ({
     genderGroup: {
         display: "flex",
         // color: "red"
+    },
+    dobContainer: {
+        // backgroundColor: "red"
+    },
+    dobWrapper: {
+        width: "100% !important",
+        // backgroundColor: "blue"
+        border: "1px solid rgba(0, 0, 0, 0.23)",
+        borderRadius: "4px",
+        padding: "18.5px 14px"
+    },
+    profileContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+        // background: "red",
+        zIndex: 999,
+        margin: "6rem auto"
     }
 }))
 
@@ -186,55 +206,63 @@ export const Profile = () => {
     return (
         <>
             {/* <p>Profile</p> */}
-            <div className={classes.pageFormContainer}>
-                <Paper elevation={5} className={classes.pageForm}>
-                    <div className={classes.iconCloseWrapper} onClick={() => { history.goBack() }}>
-                        <div className={classes.iconClose}>
-                            <RiCloseFill />
-                        </div>
-                    </div >
-                    <PageHeader>
-                        Hồ sơ của tôi
+            <div className={classes.profileContainer}>
+                <div className={classes.pageFormContainer}>
+                    <Paper elevation={5} className={classes.pageForm}>
+                        <div className={classes.iconCloseWrapper} onClick={() => { history.goBack() }}>
+                            <div className={classes.iconClose}>
+                                <RiCloseFill />
+                            </div>
+                        </div >
+                        <PageHeader>
+                            Hồ sơ của tôi
                     </PageHeader>
-                    <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
-                        <Grid container>
-                            <Grid item xs={12} sm={12} md={6}>
-                                <TextField
-                                    variant='outlined'
-                                    label="Tên"
-                                    value={formData.firstName}
-                                    name='firstName'
-                                    onChange={handleInputChange}
-                                    error={helperValid.firstName ? true : false}
-                                    helperText={helperValid.firstName}
-                                />
-                                <TextField
-                                    variant='outlined'
-                                    label="Họ"
-                                    value={formData.lastName}
-                                    name='lastName'
-                                    onChange={handleInputChange}
-                                    error={helperValid.lastName ? true : false}
-                                    helperText={helperValid.lastName}
-                                />
+                        <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
+                            <Grid container>
+                                <Grid item xs={12} sm={12} md={6}>
+                                    <TextField
+                                        variant='outlined'
+                                        label="Tên"
+                                        value={formData.firstName}
+                                        name='firstName'
+                                        onChange={handleInputChange}
+                                        error={helperValid.firstName ? true : false}
+                                        helperText={helperValid.firstName}
+                                    />
+                                    <TextField
+                                        variant='outlined'
+                                        label="Họ"
+                                        value={formData.lastName}
+                                        name='lastName'
+                                        onChange={handleInputChange}
+                                        error={helperValid.lastName ? true : false}
+                                        helperText={helperValid.lastName}
+                                    />
 
-                                <TextField
-                                    variant='outlined'
-                                    label="Số điện thoại"
-                                    value={formData.phone}
-                                    name='phone'
-                                    onChange={handleInputChange}
-                                    error={helperValid.phone ? true : false}
-                                    helperText={helperValid.phone}
-                                />
+                                    <TextField
+                                        variant='outlined'
+                                        label="Số điện thoại"
+                                        value={formData.phone}
+                                        name='phone'
+                                        onChange={handleInputChange}
+                                        error={helperValid.phone ? true : false}
+                                        helperText={helperValid.phone}
+                                    />
 
-                                <div>
+
+                                    {/* <FormControl component="fieldset" className={classes.dobContainer}>
+                                    <FormLabel component="legend" >Ngày sinh</FormLabel>
+                                    <div> */}
                                     <DatePicker value={dobSelected} onChange={handleChangeDob}
                                         openTo="year"
                                         format="dd-MM-yyyy"
                                         label="Ngày sinh"
                                         views={["year", "month", "date"]}
-                                        error={helperValid.dob ? true : false}
+                                        // className={classes.dobWrapper}
+                                        autoOk
+                                        inputVariant="outlined"
+                                        InputAdornmentProps={{ position: "start" }}
+
                                     />
                                     <FormHelperText style={{
                                         color: "#f44336",
@@ -245,36 +273,40 @@ export const Profile = () => {
 
                                     }}>{helperValid.dob}
                                     </FormHelperText>
-                                </div>
 
-                                <FormControl component="fieldset">
-                                    <FormLabel component="legend">Giới tính</FormLabel>
-                                    <RadioGroup aria-label="gender" name="gender" value={formData.gender ? "female" : "male"} onChange={handleInputChange} className={classes.genderGroup}>
-                                        <FormControlLabel value={"female"} control={<Radio color='primary' />} label="Nữ" />
-                                        <FormControlLabel value={"male"} control={<Radio color='primary' />} label="Nam" />
-                                    </RadioGroup>
-                                </FormControl>
-                                <TextField
-                                    variant='outlined'
-                                    label="Địa chỉ"
-                                    value={formData.address}
-                                    name='address'
-                                    onChange={handleInputChange}
-                                    error={helperValid.address ? true : false}
-                                    helperText={helperValid.address}
-                                    multiline
-                                />
+                                    {/* </div>
+                                </FormControl> */}
+
+                                    <FormControl component="fieldset">
+                                        <FormLabel component="legend">Giới tính</FormLabel>
+                                        <RadioGroup aria-label="gender" name="gender" value={formData.gender ? "female" : "male"} onChange={handleInputChange} className={classes.genderGroup}>
+                                            <FormControlLabel value={"female"} control={<Radio color='primary' />} label="Nữ" />
+                                            <FormControlLabel value={"male"} control={<Radio color='primary' />} label="Nam" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                    <TextField
+                                        variant='outlined'
+                                        label="Địa chỉ"
+                                        value={formData.address}
+                                        name='address'
+                                        onChange={handleInputChange}
+                                        error={helperValid.address ? true : false}
+                                        helperText={helperValid.address}
+                                        multiline
+                                    />
 
 
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        <div className={classes.buttonSaveWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonSave}>Lưu</Button>
-                        </div>
-                    </form>
+                            <div className={classes.buttonSaveWrapper}>
+                                <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonSave}>Lưu</Button>
+                            </div>
+                        </form>
 
-                </Paper>
+                    </Paper>
+                </div >
             </div>
+
         </>
     )
 }

@@ -96,3 +96,187 @@
 
 
     
+
+
+
+    const validation = ({ username, email, password, repassword }, regexPassword, regexEmail) => {
+        showHelperValid({ username, email, password, repassword }, regexPassword, regexEmail);
+        return validationUsername(username) && validationEmail(email, regexEmail) && validationPassword(password, regexPassword) && validationPassword(repassword, regexPassword) && password === repassword ? true : false;
+
+    }
+    const validationUsername = (username) => {
+        return username && username.length > 0
+    }
+    const validationEmail = (email = '', regexEmail) => {
+        return email && regexEmail.test(email);
+    }
+    const validationPassword = (password = '', regexPassword) => {
+        return password && password.length >= 8 && password.length <= 20 && regexPassword.test(password);
+    }
+    const showHelperValid = ({ username = '', email = '', password = '', repassword = '' }, regexPassword, regexEmail) => {
+        let validUsernameMessage = username && username.length > 0 ? "" : "Tên người dùng là bắt buột";
+        let validEmailMessage = "";
+        if (!email) {
+            validEmailMessage = "Email là bắt buộc";
+        }
+        else if (!regexEmail.test(email)) {
+            validEmailMessage = "Email không hợp lệ"
+        }
+        const showHelperValidPassword = (password = '') => {
+            let validMessage = "";
+            if (!password || !(password.length >= 8 && password.length <= 20)) {
+                validMessage = "Mật khẩu là bắt buộc ( 8 đến 20 ký tự)";
+            } else if (!regexPassword.test(password)) {
+                validMessage = "Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
+            }
+            return validMessage
+        }
+        let validPasswordMessage = showHelperValidPassword(password);
+        let validRePasswordMessage = showHelperValidPassword(repassword);
+        if (!validRePasswordMessage && repassword != password) {
+            validRePasswordMessage = "Mật khẩu này phải giống với mật khẩu ở trên";
+        }
+        setValid({
+            ...valid, onUsername: validUsernameMessage, onEmail: validEmailMessage, onPassword: validPasswordMessage, onRePassword: validRePasswordMessage
+        })
+    }
+
+
+
+
+// const colorBox = statusSignUp.isError ? "#e57373" : "#81c784";
+
+
+// {statusSignUp.message.length > 0 ?
+//     <div className={styles["alert-status"]}>
+//         <Box style={{ backgroundColor: colorBox, width: "20rem", height: "50px", border: `1px solid ${colorBox}`, borderRadius: "4px" }} className={styles["box-status-signin"]} >{statusSignUp.message}</Box>
+//     </div>
+//     : ""}
+
+
+
+
+// const [statusSignIn, setStatusSignIn] = useState({ message: "", isError: false })
+
+
+//   const colorBox = statusSignIn.isError ? "#e57373" : "#81c784";
+// useEffect(async () => await store.subscribe(() => {
+
+//     const responseValue = store.getState().auth.response
+
+// }), [store]);
+
+// const response = state.auth.response
+// store.subscribe(() => {
+//     showSnackbar('Đăng nhập thành công', 'success')
+// })
+
+
+// if (enableSubmit) {
+//     const data = {
+//         fullName: formData.username,
+//         password: formData.password
+//     };
+//     dispatch(useAuthAction().signIn(data));
+
+//     // store.subscribe(() => {
+//     //     const response = store.getState().auth.response;
+//     //     console.log("response: " + JSON.stringify(response))
+
+//     // })
+
+//     // const response = store.getState().auth.response;
+//     // console.log("responseValue: " + JSON.stringify(response))
+//     // if (response.result == 'success') {
+//     //     // setStatusSignIn({ message: "Đăng nhập thành công", isError: false })
+
+//     //     enqueueSnackbar('Đăng nhập thành công', {
+//     //         variant: 'success',
+//     //     });
+//     //     // setTimeout(() => {
+//     //     //     // history.push("/core/admin/management_account");
+//     //     // }, 500);
+
+//     // } else {
+//     //     // setStatusSignIn({
+//     //     //     message: response.errorInfo, isError: true
+//     //     // })
+//     //     enqueueSnackbar(`${response.errorInfo || "Đăng nhập thất bại"}`, {
+//     //         variant: 'error',
+//     //     });
+//     // }
+// } else {
+//     // setStatusSignIn({ message: "Dữ liệu không hợp lệ", isError: true })
+//     useShowSnackbar(`${"Dữ liệu không hợp lệ"}`)
+// }
+
+
+
+{/* {statusSignIn.message.length > 0 ?
+                        <div className={styles["alert-status"]}>
+                            <Box style={{ backgroundColor: colorBox, width: "20rem", height: "50px", border: `1px solid ${colorBox}`, borderRadius: "4px" }} className={styles["box-status-signin"]} >{statusSignIn.message}</Box>
+                        </div>
+                        : ""} */}
+
+
+// const [formData, setFormData] = useState({ username: '', password: '' });
+// const [valid, setValid] = useState({
+//     onUsername: '', onPassword: ''
+// });
+// const regexPassword = config.useRegex.regexPassword
+// const validation = ({ username, password }, regexPassword) => {
+//     showHelperValid({ username, password }, regexPassword);
+//     return validationUsername(username) && validationPassword(password, regexPassword) ? true : false;
+
+// }
+// const validationUsername = (username) => {
+//     return username && username.length > 0
+// }
+
+// const validationPassword = (password, regexPassword) => {
+//     return password && password.length >= 8 && password.length <= 20 && regexPassword.test(password);
+// }
+// const showHelperValid = ({ username, password }, regexPassword) => {
+//     let validUsernameMessage = username && username.length > 0 ? "" : "Tên người dùng là bắt buộc";
+//     let validMessage = "";
+//     if (!password || !(password.length >= 8 && password.length <= 20)) {
+//         validMessage = "Mật khẩu là bắt buộc ( 8 đến 20 ký tự)";
+//     } else if (!regexPassword.test(password)) {
+//         validMessage = "Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
+//     }
+//     setValid({
+//         ...valid, onUsername: validUsernameMessage, onPassword: validMessage
+//     })
+// }
+
+
+// console.log("response: " + JSON.stringify(response));
+// // if (response && response.result == config.useResultStatus.SUCCESS) {
+// if (response && response.result == "success") {
+//     await dispatch(useAuthAction().signedIn())
+//     const auth = store.getState().auth;
+//     // console.log("ValueAuth: " + JSON.stringify(auth));
+//     const response = auth.response;
+//     if (auth.isSignedIn) {
+//         // const role = response.info.role;
+//         const token = response.info.accessToken;
+//         const tokenID = response.info.idToken;
+//         localStorage.setItem("pps-token", JSON.stringify(token));
+
+//         const decodedtokenID = jwt_decode(tokenID);
+//         localStorage.setItem("role", decodedtokenID["custom:role"]);
+
+
+//         // console.log(JSON.stringify(decodedtokenID["custom:role"]))
+
+//         toast.success('Đăng nhập thành công', {
+//             position: "top-right",
+//         });
+//         // redirectByRole(role)
+//     } else {
+//         toast.error("Đăng nhập thất bại")
+//     }
+
+// } else {
+//     toast.error(`${response.errorInfo || "Đăng nhập thất bại"}`);
+// }

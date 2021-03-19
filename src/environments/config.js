@@ -38,7 +38,8 @@ const useResultStatus = {
 }
 
 const useRegex = {
-    regexPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+    // regexPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+    regexPassword: /./,
     regexEmail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
     regexPhone: /^\d{10,11}$/
 }

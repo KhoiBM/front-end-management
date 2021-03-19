@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core';
 import config from 'src/environments/config';
 
-export const useForm = (initialFValues) => {
+export const useForm = (initialFValues, validOnChange = true) => {
     const regexPassword = config.useRegex.regexPassword
     const regexPhone = config.useRegex.regexPhone
 
@@ -31,10 +31,17 @@ export const useForm = (initialFValues) => {
             }
         }
 
+        if (name == "unitPrice") {
+            if (Number(value) < 0) {
+                value = 0
+            } else {
+
+            }
+        }
         console.log(name + ": " + value)
         setFormData({ ...formData, [name]: value });
         // console.log("formdata" + ": " + JSON.stringify(formData))
-        validation({ [name]: value })
+        if (validOnChange) validation({ [name]: value })
         // validation(formData)
     }
     const handleChangeDob = (date) => {

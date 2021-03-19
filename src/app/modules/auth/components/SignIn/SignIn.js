@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
@@ -14,8 +15,11 @@ import { useAuthAction } from "src/app/stores/actions";
 import _ from "underscore";
 import config from "src/environments/config";
 import ConfirmCode from "../ConfirmCode/ConfirmCode";
-import { useShowSnackbar } from "src/app/utils/handles/index";
+import { useShowSnackbar, useForm } from "src/app/utils/handles/index";
 import { toast, ToastContainer } from "react-toastify";
+import jwt_decode from 'jwt-decode';
+
+const initialFValues = { username: '', password: '' }
 
 const SignIn = ({ toggle, isVisible }) => {
     // console.log("isvisible: " + isVisible);
@@ -26,21 +30,19 @@ const SignIn = ({ toggle, isVisible }) => {
     const dispatch = useDispatch();
 
 
-    const [formData, setFormData] = useState({ username: '', password: '' });
-    const [valid, setValid] = useState({
-        onUsername: '', onPassword: ''
-    });
-
+    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
 
     const [isFirst, setIsFirst] = useState(true)
     const { response } = useSelector((state) => state.auth)
-    const regexPassword = config.useRegex.regexPassword
+
 
 
     useEffect(() => {
-        document.title = 'Đăng nhập';
+        // document.title = 'Đăng nhập';
     }, [])
+
+
     useEffect(() => {
         // console.log("ValueResponse: " + JSON.stringify(response));
 
@@ -48,58 +50,28 @@ const SignIn = ({ toggle, isVisible }) => {
 
     useEffect(async () => {
         if (!isFirst) {
-            if (response && response.result == config.useResultStatus.SUCCESS) {
-                await dispatch(useAuthAction().signedIn())
-                const auth = store.getState().auth;
-                // console.log("ValueAuth: " + JSON.stringify(auth));
-                const response = auth.response;
-                if (auth.isSignedIn) {
-                    const role = response.info.role;
-                    const token = response.info.token;
-                    localStorage.setItem("pps-token", JSON.stringify(token));
-                    localStorage.setItem("role", role);
-                    // showSnackbar('Đăng nhập thành công', 'success');
-                    toast.success('Đăng nhập thành công', {
-                        position: "top-right",
-                    });
-                    redirectByRole(role)
-                    // history.push('/core/admin/home')
-                } else {
-                    // showSnackbar(`${"Đăng nhập thất bại"}`, 'error')
-                    toast.error("Đăng nhập thất bại")
-                }
+            const auth = store.getState().auth;
+            if (auth.isSignedIn) {
+                const role = localStorage.getItem("role");
+                redirectByRole(role)
 
             } else {
-
-                // showSnackbar(`${response.errorInfo || "Đăng nhập thất bại"}`, 'error')
-                toast.error(`${response.errorInfo || "Đăng nhập thất bại"}`);
+                toast.error("Đăng nhập thất bại")
             }
+
         }
         setIsFirst(false);
     }, [response])
 
-    const redirectByRole = (role) => {
-        switch (role) {
-            case config.useRoleName.administrator: history.push("/core/admin/home"); break;
-            case config.useRoleName.manager: history.push("/core/manager/home"); break;
-            case config.useRoleName.businessStaff: history.push("/core/business_staff/home"); break;
-            case config.useRoleName.technicalStaff: history.push("/core/technical_staff/home"); break;
-        }
-    }
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const enableSubmit = validation(formData, regexPassword);
+        const enableSubmit = validation(formData);
         // const enableSubmit = true;
-        // console.log("enableSubmit: " + enableSubmit);
+
         if (enableSubmit) {
             signIn(formData, dispatch);
         } else {
-            // showSnackbar(`${"Dữ liệu không hợp lệ"}`, 'error')
             toast.error(config.useMessage.invalidData);
         }
     };
@@ -114,29 +86,13 @@ const SignIn = ({ toggle, isVisible }) => {
 
     }
 
-    const validation = ({ username, password }, regexPassword) => {
-        showHelperValid({ username, password }, regexPassword);
-        return validationUsername(username) && validationPassword(password, regexPassword) ? true : false;
-
-    }
-    const validationUsername = (username) => {
-        return username && username.length > 0
-    }
-
-    const validationPassword = (password, regexPassword) => {
-        return password && password.length >= 8 && password.length <= 20 && regexPassword.test(password);
-    }
-    const showHelperValid = ({ username, password }, regexPassword) => {
-        let validUsernameMessage = username && username.length > 0 ? "" : "Tên người dùng là bắt buộc";
-        let validMessage = "";
-        if (!password || !(password.length >= 8 && password.length <= 20)) {
-            validMessage = "Mật khẩu là bắt buộc ( 8 đến 20 ký tự)";
-        } else if (!regexPassword.test(password)) {
-            validMessage = "Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
+    const redirectByRole = (role) => {
+        switch (role) {
+            case config.useRoleName.administrator: history.push("/core/admin/home"); break;
+            case config.useRoleName.manager: history.push("/core/manager/home"); break;
+            case config.useRoleName.businessStaff: history.push("/core/business_staff/home"); break;
+            case config.useRoleName.technicalStaff: history.push("/core/technical_staff/home"); break;
         }
-        setValid({
-            ...valid, onUsername: validUsernameMessage, onPassword: validMessage
-        })
     }
 
 
@@ -168,11 +124,11 @@ const SignIn = ({ toggle, isVisible }) => {
                                     required
                                     className={styles["input-text"]}
                                     autoComplete="on"
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
 
                                 />
                             </label >
-                            {valid.onUsername.length > 0 ? <HelperValidation>{valid.onUsername}</HelperValidation> : ""}
+                            {<HelperValidation>{helperValid.username}</HelperValidation>}
                             < br />
 
                             <label className={styles["label-input"]} htmlFor="password" >
@@ -194,10 +150,10 @@ const SignIn = ({ toggle, isVisible }) => {
                                     required
                                     className={styles["input-text"]}
                                     autoComplete="on"
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
                                 />
                             </label >
-                            {valid.onPassword.length > 0 ? <HelperValidation>{valid.onPassword}</HelperValidation> : ""}
+                            {<HelperValidation>{helperValid.password}</HelperValidation>}
 
                             <button type="submit" className={styles["btn-signin"]}>
                                 Đăng nhập
@@ -222,64 +178,3 @@ const SignIn = ({ toggle, isVisible }) => {
 
 export default SignIn;
 
-// const [statusSignIn, setStatusSignIn] = useState({ message: "", isError: false })
-
-
-//   const colorBox = statusSignIn.isError ? "#e57373" : "#81c784";
-// useEffect(async () => await store.subscribe(() => {
-
-//     const responseValue = store.getState().auth.response
-
-// }), [store]);
-
-// const response = state.auth.response
-// store.subscribe(() => {
-//     showSnackbar('Đăng nhập thành công', 'success')
-// })
-
-
-// if (enableSubmit) {
-//     const data = {
-//         fullName: formData.username,
-//         password: formData.password
-//     };
-//     dispatch(useAuthAction().signIn(data));
-
-//     // store.subscribe(() => {
-//     //     const response = store.getState().auth.response;
-//     //     console.log("response: " + JSON.stringify(response))
-
-//     // })
-
-//     // const response = store.getState().auth.response;
-//     // console.log("responseValue: " + JSON.stringify(response))
-//     // if (response.result == 'success') {
-//     //     // setStatusSignIn({ message: "Đăng nhập thành công", isError: false })
-
-//     //     enqueueSnackbar('Đăng nhập thành công', {
-//     //         variant: 'success',
-//     //     });
-//     //     // setTimeout(() => {
-//     //     //     // history.push("/core/admin/management_account");
-//     //     // }, 500);
-
-//     // } else {
-//     //     // setStatusSignIn({
-//     //     //     message: response.errorInfo, isError: true
-//     //     // })
-//     //     enqueueSnackbar(`${response.errorInfo || "Đăng nhập thất bại"}`, {
-//     //         variant: 'error',
-//     //     });
-//     // }
-// } else {
-//     // setStatusSignIn({ message: "Dữ liệu không hợp lệ", isError: true })
-//     useShowSnackbar(`${"Dữ liệu không hợp lệ"}`)
-// }
-
-
-
-{/* {statusSignIn.message.length > 0 ?
-                        <div className={styles["alert-status"]}>
-                            <Box style={{ backgroundColor: colorBox, width: "20rem", height: "50px", border: `1px solid ${colorBox}`, borderRadius: "4px" }} className={styles["box-status-signin"]} >{statusSignIn.message}</Box>
-                        </div>
-                        : ""} */}

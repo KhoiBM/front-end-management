@@ -67,6 +67,15 @@ const useStyles = makeStyles((theme) => ({
     },
     badgeNoti: {
         // textColor: "#fff"
+    },
+    menuAccount: {
+        // background: "red",
+        position: "relative",
+        "& .MuiMenu-paper": {
+            // background: "blue",
+            position: "absolute !important",
+            top: "70px !important"
+        }
     }
 }));
 
@@ -224,16 +233,17 @@ export const HeaderBar = (props) => {
                                 id="menu-appbar"
                                 anchorEl={anchorElMenuAccount}
                                 anchorOrigin={{
-                                    vertical: 'top',
+                                    vertical: 'bottom',
                                     horizontal: 'right',
                                 }}
                                 keepMounted
                                 transformOrigin={{
-                                    vertical: 'top',
+                                    vertical: 'bottom',
                                     horizontal: 'right',
                                 }}
                                 open={openMenuAccount}
                                 onClose={handleCloseMenuAccount}
+                                className={classes.menuAccount}
                             >
 
                                 <MenuItem onClick={() => {

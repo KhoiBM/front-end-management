@@ -247,7 +247,7 @@ export const AddPrintedProductForm = (props) => {
                                         marginRight: "14px",
                                         marginBottom: '16px',
 
-                                    }}>{helperValid.categoryID}
+                                    }}>{helperValid.orderID}
                                     </FormHelperText>
                                 </FormControl>
 
@@ -301,7 +301,7 @@ export const AddPrintedProductForm = (props) => {
                                     variant='outlined'
                                     label="Tên sản phẩm đã in"
                                     value={formData.printedProductName}
-                                    name='rawProductName'
+                                    name='printedProductName'
                                     onChange={handleInputChange}
                                     error={helperValid.printedProductName ? true : false}
                                     helperText={helperValid.printedProductName}

@@ -3,6 +3,8 @@ import { AuthService } from "src/app/services/AuthServices/AuthService";
 import { takeLatest, call, put } from "redux-saga/effects";
 import { useAuthAction } from "../actions";
 import { AUTH_TYPE } from "../types";
+import { toast } from "react-toastify";
+import config from "src/environments/config";
 
 
 export const useAuthSaga = () => {
@@ -43,6 +45,8 @@ export const useAuthSaga = () => {
             yield put(useAuthAction().signInSuccess(data));
         } catch (err) {
             yield put(useAuthAction().signInFailure(err));
+            // toast.error(`Đăng nhập thất bại - ${err}`);
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
         // yield put(useLoadingAction().hide());
     }

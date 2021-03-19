@@ -1,3 +1,5 @@
+
+
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-labels */
 /* eslint-disable no-unused-vars */
@@ -99,24 +101,32 @@ const initialFValues = {
     orderID: "",
     rawProductID: "",
     printedProductName: "",
-    totalQuantityOfPrintedProduct: 1,
+    totalQuantityOfPrintedProduct: '',
     description: "",
     note: "",
     createdAt: new Date()
 }
-
 export const EditPrintedProductForm = (props) => {
     const classes = useStyles();
 
     const [orderRecords, setOrderRecords] = useState([])
-
     const [rawProductRecords, setRawProductRecords] = useState([])
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
 
+
     const { recordForEdit } = props
 
+
+
+    useEffect(() => {
+        if (recordForEdit != null && recordForEdit != undefined) {
+            setFormData({ ...formData, ...recordForEdit })
+            console.log("recordForEdit: " + JSON.stringify(recordForEdit))
+
+        }
+    }, [])
 
     useEffect(() => {
         loadInit()
@@ -162,7 +172,8 @@ export const EditPrintedProductForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // console.log("formdata: " + JSON.stringify(formData))
-        const enableSubmit = validation(formData)
+        // const enableSubmit = validation(formData)
+        const enableSubmit = true
         if (enableSubmit) {
             const data = {
                 printedProductID: "",
@@ -175,16 +186,16 @@ export const EditPrintedProductForm = (props) => {
                 createdAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
-            add(data)
+            edit(data)
         } else {
             toast.error(config.useMessage.invalidData);
         }
     }
 
 
-    const add = async (data) => {
+    const edit = async (data) => {
         try {
-            const response = await (await ManagePrintedProductServices.add(data)).data
+            const response = await (await ManagePrintedProductServices.edit(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -252,7 +263,7 @@ export const EditPrintedProductForm = (props) => {
                                         marginRight: "14px",
                                         marginBottom: '16px',
 
-                                    }}>{helperValid.categoryID}
+                                    }}>{helperValid.orderID}
                                     </FormHelperText>
                                 </FormControl>
 
@@ -306,7 +317,7 @@ export const EditPrintedProductForm = (props) => {
                                     variant='outlined'
                                     label="Tên sản phẩm đã in"
                                     value={formData.printedProductName}
-                                    name='rawProductName'
+                                    name='printedProductName'
                                     onChange={handleInputChange}
                                     error={helperValid.printedProductName ? true : false}
                                     helperText={helperValid.printedProductName}
@@ -353,7 +364,7 @@ export const EditPrintedProductForm = (props) => {
                         </Grid>
 
                         <div className={classes.buttonWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Lưu</Button>
                         </div>
 
                     </form>
@@ -364,4 +375,5 @@ export const EditPrintedProductForm = (props) => {
         </>
     )
 }
+
 

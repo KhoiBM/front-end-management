@@ -13,7 +13,9 @@ import { useDispatch, useStore, useSelector } from "react-redux";
 import config from "src/environments/config";
 import ConfirmCode from "../ConfirmCode/ConfirmCode";
 import { toast } from "react-toastify";
+import { useForm } from "src/app/utils";
 
+const initialFValues = { username: '', email: '', password: '', rePassword: '' }
 
 const SignUp = ({ toggle, isVisible }) => {
 
@@ -21,10 +23,8 @@ const SignUp = ({ toggle, isVisible }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [formData, setFormData] = useState({ username: '', email: '', password: '', repassword: '' });
-    const [valid, setValid] = useState({
-        onUsername: '', onEmail: '', onPassword: '', onRePassword: ''
-    });
+    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
+
 
 
     const { response } = useSelector((state) => state.auth)
@@ -33,13 +33,8 @@ const SignUp = ({ toggle, isVisible }) => {
     const regexPassword = config.useRegex.regexPassword
     const regexEmail = config.useRegex.regexEmail
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    }
-
     useEffect(() => {
-        document.title = 'Đăng ký';
+        // document.title = 'Đăng ký';
     }, [])
 
     useEffect(() => {
@@ -57,7 +52,9 @@ const SignUp = ({ toggle, isVisible }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const enableSubmit = validation(formData, regexPassword, regexEmail);
+        // const enableSubmit = validation(formData, regexPassword, regexEmail);
+        // const enableSubmit = validation(formData);
+        const enableSubmit = true;
         console.log("enableSubmit: " + enableSubmit);
 
         if (enableSubmit) {
@@ -66,11 +63,13 @@ const SignUp = ({ toggle, isVisible }) => {
             toast.error("Dữ liệu không hợp lệ")
         }
     };
+
     const signUp = (formData, dispatch) => {
         const data = {
-            fullName: formData.username,
+            username: formData.username,
             email: formData.email,
-            password: formData.password
+            password: formData.password,
+            role: "customer"
         };
         console.log(data)
         dispatch(useAuthAction().signUp(data));
@@ -78,47 +77,6 @@ const SignUp = ({ toggle, isVisible }) => {
 
 
 
-    const validation = ({ username, email, password, repassword }, regexPassword, regexEmail) => {
-        showHelperValid({ username, email, password, repassword }, regexPassword, regexEmail);
-        return validationUsername(username) && validationEmail(email, regexEmail) && validationPassword(password, regexPassword) && validationPassword(repassword, regexPassword) && password === repassword ? true : false;
-
-    }
-    const validationUsername = (username) => {
-        return username && username.length > 0
-    }
-    const validationEmail = (email = '', regexEmail) => {
-        return email && regexEmail.test(email);
-    }
-    const validationPassword = (password = '', regexPassword) => {
-        return password && password.length >= 8 && password.length <= 20 && regexPassword.test(password);
-    }
-    const showHelperValid = ({ username = '', email = '', password = '', repassword = '' }, regexPassword, regexEmail) => {
-        let validUsernameMessage = username && username.length > 0 ? "" : "Tên người dùng là bắt buột";
-        let validEmailMessage = "";
-        if (!email) {
-            validEmailMessage = "Email là bắt buộc";
-        }
-        else if (!regexEmail.test(email)) {
-            validEmailMessage = "Email không hợp lệ"
-        }
-        const showHelperValidPassword = (password = '') => {
-            let validMessage = "";
-            if (!password || !(password.length >= 8 && password.length <= 20)) {
-                validMessage = "Mật khẩu là bắt buộc ( 8 đến 20 ký tự)";
-            } else if (!regexPassword.test(password)) {
-                validMessage = "Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
-            }
-            return validMessage
-        }
-        let validPasswordMessage = showHelperValidPassword(password);
-        let validRePasswordMessage = showHelperValidPassword(repassword);
-        if (!validRePasswordMessage && repassword != password) {
-            validRePasswordMessage = "Mật khẩu này phải giống với mật khẩu ở trên";
-        }
-        setValid({
-            ...valid, onUsername: validUsernameMessage, onEmail: validEmailMessage, onPassword: validPasswordMessage, onRePassword: validRePasswordMessage
-        })
-    }
 
     return (
         <>
@@ -147,11 +105,11 @@ const SignUp = ({ toggle, isVisible }) => {
                                     required
                                     className={styles["input-text"]}
                                     autoComplete="on"
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
 
                                 />
                             </label >
-                            {valid.onUsername.length > 0 ? <HelperValidation>{valid.onUsername}</HelperValidation> : ""}
+                            {<HelperValidation>{helperValid.username}</HelperValidation>}
                             < br />
 
                             <label className={styles["label-input"]} htmlFor="email" >
@@ -165,11 +123,11 @@ const SignUp = ({ toggle, isVisible }) => {
                                     required
                                     className={styles["input-text"]}
                                     autoComplete="on"
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
 
                                 />
                             </label >
-                            {valid.onEmail.length > 0 ? <HelperValidation>{valid.onEmail}</HelperValidation> : ""}
+                            {<HelperValidation>{helperValid.email}</HelperValidation>}
                             < br />
 
                             <label className={styles["label-input"]} htmlFor="password" >
@@ -183,26 +141,26 @@ const SignUp = ({ toggle, isVisible }) => {
                                     required
                                     className={styles["input-text"]}
                                     autoComplete="on"
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
                                 />
                             </label >
-                            {valid.onPassword.length > 0 ? <HelperValidation>{valid.onPassword}</HelperValidation> : ""}
+                            {<HelperValidation>{helperValid.password}</HelperValidation>}
                             < br />
-                            <label className={styles["label-input"]} htmlFor="repassword" >
+                            <label className={styles["label-input"]} htmlFor="rePassword" >
                                 <section className={styles["label-title-input"]} >
                                     <p>Nhập lại mật khẩu</p>
                                 </section >
                                 <input
-                                    id="repassword"
-                                    name="repassword"
-                                    type="repassword"
+                                    id="rePassword"
+                                    name="rePassword"
+                                    type="text"
                                     required
                                     className={styles["input-text"]}
                                     autoComplete="on"
-                                    onChange={handleChange}
+                                    onChange={handleInputChange}
                                 />
                             </label >
-                            {valid.onRePassword.length > 0 ? <HelperValidation>{valid.onRePassword}</HelperValidation> : ""}
+                            {<HelperValidation>{helperValid.rePassword}</HelperValidation>}
                             < br />
 
                             <button type="submit" className={styles["btn-signup"]} >
@@ -224,12 +182,3 @@ const SignUp = ({ toggle, isVisible }) => {
 };
 
 export default SignUp;
-
-// const colorBox = statusSignUp.isError ? "#e57373" : "#81c784";
-
-
-// {statusSignUp.message.length > 0 ?
-//     <div className={styles["alert-status"]}>
-//         <Box style={{ backgroundColor: colorBox, width: "20rem", height: "50px", border: `1px solid ${colorBox}`, borderRadius: "4px" }} className={styles["box-status-signin"]} >{statusSignUp.message}</Box>
-//     </div>
-//     : ""}

@@ -26,6 +26,7 @@ export class ManagePrintedProductServices {
                             printedProductID: 1,
                             orderID: 1,
                             rawProductID: 1,
+                            printedProductName: "abc",
                             totalQuantity: 1,
                             description: "abc",
                             note: "abc",
