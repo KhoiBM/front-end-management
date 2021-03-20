@@ -113,4 +113,16 @@ export class BusinessStaffProcessOrderServices {
             }
         })
     }
+
+    static countNewOrder = () => {
+        // return useHttpModule().post(config.useApiPath.api., data)
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+                    count: 10
+                }
+            }
+        })
+    }
 }

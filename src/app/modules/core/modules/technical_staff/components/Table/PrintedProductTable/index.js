@@ -8,7 +8,7 @@ import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { useTable } from 'src/app/utils';
 import { ManagePrintedProductServices } from 'src/app/services';
 import config from 'src/environments/config';
-import { PaginationBar } from 'src/app/modules/core/components';
+import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -17,12 +17,14 @@ const useStyles = makeStyles(theme => ({
         // background: "red",
         paddingTop: "1rem",
         paddingBottom: "5rem",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     tableWrapper: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     }
 }));
 const StyledTableCell = withStyles((theme) => ({
@@ -46,6 +48,9 @@ const StyledTableRow = withStyles((theme) => ({
 export const PrintedProductTable = (props) => {
     const classes = useStyles();
 
+    const { keywords, searchAction, clickSearch } = props
+
+
     const headCells = ['Mã sản phẩm đã in', "Mã đơn hàng", "Mã sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
@@ -59,15 +64,60 @@ export const PrintedProductTable = (props) => {
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
+
+
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
+
+
+
+
+    // const handleChangePagination = (event, value) => {
+    //     setPage(value);
+    //     // console.log(page)
+    // };
+
+    // useEffect(async () => {
+    // }, [refresh])
+
+
+
+
     useEffect(() => {
-        loadInit()
-    }, [page])
+    }, [refresh])
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+    }, [page, refresh])
+
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        setPage(1)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+
+    }, [clickSearch])
 
     const loadInit = async () => {
+        console.log("loadinit")
         try {
             const response = await (await ManagePrintedProductServices.view({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
@@ -75,15 +125,60 @@ export const PrintedProductTable = (props) => {
             setRecords(records)
             setTotalPage(response.info.totalPage)
             // console.log("page: " + page)
+
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }
 
     }
 
-    useEffect(async () => {
-    }, [refresh])
 
+    const search = async () => {
+        try {
+            const response = await (await ManagePrintedProductServices.search({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+
+            const records = response.info.records
+
+            setRecords(records)
+            setTotalPage(response.info.totalPage)
+            // console.log("page: " + page)
+            console.log("search")
+        } catch (err) {
+            toast.error(config.useMessage.fetchApiFailure)
+        }
+
+    }
+
+
+
+    const onDelete = async (printedProductID) => {
+        setConfirmDialog({
+            ...confirmDialog,
+            isOpen: false
+        })
+        try {
+            console.log("onDelete")
+            const data = { printedProductID: printedProductID }
+            const response = await (await ManagePrintedProductServices.delete(data)).data
+            // console.log("response: " + JSON.stringify(response))
+
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    toast.success("Thành công")
+                    setRefresh(!refresh)
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
+
+    }
 
     return (
         <>
@@ -91,7 +186,7 @@ export const PrintedProductTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
 
                             <StyledTableRow key={row.printedProductID} >
 
@@ -108,7 +203,7 @@ export const PrintedProductTable = (props) => {
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
-
+                                {/* style={{ minWidth: "230px" }} */}
                                 <StyledTableCell >
 
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
@@ -120,18 +215,23 @@ export const PrintedProductTable = (props) => {
                                             <AiOutlineEdit />
                                         </Button>
                                     </Tooltip>
-
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Xoá">
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation();
-                                            // ((row) => {
-                                            // })()
-                                            // setOpenDialog(true)
-                                            // deleteAction(row.printedProductID)
+                                            setConfirmDialog(
+                                                {
+                                                    isOpen: true,
+                                                    title: "Bạn có chắc là muốn xoá ?",
+                                                    subTitle: "Bạn không thể hoàn tác hành động này",
+                                                    onConfirm: () => { onDelete(row.printedProductID) }
+
+                                                }
+                                            )
+
                                         }
                                         }>
-                                            <AiOutlineDelete />
+                                            <AiOutlineDelete className={classes.deleteIcon} />
                                         </Button>
 
                                     </Tooltip>
@@ -146,6 +246,8 @@ export const PrintedProductTable = (props) => {
                     </TableBody>
                 </TblContainer>
             </div>
+
+            <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
 
 
             <div className={classes.paginationContainer}>

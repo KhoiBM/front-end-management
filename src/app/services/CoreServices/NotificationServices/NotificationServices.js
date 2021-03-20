@@ -45,7 +45,7 @@ export class NotificationServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    count: 10
                 }
             }
         })

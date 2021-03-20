@@ -130,7 +130,7 @@ export const EditCustomersRawProductForm = (props) => {
         console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add()
+            edit()
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -156,9 +156,9 @@ export const EditCustomersRawProductForm = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
     }
-    const add = async () => {
+    const edit = async () => {
         try {
-            const response = await (await ManageCustomersRawProductServices.add(formData)).data
+            const response = await (await ManageCustomersRawProductServices.edit(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {

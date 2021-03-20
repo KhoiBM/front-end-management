@@ -18,12 +18,14 @@ const useStyles = makeStyles(theme => ({
         // background: "red",
         paddingTop: "1rem",
         paddingBottom: "5rem",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     tableWrapper: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     deleteIcon: {
         color: "red"

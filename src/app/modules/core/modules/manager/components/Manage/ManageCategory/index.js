@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
     buttonAddWrapper: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     buttonAdd: {
         cursor: "pointer",

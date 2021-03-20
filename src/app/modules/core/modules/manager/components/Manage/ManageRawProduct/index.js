@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     actionContainer: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6),
+        // paddingRight: theme.spacing(6),
+        paddingRight: theme.spacing(2)
     },
     actionWrapper: {
         display: "flex",
@@ -31,11 +32,12 @@ const useStyles = makeStyles(theme => ({
         // paddingLeft: theme.spacing(8),
         // marginRight: theme.spacing(8),
         // background: '#B6E2F3',
-        width: "97%",
+        width: "99%",
 
     },
     buttonAdd: {
         cursor: "pointer",
+        // paddingRight: theme.spacing(2),
         '&:hover': {
             // backgroundColor: theme.palette.primary.main,
             backgroundColor: "#fff",

@@ -21,12 +21,14 @@ const useStyles = makeStyles(theme => ({
         // background: "red",
         paddingTop: "1rem",
         paddingBottom: "5rem",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     tableWrapper: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     }
 }));
 const StyledTableCell = withStyles((theme) => ({
@@ -50,7 +52,8 @@ const StyledTableRow = withStyles((theme) => ({
 export const CustomersRawProductImportationTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã nhập', "Mã sản phẩm thô của khách hàng", "Tên sản phẩm thô của khách hàng", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    // const headCells = ['Mã nhập', "Mã sản phẩm thô của khách hàng", "Tên sản phẩm thô của khách hàng", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    const headCells = ['Mã nhập', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
 
 
     const [page, setPage] = useState(1);

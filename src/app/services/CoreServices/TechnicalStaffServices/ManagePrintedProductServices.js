@@ -17,28 +17,56 @@ export class ManagePrintedProductServices {
 
     static view = (data) => {
         // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    records: [
-                        {
-                            printedProductID: 1,
-                            orderID: 1,
-                            rawProductID: 1,
-                            printedProductName: "abc",
-                            totalQuantity: 1,
-                            description: "abc",
-                            note: "abc",
-                            createdAt: "02-02-2020",
-                            updatedAt: "02-02-2020"
+        if (data.page == 1) {
+            return Promise.resolve({
+                data: {
+                    result: config.useResultStatus.SUCCESS,
+                    info: {
+                        records: [
+                            {
+                                printedProductID: 4,
+                                orderID: 1,
+                                rawProductID: 1,
+                                printedProductName: "abc",
+                                totalQuantity: 10,
+                                description: "abc",
+                                note: "abc",
+                                createdAt: "02-02-2020",
+                                updatedAt: "02-02-2020"
 
-                        }
-                    ]
+                            }
+                        ],
+                        totalPage: 20
 
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            return Promise.resolve({
+                data: {
+                    result: config.useResultStatus.SUCCESS,
+                    info: {
+                        records: [
+                            {
+                                printedProductID: 5,
+                                orderID: 1,
+                                rawProductID: 1,
+                                printedProductName: "abc",
+                                totalQuantity: 10,
+                                description: "abc",
+                                note: "abc",
+                                createdAt: "02-02-2020",
+                                updatedAt: "02-02-2020"
+
+                            }
+                        ],
+                        totalPage: 20
+
+                    }
+                }
+            })
+        }
+
     }
     static add = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
@@ -76,13 +104,54 @@ export class ManagePrintedProductServices {
 
     static search = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
+        if (data.page == 1) {
+            return Promise.resolve({
+                data: {
+                    result: config.useResultStatus.SUCCESS,
+                    info: {
+                        records: [
+                            {
+                                printedProductID: 24,
+                                orderID: 1,
+                                rawProductID: 1,
+                                printedProductName: "abc",
+                                totalQuantity: 10,
+                                description: "abc",
+                                note: "abc",
+                                createdAt: "02-02-2020",
+                                updatedAt: "02-02-2020"
 
+                            }
+                        ],
+                        totalPage: 20
+
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            return Promise.resolve({
+                data: {
+                    result: config.useResultStatus.SUCCESS,
+                    info: {
+                        records: [
+                            {
+                                printedProductID: 25,
+                                orderID: 1,
+                                rawProductID: 1,
+                                printedProductName: "abc",
+                                totalQuantity: 10,
+                                description: "abc",
+                                note: "abc",
+                                createdAt: "02-02-2020",
+                                updatedAt: "02-02-2020"
+
+                            }
+                        ],
+                        totalPage: 20
+
+                    }
+                }
+            })
+        }
     }
 }

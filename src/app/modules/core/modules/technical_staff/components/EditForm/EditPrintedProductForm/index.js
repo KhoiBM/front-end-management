@@ -122,9 +122,8 @@ export const EditPrintedProductForm = (props) => {
 
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
-            setFormData({ ...formData, ...recordForEdit })
+            setFormData(prevformdata => ({ ...prevformdata, ...recordForEdit, totalQuantityOfPrintedProduct: recordForEdit.totalQuantity }))
             console.log("recordForEdit: " + JSON.stringify(recordForEdit))
-
         }
     }, [])
 
@@ -160,7 +159,7 @@ export const EditPrintedProductForm = (props) => {
             }
 
 
-            setFormData({ ...formData, orderID: orderRecords[0].orderID, rawProductID: recordsRawProduct[0].rawProductID })
+            // setFormData({ ...formData, orderID: orderRecords[0].orderID, rawProductID: recordsRawProduct[0].rawProductID })
             setOrderRecords(orderRecords ? orderRecords : [])
             setRawProductRecords(recordsRawProduct ? recordsRawProduct : [])
 
@@ -172,11 +171,11 @@ export const EditPrintedProductForm = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         // console.log("formdata: " + JSON.stringify(formData))
-        // const enableSubmit = validation(formData)
-        const enableSubmit = true
+        const enableSubmit = validation(formData)
+
         if (enableSubmit) {
             const data = {
-                printedProductID: "",
+                printedProductID: formData.printedProductID,
                 orderID: formData.orderID,
                 rawProductID: formData.rawProductID,
                 printedProductName: formData.printedProductName,

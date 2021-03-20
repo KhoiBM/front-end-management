@@ -150,7 +150,7 @@ import { ManageRawProductServices } from '../../../../../../../services/CoreServ
 import config from '../../../../../../../../environments/config';
 import { useTable } from 'src/app/utils';
 import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
-import { RiTruckLine } from 'react-icons/ri';
+import { RiTruckLine, RiInformationLine } from 'react-icons/ri';
 
 
 const useStyles = makeStyles(theme => ({
@@ -161,13 +161,14 @@ const useStyles = makeStyles(theme => ({
         // background: "red",
         paddingTop: "1rem",
         paddingBottom: "5rem",
-        paddingRight: theme.spacing(6)
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     tableWrapper: {
         display: "flex",
         justifyContent: "flex-end",
-        paddingRight: theme.spacing(6),
-        // background: "red",
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2)
     },
     deleteIcon: {
         color: "red"
@@ -194,6 +195,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const RawProductTable = (props) => {
     const classes = useStyles();
+
     const { keywords, searchAction, clickSearch } = props
 
     const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
@@ -343,9 +345,22 @@ export const RawProductTable = (props) => {
                                 <StyledTableCell >{row.createdBy}</StyledTableCell>
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                                <StyledTableCell style={{ minWidth: "130px" }}>{row.updatedAt}</StyledTableCell>
 
-                                <StyledTableCell >
+                                <StyledTableCell style={{ minWidth: "230px" }}>
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết">
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+
+                                        }
+                                        }>
+                                            <RiInformationLine />
+                                        </Button>
+
+                                    </Tooltip>
+
+
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
 
                                         <Button onClick={(event) => {

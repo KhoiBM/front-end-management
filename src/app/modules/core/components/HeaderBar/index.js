@@ -6,7 +6,7 @@ import { RiAccountBoxLine, RiNotification2Line } from 'react-icons/ri';
 import { MdSupervisorAccount, MdChevronLeft, MdChevronRight, MdMenu } from 'react-icons/md'
 import clsx from 'clsx';
 
-import config from '../../../../../environments/config'
+
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthService } from 'src/app/services/AuthServices/AuthService';
@@ -14,6 +14,8 @@ import { AiOutlineProfile, AiOutlineLogout } from 'react-icons/ai';
 
 import brandLogo from 'src/app/assets/image/brand.svg';
 import { invert } from 'underscore';
+import config from 'src/environments/config';
+import { NotificationBar } from '../NotificationBar';
 
 const drawerWidth = config.useStyles.drawerWidth;
 
@@ -62,11 +64,6 @@ const useStyles = makeStyles((theme) => ({
         width: "25px",
         height: "auto",
         filter: "invert(100%)",
-    }, icon: {
-        // filter: "invert(100%)",
-    },
-    badgeNoti: {
-        // textColor: "#fff"
     },
     menuAccount: {
         // background: "red",
@@ -83,14 +80,13 @@ export const HeaderBar = (props) => {
     const history = useHistory();
     const classes = useStyles();
 
-    const role = localStorage.getItem("role");
-    const useRoleName = config.useRoleName;
+
 
     const [anchorElMenuAccount, setAnchorElMenuAccount] = useState(null);
-    const [anchorElNotiAccount, setAnchorElNotiAccount] = useState(null);
+
 
     const openMenuAccount = Boolean(anchorElMenuAccount);
-    const openNotiAccount = Boolean(anchorElNotiAccount);
+
 
     const handleMenuAccount = (event) => {
         setAnchorElMenuAccount(event.currentTarget);
@@ -100,14 +96,6 @@ export const HeaderBar = (props) => {
         setAnchorElMenuAccount(null);
     };
 
-
-    const handleMenuNoti = (event) => {
-        setAnchorElNotiAccount(event.currentTarget);
-    };
-
-    const handleCloseNotiAccount = (event) => {
-        setAnchorElNotiAccount(null);
-    };
 
     return (
         <>
@@ -153,65 +141,9 @@ export const HeaderBar = (props) => {
 
 
 
-                        <div>
-                            {
-                                role != useRoleName.administrator &&
-                                <Tooltip TransitionComponent={Zoom} placement="left" title="Thông báo">
-
-                                    <IconButton
-                                        aria-label="noti"
-                                        aria-controls="noti-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleMenuNoti}
-                                        color="inherit"
-                                    >
-                                        <Badge
-                                            anchorOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'right',
-                                            }}
-                                            badgeContent={999}
-                                            className={classes.badgeNoti}
-                                            color="error"           >
-                                            <RiNotification2Line className={classes.icon} />
-                                        </Badge>
-                                    </IconButton>
 
 
-                                </Tooltip>
-
-                            }
-                            {/* <Menu
-                                id="noti-appbar"
-                                anchorEl={anchorElNotiAccount}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                keepMounted
-                                open={openNotiAccount}
-                                onClose={handleCloseNotiAccount}
-                            >
-                                <MenuList>
-                                    <MenuItem onClick={() => {
-                                        handleCloseNotiAccount();
-                                    }}>
-
-                                    </MenuItem>
-
-                                    <MenuItem onClick={() => {
-                                        handleCloseNotiAccount();
-                                    }}>
-
-                                    </MenuItem>
-                                </MenuList>
-
-                            </Menu> */}
-                        </div >
-
-
-
-
+                        <NotificationBar />
 
 
 
