@@ -11,6 +11,7 @@ import { ManageRawProductImportationServices } from '../../../../../../../servic
 import config from '../../../../../../../../environments/config';
 import { useTable } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
+import { ManageCustomersRawProductImportationServices } from 'src/app/services';
 
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
@@ -49,8 +50,8 @@ const StyledTableRow = withStyles((theme) => ({
 export const CustomersRawProductImportationTable = (props) => {
     const classes = useStyles();
 
-    // const headCells = ['ID', "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã nhập', "Tên sản phẩm thô của khách hàng", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    const headCells = ['Mã nhập', "Mã sản phẩm thô của khách hàng", "Tên sản phẩm thô của khách hàng", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -73,7 +74,7 @@ export const CustomersRawProductImportationTable = (props) => {
 
     const loadInit = async () => {
         try {
-            const response = await (await ManageRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
+            const response = await (await ManageCustomersRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
 
             setRecords(records)
@@ -97,12 +98,11 @@ export const CustomersRawProductImportationTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
                             <StyledTableRow key={row.importedRawProductID} >
 
-                                <StyledTableCell >
-                                    {row.importedRawProductID}
-                                </StyledTableCell>
+                                <StyledTableCell >{row.importedRawProductID}</StyledTableCell>
+                                <StyledTableCell >{row.rawProductID}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
                                 <StyledTableCell >{row.quantity}</StyledTableCell>
                                 <StyledTableCell >{row.providedBy}</StyledTableCell>

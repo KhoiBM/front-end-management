@@ -106,7 +106,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
-    const [recordsRawProduct, setRecordsRawProduct] = useState([])
+    const [rawProductRecords, setRawProductRecords] = useState([])
 
 
     // useEffect(() => {
@@ -127,7 +127,8 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     const records = response.info.records
-                    setRecordsRawProduct(records)
+                    setFormData({ ...formData, rawProductID: records[0].rawProductID })
+                    setRawProductRecords(records)
                     // toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -196,35 +197,50 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
                         <Grid container>
                             <Grid item xs={6} sm={6} md={6}>
-                                <>
-                                    <FormControl variant="outlined" className={classes.formSelectControl}>
-                                        <InputLabel id="rawProductID-label">
 
+                                <FormControl variant="outlined" className={classes.formSelectControl}>
+                                    <InputLabel id="rawProductID-label">
+                                        Sản phẩm thô của khách hàng
                                         </InputLabel>
-                                        <Select
-                                            labelId="rawProductID-label"
-                                            id="rawProductID"
-                                            value={formData.rawProductID != null && formData.rawProductID != undefined && formData.rawProductID.length > 0 ? parseInt(formData.rawProductID, 10) : recordsRawProduct != null && recordsRawProduct != undefined && recordsRawProduct.length > 0 ? recordsRawProduct[0].rawProductID : ""}
-                                            onChange={handleInputChange}
-                                            name="rawProductID"
-                                            className={classes.formSelectContainer}
-                                        >
-                                            {
-                                                recordsRawProduct.map(val =>
-                                                    (<MenuItem value={parseInt(val.rawProductID, 10)} key={parseInt(val.rawProductID, 10)}>
-                                                        <Box>
-                                                            <Typography>  {`Mã sản phẩm thô: ${val.rawProductID}`}</Typography>
-                                                            <Typography>  {`Tên sản phẩm thô: ${val.rawProductName}`}</Typography>
-                                                        </Box>
-                                                    </MenuItem>))
-                                            }
+                                    <Select
+                                        labelId="rawProductID-label"
+                                        id="rawProductID"
+                                        value={String(formData.rawProductID)}
+
+                                        onChange={handleInputChange}
+                                        name="rawProductID"
+                                        className={classes.formSelectContainer}
+                                        labelWidth={220}
+                                    // error={helperValid.rawProductID}
+                                    >
+                                        {
+                                            rawProductRecords.map(val =>
+                                                (<MenuItem value={String(val.rawProductID)} key={String(val.rawProductID)}>
+                                                    <Box>
+                                                        <Typography>  {`Mã sản phẩm thô: ${val.rawProductID}`}</Typography>
+                                                        <Typography>  {`Tên sản phẩm thô: ${val.rawProductName}`}</Typography>
+                                                    </Box>
+                                                </MenuItem>))
+                                        }
 
 
 
-                                        </Select>
-                                        <FormHelperText></FormHelperText>
-                                    </FormControl>
-                                </>
+                                    </Select>
+                                    <FormHelperText style={{
+                                        color: "#f44336",
+                                        marginLeft: "14px",
+                                        marginRight: "14px",
+                                        marginBottom: '16px'
+
+                                    }}>
+                                        {/* {helperValid.rawProductID} */}
+                                    </FormHelperText>
+
+
+                                </FormControl>
+
+
+
                                 <TextField
                                     variant='outlined'
                                     label="Số lượng"

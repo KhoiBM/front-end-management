@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, Tooltip, Zoom } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { ManageRawProductServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
 import { useTable } from 'src/app/utils';
-import { PaginationBar } from 'src/app/modules/core/components';
+import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
+import { ManageCustomersRawProductServices } from 'src/app/services';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -23,6 +24,9 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "flex-end",
         paddingRight: theme.spacing(6)
+    },
+    deleteIcon: {
+        color: "red"
     }
 }));
 const StyledTableCell = withStyles((theme) => ({
@@ -46,7 +50,9 @@ const StyledTableRow = withStyles((theme) => ({
 export const CustomersRawProductTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const { keywords, searchAction, clickSearch } = props
+
+    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -59,21 +65,63 @@ export const CustomersRawProductTable = (props) => {
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
+
+
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
+
+
+
+    // const handleChangePagination = (event, value) => {
+    //     setPage(value);
+    //     // console.log(page)
+    // };
+
+
+
+    // useEffect(() => {
+    // }, [refresh])
+
+
     useEffect(() => {
-        loadInit()
-    }, [page])
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+    }, [page, refresh])
+
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        setPage(1)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+
+    }, [clickSearch])
+
 
     const loadInit = async () => {
         try {
-            const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, limit: limit })).data
+            const response = await (await ManageCustomersRawProductServices.view({ filterBy: "all", page: page, limit: limit })).data
             const records = response.info.records
 
             setRecords(records)
             setTotalPage(response.info.totalPage)
+            console.log("loadinit")
             // console.log("page: " + page)
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
@@ -81,9 +129,53 @@ export const CustomersRawProductTable = (props) => {
 
     }
 
-    useEffect(async () => {
-    }, [refresh])
+    const search = async () => {
+        try {
+            const response = await (await ManageCustomersRawProductServices.search({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
 
+            const records = response.info.records
+
+            setRecords(records)
+            setTotalPage(response.info.totalPage)
+            // console.log("page: " + page)
+            console.log("search")
+        } catch (err) {
+            toast.error(config.useMessage.fetchApiFailure)
+        }
+
+    }
+
+
+
+
+
+    const onDelete = async (rawProductID) => {
+        setConfirmDialog({
+            ...confirmDialog,
+            isOpen: false
+        })
+        try {
+            console.log("onDelete")
+            console.log("deleterawProductID:  " + rawProductID)
+            const data = { rawProductID: rawProductID }
+            const response = await (await ManageCustomersRawProductServices.delete(data)).data
+            // console.log("response: " + JSON.stringify(response))
+
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    toast.success("Thành công")
+                    setRefresh(!refresh)
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+    }
 
     return (
         <>
@@ -93,14 +185,14 @@ export const CustomersRawProductTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
                             <StyledTableRow key={row.rawProductID} >
 
                                 <StyledTableCell>
                                     {row.rawProductID}
                                 </StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
-                                {/* <StyledTableCell >{row.unitPrice}</StyledTableCell> */}
+                                <StyledTableCell >{row.unitPrice}</StyledTableCell>
                                 <StyledTableCell >{row.totalQuantity}</StyledTableCell>
                                 <StyledTableCell >{row.size}</StyledTableCell>
                                 <StyledTableCell >{row.color}</StyledTableCell>
@@ -114,13 +206,41 @@ export const CustomersRawProductTable = (props) => {
 
 
                                 <StyledTableCell >
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
-                                    </Button>
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            props.handleEdit(row)
+                                        }
+                                        }>
+                                            <AiOutlineEdit />
+                                        </Button>
+
+                                    </Tooltip>
+
+
+
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Xoá">
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation();
+                                            // onDelete(row.rawProductID)
+                                            setConfirmDialog(
+                                                {
+                                                    isOpen: true,
+                                                    title: "Bạn có chắc là muốn xoá ?",
+                                                    subTitle: "Bạn không thể hoàn tác hành động này",
+                                                    onConfirm: () => { onDelete(row.rawProductID) }
+
+                                                }
+                                            )
+
+                                        }
+                                        }>
+                                            <AiOutlineDelete className={classes.deleteIcon} />
+                                        </Button>
+
+                                    </Tooltip>
                                 </StyledTableCell>
 
                             </StyledTableRow>
@@ -132,6 +252,7 @@ export const CustomersRawProductTable = (props) => {
                 </TblContainer>
             </div>
 
+            <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />

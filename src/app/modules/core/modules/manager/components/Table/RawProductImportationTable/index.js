@@ -97,12 +97,10 @@ export const RawProductImportationTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
                             <StyledTableRow key={row.importedRawProductID} >
 
-                                <StyledTableCell>
-                                    {row.importedRawProductID}
-                                </StyledTableCell>
+                                <StyledTableCell>{row.importedRawProductID}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductID}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
                                 <StyledTableCell >{row.quantity}</StyledTableCell>

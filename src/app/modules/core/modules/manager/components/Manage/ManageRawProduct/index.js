@@ -52,9 +52,22 @@ const useStyles = makeStyles(theme => ({
 export const ManageRawProduct = () => {
     const classes = useStyles();
 
+    const [openEditForm, setOpenEditForm] = useState(false);
+    const [openAddForm, setOpenAddForm] = useState(false);
+    const [recordForEdit, setRecordForEdit] = useState(0)
+
+
     const [clickSearch, setClickSearch] = useState(false)
     const [searchAction, setSearchAction] = useState(false)
     const [keywords, setKeywords] = useState("")
+
+
+
+    // useEffect(() => {
+    //     // console.log("render")
+    //     // console.log("searchAction: " + searchAction)
+    // }, [searchAction, setSearchAction, keywords])
+
 
     const handleKeywordsChange = (event) => {
         setKeywords(event.target.value)
@@ -66,14 +79,8 @@ export const ManageRawProduct = () => {
     }
 
 
-    const [openEditForm, setOpenEditForm] = useState(false);
-    const [openAddForm, setOpenAddForm] = useState(false);
-    const [recordForEdit, setRecordForEdit] = useState(0)
 
-    // useEffect(() => {
-    //     // console.log("render")
-    //     // console.log("searchAction: " + searchAction)
-    // }, [searchAction, setSearchAction, keywords])
+
 
     const handleEdit = (row) => {
         setOpenEditForm(true);

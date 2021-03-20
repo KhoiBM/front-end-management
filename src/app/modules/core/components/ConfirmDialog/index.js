@@ -1,48 +1,79 @@
-// /* eslint-disable react/prop-types */
-// import React from 'react'
-// import { Dialog, DialogTitle, DialogContentText, Button, DialogActions, DialogContent, makeStyles, Typography } from '@material-ui/core'
-// import { FiAlertTriangle } from 'react-icons/fi'
+/* eslint-disable react/prop-types */
+import React from 'react'
+import { Dialog, DialogTitle, DialogContentText, Button, DialogActions, DialogContent, makeStyles, Typography, Fade, Slide } from '@material-ui/core'
+import { FiAlertTriangle } from 'react-icons/fi'
 
-// const useStyles = makeStyles(theme => ({}))
-// export const ConfirmDialog = (props) => {
-//     const classes = useStyles();
-//     const { title, subTitle, color, confirmDialog, setConfirmDialog } = props
-//     return (
-//         <>
-//             <Dialog open={confirmDialog.isOpen}
-//             >
-//                 <DialogTitle >
+const useStyles = makeStyles(theme => ({
+    dialog: {
+        padding: theme.spacing(2),
+        // position: 'absolute',
+        // top: theme.spacing(24),
+        whiteSpace: "nowrap"
+    },
+    dialogTitle: {
+        textAlign: "center"
+    },
+    dialogContent: {
+        textAlign: "center"
+    },
+    dialogAction: {
+        // justifyContent: "center"
+    }
 
-//                 </DialogTitle>
+}))
 
-//                 <DialogContent>
-//                     <Typography variant="h6">
-//                         {title}
-//                     </Typography>
 
-//                     <Typography variant="subtitle2">
-//                         {subTitle}
-//                     </Typography>
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
-//                 </DialogContent>
 
-//                 <DialogActions>
-//                     <Button onClick={() => {
+export const ConfirmDialog = (props) => {
+    const classes = useStyles();
+    const { confirmDialog, setConfirmDialog } = props
 
-//                     }} className={classes.buttonCancel}>
-//                         Huỷ
-//                     </Button>
+    return (
+        <>
+            <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}
+            >
+                <DialogTitle className={classes.dialogTitle}>
 
-//                     <Button onClick={() => {
-//                     }} className={classes.buttonOK}>
-//                         Đồng ý
-//                     </Button>
+                </DialogTitle>
 
-//                 </DialogActions>
-//             </Dialog>
-//         </>
-//     )
-// }
+                <DialogContent className={classes.dialogContent}>
+                    <Typography variant="h6">
+                        {confirmDialog.title}
+                    </Typography>
+
+                    <Typography variant="subtitle2">
+                        {/* {confirmDialog.subTitle} */}
+                    </Typography>
+
+                </DialogContent>
+
+                <DialogActions className={classes.dialogAction}>
+                    <Button onClick={() => {
+                        setConfirmDialog({
+                            ...confirmDialog,
+                            isOpen: false
+                        })
+
+                    }} className={classes.buttonCancel}>
+                        Huỷ
+                    </Button>
+
+                    <Button onClick={() => {
+                        confirmDialog.onConfirm()
+                    }} className={classes.buttonOK}>
+                        Đồng ý
+                    </Button>
+
+                </DialogActions>
+            </Dialog>
+
+        </>
+    )
+}
 
 
 

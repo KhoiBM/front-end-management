@@ -143,7 +143,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, Tooltip, Zoom } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, Tooltip, Zoom, Fade } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { ManageRawProductServices } from '../../../../../../../services/CoreServices/ManagerServices';
@@ -194,7 +194,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export const RawProductTable = (props) => {
     const classes = useStyles();
-    const { keywords, searchAction, setSearchAction, clickSearch, setClickSearch } = props
+    const { keywords, searchAction, clickSearch } = props
 
     const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
@@ -209,6 +209,7 @@ export const RawProductTable = (props) => {
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
 
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
 
 
 
@@ -285,7 +286,10 @@ export const RawProductTable = (props) => {
     }
 
     const onDelete = async (rawProductID) => {
-
+        setConfirmDialog({
+            ...confirmDialog,
+            isOpen: false
+        })
         try {
             console.log("onDelete")
             const data = { rawProductID: rawProductID }
@@ -359,7 +363,16 @@ export const RawProductTable = (props) => {
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation();
-                                            onDelete(row.rawProductID)
+                                            // onDelete(row.rawProductID)
+                                            setConfirmDialog(
+                                                {
+                                                    isOpen: true,
+                                                    title: "Bạn có chắc là muốn xoá ?",
+                                                    subTitle: "Bạn không thể hoàn tác hành động này",
+                                                    onConfirm: () => { onDelete(row.rawProductID) }
+
+                                                }
+                                            )
 
                                         }
                                         }>
@@ -378,7 +391,9 @@ export const RawProductTable = (props) => {
                     </TableBody>
                 </TblContainer>
             </div>
-            <ConfirmDialog />
+
+            <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
+
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
