@@ -206,9 +206,7 @@ export const UpdateRawProductImportationForm = (props) => {
                                         <Select
                                             labelId="rawProductID-label"
                                             id="rawProductID"
-                                            value={formData.rawProductID
-
-                                            }
+                                            value={String(formData.rawProductID)}
 
                                             onChange={handleInputChange}
                                             name="rawProductID"
@@ -218,7 +216,7 @@ export const UpdateRawProductImportationForm = (props) => {
                                         >
                                             {
                                                 rawProductRecords.map(val =>
-                                                    (<MenuItem value={val.rawProductID} key={val.rawProductID}>
+                                                    (<MenuItem value={String(val.rawProductID)} key={String(val.rawProductID)}>
                                                         <Box>
                                                             <Typography>  {`Mã sản phẩm thô: ${val.rawProductID}`}</Typography>
                                                             <Typography>  {`Tên sản phẩm thô: ${val.rawProductName}`}</Typography>
@@ -241,6 +239,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
                                     </FormControl>
                                 </>
+
                                 <TextField
                                     variant='outlined'
                                     label="Số lượng"
@@ -252,6 +251,7 @@ export const UpdateRawProductImportationForm = (props) => {
                                     required
                                     type="number"
                                 />
+
                                 <TextField
                                     variant='outlined'
                                     label="Cung cấp bởi"

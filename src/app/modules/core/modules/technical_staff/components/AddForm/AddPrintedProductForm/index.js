@@ -108,6 +108,7 @@ export const AddPrintedProductForm = (props) => {
     const classes = useStyles();
 
     const [orderRecords, setOrderRecords] = useState([])
+
     const [rawProductRecords, setRawProductRecords] = useState([])
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -159,6 +160,7 @@ export const AddPrintedProductForm = (props) => {
         // console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
+
             const data = {
                 printedProductID: "",
                 orderID: formData.orderID,
@@ -170,7 +172,9 @@ export const AddPrintedProductForm = (props) => {
                 createdAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
+
             add(data)
+
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -230,6 +234,7 @@ export const AddPrintedProductForm = (props) => {
                                         name="orderID"
                                         labelWidth={70}
                                         required
+                                    // error={helperValid.orderID}
                                     >
                                         {
                                             orderRecords.map(val =>
@@ -247,7 +252,8 @@ export const AddPrintedProductForm = (props) => {
                                         marginRight: "14px",
                                         marginBottom: '16px',
 
-                                    }}>{helperValid.orderID}
+                                    }}>
+                                        {/* {helperValid.orderID} */}
                                     </FormHelperText>
                                 </FormControl>
 

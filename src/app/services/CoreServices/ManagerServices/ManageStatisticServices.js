@@ -21,9 +21,10 @@ export class ManageStatisticServices {
                 result: config.useResultStatus.SUCCESS,
                 info: {
                     record: {
-                        inWeek: 122122,
-                        inMonth: 13213232,
-                        inYear: 2121221
+                        overall: 1232323,
+                        inWeek: 1323,
+                        inMonth: 14213,
+                        inYear: 1521221
                     }
                 }
             }

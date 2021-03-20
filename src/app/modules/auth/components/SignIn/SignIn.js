@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-import React, { useState, useEffect, useLayoutEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SignIn.module.css";
 import { RiCloseFill } from "react-icons/ri";
 import { Link, useHistory } from "react-router-dom";
@@ -14,16 +14,13 @@ import { useSelector, useDispatch, useStore } from "react-redux";
 import { useAuthAction } from "src/app/stores/actions";
 import _ from "underscore";
 import config from "src/environments/config";
-import ConfirmCode from "../ConfirmCode/ConfirmCode";
-import { useShowSnackbar, useForm } from "src/app/utils/handles/index";
-import { toast, ToastContainer } from "react-toastify";
+import { useForm } from "src/app/utils/handles/index";
+import { toast } from "react-toastify";
 import jwt_decode from 'jwt-decode';
 
 const initialFValues = { username: '', password: '' }
 
 const SignIn = ({ toggle, isVisible }) => {
-    // console.log("isvisible: " + isVisible);
-    // const { showSnackbar } = useShowSnackbar();
 
     const store = useStore();
     const history = useHistory();
@@ -34,6 +31,7 @@ const SignIn = ({ toggle, isVisible }) => {
 
 
     const [isFirst, setIsFirst] = useState(true)
+
     const { response } = useSelector((state) => state.auth)
 
 
@@ -43,10 +41,6 @@ const SignIn = ({ toggle, isVisible }) => {
     }, [])
 
 
-    useEffect(() => {
-        // console.log("ValueResponse: " + JSON.stringify(response));
-
-    })
 
     useEffect(async () => {
         if (!isFirst) {
@@ -58,7 +52,6 @@ const SignIn = ({ toggle, isVisible }) => {
             } else {
                 toast.error("Đăng nhập thất bại")
             }
-
         }
         setIsFirst(false);
     }, [response])
@@ -68,7 +61,7 @@ const SignIn = ({ toggle, isVisible }) => {
         event.preventDefault();
         const enableSubmit = validation(formData);
         // const enableSubmit = true;
-
+        console.log("formdata: " + JSON.stringify(formData))
         if (enableSubmit) {
             signIn(formData, dispatch);
         } else {
@@ -82,8 +75,6 @@ const SignIn = ({ toggle, isVisible }) => {
             password: formData.password
         };
         await dispatch(useAuthAction().signIn(data));
-
-
     }
 
     const redirectByRole = (role) => {
@@ -98,19 +89,21 @@ const SignIn = ({ toggle, isVisible }) => {
 
     return (
         <>
-            {/* {styles[]} */}
-            {/* <p>hello SignIn</p> */}
+
             {isVisible && (
                 <div className={styles["signin-page-container"]}>
                     <section className={styles["signin-wrapper"]} >
+
                         {/* <div className={styles["icon-close-wrapper"]}>
                             <Link to='#' className={styles["icon-close"]} onClick={toggle}>
                                 <RiCloseFill />
                             </Link>
                         </div> */}
+
                         <div className={styles["logo-wrapper"]}>
                             <img src={brandLogo} className={styles["brand-logo"]} alt="logo of brand" />
                         </div >
+
                         <form className={styles["form-signin-wrapper"]} onSubmit={handleSubmit} noValidate >
                             <label className={styles["label-input"]} htmlFor="username" >
                                 <section className={styles["label-title-input"]} >

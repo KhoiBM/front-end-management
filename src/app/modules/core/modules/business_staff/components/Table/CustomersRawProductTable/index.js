@@ -46,7 +46,7 @@ const StyledTableRow = withStyles((theme) => ({
 export const CustomersRawProductTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -106,6 +106,9 @@ export const CustomersRawProductTable = (props) => {
                                 <StyledTableCell >{row.color}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>
                                 <StyledTableCell >{row.categoryName}</StyledTableCell>
+
+                                <StyledTableCell >{row.createdBy}</StyledTableCell>
+
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 

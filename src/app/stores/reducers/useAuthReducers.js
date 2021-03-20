@@ -16,14 +16,14 @@ export const useAuthReducer = (state = new AuthState({ response: {}, isSignedIn:
         case AUTH_TYPE.SIGNIN.SUCCESS:
             const dataPayload = action.payload.data
             console.log("dataPayload: " + JSON.stringify(dataPayload));
-            // if (dataPayload && dataPayload.result == config.useResultStatus.SUCCESS) {
-            if (dataPayload && dataPayload.result == "success") {
+            if (dataPayload && dataPayload.result == config.useResultStatus.SUCCESS) {
+                // if (dataPayload && dataPayload.result == "success") {
                 const token = dataPayload.info.accessToken;
-                const tokenID = dataPayload.info.idToken;
+                // const tokenID = dataPayload.info.idToken;
 
-                const decodedtokenID = jwt_decode(tokenID);
+                // const decodedtokenID = jwt_decode(tokenID);
                 // const role = decodedtokenID["custom:role"]
-                const role = config.useRoleName.administrator
+                const role = config.useRoleName.manager
 
                 localStorage.setItem("pps-token", JSON.stringify(token));
                 localStorage.setItem("role", role);
@@ -49,6 +49,7 @@ export const useAuthReducer = (state = new AuthState({ response: {}, isSignedIn:
                 response: action.payload.data,
                 isSignedIn: false
             };
+
         case AUTH_TYPE.SIGNEDIN.SUCCESS:
             return {
                 ...state,

@@ -101,7 +101,6 @@ const initialFValues = {
     color: '',
     description: '',
     categoryID: "",
-    isActive: true,
     createdAt: new Date()
 }
 export const AddCustomersRawProductForm = (props) => {
@@ -205,16 +204,7 @@ export const AddCustomersRawProductForm = (props) => {
                                     required
                                     type="number"
                                 />
-                                {/* <TextField
-                                    variant='outlined'
-                                    label="Tổng số lượng"
-                                    value={formData.totalQuantity}
-                                    name='totalQuantity'
-                                    onChange={handleInputChange}
-                                    error={helperValid.totalQuantity ? true : false}
-                                    helperText={helperValid.totalQuantity}
-                                    required
-                                /> */}
+
                                 <TextField
                                     variant='outlined'
                                     label="Kích thước"
@@ -289,19 +279,6 @@ export const AddCustomersRawProductForm = (props) => {
                                         </FormHelperText>
                                     </FormControl>
                                 </>
-                                {/* <div>
-                                    <FormControlLabel
-                                        label="Trạng thái:"
-                                        labelPlacement="start"
-                                        control={<Switch
-                                            color="primary"
-                                            checked={formData.isActive}
-                                            onChange={handleInputChange}
-                                            name="isActive"
-                                        />}
-                                    />
-                                    <FormHelperText>{helperValid.isActive}</FormHelperText>
-                                </div> */}
 
 
                             </Grid>

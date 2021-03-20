@@ -52,9 +52,10 @@ const SignUp = ({ toggle, isVisible }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // const enableSubmit = validation(formData, regexPassword, regexEmail);
-        // const enableSubmit = validation(formData);
-        const enableSubmit = true;
+
+        const enableSubmit = validation(formData);
+        // const enableSubmit = true;
+
         console.log("enableSubmit: " + enableSubmit);
 
         if (enableSubmit) {
@@ -69,7 +70,7 @@ const SignUp = ({ toggle, isVisible }) => {
             username: formData.username,
             email: formData.email,
             password: formData.password,
-            role: "customer"
+            // role: "customer"
         };
         console.log(data)
         dispatch(useAuthAction().signUp(data));

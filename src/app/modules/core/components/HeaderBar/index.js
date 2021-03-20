@@ -232,15 +232,11 @@ export const HeaderBar = (props) => {
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorElMenuAccount}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
+                                // anchorOrigin={{
+                                //     vertical: 'bottom',
+                                //     horizontal: 'right',
+                                // }}
                                 keepMounted
-                                transformOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'right',
-                                }}
                                 open={openMenuAccount}
                                 onClose={handleCloseMenuAccount}
                                 className={classes.menuAccount}

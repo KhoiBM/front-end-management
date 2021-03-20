@@ -124,16 +124,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-// const FormControlLabelWrapper = props => {
-//     const { ...labelProps } = props;
-//     return (
-//         <FormControlLabel
-//             control={<Radio />}
-//             label={props.labelValue}
-//             {...labelProps}
-//         />
-//     );
-// };
 
 const initialFValues = {
     profileID: '',
@@ -149,7 +139,9 @@ const initialFValues = {
 export const Profile = () => {
     const history = useHistory()
     const classes = useStyles()
+
     const { formData, setFormData, handleInputChange, helperValid = null, validation, dobSelected, setDobSelected, handleChangeDob } = useForm(initialFValues)
+
     const [record, setRecord] = useState({});
 
 
@@ -203,20 +195,25 @@ export const Profile = () => {
             toast.error(config.useMessage.invalidData);
         }
     }
+
     return (
         <>
             {/* <p>Profile</p> */}
             <div className={classes.profileContainer}>
                 <div className={classes.pageFormContainer}>
                     <Paper elevation={5} className={classes.pageForm}>
+
                         <div className={classes.iconCloseWrapper} onClick={() => { history.goBack() }}>
                             <div className={classes.iconClose}>
                                 <RiCloseFill />
                             </div>
                         </div >
+
                         <PageHeader>
                             Hồ sơ của tôi
-                    </PageHeader>
+                        </PageHeader>
+
+
                         <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
                             <Grid container>
                                 <Grid item xs={12} sm={12} md={6}>
@@ -250,9 +247,6 @@ export const Profile = () => {
                                     />
 
 
-                                    {/* <FormControl component="fieldset" className={classes.dobContainer}>
-                                    <FormLabel component="legend" >Ngày sinh</FormLabel>
-                                    <div> */}
                                     <DatePicker value={dobSelected} onChange={handleChangeDob}
                                         openTo="year"
                                         format="dd-MM-yyyy"
@@ -261,7 +255,7 @@ export const Profile = () => {
                                         // className={classes.dobWrapper}
                                         autoOk
                                         inputVariant="outlined"
-                                        InputAdornmentProps={{ position: "start" }}
+                                        inputadornmentprops={{ position: "start" }}
 
                                     />
                                     <FormHelperText style={{
@@ -274,8 +268,6 @@ export const Profile = () => {
                                     }}>{helperValid.dob}
                                     </FormHelperText>
 
-                                    {/* </div>
-                                </FormControl> */}
 
                                     <FormControl component="fieldset">
                                         <FormLabel component="legend">Giới tính</FormLabel>

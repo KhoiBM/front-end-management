@@ -144,14 +144,15 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, Tooltip, Zoom } from '@material-ui/core';
-
 import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { ManageRawProductServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
 import { useTable } from 'src/app/utils';
-import { PaginationBar, SearchBar, ConfirmDeleteDialog } from 'src/app/modules/core/components';
+import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { RiTruckLine } from 'react-icons/ri';
+
+
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -167,8 +168,12 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "flex-end",
         paddingRight: theme.spacing(6),
         // background: "red",
+    },
+    deleteIcon: {
+        color: "red"
     }
 }));
+
 const StyledTableCell = withStyles((theme) => ({
     root: {
     },
@@ -191,7 +196,7 @@ export const RawProductTable = (props) => {
     const classes = useStyles();
     const { keywords, searchAction, setSearchAction, clickSearch, setClickSearch } = props
 
-    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -205,25 +210,15 @@ export const RawProductTable = (props) => {
     const [first, setFirst] = useState(true)
 
 
-    const [openDialog, setOpenDialog] = useState(false);
-    const [isConfirm, setIsConfirm] = useState(false);
 
 
-    const handleClickOpenDialog = () => {
-        setOpenDialog(true);
-    };
+    // const handleChangePagination = (event, value) => {
+    //     setPage(value);
+    //     // console.log(page)
+    // };
 
-    const handleCloseDialog = (value) => {
-        setOpenDialog(false);
-        // setIsConfirm(value)
-
-    };
-
-
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
+    useEffect(() => {
+    }, [refresh])
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
@@ -237,8 +232,8 @@ export const RawProductTable = (props) => {
         } else {
             loadInit()
         }
+    }, [page, refresh])
 
-    }, [page])
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
@@ -272,6 +267,7 @@ export const RawProductTable = (props) => {
             toast.error(config.useMessage.fetchApiFailure)
         }
     }
+
     const search = async () => {
         try {
             const response = await (await ManageRawProductServices.search({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
@@ -288,15 +284,18 @@ export const RawProductTable = (props) => {
 
     }
 
-    const deleteAction = async (rawProductID) => {
+    const onDelete = async (rawProductID) => {
 
         try {
-            console.log("deleteAction")
-            const response = await (await ManageRawProductServices.delete({ rawProductID: rawProductID })).data
+            console.log("onDelete")
+            const data = { rawProductID: rawProductID }
+            const response = await (await ManageRawProductServices.delete(data)).data
             // console.log("response: " + JSON.stringify(response))
+
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     toast.success("Thành công")
+                    setRefresh(!refresh)
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -311,8 +310,7 @@ export const RawProductTable = (props) => {
 
     }
 
-    useEffect(() => {
-    }, [refresh])
+
 
 
     return (
@@ -337,6 +335,9 @@ export const RawProductTable = (props) => {
                                 <StyledTableCell >{row.color}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>
                                 <StyledTableCell >{row.categoryName}</StyledTableCell>
+
+                                <StyledTableCell >{row.createdBy}</StyledTableCell>
+
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
@@ -358,13 +359,11 @@ export const RawProductTable = (props) => {
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation();
-                                            // ((row) => {
-                                            // })()
-                                            setOpenDialog(true)
-                                            deleteAction(row.rawProductID)
+                                            onDelete(row.rawProductID)
+
                                         }
                                         }>
-                                            <AiOutlineDelete />
+                                            <AiOutlineDelete className={classes.deleteIcon} />
                                         </Button>
 
                                     </Tooltip>
@@ -379,7 +378,7 @@ export const RawProductTable = (props) => {
                     </TableBody>
                 </TblContainer>
             </div>
-            <ConfirmDeleteDialog openDialog={openDialog} handleCloseDialog={handleCloseDialog} isConfirm={isConfirm} setIsConfirm={setIsConfirm} />
+            <ConfirmDialog />
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />

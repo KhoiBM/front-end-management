@@ -1,7 +1,7 @@
 
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
-import { Paper, makeStyles, Typography, AppBar, Tabs, Tab, Box } from '@material-ui/core'
+import { Paper, makeStyles, Typography, AppBar, Tabs, Tab, Box, Card, Tooltip } from '@material-ui/core'
 import Chart from "react-apexcharts";
 import { useTab } from 'src/app/utils';
 
@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
         // justifyContent: "center",
         // gap: theme.spacing(7)
         // border: "1px solid red",
-        width: "38rem"
+        width: "38rem",
+        marginTop: theme.spacing(5)
     },
     titleChart: {
         // border: "1px solid black",
@@ -42,8 +43,126 @@ const useStyles = makeStyles(theme => ({
     },
     TabContainer: {
         background: "#fff"
+    },
+
+    numberOrderContainer: {
+        minWidth: 275,
+
+        // background: "blue",
+        display: "flex",
+        alignItems: "center",
+        gap: theme.spacing(2)
+    },
+    titlenumberOrderContainer: {
+        width: "100%",
+        height: "50px",
+        marginBottom: theme.spacing(2),
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     }
 }))
+
+
+
+const NumberOrderStatistic = () => {
+    const classes = useStyles();
+
+
+    const { TabPanel, TabBar, value, handleChange } = useTab()
+
+    const [series, setSeries] = useState(
+        [
+            {
+                data: [21, 22, 10, 28, 16, 21, 13, 30]
+            }
+        ]
+    )
+    const [options, setOptions] = useState({
+        chart: {
+            id: "basic-bar"
+        },
+        xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        }
+    }
+    )
+
+
+    return (
+        <>
+            <div className={classes.chartContainer}>
+
+                <div className={classes.numberOrderContainer}>
+                    <Card className={classes.titlenumberOrderContainer}>
+                        <Box className={classes.titlenumberOrderlWrapper} >
+                            <Typography variant="h6">
+                                Số lượng đơn hàng
+                            </Typography>
+
+                        </Box>
+                    </Card>
+                </div>
+
+                <div className={classes.rootTab}>
+
+                    <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
+
+                    <TabPanel value={value} index={0}>
+                        <Paper className={classes.rootChart}>
+                            {/* <Typography variant={"subtitle1"} className={classes.titleChart} color="textSecondary">Tuần</Typography> */}
+                            <Chart
+                                options={options}
+                                series={series}
+                                type="bar"
+                                height={250}
+                                className={classes.chart}
+                            />
+                        </Paper>
+                    </TabPanel>
+
+                    <TabPanel value={value} index={1}>
+                        <Paper className={classes.rootChart}>
+                            {/* <Typography variant={"subtitle1"} className={classes.titleChart}>Tháng</Typography> */}
+                            <Chart
+                                options={options}
+                                series={series}
+                                type="bar"
+                                height={250}
+                                className={classes.chart}
+                            />
+                        </Paper>
+                    </TabPanel>
+
+                    <TabPanel value={value} index={2}>
+                        <Paper className={classes.rootChart}>
+                            {/* <Typography variant={"subtitle1"} className={classes.titleChart}>Năm</Typography> */}
+                            <Chart
+                                options={options}
+                                series={series}
+                                type="bar"
+                                height={250}
+                                className={classes.chart}
+                            />
+                        </Paper>
+                    </TabPanel>
+
+                </div>
+            </div>
+
+
+        </>
+    )
+}
+
+export { NumberOrderStatistic }
+
+
+
+
+
+
+
 
 // function a11yProps(index) {
 //     return {
@@ -72,88 +191,20 @@ const useStyles = makeStyles(theme => ({
 //     );
 // }
 
-const NumberOrderStatistic = () => {
-    const classes = useStyles();
-
-    // const [value, setValue] = useState(0);
-
-    // const handleChange = (event, newValue) => {
-    //     setValue(newValue);
-    // };
-    const { TabPanel, TabBar, value, handleChange } = useTab()
-
-    const [series, setSeries] = useState(
-        [
-            {
-                data: [21, 22, 10, 28, 16, 21, 13, 30]
-            }
-        ]
-    )
-    const [options, setOptions] = useState({
-        chart: {
-            id: "basic-bar"
-        },
-        xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-        }
-    }
-    )
 
 
-    return (
-        <>
-            <div className={classes.chartContainer}>
-                <div className={classes.rootTab}>
-                    {/* <AppBar position="static" className={classes.TabContainer}>
+{/* <AppBar position="static" className={classes.TabContainer}>
                         <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
                             <Tab label="Tuần" {...a11yProps(0)} />
                             <Tab label="Tháng" {...a11yProps(1)} />
                             <Tab label="Năm" {...a11yProps(2)} />
                         </Tabs>
                     </AppBar> */}
-                    <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
-                    <TabPanel value={value} index={0}>
-                        <Paper className={classes.rootChart}>
-                            <Typography variant={"subtitle1"} className={classes.titleChart} color="textSecondary">Tuần</Typography>
-                            <Chart
-                                options={options}
-                                series={series}
-                                type="bar"
-                                height={250}
-                                className={classes.chart}
-                            />
-                        </Paper>
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <Paper className={classes.rootChart}>
-                            <Typography variant={"subtitle1"} className={classes.titleChart}>Tháng</Typography>
-                            <Chart
-                                options={options}
-                                series={series}
-                                type="bar"
-                                height={250}
-                                className={classes.chart}
-                            />
-                        </Paper>
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <Paper className={classes.rootChart}>
-                            <Typography variant={"subtitle1"} className={classes.titleChart}>Năm</Typography>
-                            <Chart
-                                options={options}
-                                series={series}
-                                type="bar"
-                                height={250}
-                                className={classes.chart}
-                            />
-                        </Paper>
-                    </TabPanel>
-                </div>
-            </div>
 
 
-        </>
-    )
-}
 
-export { NumberOrderStatistic } 
+                        // const [value, setValue] = useState(0);
+
+    // const handleChange = (event, newValue) => {
+    //     setValue(newValue);
+    // };
