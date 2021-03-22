@@ -3,11 +3,15 @@ import React, { useState } from 'react'
 import { makeStyles, Box, AppBar, Tabs, Tab } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     tablePanel: {
+        // width: "100%",
         width: "100%",
         // backgroundColor: "red",
+        // height: "0px",
+
     },
     TabContainer: {
-        background: "#fff"
+        background: "#fff",
+        // backgroundColor: "red",
     }
 }))
 export const useTab = () => {

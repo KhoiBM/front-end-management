@@ -16,6 +16,7 @@ import brandLogo from 'src/app/assets/image/brand.svg';
 import { invert } from 'underscore';
 import config from 'src/environments/config';
 import { NotificationBar } from '../NotificationBar';
+import { NotificationDialog } from '../NotificationDialog';
 
 const drawerWidth = config.useStyles.drawerWidth;
 

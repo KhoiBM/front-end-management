@@ -125,7 +125,7 @@ export const CanceledOrderTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
                             <StyledTableRow key={row.orderID}>
 
                                 <StyledTableCell>{row.orderID}</StyledTableCell>

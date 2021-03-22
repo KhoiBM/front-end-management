@@ -30,6 +30,7 @@ export class ManageStatisticServices {
             }
         })
     }
+
     static viewRevenueOfEachService = () => {
         // return useHttpModule().get(config.useApiPath.api., data)
         return Promise.resolve({
@@ -37,9 +38,84 @@ export class ManageStatisticServices {
                 result: config.useResultStatus.SUCCESS,
                 info: {
                     record: {
-                        inWeek: {},
-                        inMonth: {},
-                        inYear: {}
+                        inWeek:
+                            [
+                                {
+                                    x: 'Ảnh',
+                                    y: 12123123
+                                },
+                                {
+                                    x: 'Đồ lưu niệm',
+                                    y: 13123123
+                                }
+                                ,
+                                {
+                                    x: 'Quần áo',
+                                    y: 19123123
+                                }
+                                ,
+                                {
+                                    x: 'Đồ sứ',
+                                    y: 10123123
+                                }
+                                ,
+                                {
+                                    x: 'Tạo của riêng bạn',
+                                    y: 10123123
+                                }
+                            ],
+                        inMonth:
+                            [
+                                {
+                                    x: 'Ảnh',
+                                    y: 12123123
+                                },
+                                {
+                                    x: 'Đồ lưu niệm',
+                                    y: 13123123
+                                }
+                                ,
+                                {
+                                    x: 'Quần áo',
+                                    y: 19123123
+                                }
+                                ,
+                                {
+                                    x: 'Đồ sứ',
+                                    y: 10123123
+                                }
+                                ,
+                                {
+                                    x: 'Tạo của riêng bạn',
+                                    y: 10123123
+                                }
+                            ],
+                        inYear:
+                            [
+                                {
+                                    x: 'Ảnh',
+                                    y: 12123123
+                                },
+                                {
+                                    x: 'Đồ lưu niệm',
+                                    y: 13123123
+                                }
+                                ,
+                                {
+                                    x: 'Quần áo',
+                                    y: 19123123
+                                }
+                                ,
+                                {
+                                    x: 'Đồ sứ',
+                                    y: 10123123
+                                }
+                                ,
+                                {
+                                    x: 'Tạo của riêng bạn',
+                                    y: 10123123
+                                }
+                            ]
                     }
                 }
             }

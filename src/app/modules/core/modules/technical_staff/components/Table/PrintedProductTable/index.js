@@ -25,8 +25,12 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "flex-end",
         // paddingRight: theme.spacing(6)
         paddingRight: theme.spacing(2)
+    },
+    deleteIcon: {
+        color: "red"
     }
 }));
+
 const StyledTableCell = withStyles((theme) => ({
     root: {
     },
@@ -158,6 +162,7 @@ export const PrintedProductTable = (props) => {
         })
         try {
             console.log("onDelete")
+            console.log("printedProductID: " + printedProductID)
             const data = { printedProductID: printedProductID }
             const response = await (await ManagePrintedProductServices.delete(data)).data
             // console.log("response: " + JSON.stringify(response))
@@ -203,8 +208,7 @@ export const PrintedProductTable = (props) => {
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
-                                {/* style={{ minWidth: "230px" }} */}
-                                <StyledTableCell >
+                                <StyledTableCell style={{ minWidth: "160px" }} >
 
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
                                         <Button onClick={(event) => {
@@ -246,6 +250,7 @@ export const PrintedProductTable = (props) => {
                     </TableBody>
                 </TblContainer>
             </div>
+
 
             <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
 

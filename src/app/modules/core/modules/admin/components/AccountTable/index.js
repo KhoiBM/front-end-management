@@ -167,7 +167,7 @@ export const AccountTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
                             <StyledTableRow key={row.accountID}>
                                 <StyledTableCell>{row.accountID}</StyledTableCell>
                                 <StyledTableCell>{row.username}</StyledTableCell>

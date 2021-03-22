@@ -155,7 +155,7 @@ export const Profile = () => {
                 setFormData({ ...formData, ...response.info.record })
 
                 const formatDob = parse(response.info.record.dob, 'dd-MM-yyyy', new Date())
-                console.log(formatDob)
+                console.log("formatDob: " + formatDob)
 
                 setDobSelected(formatDob)
 

@@ -328,7 +328,7 @@ export const RawProductTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
                             <StyledTableRow key={row.rawProductID} >
 
                                 <StyledTableCell>

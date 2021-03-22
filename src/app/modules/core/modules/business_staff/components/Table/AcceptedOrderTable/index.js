@@ -156,7 +156,7 @@ export const AcceptedOrderTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
 
                             <StyledTableRow key={row.orderID}>
 

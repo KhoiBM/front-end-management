@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Paper, makeStyles, CardContent, Card, Typography, Container, Box, IconButton, Tooltip, Zoom } from '@material-ui/core'
+import { Paper, makeStyles, CardContent, Card, Typography, Container, Box, IconButton, Tooltip, Zoom, Menu, MenuItem } from '@material-ui/core'
 import { toast } from 'react-toastify';
 import config from 'src/environments/config';
 import { ManageStatisticServices } from 'src/app/services/CoreServices/ManagerServices/ManageStatisticServices';
-import { MdAttachMoney } from 'react-icons/md';
+import { MdAttachMoney, MdMenu } from 'react-icons/md';
 import { CSVLink, CSVDownload } from "react-csv";
 import { BiExport } from 'react-icons/bi'
+import { useFormat } from 'src/app/utils';
+import { AiOutlineExport } from 'react-icons/ai';
+import { CgExport } from 'react-icons/cg'
+
+
 const useStyles = makeStyles(theme => ({
     titleContainer: {
         // marginBottom: theme.spacing(8),
@@ -19,12 +24,12 @@ const useStyles = makeStyles(theme => ({
         width: "12rem",
     },
     overallStatisticRoot: {
-        marginBottom: theme.spacing(8),
+        // marginBottom: theme.spacing(8),
         // height: "180px",
         // background: "#B6E2F3",
         width: "80rem",
         // border: "3px solid #48b7e2",
-        margin: "1rem auto"
+        margin: "0rem auto"
     },
     rootCard: {
         minWidth: 275,
@@ -88,13 +93,28 @@ const useStyles = makeStyles(theme => ({
     },
     iconExport: {
         // filter: "invert(100)"
-        color: "rgba(0, 0, 0, 0.54) !important",
-        textDecoration: "none !important"
+        // color: "rgba(0, 0, 0, 0.54) !important",
+        textDecoration: "none !important",
+        cursor: "pointer",
+        width: " 20px",
+        height: "20px",
+        lineHeight: "24px",
+        color: "#6E8192",
+        textAlign: " center",
+        transform: "scale(0.85)",
+        '&:hover': {
+            opacity: 1,
+            pointerEvents: "all",
+            transition: "0.15s ease all",
+            color: "#000"
+        }
+
     },
     iconExportWrapper: {
         // background: "blue",
-        // position: "absolute"
-
+        position: "absolute",
+        left: theme.spacing(1),
+        top: theme.spacing(0.5)
 
     },
     iconExportIconButton: {
@@ -125,10 +145,61 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
+    },
+    menuExport: {
+        // background: "red",
+        position: "relative",
+
+        "& .MuiMenu-paper": {
+            // background: "blue",
+            position: "absolute !important",
+            top: "110px !important",
+            width: "8rem",
+            color: "red !important",
+            // background: "#000",
+            // marginRigth: "590rem",
+            border: "1px solid #ddd",
+            borderRadius: '3px',
+            // padding: '3px',
+            // opacity: '0',
+            minWidth: '110px',
+            transition: '0.15s ease all',
+            // pointerEvents: 'none',
+        }
     }
 }));
 const OverallRevenueStatistic = () => {
     const classes = useStyles();
+
+
+
+
+    const [anchorElMenuExport, setAnchorElMenuExport] = useState(null);
+
+
+    const openMenuExport = Boolean(anchorElMenuExport);
+
+
+    const handleMenuExport = (event) => {
+        setAnchorElMenuExport(event.currentTarget);
+    };
+
+    const handleCloseMenuExport = () => {
+        setAnchorElMenuExport(null);
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const [overallRevenue, setOverallRevenue] = useState({})
 
@@ -150,7 +221,7 @@ const OverallRevenueStatistic = () => {
     }, [])
 
     const getCsvData = () => {
-        const csvData = [['Doanh thu'], ['Tổng doanh thu', 'Tuần', 'Tháng', 'Năm']];
+        const csvData = [['DOANH THU'], ['Tổng doanh thu', 'Tuần', 'Tháng', 'Năm']];
 
         csvData.push([`${overallRevenue.overall}`, `${overallRevenue.inWeek}`, `${overallRevenue.inMonth}`, `${overallRevenue.inYear}`]);
 
@@ -158,16 +229,20 @@ const OverallRevenueStatistic = () => {
     };
 
 
+
+
+
+
     return (
         <>
 
             <div className={classes.overallStatisticRoot}>
-                <div className={classes.overallContainer}>
+                {/* <div className={classes.overallContainer}>
                     <Card className={classes.iconExportContainer}>
                         <Box className={classes.iconExportWrapper} >
                             <Tooltip TransitionComponent={Zoom} placement="left" title="Xuất doanh thu ra tệp csv">
                                 <IconButton className={classes.iconExportIconButton} >
-                                    <CSVLink filename="Doanh Thu.csv" data={getCsvData()} className={classes.iconExport} >
+                                    <CSVLink filename="DOANH THU.csv" data={getCsvData()} className={classes.iconExport} >
                                         <BiExport />
                                     </CSVLink>
                                 </IconButton>
@@ -184,11 +259,41 @@ const OverallRevenueStatistic = () => {
                         </Box>
                     </Card>
 
-                </div>
+                </div> */}
 
                 <div className={classes.CardContainer}>
 
                     <Card className={classes.rootCard}>
+                        <Box className={classes.iconExportWrapper} >
+                            <Tooltip TransitionComponent={Zoom} placement="left" title="Xuất doanh thu ra tệp csv">
+                                <div className={classes.iconExportIconButton} onClick={handleMenuExport}>
+                                    <MdMenu />
+                                    {/* <CgExport /> */}
+                                    {/* <BiExport /> */}
+                                </div>
+                            </Tooltip>
+
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElMenuExport}
+                                // anchorOrigin={{
+                                //     vertical: 'bottom',
+                                //     horizontal: 'left',
+                                // }}
+                                keepMounted
+                                open={openMenuExport}
+                                onClose={handleCloseMenuExport}
+                                className={classes.menuExport}
+                            >
+
+                                <MenuItem onClick={() => {
+                                    handleCloseMenuExport();
+                                }}>
+                                    <CSVLink filename="DOANH THU.csv" data={getCsvData()} className={classes.iconExport} >Xuất ra CSV</CSVLink>
+                                </MenuItem>
+
+                            </Menu>
+                        </Box>
 
                         <Box component="div" className={classes.iconCardContainer} style={{ background: "#DBECDA " }}>
                             <div className={classes.iconCardWrapper}>
@@ -200,7 +305,8 @@ const OverallRevenueStatistic = () => {
                                 Tổng doanh thu
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
-                                {overallRevenue.overall}<span>đ</span>
+
+                                {`${useFormat().formatRevenue(overallRevenue.overall)} đ`}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -216,7 +322,8 @@ const OverallRevenueStatistic = () => {
                                 Tuần
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
-                                {overallRevenue.inWeek}<span>đ</span>
+                                {/* {}<span>đ</span> */}
+                                {`${useFormat().formatRevenue(overallRevenue.inWeek)} đ`}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -232,7 +339,9 @@ const OverallRevenueStatistic = () => {
                                 Tháng
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
-                                {overallRevenue.inMonth}<span>đ</span>
+                                {/* {overallRevenue.inMonth}<span>đ</span> */}
+                                {`${useFormat().formatRevenue(overallRevenue.inMonth)} đ`}
+
                             </Typography>
                         </CardContent>
                     </Card>
@@ -248,7 +357,8 @@ const OverallRevenueStatistic = () => {
                                 Năm
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
-                                {overallRevenue.inYear}<span>đ</span>
+                                {/* {overallRevenue.inYear}<span>đ</span> */}
+                                {`${useFormat().formatRevenue(overallRevenue.inYear)} đ`}
                             </Typography>
 
                         </CardContent>

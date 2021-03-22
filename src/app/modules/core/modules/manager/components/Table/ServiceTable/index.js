@@ -163,7 +163,7 @@ export const ServiceTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => {
+                        {records && records.map((row) => {
                             return (
 
                                 <StyledTableRow key={row.serviceID}>

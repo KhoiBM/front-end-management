@@ -207,7 +207,7 @@ export const CustomersRawProductTable = (props) => {
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
-                                <StyledTableCell >
+                                <StyledTableCell style={{ minWidth: "160px" }} >
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
 
                                         <Button onClick={(event) => {

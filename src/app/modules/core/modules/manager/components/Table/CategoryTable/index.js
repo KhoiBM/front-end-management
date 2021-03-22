@@ -144,7 +144,7 @@ export const CategoryTable = (props) => {
                 <TblContainer>
                     <TblHead />
                     <TableBody>
-                        {records.map((row) => (
+                        {records && records.map((row) => (
 
                             <StyledTableRow key={row.categoryID}>
 

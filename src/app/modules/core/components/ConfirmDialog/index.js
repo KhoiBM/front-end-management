@@ -34,8 +34,7 @@ export const ConfirmDialog = (props) => {
 
     return (
         <>
-            <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}
-            >
+            <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
                 <DialogTitle className={classes.dialogTitle}>
 
                 </DialogTitle>
