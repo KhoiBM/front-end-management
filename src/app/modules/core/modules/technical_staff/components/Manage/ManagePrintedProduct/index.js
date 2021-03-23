@@ -112,7 +112,6 @@ export const ManagePrintedProduct = () => {
                             <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm đã in</Button>
                         </div>
                     </div>
-
                     <PrintedProductTable handleEdit={handleEdit} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
                 </>
             </Paper>

@@ -19,11 +19,11 @@ export const useAuthReducer = (state = new AuthState({ response: {}, isSignedIn:
             if (dataPayload && dataPayload.result == config.useResultStatus.SUCCESS) {
                 // if (dataPayload && dataPayload.result == "success") {
                 const token = dataPayload.info.accessToken;
-                // const tokenID = dataPayload.info.idToken;
+                const tokenID = dataPayload.info.idToken;
 
-                // const decodedtokenID = jwt_decode(tokenID);
-                // const role = decodedtokenID["custom:role"]
-                const role = config.useRoleName.manager
+                const decodedTokenID = jwt_decode(tokenID);
+                const role = decodedTokenID["custom:role"]
+                // const role = config.useRoleName.manager
 
                 localStorage.setItem("pps-token", JSON.stringify(token));
                 localStorage.setItem("role", role);

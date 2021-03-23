@@ -20,8 +20,10 @@ const useApiPath = {
         },
         "manageRawProductServices": {
             view: "homepage/get-list-product"
+        },
+        "manageStatisticServices": {
+            viewOverallRevenue: "manager/overall-revenue"
         }
-
 
     }
 }

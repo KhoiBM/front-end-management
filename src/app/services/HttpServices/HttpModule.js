@@ -1,21 +1,18 @@
 import axios from "axios";
 import config from "src/environments/config";
-export const useHttpModule = (headers = {}) => {
+export const useHttpModule = (headers = {}, authorization = true) => {
     const instance = axios.create({
         baseURL: `${config.useApiPath.apiEndpoint}`,
         headers: headers
     });
-    // const instance = axios.create({
-    //     baseURL: `${config.useApiPath.apiEndpoint}`,
-
-    // });
 
     instance.interceptors.request.use(
         async (value) => {
-            value.headers.common['authorization'] = `Bearer ${localStorage.getItem('pps-token')}`;
+            if (authorization) { value.headers.common['authorization'] = `Bearer ${localStorage.getItem('pps-token')}`; }
+            // console.log("value request axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
-            console.log("error request axios")
+            console.log("error in request axios")
             return Promise.reject(error);
         }
     );
@@ -24,7 +21,7 @@ export const useHttpModule = (headers = {}) => {
         async (value) => {
             return Promise.resolve(value);
         }, (error) => {
-            console.log("error response axios")
+            console.log("error in response axios")
             return Promise.reject(error);
         }
     );

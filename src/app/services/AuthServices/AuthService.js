@@ -5,17 +5,17 @@ import { useControlled } from "@material-ui/core"
 import { toast } from "react-toastify"
 export class AuthService {
     static signIn = (data) => {
-        // return useHttpModule().post(config.useApiPath.api.auth.signIn, data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    // role: config.useRoleName.manager,
-                    accessToken: "test"
+        return useHttpModule().post(config.useApiPath.api.auth.signIn, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             accessToken: "test",
+        //             tokenID: ""
 
-                },
-            }
-        })
+        //         },
+        //     }
+        // })
     }
     static signUp = (data) => {
         // return useHttpModule().post(config.useApiPath.api.auth.signUp, data)

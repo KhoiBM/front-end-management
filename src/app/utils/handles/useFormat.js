@@ -1,3 +1,5 @@
+import { toast } from "react-toastify"
+
 export const useFormat = () => {
     const formatRevenue = (val) => {
         const arr = String(val).split('')
@@ -5,6 +7,7 @@ export const useFormat = () => {
         let newArr = []
         let count = 0
         let result = ''
+
         reverseArr.forEach((currVal, index) => {
             if (count == 3) {
                 newArr.push('.')
@@ -22,6 +25,7 @@ export const useFormat = () => {
         result = newArr.reverse().join("")
 
         return result
+
     }
     return { formatRevenue }
 }

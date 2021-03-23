@@ -41,7 +41,17 @@ const SignUp = ({ toggle, isVisible }) => {
         if (!isFirst) {
             if (response && response.result == config.useResultStatus.SUCCESS) {
                 toast.info("Vui lòng kích hoạt code trong email")
-                history.push(`/auth/confirm_code?username=${formData.username}`)
+                // history.push(`/auth/confirm_code?username=${formData.username}&&email=${formData.email}`)
+
+                history.push({
+                    pathname: `${"/auth/confirm_code"}`,
+                    search: "",
+                    state: {
+                        username: formData.username,
+                        email: formData.email
+                    }
+                })
+
             } else {
                 toast.info(`${response.errorInfo || "Đăng ký thất bại"}`)
 

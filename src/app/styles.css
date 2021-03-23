@@ -23,17 +23,17 @@ html,
   --secondary-color-main: #478de3;
   /* --secondary-color-dark: #de5a2e; */
   --tertiary-color-main: #b6e2f3;
-  overflow: "scroll";
 }
 body {
   /* background-color: #fff; */
   color: #000;
   overflow-x: hidden;
   overflow-y: scroll;
-  overflow: scroll;
+  /* overflow: scroll; */
   /* width: 100%;
   height: 100%; */
   background-color: rgba(249, 250, 251, var(--bg-opacity));
+  /* background-color: blue; */
 }
 *,
 *::after,

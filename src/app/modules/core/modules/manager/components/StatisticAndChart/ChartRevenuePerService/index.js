@@ -4,13 +4,14 @@ import { Paper, makeStyles, Typography, AppBar, Tabs, Tab, Box, Card, Button } f
 import Chart from "react-apexcharts";
 
 import { useTab, useOptionsRevenueServiceChart } from 'src/app/utils'
-import { ManageServiceServices } from 'src/app/services';
 import config from 'src/environments/config';
 import { toast } from 'react-toastify';
 import { useFormat } from 'src/app/utils'
 // import { BiExport } from 'react-icons/bi';
 
 import { ManageStatisticServices } from 'src/app/services/CoreServices/ManagerServices/ManageStatisticServices.js'
+
+
 const useStyles = makeStyles(theme => ({
     rootChart: {
         // border: "1px solid red",
@@ -25,7 +26,8 @@ const useStyles = makeStyles(theme => ({
         // justifyContent: "center",
         // gap: theme.spacing(7)
         // border: "1px solid red",
-        width: "38rem",
+        // width: "38rem",
+        width: "39.8rem",
         // marginTop: theme.spacing(5)
     },
     titleChart: {
@@ -42,23 +44,6 @@ const useStyles = makeStyles(theme => ({
         // backgroundColor: "red",
         width: "100%",
 
-    },
-
-    revenuePerServiceContainer: {
-        minWidth: 275,
-
-        // background: "blue",
-        display: "flex",
-        alignItems: "center",
-        gap: theme.spacing(2)
-    },
-    titileRevenuePerServiceContainer: {
-        width: "100%",
-        height: "50px",
-        marginBottom: theme.spacing(2),
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
     }
 }))
 
@@ -72,14 +57,6 @@ const ChartRevenuePerService = () => {
     const [refresh, setRefresh] = useState(false)
 
     const { TabPanel, TabBar, value, handleChange } = useTab()
-
-    const { optionsChart, titleChart } = useOptionsRevenueServiceChart()
-
-    const [options, setOptions] = useState(optionsChart)
-
-
-
-
 
 
     const [dataWeek, setDataWeek] = useState([])
@@ -98,26 +75,26 @@ const ChartRevenuePerService = () => {
 
 
 
-    const seriesMonth = [
-        {
-            name: 'Doanh thu',
-            data: dataMonth
-        }
-    ]
-    const seriesYear = [
-        {
-            name: 'Doanh thu',
-            data: dataYear
-        }
-    ]
-    // const intervalID = setInterval(() => {
-    //     // setRefresh((prev) => !prev)
-    //     loadInit()
-    // }, 10000)
+    const seriesMonth =
+        [
+            {
+                name: 'Doanh thu',
+                data: dataMonth
+            }
+        ]
 
-    useEffect(async () => {
-        await loadInit()
+    const seriesYear =
+        [
+            {
+                name: 'Doanh thu',
+                data: dataYear
+            }
+        ]
+
+    useEffect(() => {
+        loadInit()
     }, [refresh])
+
 
     const loadInit = async () => {
         console.log("Loadinit")
@@ -158,16 +135,14 @@ const ChartRevenuePerService = () => {
 
                 <div className={classes.rootTab}>
                     <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
-                    <TabPanel value={value} index={0}>
+                    <TabPanel value={value} index={0}>()
                         <Paper className={classes.rootChart}>
                             <Chart
-                                options={{
-                                    ...options,
-                                    title: titleChart("TRONG TUẦN"),
-                                }}
+
+
+                                options={useOptionsRevenueServiceChart("TRONG TUẦN")}
                                 series={seriesWeek}
                                 type="bar"
-                                // height={300}
                                 height={dataWeek.length * 100}
                                 className={classes.chart}
                             />
@@ -178,13 +153,9 @@ const ChartRevenuePerService = () => {
                         <Paper className={classes.rootChart}>
 
                             <Chart
-                                options={{
-                                    ...options,
-                                    title: titleChart("TRONG THÁNG"),
-                                }}
+                                options={useOptionsRevenueServiceChart("TRONG THÁNG")}
                                 series={seriesMonth}
                                 type="bar"
-                                // height={250}
                                 height={dataWeek.length * 100}
                                 className={classes.chart}
                             />
@@ -195,13 +166,9 @@ const ChartRevenuePerService = () => {
                         <Paper className={classes.rootChart}>
 
                             <Chart
-                                options={{
-                                    ...options,
-                                    title: titleChart("TRONG NĂM"),
-                                }}
+                                options={useOptionsRevenueServiceChart("TRONG NĂM")}
                                 series={seriesYear}
                                 type="bar"
-                                // height={250}
                                 height={dataWeek.length * 100}
                                 className={classes.chart}
                             />
@@ -220,6 +187,53 @@ export { ChartRevenuePerService }
 
 
 
+
+// const { optionsChart, titleChart } = useOptionsRevenueServiceChart()
+
+// const [options, setOptions] = useState(optionsChart)
+
+
+
+
+// options={{
+//     ...options,
+//     title: titleChart("TRONG TUẦN"),
+// }}
+
+// options={{
+//     ...options,
+//     title: titleChart("TRONG THÁNG"),
+// }}
+
+// options={{
+//     ...options,
+//     title: titleChart("TRONG NĂM"),
+// }}
+
+// ,
+//     revenuePerServiceContainer: {
+//         minWidth: 275,
+
+//         // background: "blue",
+//         display: "flex",
+//         alignItems: "center",
+//         gap: theme.spacing(2)
+//     },
+//     titileRevenuePerServiceContainer: {
+//         width: "100%",
+//         height: "50px",
+//         marginBottom: theme.spacing(2),
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center"
+//     }
+
+
+
+// const intervalID = setInterval(() => {
+//     // setRefresh((prev) => !prev)
+//     loadInit()
+// }, 10000)
 // categories: ["Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"]
 // dataLabels: {
 //     enabled: true,

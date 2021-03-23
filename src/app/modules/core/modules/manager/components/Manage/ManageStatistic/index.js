@@ -6,11 +6,11 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        width: "80rem",
+        width: "82rem",
         // border: "1px solid #48b7e2",
         // margin: "1rem auto",
         margin: "0 auto",
-        marginTop: theme.spacing(3),
+        marginTop: theme.spacing(4),
 
     }
 
@@ -23,7 +23,7 @@ export const ManageStatistic = () => {
             <div className={classes.chartContainer}>
 
                 <ChartRevenuePerService />
-                {/* <NumberOrderStatistic /> */}
+                <NumberOrderStatistic />
             </div>
         </>
     )

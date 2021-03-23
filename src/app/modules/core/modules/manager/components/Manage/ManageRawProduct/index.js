@@ -98,7 +98,7 @@ export const ManageRawProduct = () => {
 
     return (
         <>
-            {!openEditForm && !openAddForm &&
+            {/* {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>
                     <>
                         <div className={classes.actionContainer}>
@@ -112,9 +112,10 @@ export const ManageRawProduct = () => {
                     </>
 
                 </Paper>
-            }
+            } */}
             {openEditForm && <EditRawProductForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}
-            {openAddForm && <AddRawProductForm handleCloseForm={handleCloseForm} />}
+            {/* {openAddForm && <AddRawProductForm handleCloseForm={handleCloseForm} />} */}
+            <AddRawProductForm handleCloseForm={handleCloseForm} />
         </>
     )
 }

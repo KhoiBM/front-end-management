@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
         // background: "red"
     },
     searchBar: {
-        width: "30rem"
+        width: "30vmax"
     },
     iconSearchWrapper: {
         position: "absolute",

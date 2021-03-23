@@ -108,7 +108,6 @@ const initialFValues = {
     password: "",
     rePassword: "",
     roleID: "1",
-    roleName: "",
     isActive: true,
     showPassword: false,
     showRePassword: false,
@@ -121,7 +120,6 @@ export const EditAccountForm = (props) => {
 
     const { recordForEdit } = props
 
-
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
@@ -129,22 +127,65 @@ export const EditAccountForm = (props) => {
     }, [])
 
 
+
+
+    const [recordsRole, setRecordsRole] = useState([])
+
+    useEffect(() => {
+        loadInit()
+    }, [])
+
+    const loadInit = async () => {
+        try {
+            const response = await (await ManageAccountServices.getRoleToSelect()).data
+            // console.log("response: " + response)
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    // console.log("recordsRole: " + JSON.stringify(response.info.records))
+                    setRecordsRole(response.info.records ? response.info.records : [])
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+        }
+    }
+
+
+
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("formdata: " + JSON.stringify(formData))
+        // console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
 
-            edit()
+            edit(formData)
 
         } else {
             toast.error(config.useMessage.invalidData);
         }
     }
 
-    const edit = async () => {
+    const edit = async (formData) => {
         try {
-            const response = await (await ManageAccountServices.edit(formData)).data
+            const data = {
+                accountID: formData.accountID,
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                roleID: formData.roleID,
+                isActive: formData.isActive,
+                updatedAt: new Date()
+            }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await ManageAccountServices.edit(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -329,10 +370,9 @@ export const EditAccountForm = (props) => {
                                             labelWidth={50}
                                             required
                                         >
-                                            <MenuItem value={1}>Khách hàng</MenuItem>
-                                            <MenuItem value={2}>Quản lý</MenuItem>
-                                            <MenuItem value={3}>Nhân viên kinh doanh</MenuItem>
-                                            <MenuItem value={4}>Nhân viên kỹ thuật</MenuItem>
+                                            {
+                                                recordsRole && recordsRole.map((val, index) => (<MenuItem value={val.roleID} key={val.roleID}>{val.roleName}</MenuItem>))
+                                            }
                                         </Select>
                                         <FormHelperText></FormHelperText>
                                     </FormControl>

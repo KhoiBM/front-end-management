@@ -8,7 +8,7 @@ import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
 import { useForm } from 'src/app/utils'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
-import { PageHeader } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -49,15 +49,19 @@ const useStyles = makeStyles(theme => ({
         }
     },
     pageForm: {
-        width: "25rem",
+        // width: "25rem",
+        width: "50rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
 
     },
     pageFormContainer: {
         width: "100%",
-        height: "100%",
+        minHeight: "800px",
+        height: "auto",  //  làm mất goc paper ở dưới 
         // background: "red",
         display: "flex",
         justifyContent: "center",
@@ -88,6 +92,19 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
+    },
+    gridItem1: {
+        // background: "yellow",
+        '&  .MuiFormControl-root': {
+            width: "100%"
+        }
+    },
+    gridItem2: {
+        // background: "orange",
+        display: "flex",
+        justifyContent: "center",
+        // alignItems: "center"
+        paddingTop: theme.spacing(2)
     }
 }))
 
@@ -169,7 +186,6 @@ export const AddRawProductForm = (props) => {
             {/* <p>addform</p> */}
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>
-
                     <div className={classes.iconCloseWrapper}>
                         <div className={classes.iconClose} onClick={props.handleCloseForm}>
                             <RiCloseFill />
@@ -181,8 +197,8 @@ export const AddRawProductForm = (props) => {
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
-                        <Grid container>
-                            <Grid item xs={6} sm={6} md={6}>
+                        <Grid container spacing={4}>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
                                 <TextField
                                     variant='outlined'
                                     label="Tên sản phẩm thô"
@@ -192,6 +208,7 @@ export const AddRawProductForm = (props) => {
                                     error={helperValid.rawProductName ? true : false}
                                     helperText={helperValid.rawProductName}
                                     required
+
                                 />
                                 <TextField
                                     variant='outlined'
@@ -205,15 +222,15 @@ export const AddRawProductForm = (props) => {
                                     type="number"
                                 />
                                 {/* <TextField
-                                    variant='outlined'
-                                    label="Tổng số lượng"
-                                    value={formData.totalQuantity}
-                                    name='totalQuantity'
-                                    onChange={handleInputChange}
-                                    error={helperValid.totalQuantity ? true : false}
-                                    helperText={helperValid.totalQuantity}
-                                    required
-                                /> */}
+            variant='outlined'
+            label="Tổng số lượng"
+            value={formData.totalQuantity}
+            name='totalQuantity'
+            onChange={handleInputChange}
+            error={helperValid.totalQuantity ? true : false}
+            helperText={helperValid.totalQuantity}
+            required
+        /> */}
                                 <TextField
                                     variant='outlined'
                                     label="Kích thước"
@@ -252,7 +269,7 @@ export const AddRawProductForm = (props) => {
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
                                             Thể loại
-                                        </InputLabel>
+                </InputLabel>
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
@@ -288,34 +305,27 @@ export const AddRawProductForm = (props) => {
                                         </FormHelperText>
                                     </FormControl>
                                 </>
-
-
-                                {/* <div>
-                                    <FormControlLabel
-                                        label="Trạng thái:"
-                                        labelPlacement="start"
-                                        control={<Switch
-                                            color="primary"
-                                            checked={formData.isActive}
-                                            onChange={handleInputChange}
-                                            name="isActive"
-                                        />}
-                                    />
-                                    <FormHelperText>{helperValid.isActive}</FormHelperText>
-                                </div> */}
-
-
                             </Grid>
+
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                                <DropZoneUpload />
+                            </Grid>
+
                         </Grid>
                         <div className={classes.buttonWrapper}>
                             <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
                         </div>
                     </form>
+
                 </Paper>
+
             </div>
 
 
         </>
     )
 }
+
+
+
 

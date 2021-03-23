@@ -21,10 +21,10 @@ export class ManageAccountServices {
                     info: {
                         records: [
                             { accountID: 1, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", roleName: "manager", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { accountID: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", role: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { accountID: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", role: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { accountID: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", role: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                            { accountID: 5, username: "khoibm", email: "fsad@gmail.com", roleID: "1", role: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
+                            { accountID: 2, username: "khoibm", email: "fsad@gmail.com", roleID: "3", roleName: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 3, username: "khoibm", email: "fsad@gmail.com", roleID: "4", roleName: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 4, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
+                            { accountID: 5, username: "khoibm", email: "fsad@gmail.com", roleID: "1", roleName: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
                         totalPage: 20,
                         page: data.page
                     }
@@ -122,4 +122,35 @@ export class ManageAccountServices {
         })
     }
 
+
+    static getRoleToSelect = () => {
+        // return useHttpModule().get(config.useApiPath.api., data)
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+                    records: [
+                        {
+                            roleID: "1",
+                            roleName: "Khách hàng"
+                        },
+                        {
+                            roleID: "2",
+                            roleName: "Quản lý"
+                        },
+
+                        {
+                            roleID: "3",
+                            roleName: "Nhân viên kinh doanh"
+                        },
+
+                        {
+                            roleID: "4",
+                            roleName: "Nhân viên kỹ thuật"
+                        },
+                    ]
+                }
+            }
+        })
+    }
 }

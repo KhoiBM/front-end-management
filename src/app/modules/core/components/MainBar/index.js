@@ -29,21 +29,24 @@ const useStyles = makeStyles((theme) => ({
         // overflowY: "hidden"
     },
     toolbar: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
+
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
-        overflow: "hidden"
+        // backgroundColor: "blue",
+
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
-        // backgroundColor: "red",
-        minHeight: theme.spacing(105),
+        padding: theme.spacing(2),
+        // paddingTop: theme.spacing(10),
+        // backgroundColor: "blue",
+        minHeight: '100%',
         color: "#fff",
-        overflow: "hidden"
+        overflow: "hidden",
     }
 }));
 

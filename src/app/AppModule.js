@@ -36,9 +36,25 @@ const AppModule = () => {
                     // backgroundColor: "#e27348"
 
                 }
-            }
+            },
+            MuiTextField: {
+                root: {
 
+                    // backgroundColor: "#e27348"
+
+                }
+            },
+            MuiPaper: {
+                root: {
+
+
+                },
+                rounded: {
+                    // borderRadius: "0",
+                }
+            }
         },
+
         props: {
             MuiAppBar: {
                 root: {

@@ -1,18 +1,22 @@
+
 import React from 'react'
 import { useFormat } from './useFormat'
 import exportIcon from 'src/app/assets/image/exportIcon.png'
 
-export const useOptionsRevenueServiceChart = (title) => {
+export const useOptionsNumberOrderChart = (title) => {
 
     const xaxis = {
         type: 'category',
-        // categories: ["Ảnh", "Đồ lưu niệm", "Quần áo", "Đồ sứ", "Tạo của riêng bạn"],
+
+        // categories: [ "", ""],
+
         // title: {
-        //     text: 'Dịch vụ',
+        //     text: 'Thời gian',
         // },
+
         labels: {
             formatter: function (val) {
-                return `${useFormat().formatRevenue(val)} đ`;
+                return `${val}`;
             },
             // show: false
             show: true
@@ -22,16 +26,15 @@ export const useOptionsRevenueServiceChart = (title) => {
 
     const yaxis = {
         // title: {
-        //     text: 'Doanh thu',
+        //     text: 'Số lượng đơn hàng',
         // },
 
         labels: {
             formatter: function (val) {
-                // return val + "test";
                 return val;
             },
-            show: false
-            // show: true
+            // show: false
+            show: true
         }
 
 
@@ -44,19 +47,23 @@ export const useOptionsRevenueServiceChart = (title) => {
                 return val;
             },
             // show: false
+            title: {
+                formatter: function () {
+                    return ''
+                }
+            },
         },
         y: {
             formatter: function (val) {
-                return `${useFormat().formatRevenue(val)} đ`;
-
                 // return `${ val.toPrecision(val.toString().length) } đ`;
                 // return `${ val.toFixed(3) } đ`;
+                return `${val} ads`;
 
 
             },
             title: {
                 formatter: function () {
-                    return 'Doanh thu:'
+                    return 'Số lượng đơn hàng: '
                 }
             },
         }
@@ -72,7 +79,7 @@ export const useOptionsRevenueServiceChart = (title) => {
             },
             barHeight: '100%',
             distributed: true,
-            horizontal: true,
+            horizontal: false,
 
 
         }
@@ -98,12 +105,14 @@ export const useOptionsRevenueServiceChart = (title) => {
 
     //net border thanh bar
     const stroke = {
-        width: 0,
-        colors: ['#fff']
+        width: 3,
+        colors: ['#b6e2f3'],
+        curve: 'smooth',
+        // curve: 'straight',
     }
 
     const titleChart = (title) => ({
-        text: `DOANH THU TRÊN MỖI DỊCH VỤ ${title}`,
+        text: `SỐ LƯỢNG ĐƠN HÀNG ${title}`,
         align: 'center',
         margin: 40,
         offsetX: 0,
@@ -150,7 +159,7 @@ export const useOptionsRevenueServiceChart = (title) => {
         // textAnchor: 'start',
         formatter: function (val, opt) {
             // return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-            return `${useFormat().formatRevenue(val)} đ`;
+            return `${val}`;
         },
         // offsetX: 0
 
@@ -163,9 +172,8 @@ export const useOptionsRevenueServiceChart = (title) => {
         tools: {
             download: true,
             // download: `<img src="${exportIcon}" width="20" style={{color:"red"}}>`,
-
-            selection: true,
-            zoom: true,
+            selection: false,
+            zoom: false,
             zoomin: true,
             zoomout: true,
             pan: true,
@@ -174,19 +182,19 @@ export const useOptionsRevenueServiceChart = (title) => {
         },
         export: {
             csv: {
-                filename: "DOANH THU TRÊN MỖI DỊCH VỤ " + title,
+                filename: `SỐ LƯỢNG ĐƠN HÀNG ${title}`,
                 columnDelimiter: ',',
-                headerCategory: 'Dịch vụ',
+                headerCategory: 'Thời gian',
                 headerValue: 'value',
                 dateFormatter(timestamp) {
                     return new Date(timestamp).toDateString()
                 }
             },
             svg: {
-                filename: "DOANH THU TRÊN MỖI DỊCH VỤ " + title,
+                filename: `SỐ LƯỢNG ĐƠN HÀNG ${title}`,
             },
             png: {
-                filename: "DOANH THU TRÊN MỖI DỊCH VỤ " + title,
+                filename: `SỐ LƯỢNG ĐƠN HÀNG ${title}`,
             }
         },
         autoSelected: 'zoom'
@@ -208,33 +216,33 @@ export const useOptionsRevenueServiceChart = (title) => {
                 "exportToSVG": "Xuất ra SVG",
                 "exportToPNG": "Xuất ra PNG",
                 "menu": "Tuỳ chọn xuất ra tệp",
-                // "selection": "Selection",
-                // "selectionZoom": "Selection Zoom",
-                // "zoomIn": "Zoom In",
-                // "zoomOut": "Zoom Out",
-                // "pan": "Panning",
-                // "reset": "Reset Zoom"
+                "selection": "Chọn",
+                "selectionZoom": "Chọn thu phóng",
+                "zoomIn": "Phóng to",
+                "zoomOut": "Thu nhỏ",
+                "pan": "Di chuyển",
+                "reset": "Trở lại ban đầu"
             }
         }
     }]
     const grid = {
-        // row: {
-        //     colors: ['#e5e5e5', 'transparent'],
-        //     opacity: 0.5
-        // },
+        row: {
+            colors: ['#e5e5e5', 'transparent'],
+            opacity: 0.5
+        },
         // column: {
         //     colors: ['#f8f8f8', 'transparent'],
         // },
         xaxis: {
             lines: {
-                show: false,
-                // show: true
+                // show: false,
+                show: true
             }
         },
         yaxis: {
             lines: {
-                show: false,
-                // show: true
+                // show: false,
+                show: true
             }
         }
     }
@@ -257,11 +265,14 @@ export const useOptionsRevenueServiceChart = (title) => {
         },
     }
 
+    const markers = {
+        size: 5,
+        colors: ['#478de3']
+    }
+
 
     const chart = {
-        id: "DOANH THU TRÊN MỖI DỊCH VỤ",
-        // type: "bar",
-        // width: "100%",
+        id: `SỐ LƯỢNG ĐƠN HÀNG ${title}`,
         // animations: {
         //     initialAnimation: {
         //         enabled: false
@@ -272,36 +283,20 @@ export const useOptionsRevenueServiceChart = (title) => {
         defaultLocale: "vi"
     }
 
-    // return {
-    //     optionsChart: {
-    //         chart: chart,
-    //         xaxis: xaxis,
-    //         yaxis: yaxis,
-    //         tooltip: tooltip,
-    //         plotOptions: plotOptions,
-    //         colors: colors,
-    //         stroke: stroke,
-    //         title: titleChart(""),
-    //         subtitle: subTitleChart,
-    //         dataLabels: dataLabels,
-    //         grid: grid,
-    //         legend: legend
-    //     },
-    //     titleChart
 
-    // }
     return {
         chart: chart,
         xaxis: xaxis,
         yaxis: yaxis,
-        tooltip: tooltip,
+        // tooltip: tooltip,
         plotOptions: plotOptions,
-        colors: colors,
+        // colors: colors,
         stroke: stroke,
         title: titleChart(title),
         subtitle: subTitleChart,
-        dataLabels: dataLabels,
+        // dataLabels: dataLabels,
         grid: grid,
-        legend: legend
+        // legend: legend
+        markers: markers
     }
 }

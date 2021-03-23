@@ -15,20 +15,20 @@ export class ManageStatisticServices {
 
 
     static viewOverallRevenue = (data) => {
-        // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    record: {
-                        overall: 1232323,
-                        inWeek: 1323,
-                        inMonth: 14213,
-                        inYear: 1521221
-                    }
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageStatisticServices.viewOverallRevenue, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             record: {
+        //                 overall: 1232323,
+        //                 inWeek: 1323,
+        //                 inMonth: 14213,
+        //                 inYear: 1521221
+        //             }
+        //         }
+        //     }
+        // })
     }
 
     static viewRevenueOfEachService = () => {
@@ -128,9 +128,108 @@ export class ManageStatisticServices {
                 result: config.useResultStatus.SUCCESS,
                 info: {
                     record: {
-                        inWeek: {},
-                        inMonth: {},
-                        inYear: {}
+                        inWeek: [
+                            {
+                                x: 'Chủ nhật',
+                                y: 12123123
+                            },
+                            {
+                                x: 'Thứ hai',
+                                y: 12123123
+                            },
+                            {
+                                x: 'Thứ ba',
+                                y: 13123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ tư',
+                                y: 19123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ năm',
+                                y: 10123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ sáu',
+                                y: 10123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ bảy',
+                                y: 10123123
+                            }
+                        ],
+                        inMonth: [
+                            {
+                                x: 'Chủ nhật',
+                                y: 12123123
+                            },
+                            {
+                                x: 'Thứ hai',
+                                y: 12123123
+                            },
+                            {
+                                x: 'Thứ ba',
+                                y: 13123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ tư',
+                                y: 19123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ năm',
+                                y: 10123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ sáu',
+                                y: 10123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ bảy',
+                                y: 10123123
+                            }
+                        ],
+                        inYear: [
+                            {
+                                x: 'Chủ nhật',
+                                y: 12123123
+                            },
+                            {
+                                x: 'Thứ hai',
+                                y: 12123123
+                            },
+                            {
+                                x: 'Thứ ba',
+                                y: 13123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ tư',
+                                y: 19123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ năm',
+                                y: 10123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ sáu',
+                                y: 10123123
+                            }
+                            ,
+                            {
+                                x: 'Thứ bảy',
+                                y: 10123123
+                            }
+                        ]
                     }
                 }
             }

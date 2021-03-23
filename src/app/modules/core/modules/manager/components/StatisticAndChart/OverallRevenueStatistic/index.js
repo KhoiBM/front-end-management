@@ -12,6 +12,15 @@ import { CgExport } from 'react-icons/cg'
 
 
 const useStyles = makeStyles(theme => ({
+    overallStatisticRoot: {
+        // marginBottom: theme.spacing(8),
+        // height: "180px",
+        // background: "#B6E2F3",
+        // width: "80rem",
+        width: "82rem",
+        // border: "3px solid #48b7e2",
+        margin: "0rem auto"
+    },
     titleContainer: {
         // marginBottom: theme.spacing(8),
         // height: "180px",
@@ -22,14 +31,6 @@ const useStyles = makeStyles(theme => ({
     },
     titleWrapper: {
         width: "12rem",
-    },
-    overallStatisticRoot: {
-        // marginBottom: theme.spacing(8),
-        // height: "180px",
-        // background: "#B6E2F3",
-        width: "80rem",
-        // border: "3px solid #48b7e2",
-        margin: "0rem auto"
     },
     rootCard: {
         minWidth: 275,
@@ -203,22 +204,35 @@ const OverallRevenueStatistic = () => {
 
     const [overallRevenue, setOverallRevenue] = useState({})
 
-    useEffect(async () => {
-        try {
-            const response = await (await ManageStatisticServices.viewOverallRevenue()).data
-            if (response.result == config.useResultStatus.SUCCESS) {
-                const overallRevenue = response.info.record
-                // toast.success("Thành công")
-                // console.log(JSON.stringify(overallRevenue))
-                setOverallRevenue(overallRevenue)
-            } else {
-                toast.error(config.useMessage.resultFailure)
-            }
-        } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
-        }
+    useEffect(() => {
+
+        loadInit()
 
     }, [])
+
+    const loadInit = async () => {
+        localStorage.setItem("pps-token", "eyJraWQiOiJSTmkrS25iRXEyXC9nWkIwbFhoekt1TnJnekpYaldXb00rV1RtdndTQ1c1ST0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5MjJmYzNlNi05MTFhLTRjOWEtYThhNy0xNzRjOWNjNTFmNTkiLCJldmVudF9pZCI6ImJlNDM5NTEzLTRjYTItNGNkNC05YTU2LThmNTgwMzRkNzcwYiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2MTY1MTc3MDAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMV80SWF6OUtFTFMiLCJleHAiOjE2MTY1MjEzMDAsImlhdCI6MTYxNjUxNzcwMCwianRpIjoiYjgzM2MyYjUtMjk3OC00MzhmLTkwNDgtNjZhODgzYmFkYWRkIiwiY2xpZW50X2lkIjoiNThwNnM1aDBqZWJlY29yY2Z1cmhwYnM4MWciLCJ1c2VybmFtZSI6Imtob2libXRlc3QifQ.K6q_nYw53RHT7h2-eB9NUQ5N4XNDdvzRwLWcRGj5Y01p16cqfQcGVG1f5a5y3_EVuPxSZjnao_xNGqEZ9YNAJeytZk4C7_E1ZUqykN4yEeGnA68LHV8rHuq9f4ebdUMlod573Mk1ooH8ateGKWUq6VvaUSyNQ7U4yB1_hi-L6V2Vp6itvEpeNuxhh5yuZhcEjdCfUvl3FDd_MGVl4NmkJd014WtcDiY1SP485T6HtV55ZU94ClNYvhxEXR4etGGoe5bgAEXN8kkcFGo6MOc0dfWJRMebsrKcFqH3cb0UzvkoQ7wnJ6kK8f1qHxcawoWGp7LhEQXGZiTCrjZdra5mlg")
+        try {
+            const response = await (await ManageStatisticServices.viewOverallRevenue()).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    const overallRevenue = response.info.record
+                    // toast.success("Thành công")
+                    // console.log(JSON.stringify(overallRevenue))
+                    setOverallRevenue(overallRevenue)
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+    }
+
 
     const getCsvData = () => {
         const csvData = [['DOANH THU'], ['Tổng doanh thu', 'Tuần', 'Tháng', 'Năm']];

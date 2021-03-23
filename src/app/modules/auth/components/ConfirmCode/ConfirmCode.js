@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react'
 import HelperValidation from '../HelperValidation/HelperValidation'
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useStore, useSelector } from 'react-redux';
 import { useAuthAction } from 'src/app/stores/actions';
 import { useQueryURL } from 'src/app/utils/handles/useQueryURL';
@@ -17,10 +17,11 @@ import { FormWrapper, InputText } from './ConfirmCodeElements';
 
 const ConfirmCode = (props) => {
     // const { showSnackbar } = useShowSnackbar()
-    let query = useQueryURL();
+    // let query = useQueryURL();
     const store = useStore()
     const history = useHistory()
     const dispatch = useDispatch()
+    let location = useLocation();
 
     const [formData, setFormData] = useState({ confirmCode: "" });
 
@@ -50,18 +51,29 @@ const ConfirmCode = (props) => {
         const enableSubmit = validation(formData);
         console.log("enableSubmit: " + enableSubmit);
         if (enableSubmit) {
-            confirmCode(query, formData, dispatch);
+            confirmCode(formData, dispatch);
         } else {
             // showSnackbar(`${"Dữ liệu không hợp lệ"}`, 'error')
             toast.error(`${"Dữ liệu không hợp lệ"}`)
         }
     }
-    function confirmCode(query, formData, dispatch) {
-        const data = {
-            username: query.get("username"),
-            code: formData.confirmCode
-        };
-        dispatch(useAuthAction().confirmCode(data));
+    function confirmCode(formData, dispatch) {
+        // const username = query.get("username");
+        // const email = query.get("email");
+        const username = location.state.username;
+        const email = location.state.email;
+        if (username && username.length > 0 && username != null && email && email.length > 0 && email != null) {
+            const data = {
+                username: username,
+                email: email,
+                code: formData.confirmCode
+            };
+            console.log("data: " + JSON.stringify(data))
+            dispatch(useAuthAction().confirmCode(data));
+        } else {
+            toast.error("Lỗi khi truyền tên người dùng hoặc email ")
+        }
+
     }
 
 

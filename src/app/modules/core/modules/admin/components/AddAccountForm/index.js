@@ -110,6 +110,42 @@ export const AddAccountForm = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
+    const [recordsRole, setRecordsRole] = useState([])
+
+    useEffect(() => {
+        loadInit()
+    }, [])
+
+    const loadInit = async () => {
+        try {
+            const response = await (await ManageAccountServices.getRoleToSelect()).data
+            // console.log("response: " + response)
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    // console.log("recordsRole: " + JSON.stringify(response.info.records))
+                    setRecordsRole(response.info.records ? response.info.records : [])
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     const handleClickShowPassword = () => {
         setFormData({ ...formData, showPassword: !formData.showPassword });
@@ -127,10 +163,10 @@ export const AddAccountForm = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("formdata: " + JSON.stringify(formData))
+        // console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add()
+            add(formData)
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -138,9 +174,20 @@ export const AddAccountForm = (props) => {
 
     }
 
-    const add = async () => {
+
+    const add = async (formData) => {
         try {
-            const response = await (await ManageAccountServices.add(formData)).data
+            const data = {
+                accountID: "",
+                username: formData.username,
+                email: formData.email,
+                password: formData.password,
+                roleID: formData.roleID,
+                isActive: true,
+                createdAt: new Date()
+            }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await ManageAccountServices.add(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -154,10 +201,12 @@ export const AddAccountForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
-
     }
+
+
+
     return (
         <>
             {/* <p>addform</p> */}
@@ -306,10 +355,10 @@ export const AddAccountForm = (props) => {
                                             labelWidth={50}
                                             required
                                         >
-                                            <MenuItem value={1}>Khách hàng</MenuItem>
-                                            <MenuItem value={2}>Quản lý</MenuItem>
-                                            <MenuItem value={3}>Nhân viên kinh doanh</MenuItem>
-                                            <MenuItem value={4}>Nhân viên kỹ thuật</MenuItem>
+                                            {
+                                                recordsRole && recordsRole.map((val, index) => (<MenuItem value={val.roleID} key={val.roleID}>{val.roleName}</MenuItem>))
+                                            }
+
                                         </Select>
                                         {/* <FormHelperText>{helperValid.roleID}</FormHelperText> */}
                                     </FormControl>
