@@ -123,6 +123,8 @@ const initialFValues = {
 export const AddRawProductForm = (props) => {
     const classes = useStyles();
 
+    const [uploadFiles, setUploadFiles] = useState([])
+
     const [categoryRecords, setCategoryRecords] = useState([])
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -130,10 +132,10 @@ export const AddRawProductForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("formdata: " + JSON.stringify(formData))
+        // console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add()
+            add(formData)
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -162,7 +164,13 @@ export const AddRawProductForm = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
     }
-    const add = async () => {
+    const add = async (formData) => {
+        uploadFiles.forEach((file) => {
+            console.log("name: " + JSON.stringify(file.name))
+            console.log("type: " + JSON.stringify(file.type))
+        })
+        // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
+        console.log(uploadFiles)
         try {
             const response = await (await ManageRawProductServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
@@ -308,7 +316,7 @@ export const AddRawProductForm = (props) => {
                             </Grid>
 
                             <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
-                                <DropZoneUpload />
+                                <DropZoneUpload setUploadFiles={setUploadFiles} />
                             </Grid>
 
                         </Grid>

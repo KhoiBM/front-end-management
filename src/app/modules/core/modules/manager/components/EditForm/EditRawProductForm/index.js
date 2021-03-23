@@ -9,7 +9,7 @@ import { RiCloseFill } from 'react-icons/ri'
 import { useForm } from 'src/app/utils'
 import { ManageCategory } from '../../../../manager/components'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
-import { PageHeader } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -50,9 +50,12 @@ const useStyles = makeStyles(theme => ({
         }
     },
     pageForm: {
-        width: "25rem",
+        // width: "25rem",
+        width: "50rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
 
     },
@@ -90,6 +93,19 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
+    },
+    gridItem1: {
+        // background: "yellow",
+        '&  .MuiFormControl-root': {
+            width: "100%"
+        }
+    },
+    gridItem2: {
+        // background: "orange",
+        display: "flex",
+        justifyContent: "center",
+        // alignItems: "center"
+        paddingTop: theme.spacing(2)
     }
 }))
 
@@ -107,6 +123,8 @@ const initialFValues = {
 }
 export const EditRawProductForm = (props) => {
     const classes = useStyles();
+
+    const [uploadFiles, setUploadFiles] = useState([])
 
     const [categoryRecords, setCategoryRecords] = useState([])
 
@@ -194,8 +212,8 @@ export const EditRawProductForm = (props) => {
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
-                        <Grid container>
-                            <Grid item xs={6} sm={6} md={6}>
+                        <Grid container spacing={4}>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
                                 <TextField
                                     variant='outlined'
                                     label="Tên sản phẩm thô"
@@ -306,6 +324,9 @@ export const EditRawProductForm = (props) => {
                                 </div> */}
 
 
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                                <DropZoneUpload setUploadFiles={setUploadFiles} />
                             </Grid>
                         </Grid>
                         <div className={classes.buttonWrapper}>

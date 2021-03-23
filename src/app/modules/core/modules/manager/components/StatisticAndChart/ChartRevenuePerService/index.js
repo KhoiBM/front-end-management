@@ -28,6 +28,8 @@ const useStyles = makeStyles(theme => ({
         // border: "1px solid red",
         // width: "38rem",
         width: "39.8rem",
+        minHeight: "40rem",
+        height: "auto"
         // marginTop: theme.spacing(5)
     },
     titleChart: {
@@ -135,7 +137,7 @@ const ChartRevenuePerService = () => {
 
                 <div className={classes.rootTab}>
                     <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
-                    <TabPanel value={value} index={0}>()
+                    <TabPanel value={value} index={0}>
                         <Paper className={classes.rootChart}>
                             <Chart
 

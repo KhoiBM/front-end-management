@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import React, { useCallback } from 'react'
 import Dropzone from 'react-dropzone'
-import { Paper, makeStyles, Typography, List, ListItem } from '@material-ui/core'
+import { Paper, makeStyles, Typography, List, ListItem, CardMedia, Divider, Card, Tooltip, Zoom, Box } from '@material-ui/core'
 import { toast } from 'react-toastify'
 import { useDropzone } from 'react-dropzone'
 import { AiOutlineUpload } from 'react-icons/ai'
@@ -10,7 +11,8 @@ const useStyles = makeStyles((theme) => ({
         width: "21.9rem",
         minHeight: "100px",
         height: "auto",
-        position: "absolute"
+        position: "absolute",
+        background: "transparent"
 
     },
     dropZoneUploadWrapper: {
@@ -22,9 +24,14 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center"
 
     },
-    rootList: {
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
+    rootListPreview: {
+
+        // backgroundColor: "red",
+        // display: "flex",
+        // justifyContent: "flex-start",
+        // flexWrap: "wrap",
+        // gap: theme.spacing(2),
+
     },
     iconUploadWrapper: {
         display: "flex",
@@ -39,32 +46,117 @@ const useStyles = makeStyles((theme) => ({
     titleUpload: {
 
 
+    }, photoPreviewCard: {
+        width: "100px",
+        height: "100px",
+        float: "left",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        // backgroundColor: "blue",
+        marginLeft: theme.spacing(1),
+        marginTop: theme.spacing(1)
+
+    },
+    photoPreview: {
+        width: "100px",
+        height: "100px",
+        // alignSelf: "flex-start",
+
+    },
+    dropZonePreviewContainer: {
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        width: "21.9rem",
+        height: "auto",
+        // background: "red",
+        position: "absolute",
+        top: theme.spacing(24),
+        // width: '100%',
+        // height: "auto",
+        minHeight: "345px",
+        maxHeight: "345px",
+        overflow: "scroll",
+        padding: theme.spacing(1),
+        backgroundColor: theme.palette.background.paper,
+        border: "1px solid rgba(0, 0, 0, 0.23)",
     }
 }))
 
 
 const photoValidator = (file) => {
-    const maxLength = 20;
+    // let message = ''
+    const maxLength = 40;
     const MIN_WIDTH = 300
-
+    const MIN_HEIGHT = 300
+    // console.log("validatorfile: " + JSON.stringify(file))
+    // console.log("withfile: " + JSON.stringify(file.width))
+    // console.log("heightfile: " + JSON.stringify(file.height))
     if (file.name.length > maxLength) {
+        toast.error(`Tên tệp quá lớn - ${file.path} !`)
         return {
             code: "name-too-large",
             message: `Name is larger than ${maxLength} characters`
         };
     }
-    // if (file.width < MIN_WIDTH) {
-    //     return {
-    //         code: "small-width",
-    //         message: `Image width must be greater than ${MIN_WIDTH}`,
-    //     }
-    // }
 
+    const i = new Image()
+
+    i.onload = () => {
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => {
+            console.log("imagefile")
+            console.log({
+                src: file.preview,
+                width: i.width,
+                height: i.height,
+                data: reader.result
+            })
+        }
+    }
+
+    i.src = file.preview
+    if (file.width < MIN_WIDTH) {
+        toast.error("Chiều rộng của hình phải lớn hơn 300px!")
+        return {
+            code: "small-width",
+            message: `Image width must be greater than ${MIN_WIDTH}`,
+        }
+    }
+    if (file.height < MIN_HEIGHT) {
+        toast.error("Chiều cao của hình phải lớn hơn 300px!")
+        return {
+            code: "small-height",
+            message: `Image height must be greater than ${MIN_HEIGHT}`,
+        }
+    }
     return null
 }
-export const DropZoneUpload = () => {
+const getFilesFromEvent = async (event) => {
+    const files = event.target.files
+    const promises = []
+    for (let index = 0; index < files.length; index++) {
+        const file = files[index]
+        const promise = new Promise((resolve, reject) => {
+            const image = new Image()
+            let url = URL.createObjectURL(file)
+            image.src = url
+            image.onload = function () {
+                file.width = image.width
+                file.height = image.height
+                file.src = image.src
+                resolve(file)
+            }
+        })
+        promises.push(promise)
+    }
+
+    return await Promise.all(promises)
+}
+
+
+export const DropZoneUpload = (props) => {
     const classes = useStyles()
 
+    const { setUploadFiles } = props
     const mimeTypes = "image/png, image/jpg, image/jpeg"
     // const mimeTypes = ""
     // 5242880    5Mb
@@ -81,6 +173,7 @@ export const DropZoneUpload = () => {
         useCallback(acceptedFiles => {
             console.info("acceptedFiles:")
             console.log(acceptedFiles)
+            setUploadFiles(acceptedFiles)
         }, []);
 
 
@@ -90,9 +183,9 @@ export const DropZoneUpload = () => {
         rejectedFiles.forEach((rejectedFile) => {
             const isFileTooLarge = rejectedFile && rejectedFile.file.size > maxSize;
             // console.log("isFileTooLarge:" + isFileTooLarge)
-            if (isFileTooLarge) { toast.error(`Tệp  ${rejectedFile.file.path} quá lớn`) }
+            if (isFileTooLarge) { toast.error(`Tệp  ${rejectedFile.file.name} quá lớn`) }
             else {
-                toast.error(`Tệp ${rejectedFile.file.path} không được chấp nhận!`)
+                toast.error(`Tệp ${rejectedFile.file.name} không được chấp nhận!`)
             }
 
         })
@@ -108,7 +201,8 @@ export const DropZoneUpload = () => {
         maxSize: maxSize,
         onDropAccepted,
         onDropRejected,
-        validator: photoValidator
+        getFilesFromEvent: getFilesFromEvent,
+        validator: photoValidator,
 
     });
 
@@ -153,18 +247,27 @@ export const DropZoneUpload = () => {
                 </div>
 
             </Paper >
+            <Divider />
 
-            <Paper>
+            <Paper elevation={0} className={classes.dropZonePreviewContainer}>
+                {/* 
+                <Box component="div" className={classes.rootListPreview} > */}
+                {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
 
-                <List component="ul" className={classes.rootList} >
-                    {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
-                        <ListItem key={index}>
-                            {acceptedFile.name}
-                        </ListItem>
+                    <Card key={index} className={classes.photoPreviewCard}>
+                        <Tooltip TransitionComponent={Zoom} placement="left" title={acceptedFile.name} >
 
-                    ))}
+                            <CardMedia image={acceptedFile.src} className={classes.photoPreview}
 
-                </List>
+                            />
+
+                        </Tooltip>
+                    </Card>
+
+
+                ))}
+
+                {/* </Box> */}
             </Paper>
 
         </>
@@ -201,7 +304,7 @@ export const DropZoneUpload = () => {
 //                         console.log("rejectedFiles: " + JSON.stringify(rejectedFiles))
 //                         console.log(rejectedFiles)
 //                         rejectedFiles.forEach((rejectedFile) => {
-//                             toast.error(`Tệp  ${rejectedFile.file.path} quá lớn`)
+//                             toast.error(`Tệp  ${ rejectedFile.file.path } quá lớn`)
 //                         })
 
 //                     }

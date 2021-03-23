@@ -6,12 +6,20 @@ const useStyles = makeStyles(theme => ({
         // width: "100%",
         width: "100%",
         // backgroundColor: "red",
-        // height: "0px",
+        minHeight: "600px",
+        // height: "auto",
+        boxShadow: "none",
+        padding: "0"
 
     },
     TabContainer: {
         background: "#fff",
         // backgroundColor: "red",
+        // borderBottom: "1px solid rgba(0, 0, 0, 0.23)",
+    },
+    boxContentTabPanel: {
+        padding: theme.spacing(3),
+
     }
 }))
 export const useTab = () => {
@@ -31,14 +39,14 @@ export const useTab = () => {
 
         return (
             <div
-                role="tabpanel"
+                // role="tabpanel"
                 hidden={value !== index}
-                id={`tabpanel-${index}`}
-                {...other}
+                // id={`tabpanel-${index}`}
+                // {...other}
                 className={classes.tablePanel}
             >
                 {value === index && (
-                    <Box p={3}>
+                    <Box className={classes.boxContentTabPanel} >
                         {children}
                     </Box>
                 )}
@@ -56,7 +64,7 @@ export const useTab = () => {
         // })
 
         return (
-            <AppBar position="static" className={classes.TabContainer} >
+            <AppBar position="static" className={classes.TabContainer} elevation={0} >
                 <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
                     {
                         props.tabArr && props.tabArr.map((val, index) => {

@@ -16,10 +16,12 @@ const useStyles = makeStyles(theme => ({
     rootChart: {
         // border: "1px solid red",
         width: "100%",
-        transition: "transition: all 0.3s ease 0s;"
+        // transition: "transition: all 0.3s ease 0s",
+        height: "500px"
     },
     chart: {
-        width: "100%"
+        width: "100%",
+        height: "500px"
     },
     chartContainer: {
         // display: "flex",
@@ -28,6 +30,8 @@ const useStyles = makeStyles(theme => ({
         // border: "1px solid red",
         // width: "38rem",
         width: "39.8rem",
+        minHeight: "40rem",
+        height: "auto"
         // marginTop: theme.spacing(5)
     },
     titleChart: {
@@ -134,7 +138,7 @@ const NumberOrderStatistic = () => {
 
                 <div className={classes.rootTab}>
                     <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
-                    <TabPanel value={value} index={0}>()
+                    <TabPanel value={value} index={0}>
                         <Paper className={classes.rootChart}>
                             <Chart
                                 options={useOptionsNumberOrderChart("TRONG TUẦN")}
@@ -144,6 +148,7 @@ const NumberOrderStatistic = () => {
                                 className={classes.chart}
                             />
                         </Paper>
+
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>

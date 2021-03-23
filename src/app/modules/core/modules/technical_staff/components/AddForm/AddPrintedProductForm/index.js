@@ -8,7 +8,7 @@ import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
 import { useForm } from 'src/app/utils'
 import { ManagePrintedProductServices, TechnicalStaffProcessOrderServices, ManageRawProductServices } from 'src/app/services'
-import { PageHeader } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { ManagePrintedProduct } from '../../Manage'
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -51,16 +51,19 @@ const useStyles = makeStyles(theme => ({
         }
     },
     pageForm: {
-        width: "25rem",
+        // width: "25rem",
+        width: "50rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
-        overflow: "scroll",
 
     },
     pageFormContainer: {
         width: "100%",
-        height: "100%",
+        minHeight: "800px",
+        height: "auto",  //  làm mất goc paper ở dưới 
         // background: "red",
         display: "flex",
         justifyContent: "center",
@@ -91,6 +94,19 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
+    },
+    gridItem1: {
+        // background: "yellow",
+        '&  .MuiFormControl-root': {
+            width: "100%"
+        }
+    },
+    gridItem2: {
+        // background: "orange",
+        display: "flex",
+        justifyContent: "center",
+        // alignItems: "center"
+        paddingTop: theme.spacing(2)
     }
 }))
 
@@ -106,6 +122,8 @@ const initialFValues = {
 }
 export const AddPrintedProductForm = (props) => {
     const classes = useStyles();
+
+    const [uploadFiles, setUploadFiles] = useState([])
 
     const [orderRecords, setOrderRecords] = useState([])
 
@@ -217,8 +235,8 @@ export const AddPrintedProductForm = (props) => {
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
-                        <Grid container>
-                            <Grid item xs={6} sm={6} md={6}>
+                        <Grid container spacing={4}>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
 
                                 <FormControl variant="outlined" >
                                     <InputLabel id="orderID-label">
@@ -350,6 +368,9 @@ export const AddPrintedProductForm = (props) => {
                                     multiline
                                 />
 
+                            </Grid>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                                <DropZoneUpload setUploadFiles={setUploadFiles} />
                             </Grid>
                         </Grid>
 
