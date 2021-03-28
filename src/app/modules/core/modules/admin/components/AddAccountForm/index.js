@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-labels */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper, InputAdornment, IconButton, Input, OutlinedInput } from '@material-ui/core'
 import { toast } from 'react-toastify'
@@ -9,7 +7,6 @@ import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServic
 import { RiCloseFill } from 'react-icons/ri'
 import { useForm } from 'src/app/utils'
 import { MdVisibilityOff, MdVisibility } from 'react-icons/md'
-import clsx from 'clsx';
 import { PageHeader } from 'src/app/modules/core/components'
 
 const useStyles = makeStyles(theme => ({
@@ -51,16 +48,26 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
         }
     },
+    // pageForm: {
+    //     width: "25rem",
+    //     padding: theme.spacing(3),
+    //     position: "relative",
+    //     // background: "blue",
+
+    // },
     pageForm: {
         width: "25rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
 
     },
     pageFormContainer: {
         width: "100%",
-        height: "100%",
+        minHeight: "800px",
+        height: "auto",  //  làm mất goc paper ở dưới 
         // background: "red",
         display: "flex",
         justifyContent: "center",
@@ -100,10 +107,10 @@ const initialFValues = {
     email: "",
     password: "",
     rePassword: "",
-    roleID: "1",
+    roleID: "",
     showPassword: false,
     showRePassword: false,
-    createdAt: new Date()
+    // createdAt: new Date()
 }
 export const AddAccountForm = (props) => {
     const classes = useStyles();
@@ -118,7 +125,7 @@ export const AddAccountForm = (props) => {
 
     const loadInit = async () => {
         try {
-            const response = await (await ManageAccountServices.getRoleToSelect()).data
+            const response = await (await ManageAccountServices.getRoleToSelectAddOrEdit()).data
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -133,7 +140,7 @@ export const AddAccountForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
     }
 
@@ -178,13 +185,13 @@ export const AddAccountForm = (props) => {
     const add = async (formData) => {
         try {
             const data = {
-                accountID: "",
+                // accountID: "",
                 username: formData.username,
                 email: formData.email,
                 password: formData.password,
                 roleID: formData.roleID,
                 isActive: true,
-                createdAt: new Date()
+                // createdAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
             const response = await (await ManageAccountServices.add(data)).data
@@ -201,7 +208,7 @@ export const AddAccountForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
     }
 
@@ -349,7 +356,18 @@ export const AddAccountForm = (props) => {
                                         <Select
                                             labelId="roleID-label"
                                             id="roleID"
-                                            value={formData.roleID}
+                                            value={
+                                                formData.roleID &&
+                                                    formData.roleID != null && formData.roleID.length > 0
+                                                    ? formData.roleID
+                                                    : recordsRole && recordsRole != null && recordsRole.length > 0
+                                                        ? (() => {
+                                                            setFormData({ ...formData, roleID: recordsRole[0].roleID });
+                                                            return recordsRole[0].roleID
+                                                        })()
+                                                        : ""
+
+                                            }
                                             onChange={handleInputChange}
                                             name="roleID"
                                             labelWidth={50}

@@ -51,7 +51,7 @@ const StyledTableRow = withStyles((theme) => ({
 export const RawProductImportationTable = (props) => {
     const classes = useStyles();
     // const headCells = ['ID', "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã nhập', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    const headCells = ['Mã ID', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);

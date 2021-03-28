@@ -12,7 +12,7 @@ export const useOptionsRevenueServiceChart = (title) => {
         // },
         labels: {
             formatter: function (val) {
-                return `${useFormat().formatRevenue(val)} đ`;
+                return `${useFormat().formatMoney(val)} đ`;
             },
             // show: false
             show: true
@@ -30,8 +30,8 @@ export const useOptionsRevenueServiceChart = (title) => {
                 // return val + "test";
                 return val;
             },
-            show: false
-            // show: true
+            // show: false
+            show: true
         }
 
 
@@ -47,7 +47,7 @@ export const useOptionsRevenueServiceChart = (title) => {
         },
         y: {
             formatter: function (val) {
-                return `${useFormat().formatRevenue(val)} đ`;
+                return `${useFormat().formatMoney(val)} đ`;
 
                 // return `${ val.toPrecision(val.toString().length) } đ`;
                 // return `${ val.toFixed(3) } đ`;
@@ -126,6 +126,7 @@ export const useOptionsRevenueServiceChart = (title) => {
 
     const dataLabels = {
         enabled: true,
+        // enabled: false,
         // dropShadow: {
         //     enabled: true,
         //     left: 2,
@@ -134,9 +135,10 @@ export const useOptionsRevenueServiceChart = (title) => {
         // },
         // enabledOnSeries: [1], // ẩn label in thanh bar với object đầu tiên trong series
         style: {
-            fontSize: '24px',
+            fontSize: '14px',
             fontWeight: 'bold',
-            colors: ['#fff']
+            // colors: ['#fff']
+            colors: ['#000']
         },
         // background: {
         //     enabled: true,
@@ -150,9 +152,9 @@ export const useOptionsRevenueServiceChart = (title) => {
         // textAnchor: 'start',
         formatter: function (val, opt) {
             // return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-            return `${useFormat().formatRevenue(val)} đ`;
+            return `${useFormat().formatMoney(val)} đ`;
         },
-        // offsetX: 0
+        // offsetX: 300
 
     }
 
@@ -302,6 +304,10 @@ export const useOptionsRevenueServiceChart = (title) => {
         subtitle: subTitleChart,
         dataLabels: dataLabels,
         grid: grid,
-        legend: legend
+        legend: legend,
+        theme: {
+            mode: "light",
+            // palette: 'palette1' // upto palette10
+        }
     }
 }

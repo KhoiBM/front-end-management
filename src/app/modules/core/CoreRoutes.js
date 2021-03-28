@@ -3,12 +3,12 @@ import { useRouteMatch, Switch, Router, Route, Redirect } from "react-router-dom
 import React from 'react'
 import AdminPage from "./modules/admin/pages/ManageAccountPage";
 import ManagerPage from './modules/manager/pages/ManagerPage'
-import NoMatch from "src/app/components/NoMatch";
 import AdminModule from './modules/admin/AdminModule'
 import ManagerModule from './modules/manager/ManagerModule'
 import BusinessStaffModule from './modules/business_staff/BusinessStaffModule'
 import TechnicalStaffModule from './modules/technical_staff/TechnicalStaffModule'
 import ProfilePage from './pages/ProfilePage'
+import { NoMatch } from "src/app/components";
 const CoreRoutes = () => {
     const { path } = useRouteMatch();
     return (

@@ -5,7 +5,7 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 import ConfirmCodePage from './pages/ConfirmCodePage/ConfirmCodePage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
 import ConfirmForgotPasswordPage from './pages/ConfirmForgotPasswordPage/ConfirmForgotPasswordPage'
-import NoMatch from 'src/app/components/NoMatch';
+import { NoMatch } from 'src/app/components';
 const AuthRoutes = () => {
     const { path } = useRouteMatch();
     return (

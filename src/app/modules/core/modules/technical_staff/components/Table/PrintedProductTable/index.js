@@ -55,7 +55,7 @@ export const PrintedProductTable = (props) => {
     const { keywords, searchAction, clickSearch } = props
 
 
-    const headCells = ['Mã sản phẩm đã in', "Mã đơn hàng", "Mã sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);

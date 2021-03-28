@@ -1,5 +1,5 @@
 import React from 'react';
-function NoMatch() {
+export function NoMatch() {
     return (
         <div>
             <h3>
@@ -9,4 +9,3 @@ function NoMatch() {
         </div>
     );
 }
-export default NoMatch

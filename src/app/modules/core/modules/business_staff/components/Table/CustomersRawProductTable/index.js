@@ -54,8 +54,9 @@ export const CustomersRawProductTable = (props) => {
 
     const { keywords, searchAction, clickSearch } = props
 
-    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-
+    // const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Thể loại", "Thao tác"]
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
 
@@ -190,21 +191,20 @@ export const CustomersRawProductTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.rawProductID} >
 
-                                <StyledTableCell>
-                                    {row.rawProductID}
-                                </StyledTableCell>
+                                <StyledTableCell>{row.rawProductID}</StyledTableCell>
+                                <StyledTableCell>{row.rawProductCode}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
-                                <StyledTableCell >{row.unitPrice}</StyledTableCell>
+                                {/* <StyledTableCell >{row.unitPrice}</StyledTableCell> */}
                                 <StyledTableCell >{row.totalQuantity}</StyledTableCell>
-                                <StyledTableCell >{row.size}</StyledTableCell>
-                                <StyledTableCell >{row.color}</StyledTableCell>
-                                <StyledTableCell >{row.description}</StyledTableCell>
+                                {/* <StyledTableCell >{row.size}</StyledTableCell> */}
+                                {/* <StyledTableCell >{row.color}</StyledTableCell> */}
+                                {/* <StyledTableCell >{row.description}</StyledTableCell> */}
                                 <StyledTableCell >{row.categoryName}</StyledTableCell>
 
-                                <StyledTableCell >{row.createdBy}</StyledTableCell>
+                                {/* <StyledTableCell >{row.createdBy}</StyledTableCell> */}
 
-                                <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                                {/* <StyledTableCell >{row.createdAt}</StyledTableCell> */}
+                                {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
 
                                 <StyledTableCell style={{ minWidth: "160px" }} >

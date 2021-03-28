@@ -320,7 +320,7 @@ const OverallRevenueStatistic = () => {
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
 
-                                {`${useFormat().formatRevenue(overallRevenue.overall)} đ`}
+                                {`${useFormat().formatMoney(overallRevenue.overall)} đ`}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -337,7 +337,7 @@ const OverallRevenueStatistic = () => {
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
                                 {/* {}<span>đ</span> */}
-                                {`${useFormat().formatRevenue(overallRevenue.inWeek)} đ`}
+                                {`${useFormat().formatMoney(overallRevenue.inWeek)} đ`}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -354,7 +354,7 @@ const OverallRevenueStatistic = () => {
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
                                 {/* {overallRevenue.inMonth}<span>đ</span> */}
-                                {`${useFormat().formatRevenue(overallRevenue.inMonth)} đ`}
+                                {`${useFormat().formatMoney(overallRevenue.inMonth)} đ`}
 
                             </Typography>
                         </CardContent>
@@ -372,7 +372,7 @@ const OverallRevenueStatistic = () => {
                         </Typography>
                             <Typography className={classes.content} color="textSecondary" gutterBottom>
                                 {/* {overallRevenue.inYear}<span>đ</span> */}
-                                {`${useFormat().formatRevenue(overallRevenue.inYear)} đ`}
+                                {`${useFormat().formatMoney(overallRevenue.inYear)} đ`}
                             </Typography>
 
                         </CardContent>

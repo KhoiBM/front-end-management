@@ -1,9 +1,9 @@
 import React from 'react'
-import NoMatch from 'src/app/components/NoMatch';
 import { useRouteMatch, Route, Redirect, Switch } from 'react-router-dom';
 import TechnicalStaffPage from './pages/TechnicalStaffPage'
 import TechnicalStaffProcessOrderPage from './pages/TechnicalStaffProcessOrderPage'
 import ManagePrintedProductPage from './pages/ManagePrintedProductPage'
+import { NoMatch } from 'src/app/components';
 const TechnicalStaffRoutes = () => {
     const { path } = useRouteMatch();
     return (

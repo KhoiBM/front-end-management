@@ -1,5 +1,4 @@
 import React from 'react'
-import NoMatch from 'src/app/components/NoMatch';
 import { useRouteMatch, Route, Redirect, Switch } from 'react-router-dom';
 import ManagerPage from './pages/ManagerPage';
 import StatisticPage from './pages/StatisticPage';
@@ -7,6 +6,7 @@ import ManageServicesPage from './pages/ManageServicePage';
 import ManageCategoryPage from './pages/ManageCategoryPage';
 import ManageRawProductPage from './pages/ManageRawProductPage';
 import ManageRawProductImportationPage from './pages/ManageRawProductImportationPage';
+import { NoMatch } from 'src/app/components';
 const ManagerRoutes = () => {
     const { path } = useRouteMatch();
     return (

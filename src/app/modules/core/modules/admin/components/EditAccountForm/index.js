@@ -55,12 +55,15 @@ const useStyles = makeStyles(theme => ({
         width: "25rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
 
     },
     pageFormContainer: {
         width: "100%",
-        height: "100%",
+        minHeight: "800px",
+        height: "auto",  //  làm mất goc paper ở dưới 
         // background: "red",
         display: "flex",
         justifyContent: "center",
@@ -105,13 +108,13 @@ const initialFValues = {
     accountID: '',
     username: "",
     email: "",
-    password: "",
-    rePassword: "",
-    roleID: "1",
+    // password: "",
+    // rePassword: "",
+    roleID: "",
     isActive: true,
     showPassword: false,
     showRePassword: false,
-    updatedAt: new Date()
+    // updatedAt: new Date()
 }
 export const EditAccountForm = (props) => {
     const classes = useStyles();
@@ -137,7 +140,7 @@ export const EditAccountForm = (props) => {
 
     const loadInit = async () => {
         try {
-            const response = await (await ManageAccountServices.getRoleToSelect()).data
+            const response = await (await ManageAccountServices.getRoleToSelectAddOrEdit()).data
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -152,7 +155,7 @@ export const EditAccountForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
     }
 
@@ -179,10 +182,10 @@ export const EditAccountForm = (props) => {
                 accountID: formData.accountID,
                 username: formData.username,
                 email: formData.email,
-                password: formData.password,
+                // password: formData.password,
                 roleID: formData.roleID,
                 isActive: formData.isActive,
-                updatedAt: new Date()
+                // updatedAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
             const response = await (await ManageAccountServices.edit(data)).data
@@ -284,7 +287,7 @@ export const EditAccountForm = (props) => {
                                 /> */}
 
 
-                                <FormControl variant="outlined">
+                                {/* <FormControl variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Mật khẩu</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
@@ -317,10 +320,10 @@ export const EditAccountForm = (props) => {
                                     }}>{helperValid.password}
                                     </FormHelperText>
 
-                                </FormControl>
+                                </FormControl> */}
 
 
-                                <FormControl variant="outlined">
+                                {/* <FormControl variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-rePassword">Nhập lại mật khẩu</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-rePassword"
@@ -352,7 +355,7 @@ export const EditAccountForm = (props) => {
 
                                     }}>{helperValid.rePassword}
                                     </FormHelperText>
-                                </FormControl>
+                                </FormControl> */}
 
 
 

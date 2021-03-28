@@ -198,7 +198,8 @@ export const RawProductTable = (props) => {
 
     const { keywords, searchAction, clickSearch } = props
 
-    const headCells = ['Mã sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ['Mã ID sản phẩm thô', 'Mã Code sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Thể loại", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -220,8 +221,8 @@ export const RawProductTable = (props) => {
     //     // console.log(page)
     // };
 
-    useEffect(() => {
-    }, [refresh])
+    // useEffect(() => {
+    // }, [refresh])
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
@@ -331,28 +332,28 @@ export const RawProductTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.rawProductID} >
 
-                                <StyledTableCell>
-                                    {row.rawProductID}
-                                </StyledTableCell>
+                                <StyledTableCell>{row.rawProductID}</StyledTableCell>
+                                <StyledTableCell>{row.rawProductCode}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
                                 <StyledTableCell >{row.unitPrice}</StyledTableCell>
                                 <StyledTableCell >{row.totalQuantity}</StyledTableCell>
-                                <StyledTableCell >{row.size}</StyledTableCell>
-                                <StyledTableCell >{row.color}</StyledTableCell>
-                                <StyledTableCell >{row.description}</StyledTableCell>
+                                {/* <StyledTableCell >{row.size}</StyledTableCell> */}
+                                {/* <StyledTableCell >{row.color}</StyledTableCell> */}
+                                {/* <StyledTableCell >{row.description}</StyledTableCell> */}
                                 <StyledTableCell >{row.categoryName}</StyledTableCell>
 
-                                <StyledTableCell >{row.createdBy}</StyledTableCell>
+                                {/* <StyledTableCell >{row.createdBy}</StyledTableCell> */}
 
-                                <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell style={{ minWidth: "130px" }}>{row.updatedAt}</StyledTableCell>
+                                {/* <StyledTableCell >{row.createdAt}</StyledTableCell> */}
+
+                                {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
                                 <StyledTableCell style={{ minWidth: "230px" }}>
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết">
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation()
-
+                                            props.handleViewInformation(row)
                                         }
                                         }>
                                             <RiInformationLine />

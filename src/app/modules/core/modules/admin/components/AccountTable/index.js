@@ -49,7 +49,8 @@ const StyledTableRow = withStyles((theme) => ({
 export const AccountTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã tài khoản', "Tên người dùng", "Email", "Vai trò", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const { filterList, action, clickFilter } = props
+    const headCells = ['Mã ID', "Tên người dùng", "Email", "Vai trò", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [switchCheck, setSwitchCheck] = useState({});
 
@@ -65,22 +66,37 @@ export const AccountTable = (props) => {
     const { TblContainer, TblHead } = useTable(records, headCells);
 
 
-    useEffect(async () => {
-        loadInit()
-    }, [page])
+    useEffect(() => {
 
-    useEffect(async () => {
-        // if (!first) {
+        if (action == "filter") {
+            loadInitByFilter()
+        }
 
-        // }
-        // setFirst(false)
-    }, [refresh])
+    }, [page, refresh])
 
 
-    const loadInit = async () => {
+    useEffect(() => {
+        console.log("clickFilter")
+
+        setPage(1)
+
+        if (action == "filter") {
+            loadInitByFilter()
+        }
+
+    }, [clickFilter])
+
+
+
+    const loadInitByFilter = async () => {
+        console.log("loadInitByFilter")
+        console.log("action: " + action)
+        console.log("filterList:" + JSON.stringify(filterList))
+        console.log("Page: " + page)
 
         try {
-            const response = await (await ManageAccountServices.view({ filterBy: "all", page: page, limit: limit })).data
+
+            const response = await (await ManageAccountServices.view({ roleIDList: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -91,13 +107,11 @@ export const AccountTable = (props) => {
                         return acc
                     }, {})
 
-                    // console.log("switchObj: " + JSON.stringify(switchObj));
+
                     setSwitchCheck({ ...switchCheck, ...switchObj });
                     setRecords(records)
                     setTotalPage(response.info.totalPage)
-                    // console.log("page: " + page)
 
-                    // toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -112,19 +126,20 @@ export const AccountTable = (props) => {
     }
 
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        console.log(page)
-    };
-    // console.log("page:" + page)
+
     const handleChangeSwitch = (event) => {
         setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
     };
 
 
     // console.log("switchCheck: " + JSON.stringify(switchCheck));
-
     const handleChangeStatus = (row) => async (event) => {
+        // toast.info(`test switchID:${row.accountID}: ${!switchCheck[`switchID:${row.accountID}`]}`)
+        // if (switchCheck[`switchID:${row.accountID}`]) {
+        //     console.log('deactive')
+        // } else {
+        //     console.log('active')
+        // }
         const data = {
             id: row.accountID,
             isActive: !switchCheck[`switchID:${row.accountID}`]
@@ -135,8 +150,8 @@ export const AccountTable = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
-                    setRefresh(!refresh)
+                    toast.success(`${!switchCheck[`switchID:${row.accountID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
+                    setRefresh((prev) => !prev)
                     // toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -207,7 +222,7 @@ export const AccountTable = (props) => {
             </div>
 
             <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} />
+                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
             </div>
 
         </>
@@ -217,28 +232,3 @@ export const AccountTable = (props) => {
 
 
 
-
- // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
-        // if (switchCheck[`switchID:${row.id}`]) {
-        //     console.log('deactive')
-        // } else {
-        //     console.log('active')
-        // }
-        // try {
-        //     if (response.result == config.useResultStatus.SUCCESS) {
-        //         toast.success(`${!switchCheck[`switchID:${row.id}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
-        //         setRefresh(!refresh)
-        //     } else {
-        //         toast.error(config.useMessage.resultFailure)
-        //         setSwitchCheck({
-        //             ...switchCheck,
-        //             [event.target.name]: event.target.checked
-        //         })
-        //     }
-        // } catch (err) {
-        //     toast.error(config.useMessage.fetchApiFailure)
-        //     setSwitchCheck({
-        //         ...switchCheck,
-        //         [event.target.name]: event.target.checked
-        //     })
-        // }

@@ -8,6 +8,7 @@ import { RawProductTable } from '../../Table/index'
 import { AddRawProductForm } from '../../AddForm/index';
 import { EditRawProductForm } from '../../EditForm';
 import { SearchBar } from 'src/app/modules/core/components';
+import { ViewRawProductInformation } from '../../Extra';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -56,8 +57,10 @@ export const ManageRawProduct = () => {
 
     const [openEditForm, setOpenEditForm] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
-    const [recordForEdit, setRecordForEdit] = useState(0)
+    const [recordForEdit, setRecordForEdit] = useState({})
+    const [recordForViewInformation, setRecordForViewInformation] = useState({})
 
+    const [openViewInformation, setOpenViewInformation] = useState(false);
 
     const [clickSearch, setClickSearch] = useState(false)
     const [searchAction, setSearchAction] = useState(false)
@@ -88,17 +91,28 @@ export const ManageRawProduct = () => {
         setOpenEditForm(true);
         setRecordForEdit(row)
     }
+
     const handleAdd = (row) => {
         setOpenAddForm(true);
     }
     const handleCloseForm = () => {
         setOpenEditForm(false);
         setOpenAddForm(false);
+
     }
+
+    const handleViewInformation = (row) => {
+        setOpenViewInformation(true)
+        setRecordForViewInformation(row)
+    }
+    const handleCloseViewInformation = () => {
+        setOpenViewInformation(false);
+    }
+
 
     return (
         <>
-            {!openEditForm && !openAddForm &&
+            {!openEditForm && !openAddForm && !openViewInformation &&
                 <Paper elevation={2} className={classes.mainContainer}>
                     <>
                         <div className={classes.actionContainer}>
@@ -108,14 +122,15 @@ export const ManageRawProduct = () => {
                             </div>
                         </div>
 
-                        <RawProductTable handleEdit={handleEdit} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
+                        <RawProductTable handleEdit={handleEdit} handleViewInformation={handleViewInformation} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
                     </>
 
                 </Paper>
             }
             {openEditForm && <EditRawProductForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}
             {openAddForm && <AddRawProductForm handleCloseForm={handleCloseForm} />}
-            {/* <AddRawProductForm handleCloseForm={handleCloseForm} /> */}
+            {openViewInformation && <ViewRawProductInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />}
+
         </>
     )
 }

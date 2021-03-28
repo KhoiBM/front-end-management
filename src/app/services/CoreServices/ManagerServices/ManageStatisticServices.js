@@ -14,25 +14,25 @@ export class ManageStatisticServices {
     // }
 
 
-    static viewOverallRevenue = (data) => {
-        return useHttpModule().post(config.useApiPath.api.manageStatisticServices.viewOverallRevenue, data)
-        // return Promise.resolve({
-        //     data: {
-        //         result: config.useResultStatus.SUCCESS,
-        //         info: {
-        //             record: {
-        //                 overall: 1232323,
-        //                 inWeek: 1323,
-        //                 inMonth: 14213,
-        //                 inYear: 1521221
-        //             }
-        //         }
-        //     }
-        // })
+    static viewOverallRevenue = () => {
+        // return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewOverallRevenue)
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+                    record: {
+                        overall: 1232323,
+                        inWeek: 1323,
+                        inMonth: 14213,
+                        inYear: 1521221
+                    }
+                }
+            }
+        })
     }
 
     static viewRevenueOfEachService = () => {
-        // return useHttpModule().get(config.useApiPath.api., data)
+        // return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewRevenueOfEachService)
         return Promise.resolve({
             data: {
                 result: config.useResultStatus.SUCCESS,
@@ -62,7 +62,7 @@ export class ManageStatisticServices {
                                 {
                                     x: 'Tạo của riêng bạn',
                                     y: 10123123
-                                }
+                                },
                             ],
                         inMonth:
                             [
@@ -120,6 +120,7 @@ export class ManageStatisticServices {
                 }
             }
         })
+
     }
     static viewNumberOrder = () => {
         // return useHttpModule().get(config.useApiPath.api., data)

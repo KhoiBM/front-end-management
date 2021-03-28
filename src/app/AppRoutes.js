@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import AuthModule from './modules/auth/AuthModule';
 import CoreModule from './modules/core/CoreModule';
-import NoMatch from './components/NoMatch';
+import { NoMatch } from './components';
 const AppRoutes = () => {
     return (
         <Router>

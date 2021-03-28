@@ -1,7 +1,7 @@
 import React from 'react'
-import NoMatch from 'src/app/components/NoMatch';
 import { useRouteMatch, Route, Redirect, Switch } from 'react-router-dom';
 import ManageAccountPage from './pages/ManageAccountPage';
+import { NoMatch } from 'src/app/components';
 const AdminRoutes = () => {
     const { path } = useRouteMatch();
     return (

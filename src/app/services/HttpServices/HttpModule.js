@@ -1,15 +1,17 @@
 import axios from "axios";
 import config from "src/environments/config";
-export const useHttpModule = (headers = {}, authorization = true) => {
+export const useHttpModule = (headers = {}, authorization = true, baseURL = `${config.useApiPath.apiEndpoint}`) => {
     const instance = axios.create({
-        baseURL: `${config.useApiPath.apiEndpoint}`,
-        headers: headers
+        baseURL: baseURL,
+        headers: {
+            ...headers,
+        }
     });
 
     instance.interceptors.request.use(
         async (value) => {
             if (authorization) { value.headers.common['authorization'] = `Bearer ${localStorage.getItem('pps-token')}`; }
-            // console.log("value request axios: " + JSON.stringify(value))
+            console.log("value request axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
             console.log("error in request axios")
@@ -19,6 +21,37 @@ export const useHttpModule = (headers = {}, authorization = true) => {
 
     instance.interceptors.response.use(
         async (value) => {
+            console.log("value response axios: " + JSON.stringify(value))
+            return Promise.resolve(value);
+        }, (error) => {
+            console.log("error in response axios")
+            return Promise.reject(error);
+        }
+    );
+    return instance;
+};
+
+export const useHttpModuleAWS = (headers = {}) => {
+    const instance = axios.create({
+        baseURL: "",
+        headers: {
+            ...headers,
+        }
+    });
+
+    instance.interceptors.request.use(
+        async (value) => {
+            console.log("value request axios: " + JSON.stringify(value))
+            return Promise.resolve(value);
+        }, (error) => {
+            console.log("error in request axios")
+            return Promise.reject(error);
+        }
+    );
+
+    instance.interceptors.response.use(
+        async (value) => {
+            console.log("value response axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
             console.log("error in response axios")

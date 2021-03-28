@@ -49,16 +49,6 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
         }
     },
-    pageForm: {
-        // width: "25rem",
-        width: "50rem",
-        padding: theme.spacing(3),
-        position: "relative",
-        height: "auto",
-        minHeight: "300px",
-        // background: "blue",
-
-    },
     pageFormContainer: {
         width: "100%",
         minHeight: "800px",
@@ -71,6 +61,16 @@ const useStyles = makeStyles(theme => ({
         position: "relative",
         overflow: "scroll",
 
+
+    },
+    pageForm: {
+        // width: "25rem",
+        width: "50rem",
+        padding: theme.spacing(3),
+        position: "relative",
+        height: "auto",
+        minHeight: "300px",
+        // background: "blue",
 
     },
     iconCloseWrapper: {
@@ -177,6 +177,12 @@ export const EditRawProductForm = (props) => {
         }
     }
     const add = async () => {
+        uploadFiles.forEach((file) => {
+            console.log("name: " + JSON.stringify(file.name))
+            console.log("type: " + JSON.stringify(file.type))
+        })
+        // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
+        console.log(uploadFiles)
         try {
             const response = await (await ManageRawProductServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))

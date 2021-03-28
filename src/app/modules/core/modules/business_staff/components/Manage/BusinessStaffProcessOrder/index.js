@@ -42,6 +42,17 @@ export const BusinessStaffProcessOrder = () => {
 
 
     const { TabPanel, TabBar, value, handleChange } = useTab()
+    const [openViewDetail, setOpenViewDetail] = useState(false)
+    const [recordForViewDetail, setRecordForViewDetail] = useState(0)
+
+    const handViewDetail = (row) => {
+        setOpenViewDetail(true);
+        setRecordForViewDetail(row)
+    }
+
+    const handleCloseForm = () => {
+        setOpenViewDetail(false)
+    }
 
     return (
         <>
@@ -50,12 +61,15 @@ export const BusinessStaffProcessOrder = () => {
                 <div>
 
                     <TabBar tabArr={["Đơn hàng mới", "Đơn hàng đã chấp nhận", "Đơn hàng đã huỷ"]} />
+
                     <TabPanel value={value} index={0}>
-                        <NewOrderTable />
+                        <NewOrderTable handViewDetail={handViewDetail} />
                     </TabPanel>
+
                     <TabPanel value={value} index={1}>
                         <AcceptedOrderTable />
                     </TabPanel>
+
                     <TabPanel value={value} index={2}>
                         <CanceledOrderTable />
                     </TabPanel>
@@ -66,6 +80,7 @@ export const BusinessStaffProcessOrder = () => {
 
 
             </Paper>
+            {/* {openViewDetail && <ViewDetailOrder recordForViewDetail={recordForViewDetail} handleCloseForm={handleCloseForm} />} */}
         </>
     )
 }

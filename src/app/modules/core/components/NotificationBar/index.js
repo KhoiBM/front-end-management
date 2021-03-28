@@ -175,13 +175,13 @@ export const NotificationBar = () => {
 
     useEffect(() => {
         loadInit()
-        console.log("loadInit")
+        // console.log("loadNotiInit")
 
     }, [])
 
     useEffect(() => {
         loadInit()
-        console.log("loadInitRefresh")
+        // console.log("loadNotiInitRefresh")
     }, [refresh])
 
 

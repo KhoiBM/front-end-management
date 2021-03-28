@@ -140,8 +140,6 @@ const ChartRevenuePerService = () => {
                     <TabPanel value={value} index={0}>
                         <Paper className={classes.rootChart}>
                             <Chart
-
-
                                 options={useOptionsRevenueServiceChart("TRONG TUẦN")}
                                 series={seriesWeek}
                                 type="bar"

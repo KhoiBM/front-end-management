@@ -1,7 +1,7 @@
 import { toast } from "react-toastify"
 
 export const useFormat = () => {
-    const formatRevenue = (val) => {
+    const formatMoney = (val) => {
         const arr = String(val).split('')
         const reverseArr = arr.reverse()
         let newArr = []
@@ -27,5 +27,5 @@ export const useFormat = () => {
         return result
 
     }
-    return { formatRevenue }
+    return { formatMoney }
 }

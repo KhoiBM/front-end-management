@@ -49,7 +49,7 @@ const StyledTableRow = withStyles((theme) => ({
 export const CanceledOrderTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã đơn hàng', "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -129,6 +129,7 @@ export const CanceledOrderTable = (props) => {
                             <StyledTableRow key={row.orderID}>
 
                                 <StyledTableCell>{row.orderID}</StyledTableCell>
+                                <StyledTableCell>{row.orderCode}</StyledTableCell>
                                 <StyledTableCell >{row.customerID}</StyledTableCell>
                                 <StyledTableCell >{row.note}</StyledTableCell>
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>

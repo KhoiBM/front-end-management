@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import config from 'src/environments/config';
-import Loader from 'src/app/components/Loader/Loader';
 import { useLocation } from 'react-router-dom';
 import { ManageStatistic } from '../components/Manage/index'
 import { makeStyles } from '@material-ui/core';
@@ -16,7 +15,7 @@ const StatisticPage = () => {
         <>
             {/* <p>StatisticPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
-            <Loader />
+            {/* <Loader loading={loading} /> */}
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageStatistic />
             </MainBar>

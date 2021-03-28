@@ -200,6 +200,12 @@ export const AddPrintedProductForm = (props) => {
 
 
     const add = async (data) => {
+        uploadFiles.forEach((file) => {
+            console.log("name: " + JSON.stringify(file.name))
+            console.log("type: " + JSON.stringify(file.type))
+        })
+        // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
+        console.log(uploadFiles)
         try {
             const response = await (await ManagePrintedProductServices.add(data)).data
             // console.log("response: " + JSON.stringify(response))

@@ -1,15 +1,16 @@
+/* eslint-disable no-undef */
 import React from 'react'
 import AppRoutes from './AppRoutes'
 import './AppStyles'
 import { Provider } from 'react-redux'
 import { useStoreModule } from './stores'
-// import { SnackbarProvider } from 'notistack';
 import { createMuiTheme, ThemeProvider, CssBaseline } from '@material-ui/core'
 import { ToastContainer } from 'react-toastify'
 import { viVN } from '@material-ui/core/locale';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from "@date-io/date-fns";
 import vi from 'date-fns/locale/vi'
+
 
 
 const AppModule = () => {
@@ -69,16 +70,13 @@ const AppModule = () => {
 
                 <ThemeProvider theme={theme}>
 
-                    {/* <SnackbarProvider
-                        maxSnack={3}
-                    > */}
                     {/* <p>AppModule</p> */}
 
                     <ToastContainer
                         position="top-right"
                         autoClose={3000}
                         hideProgressBar={false}
-                        newestOnTop={false}
+                        newestOnTop={true}
                         closeOnClick
                         rtl={false}
                         pauseOnFocusLoss
@@ -88,7 +86,8 @@ const AppModule = () => {
                     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={vi}>
                         <AppRoutes />
                     </MuiPickersUtilsProvider>
-                    {/* </SnackbarProvider> */}
+
+
                 </ThemeProvider>
                 <CssBaseline />
             </Provider>

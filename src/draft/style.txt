@@ -10,3 +10,7 @@ export const  = styled.`
 }
 
 //  --bg-primary-color-main: #f9fafb;
+
+
+
+       border: "1px solid rgba(0, 0, 0, 0.23)",

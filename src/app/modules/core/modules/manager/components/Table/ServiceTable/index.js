@@ -47,7 +47,7 @@ const StyledTableRow = withStyles((theme) => ({
 export const ServiceTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã dịch vụ', "Tên dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Tên dịch vụ", "Giá dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -168,10 +168,10 @@ export const ServiceTable = (props) => {
 
                                 <StyledTableRow key={row.serviceID}>
 
-                                    <StyledTableCell>
-                                        {row.serviceID}
-                                    </StyledTableCell>
+                                    <StyledTableCell>{row.serviceID}</StyledTableCell>
+                                    <StyledTableCell>{row.serviceCode}</StyledTableCell>
                                     <StyledTableCell >{row.serviceName}</StyledTableCell>
+                                    <StyledTableCell >{row.servicePrice}</StyledTableCell>
                                     <StyledTableCell >{row.description}</StyledTableCell>
 
                                     <StyledTableCell>

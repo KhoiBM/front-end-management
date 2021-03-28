@@ -9,6 +9,8 @@ import { RiCloseFill } from 'react-icons/ri'
 import { useForm } from 'src/app/utils'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
+import { PhotoServices } from 'src/app/services/CoreServices/PhotoServices/PhotoServices.js'
+import { uuid } from 'uuidv4';
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -130,16 +132,7 @@ export const AddRawProductForm = (props) => {
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // console.log("formdata: " + JSON.stringify(formData))
-        const enableSubmit = validation(formData)
-        if (enableSubmit) {
-            add(formData)
-        } else {
-            toast.error(config.useMessage.invalidData);
-        }
-    }
+
 
     useEffect(() => {
         loadInit()
@@ -164,6 +157,78 @@ export const AddRawProductForm = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
     }
+
+    const uploadPhoto = async (uploadFiles) => {
+        try {
+            getPresignedURLToUpload(uploadFiles, uploadPhotoWithPresignedURL)
+        } catch (err) {
+            toast.error(`${config.useMessage.uploadPhotoFailure} + ${err}`,)
+        }
+    }
+
+    const getPresignedURLToUpload = async (uploadFiles, uploadPhotoWithPresignedURL) => {
+        try {
+            uploadFiles.forEach(async (uploadFile, index) => {
+                console.log("fileNameCustom: " + `${uploadFile.name.trim().split(/(\s+)/).join('')}${uuid}`)
+                const data = {
+                    fileType: uploadFile.type,
+                    fileName: `${uploadFile.name.trim().split(/(\s+)/).join('')}${uuid}`,
+                }
+                const responsePresignedURLToUpload = await (await PhotoServices.getPresignedURLToUpload(data)).data
+                // console.log("responsePresignedURLToUpload: " + JSON.stringify(responsePresignedURLToUpload))
+                if (responsePresignedURLToUpload && responsePresignedURLToUpload != null) {
+                    if (responsePresignedURLToUpload.result == config.useResultStatus.SUCCESS) {
+                        const presignedURL = responsePresignedURLToUpload.info.presignedURL
+
+                        uploadPhotoWithPresignedURL(presignedURL, uploadFile)
+                        // toast.success("Thành công")
+                    } else {
+                        toast.error(config.useMessage.resultFailure)
+                    }
+                } else {
+                    throw new Error("responsePresignedURLToUpload is null or undefined")
+                }
+            })
+
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+        }
+    }
+    const uploadPhotoWithPresignedURL = async (presignedURL, uploadFile) => {
+        try {
+
+            const responseUploadPhotoWithPresignedURL = await (await PhotoServices.uploadPhotoWithPresignedURL(presignedURL, uploadFile)).data
+            // console.log("responseUploadPhotoWithPresignedURL: " + JSON.stringify(responseUploadPhotoWithPresignedURL))
+            if (responseUploadPhotoWithPresignedURL && responseUploadPhotoWithPresignedURL != null) {
+                if (responseUploadPhotoWithPresignedURL) {
+                    // const presignedURL = responseUploadPhotoWithPresignedURL.info.presignedURL
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("responsePresignedURLToUpload is null or undefined")
+            }
+
+
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+        }
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // console.log("formdata: " + JSON.stringify(formData))
+        const enableSubmit = validation(formData)
+        if (enableSubmit) {
+            add(formData)
+        } else {
+            toast.error(config.useMessage.invalidData);
+        }
+    }
+
     const add = async (formData) => {
         uploadFiles.forEach((file) => {
             console.log("name: " + JSON.stringify(file.name))

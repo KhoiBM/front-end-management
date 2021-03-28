@@ -176,6 +176,12 @@ export const EditCustomersRawProductForm = (props) => {
         }
     }
     const edit = async () => {
+        uploadFiles.forEach((file) => {
+            console.log("name: " + JSON.stringify(file.name))
+            console.log("type: " + JSON.stringify(file.type))
+        })
+        // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
+        console.log(uploadFiles)
         try {
             const response = await (await ManageCustomersRawProductServices.edit(formData)).data
             // console.log("response: " + JSON.stringify(response))

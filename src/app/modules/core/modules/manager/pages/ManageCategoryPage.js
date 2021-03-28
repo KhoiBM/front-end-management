@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import CanActive from 'src/app/components/CanActive/CanActive'
-import Loader from 'src/app/components/Loader/Loader'
+import CanActive from 'src/app/components/CanActive'
+
 import config from 'src/environments/config'
 import { useLocation } from 'react-router-dom'
 import { ManageCategory } from '../components/Manage'
@@ -14,7 +14,7 @@ const ManageCategoryPage = () => {
         <>
             {/* <p>ManagerPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
-            <Loader />
+            {/* <Loader loading={loading} /> */}
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageCategory />
             </MainBar>

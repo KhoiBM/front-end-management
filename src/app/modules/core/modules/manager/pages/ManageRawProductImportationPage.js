@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import config from 'src/environments/config';
-import Loader from 'src/app/components/Loader/Loader';
 import { useLocation } from 'react-router-dom';
 import { ManageRawProductImportation } from '../components/Manage';
 import { useOpendrawer } from 'src/app/utils';
@@ -14,7 +13,7 @@ const ManageRawProductImportationPage = () => {
         <>
             {/* <p>ManagerPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
-            <Loader />
+            {/* <Loader loading={loading} /> */}
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageRawProductImportation />
             </MainBar>

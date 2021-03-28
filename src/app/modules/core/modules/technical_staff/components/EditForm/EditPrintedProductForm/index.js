@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         minHeight: "800px",
         height: "auto",  //  làm mất goc paper ở dưới 
-        background: "red",
+        // background: "red",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -209,6 +209,12 @@ export const EditPrintedProductForm = (props) => {
 
 
     const edit = async (data) => {
+        uploadFiles.forEach((file) => {
+            console.log("name: " + JSON.stringify(file.name))
+            console.log("type: " + JSON.stringify(file.type))
+        })
+        // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
+        console.log(uploadFiles)
         try {
             const response = await (await ManagePrintedProductServices.edit(data)).data
             // console.log("response: " + JSON.stringify(response))

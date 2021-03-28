@@ -6,14 +6,14 @@ import { RiProductHuntLine } from "react-icons/ri";
 import { AiOutlineWindows, AiOutlineBorder, AiOutlineAppstore, AiOutlineTag, AiOutlineSync } from 'react-icons/ai'
 import { FcProcess } from 'react-icons/fc'
 const useApiPath = {
-    "apiEndpoint": "https://5ociiz2m81.execute-api.ap-southeast-1.amazonaws.com/dev/",
+    "apiEndpoint": "https://tyadtos4x2.execute-api.ap-southeast-1.amazonaws.com",
     "api": {
         "auth": {
             "signIn": "user/login",
             "signUp": "user/signup",
             "confirmCode": "user/confirm-email",
-            "forgotPassword": "",
-            "confirmForgotPassword": ""
+            "forgotPassword": "user/forgot-password",
+            "confirmForgotPassword": "user/confirm-forgor-password"
         },
         "manageServiceServices": {
             view: ""
@@ -22,7 +22,8 @@ const useApiPath = {
             view: "homepage/get-list-product"
         },
         "manageStatisticServices": {
-            viewOverallRevenue: "manager/overall-revenue"
+            viewOverallRevenue: "manager/overall-revenue",
+            viewRevenueOfEachService: "manager/service-revenue"
         }
 
     }
@@ -123,9 +124,29 @@ const useMessage = {
     invalidData: "Dữ liệu không hợp lệ",
     fetchApiFailure: "Có lỗi xảy ra khi gọi api",
     resultFailure: `Có lỗi xảy ra bên server`,
+    uploadPhotoFailure: "Có lỗi xảy ra khi tải ảnh lên server "
+}
+const useConfigAWS = {
+    STUDIOBUCKET: {
+        BUCKETNAME: "photo-order-customer",
+        FOLDER: {
+            "STUDIO'SRAWPRODUCT": "Studio'sRawProduct",
+            "PRINTEDPRODUCT": "PrintedProduct",
+            "SERVICE": "Service",
+            "CATEGORY": "Category"
+        }
+    },
+    CUSTOMERBUCKET: {
+        BUCKETNAME: "photo-upload-album-1",
+        FOLDER: {
+            "CUSTOMER'SRAWPRODUCT": "Customer'sRawProduct",
+            "ORDER": "Order"
+        }
+    },
+
 }
 
-const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage }
+const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS }
 export default config
 
 

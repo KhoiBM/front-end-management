@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react'
-import CanActive from 'src/app/components/CanActive/CanActive'
-import Loader from 'src/app/components/Loader/Loader'
+import CanActive from 'src/app/components/CanActive'
 import config from 'src/environments/config'
 import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { useOpendrawer } from 'src/app/utils'
 import { ManageStatistic } from '../components/Manage'
 import { MainBar } from '../../../components'
+import { Loader } from 'src/app/components/Loader'
 
 const ManagerPage = () => {
+    const [loading, setLoading] = useState(true)
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
     return (
         <>
             {/* <p>ManagerPage</p> */}
             {/* <CanActive isRole={config.useRoleName.manager} /> */}
-            <Loader />
+
+            {/* <Loader loading={loading} /> */}
+
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageStatistic />
             </MainBar>
