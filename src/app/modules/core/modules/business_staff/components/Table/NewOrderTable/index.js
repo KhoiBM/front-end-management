@@ -105,7 +105,7 @@ export const NewOrderTable = (props) => {
                         return acc
                     }, {})
 
-                    // console.log("switchObj: " + JSON.stringify(switchObj));
+                    console.log("switchObj: " + JSON.stringify(switchObj));
 
                     setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
                     setRecords(records)

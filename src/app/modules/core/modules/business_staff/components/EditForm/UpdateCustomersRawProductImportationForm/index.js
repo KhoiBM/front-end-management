@@ -114,34 +114,34 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
     // }, [page])
 
     useEffect(() => {
-        loadInit()
+        // loadInit()
     }, [])
 
-    const loadInit = async () => {
+    // const loadInit = async () => {
 
 
-        try {
-            // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const response = await (await ManageRawProductServices.getAllCustomersRawProduct({ filterBy: "all" })).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    const records = response.info.records
-                    setFormData({ ...formData, rawProductID: records[0].rawProductID })
-                    setRawProductRecords(records)
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
+    //     try {
+    //         // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+    //         const response = await (await ManageRawProductServices.getAllCustomersRawProduct({})).data
+    //         // console.log("response: " + JSON.stringify(response))
+    //         if (response && response != null) {
+    //             if (response.result == config.useResultStatus.SUCCESS) {
+    //                 const records = response.info.records
+    //                 setFormData({ ...formData, rawProductID: records[0].rawProductID })
+    //                 setRawProductRecords(records)
+    //                 // toast.success("Thành công")
+    //             } else {
+    //                 toast.error(config.useMessage.resultFailure)
+    //             }
+    //         } else {
+    //             throw new Error("Response is null or undefined")
+    //         }
 
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
+    //     } catch (err) {
+    //         toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+    //     }
 
-    }
+    // }
 
 
     const handleSubmit = (event) => {
@@ -166,7 +166,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
 
                     toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo.message}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -198,7 +198,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
                         <Grid container>
                             <Grid item xs={6} sm={6} md={6}>
 
-                                <FormControl variant="outlined" className={classes.formSelectControl}>
+                                {/* <FormControl variant="outlined" className={classes.formSelectControl}>
                                     <InputLabel id="rawProductID-label">
                                         Sản phẩm thô của khách hàng
                                         </InputLabel>
@@ -233,11 +233,21 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
                                         marginBottom: '16px'
 
                                     }}>
-                                        {/* {helperValid.rawProductID} */}
+                                        {helperValid.rawProductID}
                                     </FormHelperText>
+                                </FormControl> */}
 
 
-                                </FormControl>
+                                <TextField
+                                    variant='outlined'
+                                    label="Mã ID sản phẩm thô"
+                                    value={String(formData.rawProductID)}
+                                    name='rawProductID'
+                                    onChange={handleInputChange}
+                                    error={helperValid.rawProductID ? true : false}
+                                    helperText={helperValid.rawProductID}
+                                    required
+                                />
 
 
 
@@ -272,7 +282,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
 
                     </form>
                 </Paper>
-            </div>
+            </div >
 
 
         </>

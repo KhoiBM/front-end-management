@@ -115,35 +115,35 @@ export const UpdateRawProductImportationForm = (props) => {
     // }, [page])
 
     useEffect(() => {
-        loadInit()
+        // loadInit()
     }, [])
 
-    const loadInit = async () => {
+    // const loadInit = async () => {
 
 
-        try {
-            // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
-            const response = await (await ManageRawProductServices.getAllStudioRawProduct({ filterBy: "all" })).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    const records = response.info.records
-                    // console.log("records[0].rawProductID: " + records[0].rawProductID)
-                    setFormData({ ...formData, rawProductID: records[0].rawProductID })
-                    setRawProductRecords(records)
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
+    //     try {
+    //         // const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, rowPerPage: rowPerPage })).data
+    //         const response = await (await ManageRawProductServices.getAllStudioRawProduct({ filterBy: "all" })).data
+    //         // console.log("response: " + JSON.stringify(response))
+    //         if (response && response != null) {
+    //             if (response.result == config.useResultStatus.SUCCESS) {
+    //                 const records = response.info.records
+    //                 // console.log("records[0].rawProductID: " + records[0].rawProductID)
+    //                 setFormData({ ...formData, rawProductID: records[0].rawProductID })
+    //                 setRawProductRecords(records)
+    //                 // toast.success("Thành công")
+    //             } else {
+    //                 toast.error(config.useMessage.resultFailure)
+    //             }
+    //         } else {
+    //             throw new Error("Response is null or undefined")
+    //         }
 
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
+    //     } catch (err) {
+    //         toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+    //     }
 
-    }
+    // }
 
 
     const handleSubmit = (event) => {
@@ -200,7 +200,7 @@ export const UpdateRawProductImportationForm = (props) => {
                         <Grid container>
                             <Grid item xs={6} sm={6} md={6}>
                                 <>
-                                    <FormControl variant="outlined" className={classes.formSelectControl}>
+                                    {/* <FormControl variant="outlined" className={classes.formSelectControl}>
                                         <InputLabel id="rawProductID-label">
                                             Sản phẩm thô
                                         </InputLabel>
@@ -235,11 +235,22 @@ export const UpdateRawProductImportationForm = (props) => {
                                             marginBottom: '16px'
 
                                         }}>
-                                            {/* {helperValid.rawProductID} */}
-                                        </FormHelperText>
+                                           //  {helperValid.rawProductID} 
+                                </FormHelperText>
+                                    </FormControl> */}
 
-                                    </FormControl>
                                 </>
+
+                                <TextField
+                                    variant='outlined'
+                                    label="Mã ID sản phẩm thô"
+                                    value={String(formData.rawProductID)}
+                                    name='rawProductID'
+                                    onChange={handleInputChange}
+                                    error={helperValid.rawProductID ? true : false}
+                                    helperText={helperValid.rawProductID}
+                                    required
+                                />
 
                                 <TextField
                                     variant='outlined'
@@ -274,7 +285,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
                     </form>
                 </Paper>
-            </div>
+            </div >
 
 
         </>
