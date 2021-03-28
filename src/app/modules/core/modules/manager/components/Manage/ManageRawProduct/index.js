@@ -9,6 +9,7 @@ import { AddRawProductForm } from '../../AddForm/index';
 import { EditRawProductForm } from '../../EditForm';
 import { SearchBar } from 'src/app/modules/core/components';
 import { ViewRawProductInformation } from '../../Extra';
+import { useToggleFormAddEdit, useToggleViewInformation, useSearchHandle } from 'src/app/utils';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -55,59 +56,12 @@ const useStyles = makeStyles(theme => ({
 export const ManageRawProduct = () => {
     const classes = useStyles();
 
-    const [openEditForm, setOpenEditForm] = useState(false);
-    const [openAddForm, setOpenAddForm] = useState(false);
-    const [recordForEdit, setRecordForEdit] = useState({})
-    const [recordForViewInformation, setRecordForViewInformation] = useState({})
-
-    const [openViewInformation, setOpenViewInformation] = useState(false);
-
-    const [clickSearch, setClickSearch] = useState(false)
-    const [searchAction, setSearchAction] = useState(false)
-    const [keywords, setKeywords] = useState("")
+    const { openEditForm, setOpenEditForm, openAddForm, setOpenAddForm, recordForEdit, setRecordForEdit, handleEdit, handleAdd, handleCloseForm } = useToggleFormAddEdit()
 
 
+    const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
 
-    // useEffect(() => {
-    //     // console.log("render")
-    //     // console.log("searchAction: " + searchAction)
-    // }, [searchAction, setSearchAction, keywords])
-
-
-    const handleKeywordsChange = (event) => {
-        setKeywords(event.target.value)
-        if (!event.target.value || event.target.value == null || event.target.value == undefined || event.target.value.length < 0) {
-            setClickSearch(!clickSearch)
-            setSearchAction(false)
-        }
-        // console.log("keywords: " + keywords)
-    }
-
-
-
-
-
-    const handleEdit = (row) => {
-        setOpenEditForm(true);
-        setRecordForEdit(row)
-    }
-
-    const handleAdd = (row) => {
-        setOpenAddForm(true);
-    }
-    const handleCloseForm = () => {
-        setOpenEditForm(false);
-        setOpenAddForm(false);
-
-    }
-
-    const handleViewInformation = (row) => {
-        setOpenViewInformation(true)
-        setRecordForViewInformation(row)
-    }
-    const handleCloseViewInformation = () => {
-        setOpenViewInformation(false);
-    }
+    const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
 
     return (
@@ -117,7 +71,7 @@ export const ManageRawProduct = () => {
                     <>
                         <div className={classes.actionContainer}>
                             <div className={classes.actionWrapper}>
-                                <SearchBar keywords={keywords} handleKeywordsChange={handleKeywordsChange} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
+                                <SearchBar keywords={keywords} setKeywords={setKeywords} searchAction={searchAction} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} handleKeywordsChange={handleKeywordsChange} />
                                 <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô</Button>
                             </div>
                         </div>
@@ -134,3 +88,13 @@ export const ManageRawProduct = () => {
         </>
     )
 }
+
+
+
+
+    // useEffect(() => {
+    //     // console.log("render")
+    //     // console.log("searchAction: " + searchAction)
+    // }, [searchAction, setSearchAction, keywords])
+
+

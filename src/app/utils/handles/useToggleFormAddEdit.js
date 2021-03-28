@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 export const useToggleFormAddEdit = () => {
     const [openEditForm, setOpenEditForm] = useState(false);
     const [openAddForm, setOpenAddForm] = useState(false);
-    const [recordForEdit, setRecordForEdit] = useState(0)
+    const [recordForEdit, setRecordForEdit] = useState({})
 
     const handleEdit = (row) => {
         setOpenEditForm(true);

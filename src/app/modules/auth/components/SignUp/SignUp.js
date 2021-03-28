@@ -19,16 +19,6 @@ import { Loader } from "src/app/components";
 const initialFValues = { username: '', email: '', password: '', rePassword: '' }
 
 const SignUp = ({ toggle, isVisible }) => {
-    const [loading, setLoading] = useState(true)
-    const { wait } = useWait()
-
-    const hideLoader = async () => {
-        await wait(500)
-        setLoading(false)
-    }
-    const showLoader = async () => {
-        setLoading(true)
-    }
 
 
 
@@ -107,7 +97,7 @@ const SignUp = ({ toggle, isVisible }) => {
 
     return (
         <>
-            {/* {loading && <Loader />} */}
+            {/* {<Loader loading={loading} />} */}
 
             < div className={styles["signup-page-container"]}>
                 {isVisible && (

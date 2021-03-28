@@ -27,12 +27,8 @@ const useStyles = makeStyles(theme => ({
 export const SearchBar = (props) => {
     const classes = useStyles();
 
-    // const [keywords, setKeywords] = useState("")
+    const { keywords, setKeywords, setSearchAction, clickSearch, setClickSearch, handleKeywordsChange } = props
 
-    // const handleKeywordsChange = (event) => {
-    //     setKeywords(event.target.value)
-
-    // }
 
     return (
         <>
@@ -40,24 +36,24 @@ export const SearchBar = (props) => {
                 <TextField
                     variant='outlined'
                     label="Tìm kiếm"
-                    value={props.keywords}
+                    value={keywords}
                     name="keywords"
-                    onChange={props.handleKeywordsChange}
+                    onChange={handleKeywordsChange}
                     className={classes.searchBar}
                 />
                 <IconButton className={classes.iconSearchWrapper} onClick={() => {
                     // console.log("keywords: " + keywords)
 
-                    if (!props.keywords || props.keywords == null || props.keywords == undefined || props.keywords.length < 0) {
-                        props.setSearchAction(false)
+                    if (!keywords || keywords == null || keywords == undefined || keywords.length < 0) {
+                        setSearchAction(false)
 
-                        props.setClickSearch(!props.clickSearch)
-                        // props.setClickSearch(false)
+                        setClickSearch(!clickSearch)
+                        setClickSearch(false)
                     } else {
-                        props.setSearchAction(true)
+                        setSearchAction(true)
 
-                        props.setClickSearch(!props.clickSearch)
-                        // props.setClickSearch(true)
+                        setClickSearch(!clickSearch)
+                        setClickSearch(true)
 
                     }
 

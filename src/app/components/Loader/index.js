@@ -28,16 +28,17 @@ const useStyles = makeStyles(theme => ({
 }));
 export const Loader = (props) => {
     const classes = useStyles();
-    const [loading, setLoading] = useState(true)
-    const { wait } = useWait()
+    const { loading } = props
+    // const [loading, setLoading] = useState(true)
+    // const { wait } = useWait()
 
-    const waitLoader = async () => {
-        await wait(2000)
-        setLoading(false)
-    }
+    // const waitLoader = async () => {
+    //     await wait(2000)
+    //     setLoading(false)
+    // }
 
     useEffect(() => {
-        waitLoader()
+        // waitLoader()
     }, [])
     return (
         <>
