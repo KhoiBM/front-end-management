@@ -2,8 +2,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia } from '@material-ui/core';
-import Amplify, { Storage } from 'aws-amplify';
-import { AmplifyS3Image } from "@aws-amplify/ui-react";
 import { useHttpModuleAWS } from 'src/app/services';
 
 const useStyles = makeStyles(theme => ({
@@ -11,7 +9,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         height: "100%",
         // backgroundColor: "blue",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
+
     },
 
     title: {
@@ -25,6 +23,7 @@ const useStyles = makeStyles(theme => ({
         minHeight: "700px",
         height: "auto",
         // border: "1px solid red",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
     },
     gridItemShowPhoto: {
         width: "100%",
@@ -32,45 +31,50 @@ const useStyles = makeStyles(theme => ({
         // background: "red",
         display: 'flex',
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
     },
     gridItemGridList: {
-        backgroundColor: "blue",
+        // backgroundColor: "blue",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
         width: "100%",
-        height: "12rem",
-        display: 'flex',
-        // justifyContent: "center",
-        // alignItems: "center"
-        // padding: theme.spacing(3)
-    },
-    rootGridList: {
-        width: "100%",
+        height: "14rem",
         display: 'flex',
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
+    },
+    rootGridList: {
+        // width: "100%",
+        display: 'flex',
+        // flexWrap: 'nowrap',
+        // justifyContent: 'space-around',
 
-        border: "1px solid red",
-        gap: 0
+        backgroundColor: theme.palette.background.paper,
+        // border: "1px solid red",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
+
     },
     gridList: {
-        width: "101%",
+        // width: "auto",
+        width: "130%",
         height: "12rem",
-        // backgroundColor: "blue",
-        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-        transform: 'translateZ(0)',
         display: 'flex',
+        justifyContent: "space-between",
+        alignItems: "center",
         flexWrap: 'nowrap',
-        gap: theme.spacing(1),
+        gap: theme.spacing(2),
+        // border: "1px solid red",
+        // backgroundColor: "blue",
     },
     cardMedia: {
         objectFit: "contain",
         maxWidth: "100%",
         maxHeight: "100%",
         width: 'auto',
-        height: 'auto'
+        height: 'auto',
+        // border: "1px solid blue",
     },
     cardMediaShow: {
-
         objectFit: "contain",
         maxWidth: "100%",
         maxHeight: "100%",
@@ -78,14 +82,12 @@ const useStyles = makeStyles(theme => ({
         height: 'auto'
     },
     gridListTile: {
-        // width: "auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        // border: "1px solid red",
-        '& .MuiGridListTile-tile': {
-            display: "flex",
+        // border: "1px solid orange",
 
+        '& .MuiGridListTile-tile': {
+            display: 'flex',
+            justifyContent: "center",
+            alignItems: "center",
         }
     }
 }))
@@ -101,8 +103,7 @@ export const GridPhotoList = (props) => {
 
 
     useEffect(() => {
-        // loadInit()
-
+        loadInit()
 
     }, [])
     const loadInit = () => {
@@ -115,7 +116,7 @@ export const GridPhotoList = (props) => {
 
             <Paper className={classes.rootContainer} elevation={0}>
 
-                <Grid container className={classes.rootGrid} >
+                <Grid container className={classes.rootGrid} spacing={5}>
 
                     <Grid item xs={12} sm={12} md={12} className={classes.gridItemShowPhoto}>
 

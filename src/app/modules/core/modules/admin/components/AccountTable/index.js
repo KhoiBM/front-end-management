@@ -50,6 +50,7 @@ export const AccountTable = (props) => {
     const classes = useStyles();
 
     const { filterList, action, clickFilter } = props
+
     const headCells = ['Mã ID', "Tên người dùng", "Email", "Vai trò", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [switchCheck, setSwitchCheck] = useState({});

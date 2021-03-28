@@ -5,7 +5,7 @@ import config from 'src/environments/config';
 import { toast } from 'react-toastify';
 import { PhotoServices } from 'src/app/services';
 import { PageHeader, GridPhotoList } from 'src/app/modules/core/components';
-import { RiCloseFill } from 'react-icons/ri';
+import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
 import { IconClose } from 'src/app/components';
 import photoDemo from 'src/app/assets/image/demoPhoto.jpeg'
 import photoDemo2 from 'src/app/assets/image/demoPhoto2.jpg'
@@ -85,6 +85,7 @@ const useStyles = makeStyles(theme => ({
     contentWrapper: {
         marginTop: theme.spacing(3),
         maxWidth: "300px",
+        width: "200px",
         height: "50px",
         border: "1px solid rgba(0, 0, 0, 0.23)",
         // border: "1px solid var(--primary-color-main)",
@@ -113,13 +114,8 @@ export const ViewRawProductInformation = (props) => {
 
 
     useEffect(() => {
-        // loadInit()
+        loadPhotoList()
     }, [])
-
-
-    const loadInit = async () => {
-
-    }
 
     const loadPhotoList = async () => {
         try {
@@ -127,10 +123,12 @@ export const ViewRawProductInformation = (props) => {
             const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
             const categoryCode = recordForViewInformation.categoryCode
             const rawProductCode = recordForViewInformation.rawProductCode
+
             const response = await (await PhotoServices.getPhotoListByLink({
                 bucketName,
                 fileKey: `${folder}/${categoryCode}/${rawProductCode}`
             })).data
+
             // console.log("response: " + response)
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -219,7 +217,8 @@ export const ViewRawProductInformation = (props) => {
                                             <Box>
                                                 <Typography variant={"h5"} color={"textSecondary"}>Màu sắc </Typography>
                                                 <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.color}</Typography>
+                                                    <RiCheckboxBlankCircleFill style={{ color: `${recordForViewInformation.color}` }} />
+                                                    {/* <Typography variant={"body1"}>{}</Typography> */}
                                                 </Box>
                                             </Box>
                                         </Grid>
