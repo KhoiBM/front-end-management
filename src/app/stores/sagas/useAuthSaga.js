@@ -5,7 +5,9 @@ import { useAuthAction } from "../actions";
 import { AUTH_TYPE } from "../types";
 import { toast } from "react-toastify";
 import config from "src/environments/config";
-
+import jwt_decode from 'jwt-decode';
+import { useNavigateRole } from "src/app/utils";
+import { RouteService } from "src/app/services";
 
 export const useAuthSaga = () => {
     function* useInit() {
@@ -42,10 +44,37 @@ export const useAuthSaga = () => {
             const { data } = yield call(AuthService.signIn,
                 action.payload.data
             );
-            yield put(useAuthAction().signInSuccess(data));
+            if (data && data != null) {
+                if (data.result == config.useResultStatus.SUCCESS) {
+
+                    const token = data.info.accessToken;
+                    const tokenID = data.info.idToken;
+
+                    const decodedTokenID = jwt_decode(tokenID);
+                    const role = decodedTokenID["custom:role"]
+                    // const role = config.useRoleName.administrator
+
+                    localStorage.setItem("pps-token", JSON.stringify(token));
+                    localStorage.setItem("role", role);
+                    // localStorage.setItem("role", "");
+
+                    toast.success('Đăng nhập thành công');
+
+                    RouteService.redirectByRole(role)
+
+                    yield put(useAuthAction().signInSuccess(data));
+
+                } else {
+                    toast.error(`${data.errorInfo || "Đăng nhập thất bại"}`);
+                    toast.error(config.useMessage.resultFailure)
+                }
+
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
         } catch (err) {
             yield put(useAuthAction().signInFailure(err));
-            // toast.error(`Đăng nhập thất bại - ${err}`);
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
         // yield put(useLoadingAction().hide());

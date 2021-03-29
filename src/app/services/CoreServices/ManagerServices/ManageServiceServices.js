@@ -24,7 +24,9 @@ export class ManageServiceServices {
                         records: [
                             {
                                 serviceID: "1",
+                                serviceCode: "abc",
                                 serviceName: "abcd",
+                                servicePrice: 100,
                                 description: "abcd",
                                 isActive: true,
                                 createdAt: "03-02-2021",

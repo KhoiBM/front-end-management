@@ -1,11 +1,13 @@
 
 
 import React, { useState } from 'react'
-import { makeStyles, Paper, Button } from '@material-ui/core';
+import { makeStyles, Paper, Button, Divider } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable, NewOrderTable, CanceledOrderTable } from '../../Table/index'
 import { useTab } from 'src/app/utils';
+import { ManageNewOrder } from '../ManageNewOrder';
+import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         // background: '#B6E2F3',
@@ -40,19 +42,8 @@ const useStyles = makeStyles(theme => ({
 export const BusinessStaffProcessOrder = () => {
     const classes = useStyles();
 
-
     const { TabPanel, TabBar, value, handleChange } = useTab()
-    const [openViewDetail, setOpenViewDetail] = useState(false)
-    const [recordForViewDetail, setRecordForViewDetail] = useState(0)
 
-    const handViewDetail = (row) => {
-        setOpenViewDetail(true);
-        setRecordForViewDetail(row)
-    }
-
-    const handleCloseForm = () => {
-        setOpenViewDetail(false)
-    }
 
     return (
         <>
@@ -61,13 +52,13 @@ export const BusinessStaffProcessOrder = () => {
                 <div>
 
                     <TabBar tabArr={["Đơn hàng mới", "Đơn hàng đã chấp nhận", "Đơn hàng đã huỷ"]} />
-
+                    <Divider />
                     <TabPanel value={value} index={0}>
-                        <NewOrderTable handViewDetail={handViewDetail} />
+                        <ManageNewOrder />
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>
-                        <AcceptedOrderTable />
+                        <ManageAcceptedOrder />
                     </TabPanel>
 
                     <TabPanel value={value} index={2}>
@@ -80,7 +71,6 @@ export const BusinessStaffProcessOrder = () => {
 
 
             </Paper>
-            {/* {openViewDetail && <ViewDetailOrder recordForViewDetail={recordForViewDetail} handleCloseForm={handleCloseForm} />} */}
         </>
     )
 }

@@ -6,7 +6,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useUploadPhoto } from 'src/app/utils'
 import { ManageCategory } from '../../../../manager/components'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
@@ -126,6 +126,8 @@ export const EditRawProductForm = (props) => {
 
     const [uploadFiles, setUploadFiles] = useState([])
 
+    const { uploadPhoto } = useUploadPhoto()
+
     const [categoryRecords, setCategoryRecords] = useState([])
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -188,7 +190,22 @@ export const EditRawProductForm = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
+                    const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
+
+                    const categoryCode = "categoryCode"
+                    const rawProductCode = "productcode"
+
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${categoryCode}/${rawProductCode}`,
+                    }
+
+                    uploadPhoto(uploadInfo, uploadFiles)
+
                     toast.success("Thành công")
+
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }

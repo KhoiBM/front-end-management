@@ -11,7 +11,7 @@ export const useHttpModule = (headers = {}, authorization = true, baseURL = `${c
     instance.interceptors.request.use(
         async (value) => {
             if (authorization) { value.headers.common['authorization'] = `Bearer ${localStorage.getItem('pps-token')}`; }
-            console.log("value request axios: " + JSON.stringify(value))
+            // console.log("value request axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
             console.log("error in request axios")
@@ -21,7 +21,7 @@ export const useHttpModule = (headers = {}, authorization = true, baseURL = `${c
 
     instance.interceptors.response.use(
         async (value) => {
-            console.log("value response axios: " + JSON.stringify(value))
+            // console.log("value response axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
             console.log("error in response axios")
@@ -41,7 +41,7 @@ export const useHttpModuleAWS = (headers = {}) => {
 
     instance.interceptors.request.use(
         async (value) => {
-            console.log("value request axios: " + JSON.stringify(value))
+            console.log("value request AWS  axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
             console.log("error in request axios")
@@ -51,7 +51,7 @@ export const useHttpModuleAWS = (headers = {}) => {
 
     instance.interceptors.response.use(
         async (value) => {
-            console.log("value response axios: " + JSON.stringify(value))
+            console.log("value response AWS axios: " + JSON.stringify(value))
             return Promise.resolve(value);
         }, (error) => {
             console.log("error in response axios")

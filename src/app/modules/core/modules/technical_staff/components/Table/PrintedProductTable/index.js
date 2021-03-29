@@ -9,6 +9,7 @@ import { useTable } from 'src/app/utils';
 import { ManagePrintedProductServices } from 'src/app/services';
 import config from 'src/environments/config';
 import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
+import { RiInformationLine } from 'react-icons/ri';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -55,7 +56,8 @@ export const PrintedProductTable = (props) => {
     const { keywords, searchAction, clickSearch } = props
 
 
-    const headCells = ['Mã ID', "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ['Mã ID', "Mã Code", "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -196,19 +198,31 @@ export const PrintedProductTable = (props) => {
                             <StyledTableRow key={row.printedProductID} >
 
                                 <StyledTableCell>{row.printedProductID}</StyledTableCell>
+                                <StyledTableCell>{row.printedProductCode}</StyledTableCell>
                                 <StyledTableCell>{row.orderID}</StyledTableCell>
                                 <StyledTableCell>{row.rawProductID}</StyledTableCell>
 
                                 <StyledTableCell>{row.printedProductName}</StyledTableCell>
 
                                 <StyledTableCell >{row.totalQuantity}</StyledTableCell>
-                                <StyledTableCell >{row.description}</StyledTableCell>
-                                <StyledTableCell >{row.note}</StyledTableCell>
+                                {/* <StyledTableCell >{row.description}</StyledTableCell> */}
+                                {/* <StyledTableCell >{row.note}</StyledTableCell> */}
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
-                                <StyledTableCell style={{ minWidth: "160px" }} >
+                                <StyledTableCell style={{ minWidth: "230px" }}>
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết">
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            props.handleViewInformation(row)
+                                        }
+                                        }>
+                                            <RiInformationLine />
+                                        </Button>
+
+                                    </Tooltip>
 
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
                                         <Button onClick={(event) => {
@@ -219,6 +233,7 @@ export const PrintedProductTable = (props) => {
                                             <AiOutlineEdit />
                                         </Button>
                                     </Tooltip>
+
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Xoá">
 
                                         <Button onClick={(event) => {

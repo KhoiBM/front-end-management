@@ -111,6 +111,17 @@ export class ManageCustomersRawProductServices {
             })
         }
     }
+    static add = (data) => {
+        // return useHttpModule().post(config.useApiPath.api., data)
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+
+                }
+            }
+        })
+    }
     static edit = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
         return Promise.resolve({

@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl, Tooltip, Zoom } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { BusinessStaffProcessOrderServices } from '../../../../../../../services/CoreServices/BusinessStaffServices';
-import config from '../../../../../../../../environments/config';
+import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import { RiInformationLine, RiExchangeBoxLine, RiMailSendLine } from 'react-icons/ri';
+import config from 'src/environments/config';
+import { BusinessStaffProcessOrderServices } from 'src/app/services';
 import { useTable } from 'src/app/utils';
-import { PaginationBar } from 'src/app/modules/core/components';
+import { ConfirmDialog, PaginationBar, ChangeStatusOrder } from 'src/app/modules/core/components';
+
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -25,6 +27,12 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "flex-end",
         // paddingRight: theme.spacing(6)
         paddingRight: theme.spacing(2)
+    },
+    rejectIcon: {
+        color: "red"
+    },
+    acceptIcon: {
+        color: "green"
     }
 }));
 const StyledTableCell = withStyles((theme) => ({
@@ -48,7 +56,10 @@ const StyledTableRow = withStyles((theme) => ({
 export const AcceptedOrderTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const { keywords, searchAction, clickSearch } = props
+
+    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -60,172 +71,300 @@ export const AcceptedOrderTable = (props) => {
 
     const [switchCheck, setSwitchCheck] = useState({});
 
-
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
 
+    const [statusOrder, setStatusOrder] = useState("Đang chờ")
 
-    const [statusOrder, setStatusOrder] = useState("1")
 
-    const handleStatusOrderChange = (event) => {
-        setStatusOrder(event.target.value)
+
+    const useStatusOrder = config.useStatusOrder.BUSINESS_STAFF
+    const statusOrderToFilter = useStatusOrder.FILTER
+    const statusOrderToChange = useStatusOrder.CHANGE
+
+    const [changeStatusModal, setChangeStatusModal] = useState({ isOpen: false })
+
+
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+    }, [page, refresh])
+
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        setPage(1)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+
+    }, [clickSearch])
+
+
+
+
+    const search = async () => {
+        try {
+            const response = await (await BusinessStaffProcessOrderServices.searchNewOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    const records = response.info.records
+
+                    const switchObj = records.reduce((acc, curr) => {
+                        acc[`switchID:${curr.orderID}`] = curr.statusPayment
+                        return acc
+                    }, {})
+
+                    // console.log("switchObj: " + JSON.stringify(switchObj));
+
+                    setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
+                    setRecords(records)
+                    setTotalPage(response.info.totalPage)
+                    // console.log("page: " + page)
+                    console.log("search")
+
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
     }
 
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        console.log(page)
-    };
-    // console.log("page:" + page)
+
+
+
+    const loadInit = async () => {
+
+        try {
+            const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: "all", page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    const records = response.info.records
+
+                    const switchObj = records.reduce((acc, curr) => {
+                        acc[`switchID:${curr.orderID}`] = curr.statusPayment
+                        return acc
+                    }, {})
+
+                    // console.log("switchObj: " + JSON.stringify(switchObj));
+
+                    setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
+                    setRecords(records)
+                    setTotalPage(response.info.totalPage)
+                    // console.log("page: " + page)
+                    console.log("loadInit")
+
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
+    }
+
+    const handleRefresh = () => {
+        setRefresh(prev => !prev)
+    }
+    const handleCloseChangeStatusModal = () => {
+        setChangeStatusModal({ isOpen: false })
+        handleRefresh()
+    }
+
+    // const handleStatusOrderChange = (event) => {
+    //     setStatusOrder(event.target.value)
+    // }
+
+
     const handleChangeSwitch = (event) => {
         setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
     };
-    useEffect(() => {
-        loadInit()
-    }, [page])
-
-    const loadInit = async () => {
-        try {
-            const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: "all", page: page, limit: limit })).data
-            const records = response.info.records
-
-            const switchObj = records.reduce((acc, curr) => {
-                acc[`switchID:${curr.orderID}`] = curr.statusPayment
-                return acc
-            }, {})
-            // console.log("switchObj: " + JSON.stringify(switchObj));
-            setSwitchCheck({ ...switchCheck, ...switchObj });
-            setRecords(records)
-            setTotalPage(response.info.totalPage)
-            // console.log("page: " + page)
-        } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
-        }
-
-    }
-
-    useEffect(async () => {
-        // if (!first) {
-        // }
-        // setFirst(false)
-    }, [refresh])
 
     // console.log("switchCheck: " + JSON.stringify(switchCheck));
-    const handleChangeStatus = (row) => async (event) => {
-        await checkPayMent(row, event)
+    const handleStatusPaymentChange = (orderID) => async (event) => {
+        await checkPayMent(orderID, event)
     }
 
-    const checkPayMent = async (row, event) => {
+    const checkPayMent = async (orderID, event) => {
         const data = {
-            orderID: row.orderID,
-            isActive: !switchCheck[`switchID:${row.orderID}`]
+            orderID: orderID,
+            isActive: !switchCheck[`switchID:${orderID}`]
         }
-        // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
-        // if (switchCheck[`switchID:${row.id}`]) {
+        // toast.dark(`test switchID:${orderID}: ${!switchCheck[`switchID:${orderID}`]}`)
+        // if (switchCheck[`switchID:${orderID}`]) {
         //     console.log('deactive')
         // } else {
         //     console.log('active')
         // }
         try {
-            // switchCheck[`switchID:${row.id}`] ? 
             const response = await (await BusinessStaffProcessOrderServices.checkPayment(data)).data
-            if (response.result == config.useResultStatus.SUCCESS) {
-                toast.success(`${!switchCheck[`switchID:${row.orderID}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
-                setRefresh(!refresh)
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    toast.success(`${!switchCheck[`switchID:${orderID}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
+                    handleRefresh()
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                    setSwitchCheck({
+                        ...switchCheck,
+                        [event.target.name]: event.target.checked
+                    })
+                }
             } else {
-                toast.error(config.useMessage.resultFailure)
-                setSwitchCheck({
-                    ...switchCheck,
-                    [event.target.name]: event.target.checked
-                })
+                throw new Error("Response is null or undefined")
             }
+
         } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
             setSwitchCheck({
                 ...switchCheck,
                 [event.target.name]: event.target.checked
             })
         }
     }
+
+
+
     return (
         <>
-            <p>AcceptedOrderTable</p>
-
+            {/* <p>NewOrderTable</p> */}
 
             <div className={classes.tableWrapper}>
                 <TblContainer>
                     <TblHead />
                     <TableBody>
                         {records && records.map((row) => (
-
                             <StyledTableRow key={row.orderID}>
 
                                 <StyledTableCell>{row.orderID}</StyledTableCell>
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
                                 <StyledTableCell >{row.customerID}</StyledTableCell>
 
-                                <StyledTableCell >{row.note}</StyledTableCell>
+                                {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
-                                {/* <>
-                                    <FormControl variant="outlined" >
-                                        <InputLabel id="statusOrder-label">
 
-                                        </InputLabel>
-                                        <Select
-                                            labelId="statusOrder-label"
-                                            id="statusOrder"
-                                            value={statusOrder}
-                                            onChange={handleStatusOrderChange}
-                                            name="statusOrder"
-                                        >
-                                            <MenuItem value={1}>Đang xử lý</MenuItem>
-                                            <MenuItem value={2}></MenuItem>
-                                            <MenuItem value={3}></MenuItem>
-                                            <MenuItem value={4}></MenuItem>
-                                        </Select>
-                                        <FormHelperText></FormHelperText>
-                                    </FormControl>
-                                </> */}
                                 <StyledTableCell>
                                     <Switch
                                         color="primary"
                                         checked={switchCheck[`switchID:${row.orderID}`]}
                                         onChange={handleChangeSwitch}
                                         name={`switchID:${row.orderID}`}
-                                        onClick={handleChangeStatus(row)}
+                                        onClick={handleStatusPaymentChange(row.orderID)}
                                     />
                                 </StyledTableCell>
 
-                                <StyledTableCell >{row.shipAt}</StyledTableCell>
-                                <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell>
+                                {/* <StyledTableCell >{row.shipAt}</StyledTableCell> */}
+                                {/* <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell> */}
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
-                                <StyledTableCell >
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        // props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
+                                <StyledTableCell style={{ minWidth: "230px" }}>
 
-                                    </Button>
 
-                                    {/* <>
-                                        <Button style={{ marginLeft: "8px" }} onClick={(event) => {
+                                    < Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết" >
+
+                                        <Button onClick={(event) => {
                                             event.stopPropagation()
-                                            // props.handleEdit(row)
+                                            props.handleViewInformation(row)
                                         }
                                         }>
+                                            <RiInformationLine />
+                                        </Button>
 
-                                            Từ chối
-                                    </Button>
-                                    </> */}
+                                    </ Tooltip>
+
+
+                                    {/* < Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái đơn hàng" >
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+
+                                            const data = {
+                                                orderID: row.orderID,
+                                                statusOrder: row.statusOrder
+                                            }
+
+                                            props.handleChangeStatus(data)
+                                        }
+                                        }>
+                                            <RiExchangeBoxLine />
+                                        </Button>
+
+                                    </ Tooltip> */}
+
+
+                                    < Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái đơn hàng" >
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+
+                                            const data = {
+                                                orderID: row.orderID,
+                                                statusOrder: row.statusOrder
+                                            }
+                                            // console.log("data: " + JSON.stringify(data))
+                                            setChangeStatusModal({
+                                                isOpen: true,
+                                                recordForChangeStatus: data,
+                                                statusOrderToChange,
+                                                handleCloseChangeStatusModal
+                                            })
+                                        }
+                                        }>
+                                            <RiExchangeBoxLine />
+                                        </Button>
+
+                                    </ Tooltip>
+
+
+
+                                    < Tooltip TransitionComponent={Zoom} placement="top" title="Gửi sản phẩm mẫu" >
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            props.handleOpenSendDemoProduct()
+                                        }
+                                        }>
+                                            <RiMailSendLine />
+                                        </Button>
+
+                                    </ Tooltip>
 
                                 </StyledTableCell>
-
 
                             </StyledTableRow>
 
@@ -237,6 +376,7 @@ export const AcceptedOrderTable = (props) => {
                 </TblContainer>
             </div >
 
+            {changeStatusModal.recordForChangeStatus && changeStatusModal.recordForChangeStatus != null && <ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />}
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
@@ -244,4 +384,5 @@ export const AcceptedOrderTable = (props) => {
         </>
     );
 }
+
 

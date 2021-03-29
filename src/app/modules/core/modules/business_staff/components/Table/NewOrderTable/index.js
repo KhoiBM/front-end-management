@@ -5,12 +5,11 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
-import { BusinessStaffProcessOrderServices } from '../../../../../../../services/CoreServices/BusinessStaffServices';
-import config from '../../../../../../../../environments/config';
-import { uuid } from 'uuidv4';
-import { useTable } from 'src/app/utils';
-import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { RiInformationLine } from 'react-icons/ri';
+import config from 'src/environments/config';
+import { BusinessStaffProcessOrderServices } from 'src/app/services';
+import { useTable } from 'src/app/utils';
+import { ConfirmDialog, PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -56,7 +55,10 @@ const StyledTableRow = withStyles((theme) => ({
 export const NewOrderTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const { keywords, searchAction, clickSearch } = props
+
+    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -71,24 +73,84 @@ export const NewOrderTable = (props) => {
     const [refresh, setRefresh] = useState(false)
     const [first, setFirst] = useState(true)
 
-
-    const [statusOrder, setStatusOrder] = useState("1")
+    const [statusOrder, setStatusOrder] = useState("Đang chờ")
 
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
 
 
-    useEffect(async () => {
-        // if (!first) {
-        // }
-        // setFirst(false)
-    }, [refresh])
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+    }, [page, refresh])
 
 
     useEffect(() => {
-        loadInit()
-        // console.log("load")
-    }, [page])
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        setPage(1)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else {
+                loadInit()
+            }
+        } else {
+            loadInit()
+        }
+
+    }, [clickSearch])
+
+
+
+
+    const search = async () => {
+        try {
+            const response = await (await BusinessStaffProcessOrderServices.searchNewOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    const records = response.info.records
+
+                    const switchObj = records.reduce((acc, curr) => {
+                        acc[`switchID:${curr.orderID}`] = curr.statusPayment
+                        return acc
+                    }, {})
+
+                    // console.log("switchObj: " + JSON.stringify(switchObj));
+
+                    setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
+                    setRecords(records)
+                    setTotalPage(response.info.totalPage)
+                    // console.log("page: " + page)
+                    console.log("search")
+
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
+    }
+
+
+
 
 
     const loadInit = async () => {
@@ -105,12 +167,13 @@ export const NewOrderTable = (props) => {
                         return acc
                     }, {})
 
-                    console.log("switchObj: " + JSON.stringify(switchObj));
+                    // console.log("switchObj: " + JSON.stringify(switchObj));
 
                     setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
                     setRecords(records)
                     setTotalPage(response.info.totalPage)
                     // console.log("page: " + page)
+                    console.log("loadInit")
 
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -131,14 +194,6 @@ export const NewOrderTable = (props) => {
         setStatusOrder(event.target.value)
     }
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        console.log(page)
-    };
-
-
-
-    // console.log("page:" + page)
     const handleChangeSwitch = (event) => {
         setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
     };
@@ -199,7 +254,10 @@ export const NewOrderTable = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
                     toast.success("Từ chối thành công")
+
+                    setRefresh(!refresh)
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -222,7 +280,10 @@ export const NewOrderTable = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
                     toast.success("Chấp nhận thành công")
+
+                    setRefresh(!refresh)
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -254,7 +315,7 @@ export const NewOrderTable = (props) => {
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
                                 <StyledTableCell >{row.customerID}</StyledTableCell>
 
-                                <StyledTableCell >{row.note}</StyledTableCell>
+                                {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
                                 {/* <>
                                     <FormControl variant="outlined" >
@@ -286,8 +347,8 @@ export const NewOrderTable = (props) => {
                                     />
                                 </StyledTableCell>
 
-                                <StyledTableCell >{row.shipAt}</StyledTableCell>
-                                <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell>
+                                {/* <StyledTableCell >{row.shipAt}</StyledTableCell> */}
+                                {/* <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell> */}
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
@@ -300,7 +361,7 @@ export const NewOrderTable = (props) => {
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation()
-                                            props.handViewDetail(row)
+                                            props.handleViewInformation(row)
                                         }
                                         }>
                                             <RiInformationLine />

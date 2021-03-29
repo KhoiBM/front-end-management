@@ -12,18 +12,20 @@ import Box from '@material-ui/core/Box';
 import { AuthService } from "../../../../services/AuthServices/AuthService";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { useAuthAction } from "src/app/stores/actions";
-import _ from "underscore";
 import config from "src/environments/config";
 import { useForm } from "src/app/utils/handles/index";
 import { toast } from "react-toastify";
 import jwt_decode from 'jwt-decode';
+import { RouteService } from "src/app/services";
 
 const initialFValues = { username: '', password: '' }
 
 const SignIn = ({ toggle, isVisible }) => {
 
-    const store = useStore();
+    // const store = useStore();
+
     const history = useHistory();
+
     const dispatch = useDispatch();
 
 
@@ -31,6 +33,7 @@ const SignIn = ({ toggle, isVisible }) => {
 
 
     const [isFirst, setIsFirst] = useState(true)
+
 
     const { response } = useSelector((state) => state.auth)
 
@@ -42,48 +45,46 @@ const SignIn = ({ toggle, isVisible }) => {
 
 
 
-    useEffect(async () => {
-        if (!isFirst) {
-            const auth = store.getState().auth;
-            if (auth.isSignedIn) {
-                const role = localStorage.getItem("role");
-                redirectByRole(role)
+    // useEffect(async () => {
+    //     if (!isFirst) {
+    //         const auth = store.getState().auth;
+    //         if (auth.isSignedIn) {
+    //             const role = localStorage.getItem("role");
+    //             redirectByRole(role)
 
-            } else {
-                toast.error("Đăng nhập thất bại")
-            }
-        }
-        setIsFirst(false);
-    }, [response])
+    //         } else {
+    //             toast.error("Đăng nhập thất bại")
+    //         }
+    //     }
+    //     setIsFirst(false);
+    // }, [response])
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
         const enableSubmit = validation(formData);
-        // const enableSubmit = true;
+
         console.log("formdata: " + JSON.stringify(formData))
+
         if (enableSubmit) {
+
             signIn(formData, dispatch);
+
         } else {
             toast.error(config.useMessage.invalidData);
         }
     };
 
     async function signIn(formData, dispatch) {
+
         const data = {
             username: formData.username,
             password: formData.password
         };
-        await dispatch(useAuthAction().signIn(data));
-    }
 
-    const redirectByRole = (role) => {
-        switch (role) {
-            case config.useRoleName.administrator: history.push("/core/admin/home"); break;
-            case config.useRoleName.manager: history.push("/core/manager/home"); break;
-            case config.useRoleName.businessStaff: history.push("/core/business_staff/home"); break;
-            case config.useRoleName.technicalStaff: history.push("/core/technical_staff/home"); break;
-        }
+        await dispatch(useAuthAction().signIn(data));
+        RouteService.init(history)
     }
 
 

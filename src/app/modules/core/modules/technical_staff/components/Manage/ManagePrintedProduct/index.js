@@ -8,6 +8,8 @@ import { PrintedProductTable } from '../../Table';
 import { AddPrintedProductForm } from '../../AddForm';
 import { EditPrintedProductForm } from '../../EditForm';
 import { SearchBar } from 'src/app/modules/core/components';
+import { ViewPrintedRawProductInformation } from '../../Extra';
+import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit } from 'src/app/utils';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -56,69 +58,33 @@ const useStyles = makeStyles(theme => ({
 export const ManagePrintedProduct = () => {
     const classes = useStyles();
 
+    const { openEditForm, setOpenEditForm, openAddForm, setOpenAddForm, recordForEdit, setRecordForEdit, handleEdit, handleAdd, handleCloseForm } = useToggleFormAddEdit()
 
-    const [clickSearch, setClickSearch] = useState(false)
-    const [searchAction, setSearchAction] = useState(false)
-    const [keywords, setKeywords] = useState("")
+    const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
 
-
-
-    // useEffect(() => {
-    //     // console.log("render")
-    //     // console.log("searchAction: " + searchAction)
-    // }, [searchAction, setSearchAction, keywords])
+    const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
 
-    const handleKeywordsChange = (event) => {
-        setKeywords(event.target.value)
-        if (!event.target.value || event.target.value == null || event.target.value == undefined || event.target.value.length < 0) {
-            setClickSearch(!clickSearch)
-            setSearchAction(false)
-        }
-        // console.log("keywords: " + keywords)
-    }
-
-
-
-
-    const [openEditForm, setOpenEditForm] = useState(false);
-    const [openAddForm, setOpenAddForm] = useState(false);
-    const [recordForEdit, setRecordForEdit] = useState(0)
-
-
-
-    const handleEdit = (row) => {
-        setOpenEditForm(true);
-        setRecordForEdit(row)
-    }
-    const handleAdd = (row) => {
-        setOpenAddForm(true);
-    }
-    const handleCloseForm = () => {
-        setOpenEditForm(false);
-        setOpenAddForm(false);
-    }
 
     return (
         <>
-            {!openEditForm && !openAddForm && <Paper elevation={2} className={classes.mainContainer}>
-
-
-
-                <>
-                    <div className={classes.actionContainer}>
-                        <div className={classes.actionWrapper}>
-                            <SearchBar keywords={keywords} handleKeywordsChange={handleKeywordsChange} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
-                            <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm đã in</Button>
+            {!openEditForm && !openAddForm && !openViewInformation &&
+                <Paper elevation={2} className={classes.mainContainer}>
+                    <>
+                        <div className={classes.actionContainer}>
+                            <div className={classes.actionWrapper}>
+                                <SearchBar keywords={keywords} setKeywords={setKeywords} searchAction={searchAction} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} handleKeywordsChange={handleKeywordsChange} />
+                                <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm đã in</Button>
+                            </div>
                         </div>
-                    </div>
-                    <PrintedProductTable handleEdit={handleEdit} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
-                </>
-            </Paper>
+                        <PrintedProductTable handleEdit={handleEdit} handleViewInformation={handleViewInformation} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
+                    </>
+                </Paper>
             }
 
             {openEditForm && <EditPrintedProductForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}
             {openAddForm && <AddPrintedProductForm handleCloseForm={handleCloseForm} />}
+            {openViewInformation && <ViewPrintedRawProductInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />}
 
         </>
     )

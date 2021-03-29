@@ -6,10 +6,10 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useUploadPhoto } from 'src/app/utils'
 import { ManageServices } from '../../../../manager/components'
 import { ManageServiceServices } from 'src/app/services'
-import { PageHeader } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -50,9 +50,12 @@ const useStyles = makeStyles(theme => ({
         }
     },
     pageForm: {
-        width: "25rem",
+        // width: "25rem",
+        width: "50rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
 
     },
@@ -90,18 +93,38 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
+    },
+    gridItem1: {
+        // background: "yellow",
+        '&  .MuiFormControl-root': {
+            width: "100%"
+        }
+    },
+    gridItem2: {
+        // background: "orange",
+        display: "flex",
+        justifyContent: "center",
+        // alignItems: "center"
+        paddingTop: theme.spacing(2),
+        height: "auto",
+        minHeight: "500px",
     }
 }))
 
 const initialFValues = {
     serviceID: '',
     serviceName: '',
+    servicePrice: 0,
     description: '',
     isActive: true,
     updatedAt: new Date()
 }
 export const EditServiceForm = (props) => {
     const classes = useStyles();
+
+    const [uploadFiles, setUploadFiles] = useState([])
+
+    const { uploadPhoto } = useUploadPhoto()
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
@@ -134,7 +157,18 @@ export const EditServiceForm = (props) => {
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
-                    // toast.success("Thành công")
+                    const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["SERVICE"]
+
+                    const serviceCode = "serviceCode"
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${serviceCode}`,
+                    }
+
+                    uploadPhoto(uploadInfo, uploadFiles)
+
+                    toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -166,8 +200,8 @@ export const EditServiceForm = (props) => {
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
-                        <Grid container>
-                            <Grid item xs={6} sm={6} md={6}>
+                        <Grid container spacing={4}>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
                                 <TextField
                                     variant='outlined'
                                     label="Tên dịch vụ"
@@ -177,6 +211,18 @@ export const EditServiceForm = (props) => {
                                     error={helperValid.serviceName ? true : false}
                                     helperText={helperValid.serviceName}
                                     required
+                                />
+
+                                <TextField
+                                    variant='outlined'
+                                    label="Giá dịch vụ"
+                                    value={formData.servicePrice}
+                                    name='servicePrice'
+                                    onChange={handleInputChange}
+                                    error={helperValid.servicePrice ? true : false}
+                                    helperText={helperValid.servicePrice}
+                                    required
+                                    type="number"
                                 />
 
                                 <TextField
@@ -206,6 +252,10 @@ export const EditServiceForm = (props) => {
                                 </div>
 
 
+                            </Grid>
+
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                                <DropZoneUpload setUploadFiles={setUploadFiles} />
                             </Grid>
                         </Grid>
                         <div className={classes.buttonWrapper}>

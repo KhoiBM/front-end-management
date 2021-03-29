@@ -5,9 +5,8 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { BusinessStaffProcessOrderServices } from '../../../../../../../services/CoreServices/BusinessStaffServices';
-import config from '../../../../../../../../environments/config';
-import { uuid } from 'uuidv4';
+import { BusinessStaffProcessOrderServices } from 'src/app/services';
+import config from 'src/environments/config';
 import { useTable } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
@@ -49,7 +48,8 @@ const StyledTableRow = withStyles((theme) => ({
 export const CanceledOrderTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -65,24 +65,9 @@ export const CanceledOrderTable = (props) => {
     const [first, setFirst] = useState(true)
 
 
-    const [statusOrder, setStatusOrder] = useState("1")
-
-    const handleStatusOrderChange = (event) => {
-        setStatusOrder(event.target.value)
-    }
-
-
-    // const handleChangePagination = (event, value) => {
-    //     setPage(value);
-    //     console.log(page)
-    // };
-    // console.log("page:" + page)
-    const handleChangeSwitch = (event) => {
-        // setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
-    };
     useEffect(() => {
         loadInit()
-    }, [page])
+    }, [page, refresh])
 
     const loadInit = async () => {
         try {
@@ -104,23 +89,10 @@ export const CanceledOrderTable = (props) => {
 
     }
 
-    useEffect(async () => {
-        // if (!first) {
-        // }
-        // setFirst(false)
-    }, [refresh])
-
-    // console.log("switchCheck: " + JSON.stringify(switchCheck));
-    const handleChangeStatus = (row) => async (event) => {
-        // await checkPayMent(row, event)
-    }
 
 
     return (
         <>
-            <p>CanceledOrderTable</p>
-
-
             <div className={classes.tableWrapper}>
                 <TblContainer>
                     <TblHead />
@@ -131,66 +103,29 @@ export const CanceledOrderTable = (props) => {
                                 <StyledTableCell>{row.orderID}</StyledTableCell>
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
                                 <StyledTableCell >{row.customerID}</StyledTableCell>
-                                <StyledTableCell >{row.note}</StyledTableCell>
+                                {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
-                                {/* <>
-                                    <FormControl variant="outlined" >
-                                        <InputLabel id="statusOrder-label">
 
-                                        </InputLabel>
-                                        <Select
-                                            labelId="statusOrder-label"
-                                            id="statusOrder"
-                                            value={statusOrder}
-                                            onChange={handleStatusOrderChange}
-                                            name="statusOrder"
-                                        >
-                                            <MenuItem value={1}>Đang xử lý</MenuItem>
-                                            <MenuItem value={2}></MenuItem>
-                                            <MenuItem value={3}></MenuItem>
-                                            <MenuItem value={4}></MenuItem>
-                                        </Select>
-                                        <FormHelperText></FormHelperText>
-                                    </FormControl>
-                                </> */}
                                 < StyledTableCell >
                                     <Switch
                                         color="primary"
                                         checked={switchCheck[`switchID:${row.orderID}`]}
-                                        onChange={handleChangeSwitch}
+                                        // onChange={handleChangeSwitch}
                                         name={`switchID:${row.orderID}`}
-                                        onClick={handleChangeStatus(row)}
+                                    // onClick={handleChangeStatus(row)}
                                     />
                                 </ StyledTableCell>
 
 
-                                <StyledTableCell >{row.shipAt}</StyledTableCell>
-                                <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell>
+                                {/* <StyledTableCell >{row.shipAt}</StyledTableCell> */}
+                                {/* <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell> */}
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
                                 <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
                                 <StyledTableCell >
-                                    {/* <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        // props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
 
-                                    </Button> */}
-
-                                    {/* <>
-                                        <Button style={{ marginLeft: "8px" }} onClick={(event) => {
-                                            event.stopPropagation()
-                                            // props.handleEdit(row)
-                                        }
-                                        }>
-
-                                            Từ chối
-                                    </Button>
-                                    </> */}
 
                                 </StyledTableCell>
 

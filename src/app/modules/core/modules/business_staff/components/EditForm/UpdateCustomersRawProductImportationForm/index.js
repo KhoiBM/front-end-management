@@ -4,10 +4,10 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper, Typography, Box } from '@material-ui/core'
 import { toast } from 'react-toastify'
-import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
+import config from 'src/environments/config'
+import { ManageCustomersRawProductImportationServices } from 'src/app/services'
 import { useForm } from 'src/app/utils'
-import { ManageRawProductServices, ManageCustomersRawProductImportationServices } from 'src/app/services'
 import { PageHeader } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -58,7 +58,8 @@ const useStyles = makeStyles(theme => ({
     },
     pageFormContainer: {
         width: "100%",
-        height: "100%",
+        minHeight: "800px",
+        height: "auto",  //  làm mất goc paper ở dưới 
         // background: "red",
         display: "flex",
         justifyContent: "center",
@@ -166,7 +167,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
 
                     toast.success("Thành công")
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo.message}`)
+                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

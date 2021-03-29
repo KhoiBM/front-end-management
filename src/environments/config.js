@@ -6,7 +6,7 @@ import { RiProductHuntLine } from "react-icons/ri";
 import { AiOutlineWindows, AiOutlineBorder, AiOutlineAppstore, AiOutlineTag, AiOutlineSync } from 'react-icons/ai'
 import { FcProcess } from 'react-icons/fc'
 const useApiPath = {
-    "apiEndpoint": "https://tyadtos4x2.execute-api.ap-southeast-1.amazonaws.com",
+    "apiEndpoint": "https://tyadtos4x2.execute-api.ap-southeast-1.amazonaws.com/dev/",
     "api": {
         "auth": {
             "signIn": "user/login",
@@ -24,6 +24,10 @@ const useApiPath = {
         "manageStatisticServices": {
             viewOverallRevenue: "manager/overall-revenue",
             viewRevenueOfEachService: "manager/service-revenue"
+        },
+        "photoServices": {
+            getPresignedURLToUpload: "manage/product/upload-photo",
+            getPhotoListByLink: ""
         }
 
     }
@@ -128,7 +132,7 @@ const useMessage = {
 }
 const useConfigAWS = {
     STUDIOBUCKET: {
-        BUCKETNAME: "photo-order-customer",
+        BUCKETNAME: "photo-upload-album-1",
         FOLDER: {
             "STUDIO'SRAWPRODUCT": "Studio'sRawProduct",
             "PRINTEDPRODUCT": "PrintedProduct",
@@ -137,7 +141,7 @@ const useConfigAWS = {
         }
     },
     CUSTOMERBUCKET: {
-        BUCKETNAME: "photo-upload-album-1",
+        BUCKETNAME: "photo-order-customer",
         FOLDER: {
             "CUSTOMER'SRAWPRODUCT": "Customer'sRawProduct",
             "ORDER": "Order"
@@ -145,8 +149,20 @@ const useConfigAWS = {
     },
 
 }
+const useStatusOrder = {
+    "BUSINESS_STAFF": {
+        "FILTER": ["Đang chờ", "Đã được duyệt"],
+        "CHANGE": ["Đã được duyệt", "Huỷ đơn", "Đang làm mẫu"]
+    },
+    "TECHINICAL_STAFF": {
+        "FILTER": ["Đang làm mẫu", "Đã hoàn thành mẫu"],
+        "CHANGE": ["Đã hoàn thành mẫu", "Đang in chính thức"]
+    },
+    "CUSTOMER": ["Abc", "CBA"],
 
-const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS }
+}
+
+const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS, useStatusOrder }
 export default config
 
 

@@ -4,11 +4,11 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper } from '@material-ui/core'
 import { toast } from 'react-toastify'
-import config from 'src/environments/config'
-import { useForm } from 'src/app/utils'
-import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
 import { RiCloseFill } from 'react-icons/ri'
-import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
+import config from 'src/environments/config'
+import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
+import { useForm, useUploadPhoto } from 'src/app/utils'
+import { DropZoneUpload, PageHeader } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -125,6 +125,8 @@ export const EditCustomersRawProductForm = (props) => {
 
     const [uploadFiles, setUploadFiles] = useState([])
 
+    const { uploadPhoto } = useUploadPhoto()
+
     const [categoryRecords, setCategoryRecords] = useState([])
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -187,7 +189,22 @@ export const EditCustomersRawProductForm = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
+                    const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["CUSTOMER'SRAWPRODUCT"]
+
+                    const categoryCode = "categoryCode"
+                    const rawProductCode = "productcode"
+
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${categoryCode}/${rawProductCode}`,
+                    }
+
+                    uploadPhoto(uploadInfo, uploadFiles)
+
                     toast.success("Thành công")
+
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }

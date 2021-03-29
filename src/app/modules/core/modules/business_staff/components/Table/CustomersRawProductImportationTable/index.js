@@ -7,11 +7,10 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { ManageRawProductImportationServices } from '../../../../../../../services/CoreServices/ManagerServices';
-import config from '../../../../../../../../environments/config';
+import { ManageCustomersRawProductImportationServices } from 'src/app/services';
+import config from 'src/environments/config';
 import { useTable } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-import { ManageCustomersRawProductImportationServices } from 'src/app/services';
 
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
@@ -53,7 +52,7 @@ export const CustomersRawProductImportationTable = (props) => {
     const classes = useStyles();
 
     // const headCells = ['Mã nhập', "Mã sản phẩm thô của khách hàng", "Tên sản phẩm thô của khách hàng", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
-    const headCells = ['Mã nhập', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    const headCells = ['Mã ID', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
 
 
     const [page, setPage] = useState(1);

@@ -6,23 +6,15 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useUploadPhoto } from 'src/app/utils'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { PhotoServices } from 'src/app/services/CoreServices/PhotoServices/PhotoServices.js'
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
+
 const useStyles = makeStyles(theme => ({
-    rootForm: {
-        marginTop: theme.spacing(3),
-        width: "100%",
-        // border: "1px solid red",
-        '& .MuiFormControl-root': {
-            width: '200%',
-            height: "auto",
-            marginBottom: theme.spacing(3),
-            // border: "1px solid red",
-        }
-    },
+
     selectRole: {
         margin: theme.spacing(1),
         minWidth: 120,
@@ -95,6 +87,17 @@ const useStyles = makeStyles(theme => ({
             // transform: "scale(5)",
         }
     },
+    rootForm: {
+        marginTop: theme.spacing(3),
+        width: "100%",
+        // border: "1px solid red",
+        '& .MuiFormControl-root': {
+            width: '200%',
+            height: "auto",
+            marginBottom: theme.spacing(3),
+            // border: "1px solid red",
+        }
+    },
     gridItem1: {
         // background: "yellow",
         '&  .MuiFormControl-root': {
@@ -122,10 +125,13 @@ const initialFValues = {
     isActive: true,
     createdAt: new Date()
 }
+
 export const AddRawProductForm = (props) => {
     const classes = useStyles();
 
     const [uploadFiles, setUploadFiles] = useState([])
+
+    const { uploadPhoto } = useUploadPhoto()
 
     const [categoryRecords, setCategoryRecords] = useState([])
 
@@ -137,6 +143,7 @@ export const AddRawProductForm = (props) => {
     useEffect(() => {
         loadInit()
     }, [])
+
     const loadInit = async () => {
         try {
             const response = await (await ManageCategoryServices.getAll()).data
@@ -158,65 +165,7 @@ export const AddRawProductForm = (props) => {
         }
     }
 
-    const uploadPhoto = async (uploadFiles) => {
-        try {
-            getPresignedURLToUpload(uploadFiles, uploadPhotoWithPresignedURL)
-        } catch (err) {
-            toast.error(`${config.useMessage.uploadPhotoFailure} + ${err}`,)
-        }
-    }
 
-    const getPresignedURLToUpload = async (uploadFiles, uploadPhotoWithPresignedURL) => {
-        try {
-            uploadFiles.forEach(async (uploadFile, index) => {
-                console.log("fileNameCustom: " + `${uploadFile.name.trim().split(/(\s+)/).join('')}${uuid}`)
-                const data = {
-                    fileType: uploadFile.type,
-                    fileName: `${uploadFile.name.trim().split(/(\s+)/).join('')}${uuid}`,
-                }
-                const responsePresignedURLToUpload = await (await PhotoServices.getPresignedURLToUpload(data)).data
-                // console.log("responsePresignedURLToUpload: " + JSON.stringify(responsePresignedURLToUpload))
-                if (responsePresignedURLToUpload && responsePresignedURLToUpload != null) {
-                    if (responsePresignedURLToUpload.result == config.useResultStatus.SUCCESS) {
-                        const presignedURL = responsePresignedURLToUpload.info.presignedURL
-
-                        uploadPhotoWithPresignedURL(presignedURL, uploadFile)
-                        // toast.success("Thành công")
-                    } else {
-                        toast.error(config.useMessage.resultFailure)
-                    }
-                } else {
-                    throw new Error("responsePresignedURLToUpload is null or undefined")
-                }
-            })
-
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
-        }
-    }
-    const uploadPhotoWithPresignedURL = async (presignedURL, uploadFile) => {
-        try {
-
-            const responseUploadPhotoWithPresignedURL = await (await PhotoServices.uploadPhotoWithPresignedURL(presignedURL, uploadFile)).data
-            // console.log("responseUploadPhotoWithPresignedURL: " + JSON.stringify(responseUploadPhotoWithPresignedURL))
-            if (responseUploadPhotoWithPresignedURL && responseUploadPhotoWithPresignedURL != null) {
-                if (responseUploadPhotoWithPresignedURL) {
-                    // const presignedURL = responseUploadPhotoWithPresignedURL.info.presignedURL
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("responsePresignedURLToUpload is null or undefined")
-            }
-
-
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
-        }
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -230,17 +179,33 @@ export const AddRawProductForm = (props) => {
     }
 
     const add = async (formData) => {
-        uploadFiles.forEach((file) => {
-            console.log("name: " + JSON.stringify(file.name))
-            console.log("type: " + JSON.stringify(file.type))
-        })
+        // uploadFiles.forEach((file) => {
+        //     console.log("name: " + JSON.stringify(file.name))
+        //     console.log("type: " + JSON.stringify(file.type))
+        // })
         // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
         console.log(uploadFiles)
+
         try {
             const response = await (await ManageRawProductServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
+
+                    const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
+
+                    const categoryCode = "categoryCode"
+                    const rawProductCode = "productcode"
+
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${categoryCode}/${rawProductCode}`,
+                    }
+
+                    uploadPhoto(uploadInfo, uploadFiles)
+
                     toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -250,7 +215,7 @@ export const AddRawProductForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
         }
 
     }
@@ -259,6 +224,7 @@ export const AddRawProductForm = (props) => {
             {/* <p>addform</p> */}
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>
+
                     <div className={classes.iconCloseWrapper}>
                         <div className={classes.iconClose} onClick={props.handleCloseForm}>
                             <RiCloseFill />
@@ -294,6 +260,7 @@ export const AddRawProductForm = (props) => {
                                     required
                                     type="number"
                                 />
+
                                 {/* <TextField
             variant='outlined'
             label="Tổng số lượng"

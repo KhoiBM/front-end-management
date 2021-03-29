@@ -42,18 +42,17 @@ export const SearchBar = (props) => {
                     className={classes.searchBar}
                 />
                 <IconButton className={classes.iconSearchWrapper} onClick={() => {
-                    // console.log("keywords: " + keywords)
+
 
                     if (!keywords || keywords == null || keywords == undefined || keywords.length < 0) {
                         setSearchAction(false)
 
-                        setClickSearch(!clickSearch)
-                        setClickSearch(false)
+                        setClickSearch((prev) => !prev)
+
                     } else {
                         setSearchAction(true)
 
-                        setClickSearch(!clickSearch)
-                        setClickSearch(true)
+                        setClickSearch((prev) => !prev)
 
                     }
 

@@ -6,10 +6,8 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
-import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageRawProductServices, ManageRawProductImportationServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { uuid } from 'uuidv4';
 import { useTable } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({

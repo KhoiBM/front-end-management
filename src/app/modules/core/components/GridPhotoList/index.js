@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
     gridItemShowPhoto: {
         width: "100%",
-        height: "60vh",
+        height: "70vh",
         // background: "red",
         display: 'flex',
         justifyContent: "center",
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
         width: "130%",
         height: "12rem",
         display: 'flex',
-        justifyContent: "space-between",
+        justifyContent: "space-between !important",
         alignItems: "center",
         flexWrap: 'nowrap',
         gap: theme.spacing(2),
@@ -73,6 +73,7 @@ const useStyles = makeStyles(theme => ({
         width: 'auto',
         height: 'auto',
         // border: "1px solid blue",
+
     },
     cardMediaShow: {
         objectFit: "contain",
@@ -82,12 +83,17 @@ const useStyles = makeStyles(theme => ({
         height: 'auto'
     },
     gridListTile: {
-        // border: "1px solid orange",
+        display: 'flex',
+        justifyContent: "center !important",
+        alignItems: "center",
 
         '& .MuiGridListTile-tile': {
             display: 'flex',
-            justifyContent: "center",
+            justifyContent: "center !important",
             alignItems: "center",
+            // border: "1px solid ",
+            // borderColor: theme.palette.primary.main
+            // border: "1px solid rgba(0, 0, 0, 0.23)",
         }
     }
 }))
@@ -107,7 +113,7 @@ export const GridPhotoList = (props) => {
 
     }, [])
     const loadInit = () => {
-        console.log(photoList && photoList[0])
+        // console.log(photoList && photoList[0])
         setPhotoToShow(photoList && photoList[0])
     }
     return (

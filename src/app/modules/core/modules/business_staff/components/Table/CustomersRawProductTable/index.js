@@ -5,11 +5,11 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
-import { ManageRawProductServices } from '../../../../../../../services/CoreServices/ManagerServices';
-import config from '../../../../../../../../environments/config';
+import { RiInformationLine } from 'react-icons/ri';
 import { useTable } from 'src/app/utils';
-import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { ManageCustomersRawProductServices } from 'src/app/services';
+import config from 'src/environments/config';
+import { ConfirmDialog, PaginationBar } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -56,7 +56,9 @@ export const CustomersRawProductTable = (props) => {
 
     // const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     // const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+
     const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Thể loại", "Thao tác"]
+
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
 
@@ -69,20 +71,7 @@ export const CustomersRawProductTable = (props) => {
     const [first, setFirst] = useState(true)
 
 
-
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
-
-
-
-    // const handleChangePagination = (event, value) => {
-    //     setPage(value);
-    //     // console.log(page)
-    // };
-
-
-
-    // useEffect(() => {
-    // }, [refresh])
 
 
     useEffect(() => {
@@ -207,7 +196,22 @@ export const CustomersRawProductTable = (props) => {
                                 {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
 
-                                <StyledTableCell style={{ minWidth: "160px" }} >
+                                <StyledTableCell style={{ minWidth: "230px" }}>
+
+
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết">
+
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            props.handleViewInformation(row)
+                                        }
+                                        }>
+                                            <RiInformationLine />
+                                        </Button>
+
+                                    </Tooltip>
+
+
                                     <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
 
                                         <Button onClick={(event) => {

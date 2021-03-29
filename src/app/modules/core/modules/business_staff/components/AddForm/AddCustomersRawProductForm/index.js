@@ -4,12 +4,11 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper } from '@material-ui/core'
 import { toast } from 'react-toastify'
-import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
 import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
+import config from 'src/environments/config'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
-import { ManageCustomersRawProduct } from '../../Manage'
+import { useForm, useUploadPhoto } from 'src/app/utils'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -125,6 +124,8 @@ export const AddCustomersRawProductForm = (props) => {
 
     const [uploadFiles, setUploadFiles] = useState([])
 
+    const { uploadPhoto } = useUploadPhoto()
+
     const [categoryRecords, setCategoryRecords] = useState([])
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
@@ -165,17 +166,31 @@ export const AddCustomersRawProductForm = (props) => {
         }
     }
     const add = async () => {
-        uploadFiles.forEach((file) => {
-            console.log("name: " + JSON.stringify(file.name))
-            console.log("type: " + JSON.stringify(file.type))
-        })
+        // uploadFiles.forEach((file) => {
+        //     console.log("name: " + JSON.stringify(file.name))
+        //     console.log("type: " + JSON.stringify(file.type))
+        // })
         // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
-        console.log(uploadFiles)
+        // console.log(uploadFiles)
         try {
             const response = await (await ManageCustomersRawProductServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+                    const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["CUSTOMER'SRAWPRODUCT"]
+
+                    const categoryCode = "categoryCode"
+                    const rawProductCode = "productcode"
+
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${categoryCode}/${rawProductCode}`,
+                    }
+                    const prefix = `${folder}/${categoryCode}/${rawProductCode}`
+                    console.log("prefix:" + prefix)
+                    uploadPhoto(uploadInfo, uploadFiles)
+
                     toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -185,7 +200,7 @@ export const AddCustomersRawProductForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
         }
 
     }

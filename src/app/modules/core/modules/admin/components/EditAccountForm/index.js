@@ -124,7 +124,7 @@ export const EditAccountForm = (props) => {
     const { recordForEdit } = props
 
     useEffect(() => {
-        if (recordForEdit != null && recordForEdit != undefined) {
+        if (recordForEdit && recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
         }
     }, [])

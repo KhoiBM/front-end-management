@@ -8,7 +8,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useUploadPhoto } from 'src/app/utils'
 import { ManagePrintedProductServices, TechnicalStaffProcessOrderServices, ManageRawProductServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { ManagePrintedProduct } from '../../Manage'
@@ -127,6 +127,8 @@ export const EditPrintedProductForm = (props) => {
 
     const [uploadFiles, setUploadFiles] = useState([])
 
+    const { uploadPhoto } = useUploadPhoto()
+
     const [orderRecords, setOrderRecords] = useState([])
     const [rawProductRecords, setRawProductRecords] = useState([])
 
@@ -220,7 +222,22 @@ export const EditPrintedProductForm = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
+                    const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["PRINTEDPRODUCT"]
+
+                    const orderID = "orderID"
+                    const printedProductCode = "printedProductCode"
+
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${orderID}/${printedProductCode}`,
+                    }
+
+                    uploadPhoto(uploadInfo, uploadFiles)
+
                     toast.success("Thành công")
+
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }

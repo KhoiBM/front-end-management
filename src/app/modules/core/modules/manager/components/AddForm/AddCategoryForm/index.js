@@ -8,10 +8,10 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useUploadPhoto } from 'src/app/utils'
 import { ManageCategory } from '../../../../manager/components'
 import { ManageCategoryServices, ManageServiceServices } from 'src/app/services'
-import { PageHeader } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -52,9 +52,12 @@ const useStyles = makeStyles(theme => ({
         }
     },
     pageForm: {
-        width: "25rem",
+        // width: "25rem",
+        width: "50rem",
         padding: theme.spacing(3),
         position: "relative",
+        height: "auto",
+        minHeight: "300px",
         // background: "blue",
 
     },
@@ -92,6 +95,25 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
             // transform: "scale(5)",
         }
+    },
+    rootGridForm: {
+
+        // background: "yellow",
+    },
+    gridItem1: {
+        // background: "yellow",
+        '&  .MuiFormControl-root': {
+            width: "100%"
+        }
+    },
+    gridItem2: {
+        // background: "orange",
+        display: "flex",
+        justifyContent: "center",
+        // alignItems: "center"
+        paddingTop: theme.spacing(2),
+        height: "auto",
+        minHeight: "500px",
     }
 }))
 
@@ -105,6 +127,11 @@ const initialFValues = {
 }
 export const AddCategoryForm = (props) => {
     const classes = useStyles();
+
+
+    const [uploadFiles, setUploadFiles] = useState([])
+
+    const { uploadPhoto } = useUploadPhoto()
 
     const [serviceRecords, setServiceRecords] = useState([])
 
@@ -153,6 +180,20 @@ export const AddCategoryForm = (props) => {
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
+
+
+                    const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
+                    const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["CATEGORY"]
+
+                    const categoryCode = "categoryCode"
+
+                    const uploadInfo = {
+                        bucketName,
+                        prefix: `${folder}/${categoryCode}`,
+                    }
+
+                    uploadPhoto(uploadInfo, uploadFiles)
+
                     toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -183,8 +224,9 @@ export const AddCategoryForm = (props) => {
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
-                        <Grid container>
-                            <Grid item xs={6} sm={6} md={6}>
+                        <Grid container spacing={4} className={classes.rootGridForm}>
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
+
                                 <TextField
                                     variant='outlined'
                                     label="Tên thể loại"
@@ -264,6 +306,12 @@ export const AddCategoryForm = (props) => {
                                 </div> */}
 
                             </Grid>
+
+
+                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                                <DropZoneUpload setUploadFiles={setUploadFiles} />
+                            </Grid>
+
                         </Grid>
                         <div className={classes.buttonWrapper}>
                             <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>

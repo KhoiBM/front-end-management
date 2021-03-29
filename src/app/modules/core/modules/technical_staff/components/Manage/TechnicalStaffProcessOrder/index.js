@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react'
-import { makeStyles, Paper, Button } from '@material-ui/core';
+import { makeStyles, Paper, Button, Divider } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable } from '../../Table/index'
@@ -51,6 +51,7 @@ export const TechnicalStaffProcessOrder = () => {
                 <div>
 
                     <TabBar tabArr={["Đơn hàng đã chấp nhận", "Cá nhân hoá"]} />
+                    <Divider />
                     <TabPanel value={value} index={0}>
                         <AcceptedOrderTable />
                     </TabPanel>

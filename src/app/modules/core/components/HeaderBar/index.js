@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Typography, ListItemIcon, ListItem, ListItemText, List, Divider, useTheme, Drawer, Zoom, Tooltip, MenuList, Badge } from '@material-ui/core'
-import { RiAccountBoxLine, RiNotification2Line } from 'react-icons/ri';
-import { MdSupervisorAccount, MdChevronLeft, MdChevronRight, MdMenu } from 'react-icons/md'
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Zoom, Tooltip } from '@material-ui/core'
+import { RiAccountBoxLine } from 'react-icons/ri';
+import { MdMenu } from 'react-icons/md'
 import clsx from 'clsx';
 
 
@@ -13,10 +13,8 @@ import { AuthService } from 'src/app/services/AuthServices/AuthService';
 import { AiOutlineProfile, AiOutlineLogout } from 'react-icons/ai';
 
 import brandLogo from 'src/app/assets/image/brand.svg';
-import { invert } from 'underscore';
 import config from 'src/environments/config';
 import { NotificationBar } from '../NotificationBar';
-import { NotificationDialog } from '../NotificationDialog';
 
 const drawerWidth = config.useStyles.drawerWidth;
 

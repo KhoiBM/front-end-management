@@ -12,6 +12,7 @@ export const useForm = (initialFValues, validOnChange = true) => {
     const [formData, setFormData] = useState(initialFValues);
     const [dobSelected, setDobSelected] = useState(new Date())
     const [helperValid, setHelperValid] = useState({});
+
     const handleInputChange = (event) => {
         const name = event.target.name;
         let value = event.target.type == 'checkbox'
@@ -26,18 +27,23 @@ export const useForm = (initialFValues, validOnChange = true) => {
         if (name == "totalQuantityOfPrintedProduct") {
             if (Number(value) < 1) {
                 value = 1
-            } else {
-
             }
         }
 
         if (name == "unitPrice") {
             if (Number(value) < 0) {
                 value = 0
-            } else {
-
             }
         }
+
+
+        if (name == "servicePrice") {
+            if (Number(value) < 0) {
+                value = 0
+            }
+        }
+
+
         console.log(name + ": " + value)
         setFormData({ ...formData, [name]: value });
         // console.log("formdata" + ": " + JSON.stringify(formData))
@@ -48,6 +54,7 @@ export const useForm = (initialFValues, validOnChange = true) => {
         setDobSelected(date)
         // console.log(date)
     }
+
     const validation = (fieldValues = formData) => {
         const temp = { ...helperValid };
         if ('username' in fieldValues) temp.username = fieldValues.username && fieldValues.username.length > 0 ? "" : "Tên người dùng là bắt buộc"

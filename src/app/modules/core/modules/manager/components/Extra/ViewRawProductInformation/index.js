@@ -10,7 +10,7 @@ import { IconClose } from 'src/app/components';
 import photoDemo from 'src/app/assets/image/demoPhoto.jpeg'
 import photoDemo2 from 'src/app/assets/image/demoPhoto2.jpg'
 import photoDemo3 from 'src/app/assets/image/demoPhoto3.jpg'
-import { useFormat } from 'src/app/utils';
+import { useFormat, useLoadPhotoList } from 'src/app/utils';
 
 const useStyles = makeStyles(theme => ({
     pageViewInfomationContainer: {
@@ -63,10 +63,15 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
     },
     descriptionContainer: {
-        width: "100%",
+        width: "77%",
+        textAlign: "justify",
+
         // background: "red",
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
+        "& .MuiTypography-body1 ": {
+            lineHeight: "2 !important",
+        }
     }, dateTimeContainer: {
 
     },
@@ -75,7 +80,6 @@ const useStyles = makeStyles(theme => ({
         height: "150px",
         // background: "red",
         paddingTop: theme.spacing(2),
-        paddingLeft: theme.spacing(2)
     },
     categoryContainer: {
         // background: "red",
@@ -105,48 +109,22 @@ export const ViewRawProductInformation = (props) => {
 
     const { recordForViewInformation } = props
 
-    const [photoList, setPhotoList] = useState([
-        photoDemo,
-        photoDemo2,
-        photoDemo3
-    ])
+    const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
+    const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
+
+    const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
 
 
     useEffect(() => {
-        loadPhotoList()
-    }, [])
-
-    const loadPhotoList = async () => {
-        try {
-            const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
-            const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
+        if (recordForViewInformation && recordForViewInformation != null && recordForViewInformation.length > 0) {
             const categoryCode = recordForViewInformation.categoryCode
             const rawProductCode = recordForViewInformation.rawProductCode
-
-            const response = await (await PhotoServices.getPhotoListByLink({
-                bucketName,
-                fileKey: `${folder}/${categoryCode}/${rawProductCode}`
-            })).data
-
-            // console.log("response: " + response)
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    const photoList = response.info.records
-                    console.log("photoList: " + photoList)
-                    setPhotoList(photoList)
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            const fileKey = `${folder}/${categoryCode}/${rawProductCode}`
+            loadPhotoList(bucketName, fileKey)
         }
-    }
+    }, [])
+
 
     return (
         <>
@@ -182,12 +160,13 @@ export const ViewRawProductInformation = (props) => {
                                     <Box className={classes.descriptionContainer}>
                                         <Typography variant={"body1"}>{recordForViewInformation.description}</Typography>
                                     </Box>
+
                                 </Grid>
 
                                 <Grid item xs={12} sm={12} md={12}>
                                     <Grid container>
                                         <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box className={classes.unitPriceTitleContainer}>
+                                            <Box >
                                                 <Typography variant={"h5"} color={"textSecondary"}>Giá</Typography>
                                                 <Box className={classes.contentWrapper}>
                                                     <Typography variant={"body1"} >{useFormat().formatMoney(recordForViewInformation.unitPrice)} đ</Typography>
@@ -199,12 +178,13 @@ export const ViewRawProductInformation = (props) => {
                                             <Box>
                                                 <Typography variant={"h5"} color={"textSecondary"}>Tổng số lượng</Typography>
                                                 <Box className={classes.contentWrapper}>
-                                                    <Typography variant={""}>{recordForViewInformation.totalQuantity}</Typography>
+                                                    <Typography variant={"body1"}>{recordForViewInformation.totalQuantity}</Typography>
                                                 </Box>
 
                                             </Box>
                                         </Grid>
                                     </Grid>
+
                                     <Grid container>
                                         <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
                                             <Box>
@@ -218,11 +198,12 @@ export const ViewRawProductInformation = (props) => {
                                                 <Typography variant={"h5"} color={"textSecondary"}>Màu sắc </Typography>
                                                 <Box className={classes.contentWrapper}>
                                                     <RiCheckboxBlankCircleFill style={{ color: `${recordForViewInformation.color}` }} />
-                                                    {/* <Typography variant={"body1"}>{}</Typography> */}
+
                                                 </Box>
                                             </Box>
                                         </Grid>
                                     </Grid>
+
                                     <Grid container>
                                         <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
                                             <Box>
@@ -258,6 +239,7 @@ export const ViewRawProductInformation = (props) => {
                                             </Box>
                                         </Grid>
                                     </Grid>
+
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -308,3 +290,4 @@ export const ViewRawProductInformation = (props) => {
 //         updatedAt: "03-03-2021",
 //     }
 // ])
+//   {/* <Typography variant={"body1"}>{}</Typography> */}
