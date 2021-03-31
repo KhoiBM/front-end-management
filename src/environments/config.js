@@ -19,15 +19,24 @@ const useApiPath = {
             view: ""
         },
         "manageRawProductServices": {
-            view: "homepage/get-list-product"
+            view: "manager/studio-raw-product-list",
+            viewSearch: "manager/studio-raw-product-search-list",
+            viewDetail: "manager/studio-raw-product-info"
         },
         "manageStatisticServices": {
             viewOverallRevenue: "manager/overall-revenue",
-            viewRevenueOfEachService: "manager/service-revenue"
+            viewRevenueOfEachService: "manager/service-revenue",
+            viewNumberOrder: "manager/number-order"
+        },
+        "manageImportedRawProductServices": {
+            viewImportedRawProduct: "manager/imported-studio-raw-product-list"
         },
         "photoServices": {
             getPresignedURLToUpload: "manage/product/upload-photo",
             getPhotoListByLink: "manage/get-list-photo"
+        },
+        "manageCategoryServices": {
+            view: "manager/view-category",
         }
 
     }
@@ -153,14 +162,18 @@ const useConfigAWS = {
 }
 const useStatusOrder = {
     "BUSINESS_STAFF": {
-        "FILTER": ["Đang chờ", "Đã được duyệt", "Đã hoàn thành"],
-        "CHANGE": ["Đã được duyệt", "Huỷ đơn", "Đang làm mẫu"]
+        "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+            "Chấp nhận mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+        "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang in mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
+            "Hoàn thành đơn hàng"]
     },
-    "TECHINICAL_STAFF": {
-        "FILTER": ["Đang làm mẫu", "Đã hoàn thành mẫu"],
-        "CHANGE": ["Đã hoàn thành mẫu", "Đang in chính thức"]
+    "TECHNICAL_STAFF": {
+        "FILTER": ["Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
+            "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+        "CHANGE": ["Hoàn thành mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ"]
     },
-    "CUSTOMER": ["Abc", "CBA"],
+    "CUSTOMER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang in mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+        "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
 
 }
 
