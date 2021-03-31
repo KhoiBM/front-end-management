@@ -115,7 +115,8 @@ export const ViewOrderInformation = (props) => {
 
     const { viewOrderInformationModal, setViewOrderInformationModal } = props
     const { isOpen, recordForViewInformation, handleCloseModal } = viewOrderInformationModal
-    console.log("viewOrderInformationModal: " + JSON.stringify(viewOrderInformationModal))
+    // console.log("viewOrderInformationModal: " + JSON.stringify(viewOrderInformationModal))
+
     // const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
     // const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
 
@@ -134,8 +135,8 @@ export const ViewOrderInformation = (props) => {
 
     const [recordForCart, setRecordForCart] = useState({})
 
-
     const [recordOrder, setRecordOrder] = useState({})
+
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {

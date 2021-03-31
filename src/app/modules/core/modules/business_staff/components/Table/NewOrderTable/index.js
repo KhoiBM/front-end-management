@@ -77,6 +77,7 @@ export const NewOrderTable = (props) => {
 
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
+
     const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
 
@@ -428,6 +429,7 @@ export const NewOrderTable = (props) => {
             </div >
 
             <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
+
             {<ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
 
             <div className={classes.paginationContainer}>
