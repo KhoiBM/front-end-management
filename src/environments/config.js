@@ -49,9 +49,7 @@ const useRegex = {
     regexPassword: /./,
     // regexEmail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
     regexEmail: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/i,
-    regexPhone: /^[+]?(\([0-9]{1,4}\))?[0-9]{10,16}$/,
-    regexUsername: /^(?=.{4,50}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
-    regexAddress: /^([0-9]*[a-zA-Z]+[\s,-]?)+$/
+    regexPhone: /^\d{10,11}$/
 }
 //      link: "/core/admin/manage_account"
 const useUserRole = {
