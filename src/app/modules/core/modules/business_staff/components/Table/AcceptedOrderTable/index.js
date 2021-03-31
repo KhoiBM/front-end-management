@@ -9,7 +9,7 @@ import { RiInformationLine, RiExchangeBoxLine, RiMailSendLine } from 'react-icon
 import config from 'src/environments/config';
 import { BusinessStaffProcessOrderServices } from 'src/app/services';
 import { useTable } from 'src/app/utils';
-import { ConfirmDialog, PaginationBar, ChangeStatusOrder } from 'src/app/modules/core/components';
+import { ConfirmDialog, PaginationBar, ChangeStatusOrder, ViewOrderInformation } from 'src/app/modules/core/components';
 
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
@@ -58,8 +58,11 @@ export const AcceptedOrderTable = (props) => {
 
     const { keywords, searchAction, clickSearch } = props
 
+    const { filterList, action, clickFilter } = props
+
     // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -75,16 +78,12 @@ export const AcceptedOrderTable = (props) => {
     const [first, setFirst] = useState(true)
 
     const [statusOrder, setStatusOrder] = useState("Đang chờ")
-
-
-
     const useStatusOrder = config.useStatusOrder.BUSINESS_STAFF
-    const statusOrderToFilter = useStatusOrder.FILTER
     const statusOrderToChange = useStatusOrder.CHANGE
 
     const [changeStatusModal, setChangeStatusModal] = useState({ isOpen: false })
 
-
+    const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
@@ -92,11 +91,14 @@ export const AcceptedOrderTable = (props) => {
         if (keywords && keywords != null && keywords.length > 0) {
             if (searchAction) {
                 search()
-            } else {
-                loadInit()
+            } else if (action == "filter") {
+                loadInitByFilter()
             }
+
         } else {
-            loadInit()
+            if (action == "filter") {
+                loadInitByFilter()
+            }
         }
     }, [page, refresh])
 
@@ -104,19 +106,78 @@ export const AcceptedOrderTable = (props) => {
     useEffect(() => {
         // console.log("keywords: " + keywords)
         // console.log("searchAction: " + searchAction)
-        setPage(1)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-                search()
+        if (!first) {
+            setPage(1)
+            if (keywords && keywords != null && keywords.length > 0) {
+                if (searchAction) {
+                    search()
+                } else {
+                    loadInitByFilter()
+                }
             } else {
-                loadInit()
+                loadInitByFilter()
             }
+
         } else {
-            loadInit()
+            setFirst(false)
         }
 
     }, [clickSearch])
 
+
+
+    useEffect(() => {
+        console.log("clickFilter")
+        if (!first) {
+            setPage(1)
+
+            if (action == "filter") {
+                loadInitByFilter()
+            }
+        } else {
+            setFirst(false)
+        }
+
+    }, [clickFilter])
+
+
+    const loadInitByFilter = async () => {
+        console.log("loadInitByFilter")
+        console.log("action: " + action)
+        console.log("filterList:" + JSON.stringify(filterList))
+        console.log("Page: " + page)
+        try {
+            const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    const records = response.info.records
+
+                    const switchObj = records.reduce((acc, curr) => {
+                        acc[`switchID:${curr.orderID}`] = curr.statusPayment
+                        return acc
+                    }, {})
+
+                    // console.log("switchObj: " + JSON.stringify(switchObj));
+
+                    setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
+                    setRecords(records)
+                    setTotalPage(response.info.totalPage)
+                    // console.log("page: " + page)
+
+
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
+    }
 
 
 
@@ -159,46 +220,13 @@ export const AcceptedOrderTable = (props) => {
 
 
 
-    const loadInit = async () => {
-
-        try {
-            const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: "all", page: page, limit: limit })).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    const records = response.info.records
-
-                    const switchObj = records.reduce((acc, curr) => {
-                        acc[`switchID:${curr.orderID}`] = curr.statusPayment
-                        return acc
-                    }, {})
-
-                    // console.log("switchObj: " + JSON.stringify(switchObj));
-
-                    setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
-                    setRecords(records)
-                    setTotalPage(response.info.totalPage)
-                    // console.log("page: " + page)
-                    console.log("loadInit")
-
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
-
-    }
 
     const handleRefresh = () => {
         setRefresh(prev => !prev)
     }
-    const handleCloseChangeStatusModal = () => {
+    const handleCloseModal = () => {
         setChangeStatusModal({ isOpen: false })
+        setViewOrderInformationModal({ isOpen: false })
         handleRefresh()
     }
 
@@ -268,9 +296,10 @@ export const AcceptedOrderTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.orderID}>
 
-                                <StyledTableCell>{row.orderID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
-                                <StyledTableCell >{row.customerID}</StyledTableCell>
+                                {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
+                                <StyledTableCell >{row.customerCode}</StyledTableCell>
 
                                 {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
@@ -299,7 +328,13 @@ export const AcceptedOrderTable = (props) => {
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation()
-                                            props.handleViewInformation(row)
+                                            // props.handleViewInformation(row)
+                                            setViewOrderInformationModal({
+                                                isOpen: true,
+                                                recordForViewInformation: row,
+                                                handleCloseModal
+                                            })
+                                            // console.log("ViewOrderInformationModal: " + viewOrderInformationModal)
                                         }
                                         }>
                                             <RiInformationLine />
@@ -341,8 +376,9 @@ export const AcceptedOrderTable = (props) => {
                                                 isOpen: true,
                                                 recordForChangeStatus: data,
                                                 statusOrderToChange,
-                                                handleCloseChangeStatusModal
+                                                handleCloseModal
                                             })
+
                                         }
                                         }>
                                             <RiExchangeBoxLine />
@@ -376,7 +412,9 @@ export const AcceptedOrderTable = (props) => {
                 </TblContainer>
             </div >
 
-            {changeStatusModal.recordForChangeStatus && changeStatusModal.recordForChangeStatus != null && <ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />}
+            {<ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />}
+
+            {<ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />

@@ -1,253 +1,288 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, Typography, Container, Box } from '@material-ui/core'
+import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, Typography, Container, Box, TextField, Switch, FormControlLabel, Divider, DialogTitle, DialogContent, Slide, Dialog } from '@material-ui/core'
 import { toast } from 'react-toastify';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
 import { IconClose } from 'src/app/components';
 import config from 'src/environments/config';
 import { useLoadPhotoList } from 'src/app/utils';
 import { PageHeader } from 'src/app/modules/core/components';
+import { ViewCart } from '../ViewCart';
+import bgAuth from "src/app/assets/image/bg_auth.jpeg"
 
 const useStyles = makeStyles(theme => ({
-    pageViewInfomationContainer: {
-        width: "100%",
-        minHeight: "800px",
-        height: "auto",  //  làm mất goc paper ở dưới 
-        // background: "red",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-        overflow: "scroll",
-        background: 'var(bg-secondary-color-main)',
+    // pageViewInfomationContainer: {
+    //     width: "100%",
+    //     minHeight: "1100px",
+    //     height: "auto",  //  làm mất goc paper ở dưới 
+    //     // background: "red",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     position: "relative",
+    //     // overflow: "scroll",
+    //     background: 'var(bg-secondary-color-main)',
 
-    },
-    pageViewInfomationWrapper: {
-        width: "100%",
-        padding: theme.spacing(3),
-        height: "auto",
-        minHeight: "800px",
-        // background: "blue",
-        background: "#fff",
 
-    },
+    // },
+    // pageViewInfomationWrapper: {
+    //     width: "100%",
+    //     padding: theme.spacing(3),
+    //     height: "auto",
+    //     minHeight: "1100px",
+    //     // background: "blue",
+    //     background: "#fff",
+    //     paddingBottom: theme.spacing(10)
+
+    // },
     rootGrid: {
         marginTop: theme.spacing(3),
         width: "100%",
         minHeight: "700px",
         height: "auto",
         // border: "1px solid red",
+
         '& .MuiFormControl-root': {
-            width: '200%',
-            height: "auto",
             marginBottom: theme.spacing(3),
             // border: "1px solid red",
         }
     },
     gridItem1: {
-        // background: "blue",
-        padding: 0
 
+        // background: "blue",
+        background: "#fff",
     },
     gridItem2: {
         // background: "red",
-
-    },
-    titleContainer: {
         width: "100%",
-        // background: "red",
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-    },
-    descriptionContainer: {
-        width: "77%",
-        textAlign: "justify",
+        // borderLeft: "1px solid rgba(0, 0, 0, 0.23)",
+        paddingLeft: theme.spacing(15),
+        background: "#fff",
+        '& .MuiFormControl-root': {
+            width: "100%",
+            color: "#000 !important",
+            borderRadius: "4px",
+            '& .MuiInputBase-input': {
+                color: "#000 !important",
+                background: "#fff",
+                // background: "red",
+                // background: 'var(--bg-secondary-color-main)',
 
-        // background: "red",
-        paddingTop: theme.spacing(5),
-        paddingBottom: theme.spacing(5),
-        "& .MuiTypography-body1 ": {
-            lineHeight: "2 !important",
+                borderRadius: "4px",
+            }
         }
-    }, dateTimeContainer: {
+
 
     },
-    gridItemContent: {
-        width: "100%",
-        height: "150px",
-        // background: "red",
-        paddingTop: theme.spacing(2),
+    bg: {
+        backgroundImage: `url(${bgAuth}) !important`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        // background: "red"
+        // overflowY: "hidden"
     },
-    categoryContainer: {
-        // background: "red",
-        marginBottom: theme.spacing(1),
-        fontWeight: "300",
+    dialog: {
+
+        // background: theme.palette.grey[50],
+
     },
-    contentWrapper: {
-        marginTop: theme.spacing(3),
-        maxWidth: "300px",
-        width: "200px",
-        height: "50px",
-        border: "1px solid rgba(0, 0, 0, 0.23)",
-        // border: "1px solid var(--primary-color-main)",
-        borderRadius: "10px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontWeight: "500",
-        fontSize: "1.25rem"
-    }
+    dialogTitle: {
+        position: "relative",
+        // // backgroundColor: "red"
+        padding: theme.spacing(2),
+
+
+    },
+    dialogContent: {
+        // background: "#fff",
+    },
+    dialogAction: {
+
+    },
 }))
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+
 export const ViewOrderInformation = (props) => {
 
     const classes = useStyles();
 
-    const { recordForViewInformation } = props
+    const { viewOrderInformationModal, setViewOrderInformationModal } = props
+    const { isOpen, recordForViewInformation, handleCloseModal } = viewOrderInformationModal
+    // console.log("viewOrderInformationModal: " + JSON.stringify(viewOrderInformationModal))
 
-    const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
-    const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["CUSTOMER'SRAWPRODUCT"]
+    // const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
+    // const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
 
 
+    // const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
+    // useEffect(() => {
+    // if (recordForViewInformation && recordForViewInformation != null) {
+    //     const orderID = recordForCart.orderID
+    //     const orderDetailID = recordForCart.orderDetailID
+    //     const fileKey = `${folder}/${orderID}/${orderDetailID}`
+    //     loadPhotoList(bucketName, fileKey)
+    // }
 
-    const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
+    // }, [recordForViewInformation])
+
+    const [recordForCart, setRecordForCart] = useState({})
+
+    const [recordOrder, setRecordOrder] = useState({})
+
 
     useEffect(() => {
-        if (recordForViewInformation && recordForViewInformation != null && recordForViewInformation.length > 0) {
-            const categoryCode = recordForViewInformation.categoryCode
-            const rawProductCode = recordForViewInformation.rawProductCode
-            const fileKey = `${folder}/${categoryCode}/${rawProductCode}`
-            loadPhotoList(bucketName, fileKey)
+        if (recordForViewInformation && recordForViewInformation != null) {
+            setRecordForCart({
+                orderID: recordForViewInformation.orderID,
+                orderCode: recordForViewInformation.orderCode
+            })
+            setRecordOrder({ ...recordOrder, ...recordForViewInformation })
         }
-
-    }, [])
-
-
+    }, [recordForViewInformation])
 
     return (
         <>
-            <Paper elevation={6} className={classes.pageViewInfomationContainer}>
-                < Paper className={classes.pageViewInfomationWrapper} >
+            {/* isOpen */}
+            <Dialog fullScreen open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>
 
-                    <IconClose handleClose={props.handleClose} />
+                <DialogTitle className={classes.dialogTitle}>
 
-                    <PageHeader>
-                        Xem thông tin chi tiết đơn hàng
-                </PageHeader>
+                </DialogTitle>
 
-                    {/* <Grid container spacing={4} className={classes.rootGrid}>
+                <DialogContent className={classes.dialogContent}>
 
-                        <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
-                            {photoList && photoList != null && <GridPhotoList photoList={photoList} />}
+                    <IconClose handleClose={handleCloseModal} />
+
+                    <PageHeader>Xem thông tin chi tiết đơn hàng</PageHeader>
+
+                    <Grid container spacing={2} className={classes.rootGrid}>
+
+                        <Grid item xs={9} sm={9} md={9} className={classes.gridItem1}>
+                            <ViewCart recordForCart={recordForCart} />
                         </Grid>
 
+                        <Grid item xs={3} sm={3} md={3} className={classes.gridItem2}>
+                            <TextField
+                                variant='outlined'
+                                label="Mã ID đơn hàng"
+                                value={recordOrder.orderID}
+                                name='orderID'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Mã ID khách hàng"
+                                value={recordOrder.customerID}
+                                name='customerID'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Tên khách hàng"
+                                value={recordOrder.customerName}
+                                name='customerID'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Số điện thoại"
+                                value={recordOrder.phone}
+                                name='customerID'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Địa chỉ"
+                                value={recordOrder.address}
+                                name='shipAt'
+                                // required
+                                disabled
+                            />
 
-                        <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
-                            <Grid container>
-                                <Grid item xs={12} sm={12} md={12} >
-                                    <Box className={classes.categoryContainer}>
-                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã Code: {recordForViewInformation.rawProductCode}</Typography>
-                                    </Box>
-                                    <Box className={classes.titleContainer}>
-                                        <Typography variant={"h3"}>{recordForViewInformation.rawProductName}</Typography>
-                                    </Box>
+                            <TextField
+                                variant='outlined'
+                                label="Trạng thái đơn hàng"
+                                value={recordOrder.statusOrder}
+                                name='statusOrder'
+                                // required
+                                disabled
+                            />
+                            {/* <FormControlLabel
+                    label="Trạng thái thanh toán"
+                    labelPlacement="start"
+                    control={<Switch
+                        color="primary"
+                        checked={recordOrder.statusPayment}
+                        name="statusPayment"
+                        disabled
 
-                                </Grid >
+                    />
 
-                                <Grid item xs={12} sm={12} md={12}>
-                                    <Box className={classes.descriptionContainer}>
-                                        <Typography variant={"body1"}>{recordForViewInformation.description}</Typography>
-                                    </Box>
+                    }
+                /> */}
+                            <TextField
+                                variant='outlined'
+                                label="Trạng thái thanh toán"
+                                value={recordOrder.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
+                                name='statusOrder'
+                                // required
+                                disabled
+                            />
 
-                                </Grid>
+                            <TextField
+                                variant='outlined'
+                                label="Ngày giao"
+                                value={recordOrder.shipAt}
+                                name='shipAt'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Ghi chú"
+                                value={recordOrder.note}
+                                name='note'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Ngày tạo"
+                                value={recordOrder.createdAt}
+                                name='note'
+                                // required
+                                disabled
+                            />
+                            <TextField
+                                variant='outlined'
+                                label="Ngày sửa đổi"
+                                value={recordOrder.updatedAt}
+                                name='note'
+                                // required
+                                disabled
+                            />
 
-                                <Grid item xs={12} sm={12} md={12}>
-                                    <Grid container>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box >
-                                                <Typography variant={"h5"} color={"textSecondary"}>Giá</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"} >{useFormat().formatMoney(recordForViewInformation.unitPrice)} đ</Typography>
-                                                </Box>
 
-                                            </Box>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Tổng số lượng</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.totalQuantity}</Typography>
-                                                </Box>
-
-                                            </Box>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Kích thước</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.size}</Typography>                                                </Box>
-                                            </Box>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Màu sắc </Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <RiCheckboxBlankCircleFill style={{ color: `${recordForViewInformation.color}` }} />
-
-                                                </Box>
-                                            </Box>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Thể loại:</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.categoryName}</Typography>                                                </Box>
-                                            </Box>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Tạo bởi:</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.createdBy}</Typography>                                                </Box>
-                                            </Box>
-                                        </Grid>
-
-                                    </Grid>
-
-                                    <Grid container>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Ngày tạo:</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.createdAt}</Typography>                                                </Box>
-                                            </Box>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
-                                                <Typography variant={"h5"} color={"textSecondary"}>Ngày sửa đổi:</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"}>{recordForViewInformation.updatedAt}</Typography>
-                                                </Box>
-                                            </Box>
-                                        </Grid>
-                                    </Grid>
-
-                                </Grid>
-                            </Grid>
                         </Grid>
 
                     </Grid>
- */}
-                </ Paper>
 
-            </Paper >
+                </DialogContent>
+
+            </Dialog >
+
 
         </>
     )

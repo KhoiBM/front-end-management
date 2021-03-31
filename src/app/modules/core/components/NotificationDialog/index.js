@@ -51,7 +51,7 @@ export const NotificationDialog = (props) => {
                     notificationDialog.onIsView(true)
                 }}>
                     <DialogTitle className={classes.dialogTitle}>
-                        <Typography variant={"h4"}>{notificationDialog.title}</Typography>
+                        {notificationDialog.title}
                     </DialogTitle>
 
                     <DialogContent className={classes.dialogContent}>

@@ -8,7 +8,7 @@ export const useFilterHandle = (props) => {
 
     const [recordsSelect, setRecordsSelect] = useState([])
 
-    const [filterList, setFilterList] = React.useState([]);
+    const [filterList, setFilterList] = useState([]);
 
     const [action, setAction] = useState("filter")
 
@@ -34,11 +34,12 @@ export const useFilterHandle = (props) => {
 
 
                     // console.log("RecordsSelect: " + JSON.stringify(records))
+
                     await setRecordsSelect(records ? records : [])
 
                     const mapFilterList = records.map((val) => (val.ID))
 
-                    console.log("mapList: " + JSON.stringify(mapFilterList))
+                    // console.log("mapList: " + JSON.stringify(mapFilterList))
 
                     await setFilterList(records ? mapFilterList : [])
 

@@ -5,13 +5,12 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem, FormHelperText, FormControl, InputLabel, Select, Paper, Typography, Box, Slide, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core'
 import { toast } from 'react-toastify'
-import { RiCloseFill } from 'react-icons/ri'
 import config from 'src/environments/config'
-import { ManageCustomersRawProductImportationServices, BusinessStaffProcessOrderServices } from 'src/app/services'
+import { BusinessStaffProcessOrderServices } from 'src/app/services'
 import { useForm } from 'src/app/utils'
 import { PageHeader } from 'src/app/modules/core/components'
 import { IconClose } from 'src/app/components'
-import { BusinessStaffProcessOrder } from '../../modules/business_staff/components'
+
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -71,38 +70,35 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
-
 const initialFValues = {
     orderID: '',
     statusOrder: "",
 }
+
 export const ChangeStatusOrder = (props) => {
     const classes = useStyles();
 
-
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
-
 
     const { changeStatusModal, setChangeStatusModal } = props
 
-    const { isOpen, recordForChangeStatus, statusOrderToChange, handleCloseChangeStatusModal } = changeStatusModal
+    const { isOpen, recordForChangeStatus, statusOrderToChange, handleCloseModal } = changeStatusModal
 
 
     useEffect(() => {
 
-        // console.log("recordForChangeStatus: " + JSON.stringify(recordForChangeStatus))
+
         // console.log("formData:" + JSON.stringify(formData))
 
-        if (recordForChangeStatus && recordForChangeStatus != null && recordForChangeStatus != undefined) {
-
+        if (recordForChangeStatus && recordForChangeStatus != null) {
+            console.log("recordForChangeStatus: " + JSON.stringify(recordForChangeStatus))
             setFormData({ ...formData, ...recordForChangeStatus })
 
         }
 
         // loadInit()
 
-    }, [])
+    }, [recordForChangeStatus])
 
     // const loadInit = async () => {
 
@@ -149,7 +145,7 @@ export const ChangeStatusOrder = (props) => {
 
 
                 <DialogTitle className={classes.dialogTitle}>
-                    <IconClose handleClose={handleCloseChangeStatusModal} />
+                    <IconClose handleClose={handleCloseModal} />
                     <br />
                     <PageHeader>
                         Thay đổi trạng thái đơn hàng
@@ -173,13 +169,14 @@ export const ChangeStatusOrder = (props) => {
                                         onChange={handleInputChange}
                                         name="statusOrder"
                                         labelWidth={150}
+                                    // error={helperValid.statusOrder ? true : false}
                                     >
                                         {statusOrderToChange && statusOrderToChange != null && statusOrderToChange.length > 0 &&
                                             statusOrderToChange.map((val, index) => (<MenuItem value={val} key={index}>{val}</MenuItem>))
                                         }
 
                                     </Select>
-                                    <FormHelperText></FormHelperText>
+                                    {/* <FormHelperText>{helperValid.statusOrder}</FormHelperText> */}
                                 </FormControl>
 
 

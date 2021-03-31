@@ -27,7 +27,7 @@ const useApiPath = {
         },
         "photoServices": {
             getPresignedURLToUpload: "manage/product/upload-photo",
-            getPhotoListByLink: ""
+            getPhotoListByLink: "manage/get-list-photo"
         }
 
     }
@@ -153,7 +153,7 @@ const useConfigAWS = {
 }
 const useStatusOrder = {
     "BUSINESS_STAFF": {
-        "FILTER": ["Đang chờ", "Đã được duyệt"],
+        "FILTER": ["Đang chờ", "Đã được duyệt", "Đã hoàn thành"],
         "CHANGE": ["Đã được duyệt", "Huỷ đơn", "Đang làm mẫu"]
     },
     "TECHINICAL_STAFF": {

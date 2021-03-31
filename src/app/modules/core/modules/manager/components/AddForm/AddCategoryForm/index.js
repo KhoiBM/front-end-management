@@ -192,9 +192,14 @@ export const AddCategoryForm = (props) => {
                         prefix: `${folder}/${categoryCode}`,
                     }
 
-                    uploadPhoto(uploadInfo, uploadFiles)
+                    if (uploadFiles.length > 0) {
+                        uploadPhoto(uploadInfo, uploadFiles)
+                    } else {
+                        toast.success("Thành công")
+                    }
 
-                    toast.success("Thành công")
+
+
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }

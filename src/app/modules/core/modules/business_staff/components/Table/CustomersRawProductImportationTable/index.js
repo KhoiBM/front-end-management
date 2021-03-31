@@ -52,7 +52,7 @@ export const CustomersRawProductImportationTable = (props) => {
     const classes = useStyles();
 
     // const headCells = ['Mã nhập', "Mã sản phẩm thô của khách hàng", "Tên sản phẩm thô của khách hàng", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
-    const headCells = ['Mã ID', "Mã sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    const headCells = ['Mã Code', "Mã Code sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
 
 
     const [page, setPage] = useState(1);
@@ -103,8 +103,10 @@ export const CustomersRawProductImportationTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.importedRawProductID} >
 
-                                <StyledTableCell >{row.importedRawProductID}</StyledTableCell>
-                                <StyledTableCell >{row.rawProductID}</StyledTableCell>
+                                {/* <StyledTableCell >{row.importedRawProductID}</StyledTableCell> */}
+                                <StyledTableCell >{row.importedRawProductCode}</StyledTableCell>
+                                {/* <StyledTableCell >{row.rawProductID}</StyledTableCell> */}
+                                <StyledTableCell >{row.rawProductCode}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
                                 <StyledTableCell >{row.quantity}</StyledTableCell>
                                 <StyledTableCell >{row.providedBy}</StyledTableCell>

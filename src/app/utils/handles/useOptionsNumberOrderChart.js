@@ -174,10 +174,10 @@ export const useOptionsNumberOrderChart = (title) => {
             // download: `<img src="${exportIcon}" width="20" style={{color:"red"}}>`,
             selection: false,
             zoom: false,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-            reset: true,
+            zoomin: false,
+            zoomout: false,
+            pan: false,
+            reset: false,
             customIcons: []
         },
         export: {
@@ -217,7 +217,7 @@ export const useOptionsNumberOrderChart = (title) => {
                 "exportToPNG": "Xuất ra PNG",
                 "menu": "Tuỳ chọn xuất ra tệp",
                 "selection": "Chọn",
-                "selectionZoom": "Chọn thu phóng",
+                "selectionZoom": "Chọn",
                 "zoomIn": "Phóng to",
                 "zoomOut": "Thu nhỏ",
                 "pan": "Di chuyển",

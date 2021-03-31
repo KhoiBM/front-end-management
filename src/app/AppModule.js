@@ -82,6 +82,7 @@ const AppModule = () => {
                         pauseOnFocusLoss
                         draggable
                         pauseOnHover
+                        limit={3}
                     />
                     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={vi}>
                         <AppRoutes />

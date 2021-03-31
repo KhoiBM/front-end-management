@@ -24,15 +24,15 @@ export class ManageRawProductServices {
                         records: [
                             {
                                 rawProductID: 1,
-                                rawProductCode: "dsfad",
+                                rawProductCode: "productcode",
                                 rawProductName: "Áo thun trắng",
                                 unitPrice: 100000,
                                 totalQuantity: 10,
                                 size: "M",
                                 color: "#4cbb3d",
                                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-
                                 categoryID: "1",
+                                categoryCode: "categoryCode",
                                 categoryName: "Áo",
                                 createdBy: "KhoiBM",
                                 createdAt: "03-03-2021",

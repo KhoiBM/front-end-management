@@ -15,6 +15,7 @@ import ConfirmCode from "../ConfirmCode/ConfirmCode";
 import { toast } from "react-toastify";
 import { useForm, useWait } from "src/app/utils";
 import { Loader } from "src/app/components";
+import { useLoaderHandle } from "src/app/utils/handles/useLoaderHandle";
 
 const initialFValues = { username: '', email: '', password: '', rePassword: '' }
 
@@ -35,6 +36,9 @@ const SignUp = ({ toggle, isVisible }) => {
 
     const regexPassword = config.useRegex.regexPassword
     const regexEmail = config.useRegex.regexEmail
+
+
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         // document.title = 'Đăng ký';
@@ -81,7 +85,8 @@ const SignUp = ({ toggle, isVisible }) => {
         }
     };
 
-    const signUp = (formData, dispatch) => {
+    const signUp = async (formData, dispatch) => {
+        // showLoader()
         const data = {
             username: formData.username,
             email: formData.email,
@@ -89,7 +94,8 @@ const SignUp = ({ toggle, isVisible }) => {
             role: "customer"
         };
         console.log(data)
-        dispatch(useAuthAction().signUp(data));
+        await dispatch(useAuthAction().signUp(data));
+        // hideLoader()
     }
 
 

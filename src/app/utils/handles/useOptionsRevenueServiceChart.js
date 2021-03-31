@@ -154,7 +154,7 @@ export const useOptionsRevenueServiceChart = (title) => {
             // return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
             return `${useFormat().formatMoney(val)} đ`;
         },
-        // offsetX: 300
+        offsetX: 10
 
     }
 

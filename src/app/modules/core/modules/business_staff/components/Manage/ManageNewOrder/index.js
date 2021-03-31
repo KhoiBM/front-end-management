@@ -39,7 +39,7 @@ export const ManageNewOrder = () => {
     const classes = useStyles();
 
 
-    const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
+    // const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
@@ -47,7 +47,8 @@ export const ManageNewOrder = () => {
 
     return (
         <>
-            {!openViewInformation &&
+            {
+                // !openViewInformation &&
                 <Paper elevation={0} className={classes.mainContainer}>
                     <>
 
@@ -57,12 +58,14 @@ export const ManageNewOrder = () => {
                             </div>
                         </div>
 
-                        <NewOrderTable handleViewInformation={handleViewInformation} keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
+                        <NewOrderTable
+                            // handleViewInformation={handleViewInformation}
+                            keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
                     </>
                 </Paper>
             }
 
-            {openViewInformation && <ViewOrderInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />}
+            {/* {openViewInformation && <ViewOrderInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />} */}
 
         </>
     )

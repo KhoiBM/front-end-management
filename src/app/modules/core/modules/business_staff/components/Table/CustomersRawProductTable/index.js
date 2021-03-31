@@ -57,7 +57,7 @@ export const CustomersRawProductTable = (props) => {
     // const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     // const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
-    const headCells = ['Mã ID', "Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Thể loại", "Thao tác"]
+    const headCells = ["Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Thể loại", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -180,7 +180,7 @@ export const CustomersRawProductTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.rawProductID} >
 
-                                <StyledTableCell>{row.rawProductID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.rawProductID}</StyledTableCell> */}
                                 <StyledTableCell>{row.rawProductCode}</StyledTableCell>
                                 <StyledTableCell >{row.rawProductName}</StyledTableCell>
                                 {/* <StyledTableCell >{row.unitPrice}</StyledTableCell> */}

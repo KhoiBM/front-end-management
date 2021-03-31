@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         // backgroundColor: "red",
         minHeight: "600px",
-        // height: "auto",
+        height: "auto",
         boxShadow: "none",
         padding: "0"
 

@@ -225,10 +225,14 @@ export const AddPrintedProductForm = (props) => {
                         prefix: `${folder}/${orderID}/${printedProductCode}`,
                     }
 
+                    if (uploadFiles.length > 0) {
+                        uploadPhoto(uploadInfo, uploadFiles)
+                    } else {
+                        toast.success("Thành công")
+                    }
 
-                    uploadPhoto(uploadInfo, uploadFiles)
 
-                    toast.success("Thành công")
+                    // toast.success("Thành công")
 
                 } else {
                     toast.error(config.useMessage.resultFailure)

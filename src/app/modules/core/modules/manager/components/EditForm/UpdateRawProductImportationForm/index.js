@@ -97,7 +97,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const initialFValues = {
-    rawProductID: '',
+    // rawProductID: '',
+    rawProductCode: '',
     quantity: 0,
     providedBy: "",
     createdAt: new Date()
@@ -241,7 +242,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
                                 </>
 
-                                <TextField
+                                {/* <TextField
                                     variant='outlined'
                                     label="Mã ID sản phẩm thô"
                                     value={String(formData.rawProductID)}
@@ -249,6 +250,17 @@ export const UpdateRawProductImportationForm = (props) => {
                                     onChange={handleInputChange}
                                     error={helperValid.rawProductID ? true : false}
                                     helperText={helperValid.rawProductID}
+                                    required
+                                /> */}
+
+                                <TextField
+                                    variant='outlined'
+                                    label="Mã Code sản phẩm thô"
+                                    value={String(formData.rawProductCode)}
+                                    name='rawProductCode'
+                                    onChange={handleInputChange}
+                                    error={helperValid.rawProductCode ? true : false}
+                                    helperText={helperValid.rawProductCode}
                                     required
                                 />
 

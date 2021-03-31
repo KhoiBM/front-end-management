@@ -242,7 +242,7 @@ export const NotificationBar = () => {
         <>
             <div>
                 {
-                    role != useRoleName.administrator &&
+                    role != useRoleName.administrator && role != useRoleName.manager &&
                     <>
                         <Tooltip TransitionComponent={Zoom} placement="left" title="Thông báo">
                             <IconButton

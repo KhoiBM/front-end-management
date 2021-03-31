@@ -24,6 +24,7 @@ export class ManageCustomersRawProductServices {
                         records: [
                             {
                                 rawProductID: 1,
+                                rawProductCode: "productcode",
                                 rawProductName: "abc",
                                 unitPrice: 1,
                                 totalQuantity: 10,
@@ -31,6 +32,7 @@ export class ManageCustomersRawProductServices {
                                 color: "xanh",
                                 description: "d",
                                 categoryID: "1",
+                                categoryCode: "categoryCode",
                                 categoryName: "abc",
                                 createdAt: "03-03-2021",
                                 updatedAt: "03-03-2021"

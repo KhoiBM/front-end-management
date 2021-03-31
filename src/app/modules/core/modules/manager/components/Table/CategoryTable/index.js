@@ -47,7 +47,8 @@ const StyledTableRow = withStyles((theme) => ({
 export const CategoryTable = (props) => {
     const classes = useStyles();
 
-    const headCells = ['Mã ID', "Mã Code", "Tên thể loại", "Mô tả", "Trạng thái", "Tên dịch vụ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ['Mã ID', "Mã Code", "Tên thể loại", "Mô tả", "Trạng thái", "Tên dịch vụ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên thể loại", "Mô tả", "Trạng thái", "Tên dịch vụ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -148,7 +149,8 @@ export const CategoryTable = (props) => {
 
                             <StyledTableRow key={row.categoryID}>
 
-                                <StyledTableCell>{row.categoryID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.categoryID}</StyledTableCell> */}
+
                                 <StyledTableCell>{row.categoryCode}</StyledTableCell>
                                 <StyledTableCell >{row.categoryName}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>

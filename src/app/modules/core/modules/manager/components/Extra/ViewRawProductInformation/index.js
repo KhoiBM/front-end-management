@@ -108,20 +108,19 @@ export const ViewRawProductInformation = (props) => {
     const classes = useStyles();
 
     const { recordForViewInformation } = props
-
     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
-
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
 
 
     useEffect(() => {
-        if (recordForViewInformation && recordForViewInformation != null && recordForViewInformation.length > 0) {
+        if (recordForViewInformation && recordForViewInformation != null) {
             const categoryCode = recordForViewInformation.categoryCode
             const rawProductCode = recordForViewInformation.rawProductCode
-            const fileKey = `${folder}/${categoryCode}/${rawProductCode}`
+            const fileKey = `${folder}/${categoryCode}/${rawProductCode}/`
             loadPhotoList(bucketName, fileKey)
+            // console.log("loadPhotoList")
         }
     }, [])
 
@@ -140,7 +139,7 @@ export const ViewRawProductInformation = (props) => {
                     <Grid container spacing={4} className={classes.rootGrid}>
 
                         <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
-                            <GridPhotoList photoList={photoList} />
+                            {photoList && photoList != null && <GridPhotoList photoList={photoList} />}
                         </Grid>
 
 
