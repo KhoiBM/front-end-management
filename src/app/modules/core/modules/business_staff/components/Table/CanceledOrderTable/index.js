@@ -49,7 +49,7 @@ export const CanceledOrderTable = (props) => {
     const classes = useStyles();
 
     // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -100,9 +100,10 @@ export const CanceledOrderTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.orderID}>
 
-                                <StyledTableCell>{row.orderID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
-                                <StyledTableCell >{row.customerID}</StyledTableCell>
+                                {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
+                                <StyledTableCell >{row.customerCode}</StyledTableCell>
                                 {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
 

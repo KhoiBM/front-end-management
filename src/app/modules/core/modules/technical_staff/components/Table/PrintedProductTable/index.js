@@ -57,7 +57,7 @@ export const PrintedProductTable = (props) => {
 
 
     // const headCells = ['Mã ID', "Mã Code", "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã ID', "Mã Code", "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Mã Code đơn hàng", "Mã Code sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -197,10 +197,12 @@ export const PrintedProductTable = (props) => {
 
                             <StyledTableRow key={row.printedProductID} >
 
-                                <StyledTableCell>{row.printedProductID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.printedProductID}</StyledTableCell> */}
                                 <StyledTableCell>{row.printedProductCode}</StyledTableCell>
-                                <StyledTableCell>{row.orderID}</StyledTableCell>
-                                <StyledTableCell>{row.rawProductID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
+                                <StyledTableCell>{row.orderCode}</StyledTableCell>
+                                {/* <StyledTableCell>{row.rawProductID}</StyledTableCell> */}
+                                <StyledTableCell>{row.rawProductCode}</StyledTableCell>
 
                                 <StyledTableCell>{row.printedProductName}</StyledTableCell>
 

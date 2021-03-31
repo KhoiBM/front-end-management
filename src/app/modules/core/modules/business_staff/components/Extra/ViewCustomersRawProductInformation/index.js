@@ -114,10 +114,12 @@ export const ViewCustomersRawProductInformation = (props) => {
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
     useEffect(() => {
-        if (recordForViewInformation && recordForViewInformation != null && recordForViewInformation.length > 0) {
+        if (recordForViewInformation && recordForViewInformation != null) {
             const categoryCode = recordForViewInformation.categoryCode
             const rawProductCode = recordForViewInformation.rawProductCode
-            const fileKey = `${folder}/${categoryCode}/${rawProductCode}`
+            const fileKey = `${folder}/${categoryCode}/${rawProductCode}/`
+            console.log("fileKey:" + fileKey)
+
             loadPhotoList(bucketName, fileKey)
         }
 

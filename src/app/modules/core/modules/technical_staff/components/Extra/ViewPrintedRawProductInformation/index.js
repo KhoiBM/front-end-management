@@ -121,10 +121,14 @@ export const ViewPrintedRawProductInformation = (props) => {
 
 
     useEffect(() => {
-        if (recordForViewInformation && recordForViewInformation != null && recordForViewInformation.length > 0) {
-            const categoryCode = recordForViewInformation.categoryCode
-            const rawProductCode = recordForViewInformation.rawProductCode
-            const fileKey = `${folder}/${categoryCode}/${rawProductCode}`
+        if (recordForViewInformation && recordForViewInformation != null) {
+            const orderCode = recordForViewInformation.orderCode
+            const printedProductCode = recordForViewInformation.printedProductCode
+            const fileKey = `${folder}/${orderCode}/${printedProductCode}/`
+            // const fileKey = `${folder}/${"categoryCode"}/${"printedProductCode"}/`
+
+            // console.log("fileKey:" + fileKey)
+
             loadPhotoList(bucketName, fileKey)
         }
     }, [])
@@ -156,11 +160,13 @@ export const ViewPrintedRawProductInformation = (props) => {
                             <Grid container>
                                 <Grid item xs={12} sm={12} md={12} >
                                     <Box className={classes.categoryContainer}>
-                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã ID đơn hàng: {recordForViewInformation.orderID}</Typography>
+                                        {/* <Typography variant={"subtitle1"} color={"textSecondary"}>Mã ID đơn hàng: {recordForViewInformation.orderID}</Typography> */}
+                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã Code đơn hàng: {recordForViewInformation.orderCode}</Typography>
                                     </Box>
 
                                     <Box className={classes.categoryContainer}>
-                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã ID sản phẩm thô: {recordForViewInformation.rawProductID}</Typography>
+                                        {/* <Typography variant={"subtitle1"} color={"textSecondary"}>Mã ID sản phẩm thô: {recordForViewInformation.rawProductID}</Typography> */}
+                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã Code sản phẩm thô: {recordForViewInformation.rawProductCode}</Typography>
                                     </Box>
 
                                     <Box className={classes.categoryContainer}>
@@ -184,7 +190,8 @@ export const ViewPrintedRawProductInformation = (props) => {
                                     <Box>
                                         <Typography variant={"h5"} color={"textSecondary"}>Ghi chú:</Typography>
                                         <Box className={classes.noteWrapper}>
-                                            <Typography variant={"body1"}>{recordForViewInformation.note}</Typography>                                                </Box>
+                                            <Typography variant={"body1"}>{recordForViewInformation.note}</Typography>
+                                        </Box>
                                     </Box>
                                 </Grid>
 

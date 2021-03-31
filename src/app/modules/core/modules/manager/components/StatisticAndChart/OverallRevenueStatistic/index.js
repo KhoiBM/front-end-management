@@ -169,10 +169,9 @@ const useStyles = makeStyles(theme => ({
         }
     }
 }));
+
 const OverallRevenueStatistic = () => {
     const classes = useStyles();
-
-
 
 
     const [anchorElMenuExport, setAnchorElMenuExport] = useState(null);
@@ -188,16 +187,6 @@ const OverallRevenueStatistic = () => {
     const handleCloseMenuExport = () => {
         setAnchorElMenuExport(null);
     };
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -219,7 +208,7 @@ const OverallRevenueStatistic = () => {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     const overallRevenue = response.info.record
                     // toast.success("Thành công")
-                    // console.log(JSON.stringify(overallRevenue))
+                    console.log(JSON.stringify(overallRevenue))
                     setOverallRevenue(overallRevenue)
                 } else {
                     toast.error(config.useMessage.resultFailure)

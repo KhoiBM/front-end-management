@@ -1,18 +1,18 @@
 /* eslint-disable no-empty-pattern */
 import React, { useState } from 'react'
-import photoDemo from 'src/app/assets/image/demoPhoto.jpeg'
-import photoDemo2 from 'src/app/assets/image/demoPhoto2.jpg'
-import photoDemo3 from 'src/app/assets/image/demoPhoto3.jpg'
+
 import config from 'src/environments/config'
 import { toast } from 'react-toastify'
 import { PhotoServices } from 'src/app/services'
 
 export const useLoadPhotoList = (props) => {
 
+    // const [photoList, setPhotoList] = useState([
+    //     photoDemo,
+    //     photoDemo2,
+    //     photoDemo3
+    // ])
     const [photoList, setPhotoList] = useState([
-        photoDemo,
-        photoDemo2,
-        photoDemo3
     ])
 
     const loadPhotoList = async (bucketName, fileKey) => {
@@ -23,11 +23,19 @@ export const useLoadPhotoList = (props) => {
                 fileKey
             })).data
 
-            // console.log("response: " + response)
+            // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
-                    const photoList = response.info.records
+                    let photoList = response.info.photoList
+                    photoList = photoList.filter(url => {
+                        const fileName = url.split("/")[6]
+                        // console.log("url: " + JSON.stringify(fileName.length > 0))
+                        return fileName.length > 0
+                    })
+
+
                     console.log("photoList: " + photoList)
+
                     setPhotoList(photoList)
                     // toast.success("Thành công")
                 } else {

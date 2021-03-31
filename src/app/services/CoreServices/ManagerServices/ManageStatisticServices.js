@@ -15,111 +15,111 @@ export class ManageStatisticServices {
 
 
     static viewOverallRevenue = () => {
-        // return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewOverallRevenue)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    record: {
-                        overall: 1232323,
-                        inWeek: 1323,
-                        inMonth: 14213,
-                        inYear: 1521221
-                    }
-                }
-            }
-        })
+        return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewOverallRevenue)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             record: {
+        //                 overall: 1232323,
+        //                 inWeek: 1323,
+        //                 inMonth: 14213,
+        //                 inYear: 1521221
+        //             }
+        //         }
+        //     }
+        // })
     }
 
     static viewRevenueOfEachService = () => {
-        // return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewRevenueOfEachService)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    record: {
-                        inWeek:
-                            [
-                                {
-                                    x: 'Ảnh',
-                                    y: 12123123
-                                },
-                                {
-                                    x: 'Đồ lưu niệm',
-                                    y: 13123123
-                                }
-                                ,
-                                {
-                                    x: 'Quần áo',
-                                    y: 19123123
-                                }
-                                ,
-                                {
-                                    x: 'Đồ sứ',
-                                    y: 10123123
-                                }
-                                ,
-                                {
-                                    x: 'Tạo của riêng bạn',
-                                    y: 10123123
-                                },
-                            ],
-                        inMonth:
-                            [
-                                {
-                                    x: 'Ảnh',
-                                    y: 12123123
-                                },
-                                {
-                                    x: 'Đồ lưu niệm',
-                                    y: 13123123
-                                }
-                                ,
-                                {
-                                    x: 'Quần áo',
-                                    y: 19123123
-                                }
-                                ,
-                                {
-                                    x: 'Đồ sứ',
-                                    y: 10123123
-                                }
-                                ,
-                                {
-                                    x: 'Tạo của riêng bạn',
-                                    y: 10123123
-                                }
-                            ],
-                        inYear:
-                            [
-                                {
-                                    x: 'Ảnh',
-                                    y: 12123123
-                                },
-                                {
-                                    x: 'Đồ lưu niệm',
-                                    y: 13123123
-                                }
-                                ,
-                                {
-                                    x: 'Quần áo',
-                                    y: 19123123
-                                }
-                                ,
-                                {
-                                    x: 'Đồ sứ',
-                                    y: 10123123
-                                }
-                                ,
-                                {
-                                    x: 'Tạo của riêng bạn',
-                                    y: 10123123
-                                }
-                            ]
-                    }
-                }
-            }
-        })
+        return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewRevenueOfEachService)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             record: {
+        //                 inWeek:
+        //                     [
+        //                         {
+        //                             x: 'Ảnh',
+        //                             y: 12123123
+        //                         },
+        //                         {
+        //                             x: 'Đồ lưu niệm',
+        //                             y: 13123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Quần áo',
+        //                             y: 19123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Đồ sứ',
+        //                             y: 10123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Tạo của riêng bạn',
+        //                             y: 10123123
+        //                         },
+        //                     ],
+        //                 inMonth:
+        //                     [
+        //                         {
+        //                             x: 'Ảnh',
+        //                             y: 12123123
+        //                         },
+        //                         {
+        //                             x: 'Đồ lưu niệm',
+        //                             y: 13123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Quần áo',
+        //                             y: 19123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Đồ sứ',
+        //                             y: 10123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Tạo của riêng bạn',
+        //                             y: 10123123
+        //                         }
+        //                     ],
+        //                 inYear:
+        //                     [
+        //                         {
+        //                             x: 'Ảnh',
+        //                             y: 12123123
+        //                         },
+        //                         {
+        //                             x: 'Đồ lưu niệm',
+        //                             y: 13123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Quần áo',
+        //                             y: 19123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Đồ sứ',
+        //                             y: 10123123
+        //                         }
+        //                         ,
+        //                         {
+        //                             x: 'Tạo của riêng bạn',
+        //                             y: 10123123
+        //                         }
+        //                     ]
+        //             }
+        //         }
+        //     }
+        // })
 
     }
     static viewNumberOrder = () => {

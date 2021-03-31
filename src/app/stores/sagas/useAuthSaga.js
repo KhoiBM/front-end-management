@@ -65,8 +65,9 @@ export const useAuthSaga = () => {
                     yield put(useAuthAction().signInSuccess(data));
 
                 } else {
-                    toast.error(`${data.errorInfo || "Đăng nhập thất bại"}`);
-                    toast.error(config.useMessage.resultFailure)
+                    // toast.error(`${"Đăng nhập thất bại"} - ${data.errorInfo} `);
+                    toast.error(`${"Đăng nhập thất bại"}`);
+                    // toast.error(config.useMessage.resultFailure)
                 }
 
             } else {

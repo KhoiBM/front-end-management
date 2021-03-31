@@ -86,7 +86,7 @@ export const ChangeStatusOrder = (props) => {
 
     const { changeStatusModal, setChangeStatusModal } = props
 
-    const { isOpen, recordForChangeStatus, statusOrderToChange, handleCloseChangeStatusModal } = changeStatusModal
+    const { isOpen, recordForChangeStatus, statusOrderToChange, handleCloseModal } = changeStatusModal
 
 
     useEffect(() => {
@@ -149,7 +149,7 @@ export const ChangeStatusOrder = (props) => {
 
 
                 <DialogTitle className={classes.dialogTitle}>
-                    <IconClose handleClose={handleCloseChangeStatusModal} />
+                    <IconClose handleClose={handleCloseModal} />
                     <br />
                     <PageHeader>
                         Thay đổi trạng thái đơn hàng

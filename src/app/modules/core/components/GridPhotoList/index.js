@@ -102,7 +102,6 @@ const useStyles = makeStyles(theme => ({
 export const GridPhotoList = (props) => {
     const classes = useStyles();
 
-
     const { photoList } = props
 
     const [photoToShow, setPhotoToShow] = useState()
@@ -110,12 +109,16 @@ export const GridPhotoList = (props) => {
 
     useEffect(() => {
         loadInit()
+    }, [photoList])
 
-    }, [])
+
     const loadInit = () => {
-        // console.log(photoList && photoList[0])
-        setPhotoToShow(photoList && photoList[0])
+        // console.log("GridPhotoList:" + JSON.stringify(photoList))
+        if (photoList && photoList != null) setPhotoToShow(photoList[0])
+
     }
+
+
     return (
         <>
 
@@ -138,7 +141,7 @@ export const GridPhotoList = (props) => {
                     <Grid item xs={12} sm={12} md={12} className={classes.gridItemGridList}>
                         <div className={classes.rootGridList}>
                             <GridList className={classes.gridList} cols={2.5} spacing={0} >
-                                {photoList && photoList.map((url, index) => (
+                                {photoList && photoList != null && photoList.map((url, index) => (
                                     <GridListTile key={index} className={classes.gridListTile}>
                                         <img
                                             className={classes.cardMedia}

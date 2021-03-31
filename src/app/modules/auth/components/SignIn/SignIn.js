@@ -17,6 +17,8 @@ import { useForm } from "src/app/utils/handles/index";
 import { toast } from "react-toastify";
 import jwt_decode from 'jwt-decode';
 import { RouteService } from "src/app/services";
+import { useLoaderHandle } from "src/app/utils/handles/useLoaderHandle";
+import { Loader } from "src/app/components";
 
 const initialFValues = { username: '', password: '' }
 
@@ -37,10 +39,11 @@ const SignIn = ({ toggle, isVisible }) => {
 
     const { response } = useSelector((state) => state.auth)
 
-
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         // document.title = 'Đăng nhập';
+        // hideLoader()
     }, [])
 
 
@@ -77,7 +80,7 @@ const SignIn = ({ toggle, isVisible }) => {
     };
 
     async function signIn(formData, dispatch) {
-
+        // showLoader()
         const data = {
             username: formData.username,
             password: formData.password
@@ -85,12 +88,13 @@ const SignIn = ({ toggle, isVisible }) => {
 
         await dispatch(useAuthAction().signIn(data));
         RouteService.init(history)
+        // hideLoader()
     }
 
 
     return (
         <>
-
+            {/* {<Loader loading={loading} />} */}
             {isVisible && (
                 <div className={styles["signin-page-container"]}>
                     <section className={styles["signin-wrapper"]} >

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import useWait from 'src/app/utils/handles/useWait.js'
+import { useWait } from './useWait'
+
 export const useLoaderHandle = () => {
     const [loading, setLoading] = useState(true)
     const { wait } = useWait()
@@ -12,5 +13,5 @@ export const useLoaderHandle = () => {
         setLoading(true)
     }
 
-    return { loading, setLoading }
+    return { loading, setLoading, showLoader, hideLoader }
 }

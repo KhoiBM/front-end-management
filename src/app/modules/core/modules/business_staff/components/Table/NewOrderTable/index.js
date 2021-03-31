@@ -9,7 +9,7 @@ import { RiInformationLine } from 'react-icons/ri';
 import config from 'src/environments/config';
 import { BusinessStaffProcessOrderServices } from 'src/app/services';
 import { useTable } from 'src/app/utils';
-import { ConfirmDialog, PaginationBar } from 'src/app/modules/core/components';
+import { ConfirmDialog, PaginationBar, ViewOrderInformation } from 'src/app/modules/core/components';
 const useStyles = makeStyles(theme => ({
     paginationContainer: {
         display: "flex",
@@ -58,7 +58,7 @@ export const NewOrderTable = (props) => {
     const { keywords, searchAction, clickSearch } = props
 
     // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -77,6 +77,7 @@ export const NewOrderTable = (props) => {
 
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: "", subTitle: "" })
+    const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
 
 
@@ -188,7 +189,13 @@ export const NewOrderTable = (props) => {
 
     }
 
-
+    const handleRefresh = () => {
+        setRefresh(prev => !prev)
+    }
+    const handleCloseModal = () => {
+        setViewOrderInformationModal({ isOpen: false })
+        handleRefresh()
+    }
 
     const handleStatusOrderChange = (event) => {
         setStatusOrder(event.target.value)
@@ -311,10 +318,10 @@ export const NewOrderTable = (props) => {
                         {records && records.map((row) => (
                             <StyledTableRow key={row.orderID}>
 
-                                <StyledTableCell>{row.orderID}</StyledTableCell>
+                                {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
-                                <StyledTableCell >{row.customerID}</StyledTableCell>
-
+                                {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
+                                <StyledTableCell >{row.customerCode}</StyledTableCell>
                                 {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
                                 {/* <>
@@ -361,7 +368,12 @@ export const NewOrderTable = (props) => {
 
                                         <Button onClick={(event) => {
                                             event.stopPropagation()
-                                            props.handleViewInformation(row)
+                                            // props.handleViewInformation(row)
+                                            setViewOrderInformationModal({
+                                                isOpen: true,
+                                                recordForViewInformation: row,
+                                                handleCloseModal
+                                            })
                                         }
                                         }>
                                             <RiInformationLine />
@@ -416,6 +428,7 @@ export const NewOrderTable = (props) => {
             </div >
 
             <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
+            {<ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
 
             <div className={classes.paginationContainer}>
                 <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />

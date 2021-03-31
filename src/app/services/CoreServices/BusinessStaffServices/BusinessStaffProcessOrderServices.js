@@ -25,10 +25,12 @@ export class BusinessStaffProcessOrderServices {
                             {
                                 orderID: 1,
                                 customerID: 1,
+                                customerName: "KhoiBM",
                                 note: "abc",
                                 statusOrder: "abc",
                                 statusPayment: false,
                                 shipAt: "02-12-2021",
+                                phone: "0313823823",
                                 address: "hcm",
                                 createdAt: "20-02-2021",
                                 updatedAt: "20-02-2021"
@@ -36,10 +38,113 @@ export class BusinessStaffProcessOrderServices {
                             {
                                 orderID: 2,
                                 customerID: 2,
+                                customerName: "KhoiBM",
                                 note: "abc",
                                 statusOrder: "abc",
                                 statusPayment: false,
                                 shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            }, {
+                                orderID: 1,
+                                customerID: 1,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            },
+                            {
+                                orderID: 2,
+                                customerID: 2,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            },
+                            {
+                                orderID: 2,
+                                customerID: 2,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            }, {
+                                orderID: 1,
+                                customerID: 1,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            },
+                            {
+                                orderID: 2,
+                                customerID: 2,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            },
+                            {
+                                orderID: 2,
+                                customerID: 2,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            }, {
+                                orderID: 1,
+                                customerID: 1,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            },
+                            {
+                                orderID: 2,
+                                customerID: 2,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
                                 address: "hcm",
                                 createdAt: "20-02-2021",
                                 updatedAt: "20-02-2021"
@@ -59,10 +164,12 @@ export class BusinessStaffProcessOrderServices {
                             {
                                 orderID: 3,
                                 customerID: 3,
-                                note: "abc2",
-                                statusOrder: "abc2",
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
                                 statusPayment: false,
-                                shipAt: "02-12-2022",
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
                                 address: "hcm2",
                                 createdAt: "20-02-2022",
                                 updatedAt: "20-02-2022"
@@ -77,6 +184,7 @@ export class BusinessStaffProcessOrderServices {
 
     }
     static viewAcceptedOrder = (data) => {
+        console.log("filterListViewAcceptedOrder: " + data.filterBy)
         // return useHttpModule().get(config.useApiPath.api., data)
         if (data.page == 1) {
             return Promise.resolve({
@@ -87,10 +195,12 @@ export class BusinessStaffProcessOrderServices {
                             {
                                 orderID: 1,
                                 customerID: 1,
+                                customerName: "KhoiBM",
                                 note: "abc",
-                                statusOrder: "Đã được duyệt",
+                                statusOrder: "abc",
                                 statusPayment: false,
                                 shipAt: "02-12-2021",
+                                phone: "0313823823",
                                 address: "hcm",
                                 createdAt: "20-02-2021",
                                 updatedAt: "20-02-2021"
@@ -98,10 +208,12 @@ export class BusinessStaffProcessOrderServices {
                             {
                                 orderID: 2,
                                 customerID: 2,
+                                customerName: "KhoiBM",
                                 note: "abc",
-                                statusOrder: "Đã được duyệt",
+                                statusOrder: "abc",
                                 statusPayment: false,
                                 shipAt: "02-12-2021",
+                                phone: "0313823823",
                                 address: "hcm",
                                 createdAt: "20-02-2021",
                                 updatedAt: "20-02-2021"
@@ -198,6 +310,20 @@ export class BusinessStaffProcessOrderServices {
                 }
             })
         }
+    }
+    static getStatusOrderToFilter = () => {
+
+        const useStatusOrder = config.useStatusOrder.BUSINESS_STAFF
+        const statusOrderToFilter = useStatusOrder.FILTER
+
+        return Promise.resolve({
+            data: {
+                result: config.useResultStatus.SUCCESS,
+                info: {
+                    records: statusOrderToFilter
+                }
+            }
+        })
     }
 
     static viewOrderDetail = (data) => {
