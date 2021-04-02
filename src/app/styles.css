@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded&display=swap");
+
+html,
+:root {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+
+  box-sizing: border-box;
+  font-family: "Encode Sans Expanded", Roboto, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif, "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans" !important;
+
+  --bg-primary-color-main: rgba(249, 250, 251, var(--bg-opacity));
+  --bg-secondary-color-main: #f2f2f2;
+  --bg-opacity: 1;
+  --border-color-main: #e5e7eb;
+  --border-secondary-color-main: #dbdde1;
+  --color-black: #000;
+  --color-black-1: rgb(28, 32, 34);
+  --color-white: #fff;
+  --primary-color-main: #48b7e2;
+  --error-color-main: #f44336;
+  /* --secondary-color-main: #e27348; */
+  --secondary-color-main: #478de3;
+  /* --secondary-color-dark: #de5a2e; */
+  --tertiary-color-main: #b6e2f3;
+}
+body {
+  /* background-color: #fff; */
+  color: #000;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* overflow: scroll; */
+  /* width: 100%;
+  height: 100%; */
+  background-color: rgba(249, 250, 251, var(--bg-opacity));
+  /* background-color: blue; */
+  font-family: "Encode Sans Expanded", Roboto, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif, "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans" !important;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0 solid #e5e7eb;
+  font-family: "Encode Sans Expanded", Roboto, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif, "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans" !important;
+}
