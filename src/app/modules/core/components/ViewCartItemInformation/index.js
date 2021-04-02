@@ -83,6 +83,7 @@ export const ViewCartItemInformation = (props) => {
 
     return (
         <>
+            <p>test</p>
             {/* isOpen */}
             <Dialog fullScreen open={isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
 
