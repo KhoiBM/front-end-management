@@ -92,7 +92,7 @@ export const AddDemoProductPhoto = (props) => {
         event.preventDefault();
 
         add()
-
+        //test
     }
 
     const add = async () => {
