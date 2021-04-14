@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
-import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia } from '@material-ui/core';
+import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia, Divider } from '@material-ui/core';
 import { useHttpModuleAWS } from 'src/app/services';
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         height: "14rem",
         display: 'flex',
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center"
     },
     rootGridList: {
@@ -59,12 +59,14 @@ const useStyles = makeStyles(theme => ({
         width: "130%",
         height: "12rem",
         display: 'flex',
-        justifyContent: "space-between !important",
+        // justifyContent: "space-between !important",
+        justifyContent: "flex-start !important",
         alignItems: "center",
         flexWrap: 'nowrap',
         gap: theme.spacing(2),
         // border: "1px solid red",
         // backgroundColor: "blue",
+
     },
     cardMedia: {
         objectFit: "contain",
@@ -83,9 +85,12 @@ const useStyles = makeStyles(theme => ({
         height: 'auto'
     },
     gridListTile: {
+        // width: "100px",
+        // minWidth: "100%",
         display: 'flex',
         justifyContent: "center !important",
         alignItems: "center",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
 
         '& .MuiGridListTile-tile': {
             display: 'flex',
@@ -93,7 +98,7 @@ const useStyles = makeStyles(theme => ({
             alignItems: "center",
             // border: "1px solid ",
             // borderColor: theme.palette.primary.main
-            // border: "1px solid rgba(0, 0, 0, 0.23)",
+
         }
     }
 }))
@@ -121,8 +126,6 @@ export const GridPhotoList = (props) => {
 
     return (
         <>
-
-
             <Paper className={classes.rootContainer} elevation={0}>
 
                 <Grid container className={classes.rootGrid} spacing={5}>
@@ -159,7 +162,6 @@ export const GridPhotoList = (props) => {
                 </Grid>
 
             </Paper >
-
         </>
     )
 }

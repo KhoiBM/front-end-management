@@ -41,26 +41,7 @@ export class PhotoServices {
 
         const { bucketName, fileKey } = data
 
-        // return useHttpModule().post(`${config.useApiPath.api.photoServices.getPhotoListByLink}?bucketName=${bucketName}&fileKey=${fileKey}`)
-
         return useHttpModule().post(`${config.useApiPath.api.photoServices.getPhotoListByLink}`, data)
 
-        // return Promise.resolve({
-        //     data: {
-        //         result: config.useResultStatus.SUCCESS,
-        //         info: {
-        //             records: [
-        //                 photoDemo,
-        //                 photoDemo2,
-        //                 photoDemo3
-        //             ]
-        //         }
-        //     }
-        // })
-
     }
-
-
-
-
 }

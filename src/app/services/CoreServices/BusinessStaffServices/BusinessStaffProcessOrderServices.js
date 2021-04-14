@@ -150,6 +150,7 @@ export class BusinessStaffProcessOrderServices {
         }
 
     }
+
     static viewAcceptedOrder = (data) => {
         console.log("filterListViewAcceptedOrder: " + data.filterBy)
         // return useHttpModule().get(config.useApiPath.api., data)
@@ -176,9 +177,9 @@ export class BusinessStaffProcessOrderServices {
                                 updatedAt: "20-02-2021"
                             },
                             {
-                                orderID: 1,
-                                orderCode: 1,
-                                customerID: 1,
+                                orderID: 2,
+                                orderCode: 2,
+                                customerID: 2,
                                 customerCode: 23334,
                                 customerName: "KhoiBM",
                                 note: "abc",
@@ -232,9 +233,9 @@ export class BusinessStaffProcessOrderServices {
                                 updatedAt: "20-02-2021"
                             },
                             {
-                                orderID: 1,
-                                orderCode: 1,
-                                customerID: 1,
+                                orderID: 3,
+                                orderCode: 3,
+                                customerID: 3,
                                 customerCode: 23334,
                                 customerName: "KhoiBM",
                                 statusOrder: "Đã được duyệt",
@@ -254,6 +255,7 @@ export class BusinessStaffProcessOrderServices {
         }
 
     }
+
     static viewCanceledOrder = (data) => {
         // return useHttpModule().get(config.useApiPath.api., data)
         if (data.page == 1) {
@@ -263,21 +265,21 @@ export class BusinessStaffProcessOrderServices {
                     info: {
                         records: [
 
-                            // {
-                            //     orderID: 1,
-                            //     orderCode: 1,
-                            //     customerID: 1,
-                            //     customerCode: 23334,
-                            //     customerName: "KhoiBM",
-                            //     note: "abc",
-                            //     statusOrder: "abc",
-                            //     statusPayment: false,
-                            //     shipAt: "02-12-2021",
-                            //     phone: "0313823823",
-                            //     address: "hcm",
-                            //     createdAt: "20-02-2021",
-                            //     updatedAt: "20-02-2021"
-                            // },
+                            {
+                                orderID: 1,
+                                orderCode: 1,
+                                customerID: 1,
+                                customerCode: 23334,
+                                customerName: "KhoiBM",
+                                note: "abc",
+                                statusOrder: "abc",
+                                statusPayment: false,
+                                shipAt: "02-12-2021",
+                                phone: "0313823823",
+                                address: "hcm",
+                                createdAt: "20-02-2021",
+                                updatedAt: "20-02-2021"
+                            },
                             // {
                             //     orderID: 1,
                             //     orderCode: 1,
@@ -522,9 +524,9 @@ export class BusinessStaffProcessOrderServices {
                             }
                             ,
                             {
-                                orderID: 1,
-                                orderCode: 1,
-                                customerID: 1,
+                                orderID: 2,
+                                orderCode: 2,
+                                customerID: 2,
                                 customerCode: 23334,
                                 customerName: "KhoiBM",
                                 note: "abc",
@@ -537,9 +539,9 @@ export class BusinessStaffProcessOrderServices {
                                 updatedAt: "20-02-2021"
                             },
                             {
-                                orderID: 1,
-                                orderCode: 1,
-                                customerID: 1,
+                                orderID: 2,
+                                orderCode: 2,
+                                customerID: 2,
                                 customerCode: 23334,
                                 customerName: "KhoiBM",
                                 statusOrder: "Đã được duyệt",

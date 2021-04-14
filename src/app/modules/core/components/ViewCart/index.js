@@ -107,8 +107,7 @@ export const ViewCart = (props) => {
 
     const classes = useStyles();
 
-    const { recordForCart, setTotalPrices, handleRefreshViewOrderInformation } = props
-
+    const { recordForCart, setTotalOrderPrices, handleRefreshViewOrderInformation } = props
 
     const [orderDetailList, setOrderDetailList] = useState([])
 
@@ -131,13 +130,13 @@ export const ViewCart = (props) => {
 
                     const analyzeObject = records.reduce((acc, curr) => {
                         const totalCartItemPrice = ((curr.unitPrice + curr.servicePrice) * curr.quantity)
-                        const totalPrice = acc.totalPrice + totalCartItemPrice
-                        return { totalPrice }
-                    }, { totalPrice: 0 })
+                        const totalOrderPrices = acc.totalOrderPrices + totalCartItemPrice
+                        return { totalOrderPrices }
+                    }, { totalOrderPrices: 0 })
 
-                    setTotalPrices(`${useFormat().formatMoney(analyzeObject.totalPrice)} đ`)
-                    // handleRefreshViewOrderInformation()
-                    // console.log("totalprice: " + `${useFormat().formatMoney(analyzeObject.totalPrice)} đ`)
+                    setTotalOrderPrices(`${useFormat().formatMoney(analyzeObject.totalOrderPrices)} đ`)
+                    handleRefreshViewOrderInformation()
+                    // console.log("totalOrderPrices: " + `${useFormat().formatMoney(analyzeObject.totalOrderPrices)} đ`)
 
                     setOrderDetailList(records && records != null ? records : [])
                 } else {
@@ -182,14 +181,17 @@ export const ViewCart = (props) => {
                                 <Grid item xs={1} sm={1} md={1} >
                                     <Typography variant={"body1"}>Màu</Typography>
                                 </Grid>
-                                <Grid item xs={1} sm={1} md={1}>
+                                <Grid item xs={1} sm={1} md={1} style={{ minWidth: "6rem" }}>
                                     <Typography variant={"body1"}>Giá đơn vị</Typography>
                                 </Grid>
-                                <Grid item xs={1} sm={1} md={1} >
+                                <Grid item xs={1} sm={1} md={1} style={{ minWidth: "6rem" }}>
                                     <Typography variant={"body1"}>Giá dịch vụ</Typography>
                                 </Grid>
                                 <Grid item xs={1} sm={1} md={1} >
                                     <Typography variant={"body1"}>Số lượng</Typography>
+                                </Grid>
+                                <Grid item xs={1} sm={1} md={1} style={{ minWidth: "8rem" }}>
+                                    <Typography variant={"body1"}>Tổng giá</Typography>
                                 </Grid>
                                 <Grid item xs={1} sm={1} md={1} >
                                     <Typography variant={"body1"}>Thao tác</Typography>

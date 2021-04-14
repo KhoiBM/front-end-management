@@ -7,7 +7,7 @@ import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit, useTog
 import { AcceptedOrderTable } from '../../Table';
 import config from 'src/environments/config';
 import { SendDemoProduct } from '../../AddForm';
-import { BusinessStaffProcessOrderServices } from 'src/app/services';
+import { TechnicalStaffProcessOrderServices } from 'src/app/services';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -54,7 +54,7 @@ export const ManageAcceptedOrder = () => {
 
 
 
-    const fetchApi = BusinessStaffProcessOrderServices.getStatusOrderToFilter()
+    const fetchApi = TechnicalStaffProcessOrderServices.getStatusOrderToFilter()
 
     const mapToFilter = (records) => {
         // console.log("mapToFilter")

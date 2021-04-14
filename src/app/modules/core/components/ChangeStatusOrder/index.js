@@ -56,6 +56,8 @@ const useStyles = makeStyles(theme => ({
 
     },
     dialogContent: {
+        background: "#fff",
+        position: "relative",
 
     },
     dialogAction: {
@@ -87,7 +89,6 @@ export const ChangeStatusOrder = (props) => {
 
     useEffect(() => {
 
-
         // console.log("formData:" + JSON.stringify(formData))
 
         if (recordForChangeStatus && recordForChangeStatus != null) {
@@ -104,7 +105,6 @@ export const ChangeStatusOrder = (props) => {
 
 
     // }
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -168,7 +168,7 @@ export const ChangeStatusOrder = (props) => {
                                         value={formData.statusOrder}
                                         onChange={handleInputChange}
                                         name="statusOrder"
-                                        labelWidth={150}
+                                        labelWidth={160}
                                     // error={helperValid.statusOrder ? true : false}
                                     >
                                         {statusOrderToChange && statusOrderToChange != null && statusOrderToChange.length > 0 &&

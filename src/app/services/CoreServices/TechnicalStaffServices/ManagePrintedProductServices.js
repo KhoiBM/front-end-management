@@ -77,7 +77,10 @@ export class ManagePrintedProductServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        orderCode: "orderCode",
+                        printedProductCode: "printedProductCode"
+                    }
                 }
             }
         })
@@ -88,7 +91,10 @@ export class ManagePrintedProductServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        orderCode: "orderCode",
+                        printedProductCode: "printedProductCode"
+                    }
                 }
             }
         })

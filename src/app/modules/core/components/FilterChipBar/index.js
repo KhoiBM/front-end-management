@@ -66,7 +66,7 @@ export const FilterChipBar = (props) => {
     const handleFilterChange = (event) => {
         setClickFilter((prev) => !prev)
         setAction("filter")
-        console.log("event.target.value : " + JSON.stringify(event.target.value))
+        // console.log("event.target.value : " + JSON.stringify(event.target.value))
 
         // setFilterSelectList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? [...recordsSelect.map((val) => (val.ID))] : []);
         // setFilterSelectList(event.target.value);
@@ -89,7 +89,7 @@ export const FilterChipBar = (props) => {
 
 
     useEffect(() => {
-        console.log("filterSelectList: " + JSON.stringify(filterSelectList))
+        // console.log("filterSelectList: " + JSON.stringify(filterSelectList))
     }, [filterSelectList])
 
     return (
@@ -109,13 +109,11 @@ export const FilterChipBar = (props) => {
                     displayEmpty={true}
                     // displayEmpty={false}
                     renderValue={(selected) => {
-                        console.log("selected: " + JSON.stringify(selected))
-                        console.log("selectedlength: " + selected.length)
+                        // console.log("selected: " + JSON.stringify(selected))
+                        // console.log("selectedlength: " + selected.length)
                         return (
                             <div className={classes.chips}>
                                 {
-                                    // selected.length == recordsSelect.length
-                                    // || 
                                     selected.indexOf(0) != -1
                                         // || selected[0] == 0
                                         || selected.length == 0

@@ -8,15 +8,12 @@ import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { RiInformationLine, RiExchangeBoxLine, RiMailSendLine } from 'react-icons/ri';
 import config from 'src/environments/config';
-import { BusinessStaffProcessOrderServices } from 'src/app/services';
+import { BusinessStaffProcessOrderServices, TechnicalStaffProcessOrderServices } from 'src/app/services';
 import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
 import { ConfirmDialog, PaginationBar, ChangeStatusOrder, ViewOrderInformation } from 'src/app/modules/core/components';
 import { NotFound } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
-
-
-
 }));
 
 
@@ -24,14 +21,13 @@ const useStyles = makeStyles(theme => ({
 export const AcceptedOrderTable = (props) => {
 
     const classes = useStyles();
+
     const { classesCustom } = useCustomStyles()
 
     const { keywords, searchAction, clickSearch } = props
 
     const { filterList, action, clickFilter } = props
 
-    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
@@ -46,9 +42,7 @@ export const AcceptedOrderTable = (props) => {
 
     const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
 
-    const [statusOrder, setStatusOrder] = useState("Đang chờ")
-
-    const useStatusOrder = config.useStatusOrder.BUSINESS_STAFF
+    const useStatusOrder = config.useStatusOrder.TECHNICAL_STAFF
     const statusOrderToChange = useStatusOrder.CHANGE
 
     const [changeStatusModal, setChangeStatusModal] = useState({ isOpen: false })
@@ -97,8 +91,8 @@ export const AcceptedOrderTable = (props) => {
 
 
     useEffect(() => {
-        console.log("clickFilter")
         if (!first) {
+            console.log("clickFilter")
             setPage(1)
 
             if (action == "filter") {
@@ -113,12 +107,12 @@ export const AcceptedOrderTable = (props) => {
 
     const loadInitByFilter = async () => {
 
-        console.log("action: " + action)
-        console.log("filterList:" + JSON.stringify(filterList))
-        console.log("Page: " + page)
+        // console.log("action: " + action)
+        // console.log("filterList:" + JSON.stringify(filterList))
+        // console.log("Page: " + page)
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
+            const response = await (await TechnicalStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -167,7 +161,7 @@ export const AcceptedOrderTable = (props) => {
             setSwitchCheck({})
         }
 
-        console.log("totalPageResponse: " + totalPageResponse)
+        // console.log("totalPageResponse: " + totalPageResponse)
 
         setTotalPage(totalPageResponse && totalPageResponse != null ? totalPageResponse : 0)
 
@@ -181,7 +175,7 @@ export const AcceptedOrderTable = (props) => {
 
         try {
 
-            const response = await (await BusinessStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            const response = await (await TechnicalStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
 
@@ -214,65 +208,12 @@ export const AcceptedOrderTable = (props) => {
 
 
 
+
     const handleCloseModal = () => {
         setChangeStatusModal({ isOpen: false })
         setViewOrderInformationModal({ isOpen: false })
         handleRefresh()
     }
-
-    // const handleStatusOrderChange = (event) => {
-    //     setStatusOrder(event.target.value)
-    // }
-
-
-    const handleChangeSwitch = (event) => {
-        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
-    };
-
-    // console.log("switchCheck: " + JSON.stringify(switchCheck));
-    const handleStatusPaymentChange = (orderID) => async (event) => {
-        await checkPayMent(orderID, event)
-    }
-
-    const checkPayMent = async (orderID, event) => {
-        const data = {
-            orderID: orderID,
-            isActive: !switchCheck[`switchID:${orderID}`]
-        }
-        // toast.dark(`test switchID:${orderID}: ${!switchCheck[`switchID:${orderID}`]}`)
-        // if (switchCheck[`switchID:${orderID}`]) {
-        //     console.log('deactive')
-        // } else {
-        //     console.log('active')
-        // }
-        try {
-            const response = await (await BusinessStaffProcessOrderServices.checkPayment(data)).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    toast.success(`${!switchCheck[`switchID:${orderID}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
-                    handleRefresh()
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                    setSwitchCheck({
-                        ...switchCheck,
-                        [event.target.name]: event.target.checked
-                    })
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-            setSwitchCheck({
-                ...switchCheck,
-                [event.target.name]: event.target.checked
-            })
-        }
-    }
-
 
 
     return (
@@ -297,9 +238,8 @@ export const AcceptedOrderTable = (props) => {
                                 <Switch
                                     color="primary"
                                     checked={switchCheck[`switchID:${row.orderID}`]}
-                                    onChange={handleChangeSwitch}
                                     name={`switchID:${row.orderID}`}
-                                    onClick={handleStatusPaymentChange(row.orderID)}
+
                                 />
                             </StyledTableCell>
 
@@ -331,26 +271,6 @@ export const AcceptedOrderTable = (props) => {
 
                                 </ Tooltip>
 
-
-                                {/* < Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái đơn hàng" >
-
-                                        <Button onClick={(event) => {
-                                            event.stopPropagation()
-
-                                            const data = {
-                                                orderID: row.orderID,
-                                                statusOrder: row.statusOrder
-                                            }
-
-                                            props.handleChangeStatus(data)
-                                        }
-                                        }>
-                                            <RiExchangeBoxLine />
-                                        </Button>
-
-                                    </ Tooltip> */}
-
-
                                 < Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái đơn hàng" >
 
                                     <Button onClick={(event) => {
@@ -375,19 +295,6 @@ export const AcceptedOrderTable = (props) => {
 
                                 </ Tooltip>
 
-
-
-                                < Tooltip TransitionComponent={Zoom} placement="top" title="Gửi sản phẩm mẫu" >
-
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        props.handleOpenSendDemoProduct()
-                                    }
-                                    }>
-                                        <RiMailSendLine />
-                                    </Button>
-
-                                </ Tooltip>
 
                             </StyledTableCell>
 

@@ -11,6 +11,7 @@ import { ManagePrintedProductServices, TechnicalStaffProcessOrderServices, Manag
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { ManagePrintedProduct } from '../../Manage'
 import { IconClose } from 'src/app/components'
+
 const useStyles = makeStyles(theme => ({
     // rootForm: {
     //     marginTop: theme.spacing(3),
@@ -211,23 +212,28 @@ export const AddPrintedProductForm = (props) => {
             console.log("name: " + JSON.stringify(file.name))
             console.log("type: " + JSON.stringify(file.type))
         })
+
         // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
+
         console.log(uploadFiles)
+
         try {
             const response = await (await ManagePrintedProductServices.add(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
+                    const record = response.info.record
+
                     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["PRINTEDPRODUCT"]
 
-                    const orderID = "orderID"
-                    const printedProductCode = "printedProductCode"
+                    const orderCode = record.orderCode
+                    const printedProductCode = record.printedProductCode
 
                     const uploadInfo = {
                         bucketName,
-                        prefix: `${folder}/${orderID}/${printedProductCode}`,
+                        prefix: `${folder}/${orderCode}/${printedProductCode}`,
                     }
 
                     if (uploadFiles.length > 0) {
@@ -264,7 +270,7 @@ export const AddPrintedProductForm = (props) => {
                     </PageHeader>
 
                     <form noValidate onSubmit={handleSubmit} className={classesCustomStylesAddEditForm.rootForm}>
-                        <Grid container spacing={4}>
+                        <Grid container spacing={4} className={classesCustomStylesAddEditForm.rootGridContainer}>
                             <Grid item xs={6} sm={6} md={6} className={classesCustomStylesAddEditForm.gridItem1}>
 
                                 <FormControl variant="outlined" >
@@ -279,7 +285,7 @@ export const AddPrintedProductForm = (props) => {
                                         }
                                         onChange={handleInputChange}
                                         name="orderID"
-                                        labelWidth={70}
+                                        labelWidth={80}
                                         required
                                     // error={helperValid.orderID}
                                     >
@@ -319,7 +325,7 @@ export const AddPrintedProductForm = (props) => {
                                         onChange={handleInputChange}
                                         name="rawProductID"
                                         className={classesCustomStylesAddEditForm.formSelectContainer}
-                                        labelWidth={105}
+                                        labelWidth={115}
                                     // error={helperValid.rawProductID}
                                     >
                                         {

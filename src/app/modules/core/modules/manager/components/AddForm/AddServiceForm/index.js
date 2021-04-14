@@ -154,7 +154,10 @@ export const AddServiceForm = (props) => {
                     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["SERVICE"]
 
-                    const serviceCode = "serviceCode"
+                    const record = response.info.record
+
+                    const serviceCode = record.serviceCode
+
                     const uploadInfo = {
                         bucketName,
                         prefix: `${folder}/${serviceCode}`,

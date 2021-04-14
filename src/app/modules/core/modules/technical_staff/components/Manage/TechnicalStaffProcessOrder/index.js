@@ -6,6 +6,7 @@ import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable } from '../../Table/index'
 import { useTab } from 'src/app/utils';
+import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         // background: '#B6E2F3',
@@ -51,16 +52,16 @@ export const TechnicalStaffProcessOrder = () => {
                 <div>
 
                     <TabBar tabArr={["Đơn hàng đã chấp nhận", "Cá nhân hoá"]} />
+
                     <Divider />
+
                     <TabPanel value={value} index={0}>
-                        <AcceptedOrderTable />
+                        <ManageAcceptedOrder />
                     </TabPanel>
-                    {/* <TabPanel value={value} index={1}>
+
+                    <TabPanel value={value} index={1}>
 
                     </TabPanel>
-                    <TabPanel value={value} index={2}>
-
-                    </TabPanel> */}
 
 
 

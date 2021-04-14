@@ -151,22 +151,46 @@ const useConfigAWS = {
 
 }
 
+// const useStatusOrder = {
+//     "BUSINESS_STAFF": {
+//         "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+//             "Chấp nhận mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+//         "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang in mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
+//             "Hoàn thành đơn hàng"]
+//     },
+//     "TECHNICAL_STAFF": {
+//         "FILTER": ["Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
+//             "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+//         "CHANGE": ["Hoàn thành mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ"]
+//     },
+//     "CUSTOMER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang in mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+//         "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+
+// }
+
 const useStatusOrder = {
     "BUSINESS_STAFF": {
-        "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+        "FILTER": ["Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
             "Chấp nhận mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
-        "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang in mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
+        "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang làm mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
             "Hoàn thành đơn hàng"]
     },
     "TECHNICAL_STAFF": {
-        "FILTER": ["Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
-            "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+        "FILTER": ["Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
+            "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ"],
         "CHANGE": ["Hoàn thành mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ"]
     },
-    "CUSTOMER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang in mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
-        "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+    "CUSTOMER": {
+        "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+            "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+        "CHANGE": ["Hủy đơn", "Từ chối mẫu", "Chấp nhận mẫu"]
+    }
+
+
 
 }
+
+
 // const useCustomeStyles = {
 //     customStylesAddEditForm: (theme) => ({
 

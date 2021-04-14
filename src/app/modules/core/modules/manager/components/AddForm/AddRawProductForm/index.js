@@ -118,8 +118,10 @@ export const AddRawProductForm = (props) => {
                     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
 
-                    const categoryCode = "categoryCode"
-                    const rawProductCode = "productcode"
+                    const record = response.info.record
+
+                    const categoryCode = record.categoryCode
+                    const rawProductCode = record.rawProductCode
 
                     const uploadInfo = {
                         bucketName,

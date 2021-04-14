@@ -188,7 +188,9 @@ export const AddCategoryForm = (props) => {
                     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["CATEGORY"]
 
-                    const categoryCode = "categoryCode"
+                    const record = response.info.record
+
+                    const categoryCode = record.categoryCode
 
                     const uploadInfo = {
                         bucketName,

@@ -228,16 +228,19 @@ export const EditPrintedProductForm = (props) => {
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
+                    const record = response.info.record
+
                     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["PRINTEDPRODUCT"]
 
-                    const orderID = "orderID"
-                    const printedProductCode = "printedProductCode"
+                    const orderCode = record.orderCode
+                    const printedProductCode = record.printedProductCode
 
                     const uploadInfo = {
                         bucketName,
-                        prefix: `${folder}/${orderID}/${printedProductCode}`,
+                        prefix: `${folder}/${orderCode}/${printedProductCode}`,
                     }
+
 
                     if (uploadFiles.length > 0) {
                         uploadPhoto(uploadInfo, uploadFiles)
@@ -288,7 +291,7 @@ export const EditPrintedProductForm = (props) => {
                                         }
                                         onChange={handleInputChange}
                                         name="orderID"
-                                        labelWidth={70}
+                                        labelWidth={80}
                                         required
                                     >
                                         {
@@ -326,7 +329,7 @@ export const EditPrintedProductForm = (props) => {
                                         onChange={handleInputChange}
                                         name="rawProductID"
                                         className={classesCustomStylesAddEditForm.formSelectContainer}
-                                        labelWidth={105}
+                                        labelWidth={115}
                                     // error={helperValid.rawProductID}
                                     >
                                         {

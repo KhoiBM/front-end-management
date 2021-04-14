@@ -164,7 +164,9 @@ export class ManageServiceServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        serviceCode: "serviceCode"
+                    }
                 }
             }
         })
@@ -178,7 +180,9 @@ export class ManageServiceServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        serviceCode: "serviceCode"
+                    }
                 }
             }
         })

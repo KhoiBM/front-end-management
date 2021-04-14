@@ -352,7 +352,10 @@ export class ManageRawProductServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode",
+                        rawProductCode: "rawProductCode"
+                    }
                 }
             }
         })
@@ -364,7 +367,10 @@ export class ManageRawProductServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode",
+                        rawProductCode: "rawProductCode"
+                    }
                 }
             }
         })

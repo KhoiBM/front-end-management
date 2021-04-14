@@ -272,6 +272,43 @@ export const AcceptedOrderTable = (props) => {
         }
     }
 
+    const sendDemoProduct = async (orderCode) => {
+
+
+        try {
+
+            const response = await (await BusinessStaffProcessOrderServices.sendDemoProduct({ orderCode })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    toast.success("Thành công")
+
+                    handleRefresh()
+
+                    console.log("sendDemoProduct")
+
+                    console.log("orderCode: " + orderCode)
+
+                } else {
+
+                    toast.error(config.useMessage.resultFailure)
+
+                }
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
+        } catch (err) {
+
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+
+        }
+
+    }
 
 
     return (
@@ -380,7 +417,8 @@ export const AcceptedOrderTable = (props) => {
 
                                     <Button onClick={(event) => {
                                         event.stopPropagation()
-                                        props.handleOpenSendDemoProduct()
+                                        // props.handleOpenSendDemoProduct()
+                                        sendDemoProduct(row.orderCode)
                                     }
                                     }>
                                         <RiMailSendLine />

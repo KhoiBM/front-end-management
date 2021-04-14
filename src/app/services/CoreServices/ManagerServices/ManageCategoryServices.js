@@ -94,7 +94,9 @@ export class ManageCategoryServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode"
+                    }
                 }
             }
         })
@@ -105,7 +107,9 @@ export class ManageCategoryServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode"
+                    }
                 }
             }
         })

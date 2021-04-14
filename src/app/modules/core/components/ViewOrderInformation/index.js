@@ -11,30 +11,6 @@ import { ViewCart } from '../ViewCart';
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
 
 const useStyles = makeStyles(theme => ({
-    // pageViewInfomationContainer: {
-    //     width: "100%",
-    //     minHeight: "1100px",
-    //     height: "auto",  //  làm mất goc paper ở dưới 
-    //     // background: "red",
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     position: "relative",
-    //     // overflow: "scroll",
-    //     background: 'var(bg-secondary-color-main)',
-
-
-    // },
-    // pageViewInfomationWrapper: {
-    //     width: "100%",
-    //     padding: theme.spacing(3),
-    //     height: "auto",
-    //     minHeight: "1100px",
-    //     // background: "blue",
-    //     background: "#fff",
-    //     paddingBottom: theme.spacing(10)
-
-    // }, 
     rootGrid: {
         marginTop: theme.spacing(3),
         width: "100%",
@@ -60,7 +36,7 @@ const useStyles = makeStyles(theme => ({
         // borderLeft: "1px solid rgba(0, 0, 0, 0.23)",
 
         '& .MuiFormControl-root': {
-            width: "90%",
+            width: "95%",
             fontWeight: '900 !important',
             color: "#000 !important",
             borderRadius: "4px",
@@ -76,7 +52,7 @@ const useStyles = makeStyles(theme => ({
                 height: "30px !important",
                 background: "#fff",
                 "& .MuiInputBase-inputMultiline": {
-                    background: "red",
+                    // background: "red",
                 }
             }
         }
@@ -113,7 +89,7 @@ const useStyles = makeStyles(theme => ({
     dialogAction: {
 
     },
-    gridItem2ContentContainer: {
+    gridItemContentContainer: {
         // paddingLeft: theme.spacing(5)
         display: "flex",
         flexDirection: "column",
@@ -132,7 +108,7 @@ const useStyles = makeStyles(theme => ({
 
     },
     totalPriceContainer: {
-        width: "90%",
+        width: "95%",
         height: "auto",
         minHeight: "80px",
         // background: "red",
@@ -145,6 +121,7 @@ const useStyles = makeStyles(theme => ({
         "& .MuiTypography-root": {
             fontWeight: '200 !important',
             color: "#000",
+
         }
     },
     totalPriceWrapper: {
@@ -154,7 +131,8 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
-    }, PageHeaderWrapper: {
+    },
+    PageHeaderWrapper: {
         marginLeft: theme.spacing(2.2)
 
     }
@@ -172,15 +150,15 @@ export const ViewOrderInformation = (props) => {
     const classes = useStyles();
 
     const { viewOrderInformationModal, setViewOrderInformationModal } = props
+
     const { isOpen, recordForViewInformation, handleCloseModal } = viewOrderInformationModal
     // console.log("viewOrderInformationModal: " + JSON.stringify(viewOrderInformationModal))
-
 
     const [recordForCart, setRecordForCart] = useState({})
 
     const [recordOrder, setRecordOrder] = useState({})
 
-    const [totalPrices, setTotalPrices] = useState(null)
+    const [totalOrderPrices, setTotalOrderPrices] = useState(null)
 
     const [refresh, setRefresh] = useState(false)
 
@@ -197,7 +175,7 @@ export const ViewOrderInformation = (props) => {
 
     useEffect(() => {
 
-    }, [totalPrices, refresh])
+    }, [totalOrderPrices, refresh])
 
 
     const handleRefreshViewOrderInformation = () => {
@@ -223,31 +201,31 @@ export const ViewOrderInformation = (props) => {
 
                     <Grid container spacing={1} className={classes.rootGrid}>
 
-                        <Grid item xs={8} sm={8} md={8} className={classes.gridItemViewCart}>
-                            <ViewCart recordForCart={recordForCart} setTotalPrices={setTotalPrices} handleRefreshViewOrderInformation={handleRefreshViewOrderInformation} />
+                        <Grid item xs={9} sm={9} md={9} className={classes.gridItemViewCart}>
+                            <ViewCart recordForCart={recordForCart} setTotalOrderPrices={setTotalOrderPrices} handleRefreshViewOrderInformation={handleRefreshViewOrderInformation} />
                         </Grid>
 
-                        <Grid item xs={4} sm={4} md={4} className={classes.gridItemContentOrder}>
+                        <Grid item xs={3} sm={3} md={3} className={classes.gridItemContentOrder}>
                             <Grid container>
                                 <Grid item xs={12} sm={12} md={12} className={classes.gridItemTotalPrice}>
                                     <Paper elevation={1} className={classes.totalPriceContainer}>
                                         <div className={classes.totalPriceWrapper}>
 
                                             <Box>
-                                                <Typography variant={"h6"}>Tổng tiền:</Typography>
+                                                <Typography variant={"h6"}>Tổng giá trị đơn hàng:</Typography>
                                             </Box>
 
                                             <Box>
-                                                {totalPrices && totalPrices != null &&
-                                                    <Typography variant={"body1"}>{totalPrices}</Typography>
+                                                {totalOrderPrices && totalOrderPrices != null &&
+                                                    <Typography variant={"body1"}>{totalOrderPrices}</Typography>
                                                 }
                                             </Box>
 
                                         </div>
                                     </Paper>
                                 </Grid>
-                                <Grid item xs={12} sm={12} md={12} className={classes.gridItem}>
-                                    <Box className={classes.gridItem2ContentContainer} >
+                                <Grid item xs={12} sm={12} md={12} >
+                                    <Box className={classes.gridItemContentContainer} >
 
                                         <TextField
                                             variant='outlined'
@@ -358,11 +336,10 @@ disabled
 
 
                                     </Box>
+
                                 </Grid>
+
                             </Grid>
-
-
-
                         </Grid>
 
                     </Grid>

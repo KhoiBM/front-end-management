@@ -200,8 +200,10 @@ export const EditCustomersRawProductForm = (props) => {
                     const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["CUSTOMER'SRAWPRODUCT"]
 
-                    const categoryCode = "categoryCode"
-                    const rawProductCode = "productcode"
+                    const record = response.info.record
+
+                    const categoryCode = record.categoryCode
+                    const rawProductCode = record.rawProductCode
 
                     const uploadInfo = {
                         bucketName,

@@ -32,17 +32,22 @@ const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
         width: "100%",
+        height: "auto",
         // border: "1px solid red",
         '& .MuiFormControl-root': {
             width: '200%',
             height: "auto",
             marginBottom: theme.spacing(3),
             // border: "1px solid red",
-        }
+        },
+
+    },
+    rootGridContainer: {
+        marginBottom: theme.spacing(2)
     },
 
-
     gridItem1: {
+        width: "100%",
         // background: "yellow",
         position: "relative",
         '&  .MuiFormControl-root': {
@@ -52,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 
 
     gridItem2: {
+        width: "100%",
         // background: "orange",
         display: "flex",
         justifyContent: "center",
@@ -59,6 +65,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(2),
         height: "auto",
         minHeight: "500px",
+
     },
     colorPickerInputContainer: {
         background: "orange",
