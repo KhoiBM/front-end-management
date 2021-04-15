@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { ManageRawProductServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useFormat } from 'src/app/utils';
 import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { RiTruckLine, RiInformationLine } from 'react-icons/ri';
 import { NotFound } from 'src/app/components';
@@ -219,7 +219,7 @@ export const RawProductTable = (props) => {
                             {/* <StyledTableCell>{row.rawProductID}</StyledTableCell> */}
                             <StyledTableCell>{row.rawProductCode}</StyledTableCell>
                             <StyledTableCell >{row.rawProductName}</StyledTableCell>
-                            <StyledTableCell >{row.unitPrice}</StyledTableCell>
+                            <StyledTableCell >{`${useFormat().formatMoney(row.unitPrice)} đ`}</StyledTableCell>
                             <StyledTableCell >{row.totalQuantity}</StyledTableCell>
                             {/* <StyledTableCell >{row.size}</StyledTableCell> */}
                             {/* <StyledTableCell >{row.color}</StyledTableCell> */}

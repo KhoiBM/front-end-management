@@ -5,8 +5,9 @@ import { makeStyles, Paper, Button, Divider } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable } from '../../Table/index'
-import { useTab } from 'src/app/utils';
+import { useTab, useRefresh } from 'src/app/utils';
 import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
+import { Personalize } from '../../Extra/Personalize';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         // background: '#B6E2F3',
@@ -44,6 +45,16 @@ export const TechnicalStaffProcessOrder = () => {
 
     const { TabPanel, TabBar, value, handleChange } = useTab()
 
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
+
+    const [personalizeModal, setPersonalizeModal] = useState({ isOpen: true })
+
+    const handleCloseModal = () => {
+        setPersonalizeModal({ isOpen: false })
+        handleRefresh()
+    }
+
+
     return (
         <>
             <Paper elevation={2} className={classes.mainContainer}>
@@ -51,7 +62,29 @@ export const TechnicalStaffProcessOrder = () => {
                 {/* <p>TechnicalStaffProcessOrder</p> */}
                 <div>
 
-                    <TabBar tabArr={["Đơn hàng đã chấp nhận", "Cá nhân hoá"]} />
+                    {/* <TabBar tabArr={[
+                        {
+                            label: "Đơn hàng đã chấp nhận",
+                            onClick: () => { }
+                        },
+                        {
+                            label: "Cá nhân hoá",
+                            onClick: () => {
+                                setPersonalizeModal({
+                                    isOpen: true,
+                                    handleCloseModal
+                                })
+                            }
+                        }]}
+                    /> */}
+
+                    <TabBar tabArr={[
+                        {
+                            label: "Đơn hàng đã chấp nhận",
+                            onClick: () => { }
+                        }]}
+                    />
+
 
                     <Divider />
 
@@ -59,8 +92,8 @@ export const TechnicalStaffProcessOrder = () => {
                         <ManageAcceptedOrder />
                     </TabPanel>
 
-                    <TabPanel value={value} index={1}>
-
+                    <TabPanel value={value} index={1} >
+                        {/* <Personalize personalizeModal={personalizeModal} setPersonalizeModal={setPersonalizeModal} /> */}
                     </TabPanel>
 
 

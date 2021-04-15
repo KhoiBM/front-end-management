@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     dropZoneUploadContainer: {
         border: "1px solid rgba(0, 0, 0, 0.23)",
         // width: "21.9rem",
-        width: props => props.widthContainer ? `${props.widthContainer}` : "21.9rem",
+        width: props => props.widthContainer ? `${props.widthContainer}` : "21.9vw",
         minHeight: "100px",
         height: "auto",
         position: "absolute",
@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
     photoPreviewCard: {
         width: "100px",
         height: "100px",
-        // float: "left",
+        float: "left",
         // border: "1px solid rgba(0, 0, 0, 0.23)",
         // backgroundColor: "blue",
-        // marginLeft: theme.spacing(1),
-        // marginTop: theme.spacing(1)
+        marginLeft: theme.spacing(1),
+        marginTop: theme.spacing(1)
 
     },
     photoPreview: {
@@ -79,17 +79,17 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(24),
         // width: '100%',
         // height: "auto",
-        minHeight: "345px",
-        maxHeight: "345px",
-        overflow: "scroll",
+        minHeight: "75%",
+        maxHeight: "75%",
+        overflowY: "scroll !important",
         padding: theme.spacing(1),
         backgroundColor: theme.palette.background.paper,
         border: "1px solid rgba(0, 0, 0, 0.23)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: theme.spacing(1)
+        // display: "flex",
+        // justifyContent: "center",
+
+        // flexWrap: "wrap",
+        // gap: theme.spacing(1)
     }
 }))
 
@@ -166,8 +166,10 @@ const getFilesFromEvent = async (event) => {
 }
 
 
-export const DropZoneUpload = (props) => {
-    const { sizeContainer = { width: "21.9rem" } } = props
+export const DropZoneUploadBar = (props) => {
+    const { dragUrl } = props
+
+    const { sizeContainer = { width: "21.9vw" } } = props
     const classes = useStyles({ widthContainer: sizeContainer.width })
 
     const { setUploadFiles } = props
@@ -236,15 +238,14 @@ export const DropZoneUpload = (props) => {
 
                     {!isDragActive &&
                         <>
-                            <Typography variant={"caption"} className={classes.titleUpload}>
-                                <div className={classes.iconUploadWrapper}>
-                                    <p><AiOutlineUpload className={classes.iconUpload} /></p>
-                                </div>
-
-                                <p>Kéo thả tệp vào đây hoặc nhấp chuột để chọn tệp</p>
-                            </Typography>
-
-
+                            <Tooltip TransitionComponent={Zoom} placement="left" title="Tải lên ảnh tại đây">
+                                <Typography variant={"caption"} className={classes.titleUpload}>
+                                    <div className={classes.iconUploadWrapper}>
+                                        <p><AiOutlineUpload className={classes.iconUpload} /></p>
+                                    </div>
+                                    {/* <Typography>Tải lên ảnh tại đây</Typography> */}
+                                </Typography>
+                            </Tooltip>
                         </>
 
                     }
@@ -263,101 +264,25 @@ export const DropZoneUpload = (props) => {
             </Paper >
 
             <Paper elevation={0} className={classes.dropZonePreviewContainer}>
-                {/* 
-                <Box component="div" className={classes.rootListPreview} > */}
                 {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
 
                     <Card key={index} className={classes.photoPreviewCard}>
                         <Tooltip TransitionComponent={Zoom} placement="left" title={acceptedFile.name} >
-
-                            <CardMedia image={acceptedFile.src} className={classes.photoPreview}
-
+                            <img src={acceptedFile.src} className={classes.photoPreview}
+                                draggable="true"
+                                onDragStart={(e) => {
+                                    e.stopPropagation()
+                                    dragUrl.current = e.target.src;
+                                    console.log("dragUrl: " + dragUrl.current)
+                                }}
                             />
-
                         </Tooltip>
                     </Card>
 
 
                 ))}
-
-                {/* </Box> */}
             </Paper>
 
         </>
     )
 }
-
-
-// const mimeTypes = "image/png, image/jpg, image/jpeg"
-// // const mimeTypes = ""
-// // 5242880    5Mb
-// const maxSize = 1048576;
-// // const maxSize = 5242880;
-
-
-// return (
-//     <>
-
-//         <Paper elevation={0} className={classes.dropZoneUploadContainer}>
-//             <Dropzone
-//                 accept={mimeTypes}
-//                 minSize={0}
-//                 maxSize={maxSize}
-//                 multiple
-
-//                 onDropAccepted={
-//                     acceptedFiles => {
-//                         console.info("acceptedFiles:")
-//                         console.log(acceptedFiles)
-//                     }
-//                 }
-
-//                 onDropRejected={
-//                     rejectedFiles => {
-//                         console.log("rejectedFiles: " + JSON.stringify(rejectedFiles))
-//                         console.log(rejectedFiles)
-//                         rejectedFiles.forEach((rejectedFile) => {
-//                             toast.error(`Tệp  ${ rejectedFile.file.path } quá lớn`)
-//                         })
-
-//                     }
-//                 }
-
-
-//             >
-
-//                 {({ getRootProps, getInputProps, isDragActive, isDragReject, rejectedFiles }) => {
-//                     // const isFileTooLarge = rejectedFiles && rejectedFiles.length > 0 && rejectedFiles[0].size > maxSize;
-//                     return (
-//                         <section>
-//                             <div {...getRootProps({ className: classes.dropZoneUploadWrapper })}>
-//                                 <input {...getInputProps()} />
-
-//                                 <Typography variant={"caption"}>
-//                                     {!isDragActive && "Kéo thả tệp vào đây hoặc nhấp chuột để chọn tệp"}
-//                                 </Typography>
-
-//                                 <Typography variant={"caption"}>
-//                                     {isDragActive && !isDragReject && "Hãy thả nó xuống"}
-//                                 </Typography>
-
-//                                 <Typography variant={"caption"} color="error">
-//                                     {isDragReject && "Tệp không được chấp nhận!"}
-//                                 </Typography>
-//                                 {/* 
-//                                 <Typography variant={"caption"} color="error">
-//                                     {isFileTooLarge && "Tệp quá lớn"}
-//                                 </Typography> */}
-
-
-
-//                             </div>
-//                         </section>
-//                     )
-//                 }
-//                 }
-//             </Dropzone>
-//         </Paper>
-
-//     </>
-// )

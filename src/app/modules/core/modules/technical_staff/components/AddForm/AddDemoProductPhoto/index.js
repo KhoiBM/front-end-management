@@ -74,6 +74,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 export const AddDemoProductPhoto = (props) => {
+
     const classes = useStyles();
 
     const [uploadFiles, setUploadFiles] = useState([])
@@ -92,7 +93,7 @@ export const AddDemoProductPhoto = (props) => {
         event.preventDefault();
 
         add()
-        //test
+
     }
 
     const add = async () => {

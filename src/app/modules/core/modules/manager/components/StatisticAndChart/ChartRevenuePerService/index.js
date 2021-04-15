@@ -136,7 +136,21 @@ const ChartRevenuePerService = () => {
             <div className={classes.chartContainer}>
 
                 <div className={classes.rootTab}>
-                    <TabBar tabArr={["Tuần", "Tháng", "Năm"]} />
+                    <TabBar tabArr={[
+                        {
+                            label: "Tuần",
+                            onClick: () => { }
+                        },
+                        {
+                            label: "Tháng",
+                            onClick: () => { }
+                        },
+                        {
+                            label: "Năm",
+                            onClick: {}
+                        }
+                    ]} />
+
                     <TabPanel value={value} index={0}>
                         <Paper className={classes.rootChart}>
                             <Chart

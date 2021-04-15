@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useFormat } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
 import { NotFound } from 'src/app/components';
 
@@ -176,7 +176,8 @@ export const ServiceTable = (props) => {
                                 {/* <StyledTableCell>{row.serviceID}</StyledTableCell> */}
                                 <StyledTableCell>{row.serviceCode}</StyledTableCell>
                                 <StyledTableCell >{row.serviceName}</StyledTableCell>
-                                <StyledTableCell >{row.servicePrice}</StyledTableCell>
+                                <StyledTableCell >
+                                    {`${useFormat().formatMoney(row.servicePrice)} đ`}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>
 
                                 <StyledTableCell>

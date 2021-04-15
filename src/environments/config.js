@@ -24,7 +24,7 @@ const useApiPath = {
             viewRevenueOfEachService: "manager/service-revenue"
         },
         "photoServices": {
-            getPresignedURLToUpload: "manage/product/upload-photo",
+            getPresignedURLToUpload: "manage/upload-photo",
             getPhotoListByLink: "manage/get-list-photo"
         }
 

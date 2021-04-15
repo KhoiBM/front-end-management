@@ -52,7 +52,7 @@ export const useAuthSaga = () => {
 
                     const decodedTokenID = jwt_decode(tokenID);
                     const role = decodedTokenID["custom:role"]
-                    // const role = config.useRoleName.administrator
+                    // const role = config.useRoleName.technicalStaff
 
                     localStorage.setItem("pps-token", JSON.stringify(token));
                     localStorage.setItem("role", role);

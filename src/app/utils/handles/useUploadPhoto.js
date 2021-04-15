@@ -44,7 +44,7 @@ export const useUploadPhoto = () => {
 
 
 
-                if (responseStatus != 200 || responseStatus != 201) throw new Error(`${config.useMessage.resultFailure}`)
+                // if (responseStatus != 200 || responseStatus != 201) throw new Error(`${config.useMessage.resultFailure}`)
 
 
                 if (responseData && responseData != null) {

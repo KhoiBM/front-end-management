@@ -6,7 +6,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat } from 'src/app/utils'
 import { ManageServices } from '../../../../manager/components'
 import { ManageServiceServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
@@ -213,7 +213,7 @@ export const AddServiceForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá dịch vụ"
-                                    value={formData.servicePrice}
+                                    value={`${useFormat().formatMoney(formData.servicePrice)} đ`}
                                     name='servicePrice'
                                     onChange={handleInputChange}
                                     error={helperValid.servicePrice ? true : false}

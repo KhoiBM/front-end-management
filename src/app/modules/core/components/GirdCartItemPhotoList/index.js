@@ -90,7 +90,26 @@ export const GirdCartItemPhotoList = (props) => {
 
     return (
         <>
-            <TabBar tabArr={["Hình để in ", "Hình xem trước", "Hình sản phẩm thô", "Hình thiết kế mẫu"]} />
+
+            <TabBar tabArr={[
+                {
+                    label: "Hình để in",
+                    onClick: () => { }
+                },
+                {
+                    label: "Hình xem trước",
+                    onClick: () => { }
+                },
+                {
+                    label: "Hình sản phẩm thô",
+                    onClick: {}
+                }
+                ,
+                {
+                    label: "Hình thiết kế mẫu",
+                    onClick: {}
+                }
+            ]} />
 
             <Divider />
 

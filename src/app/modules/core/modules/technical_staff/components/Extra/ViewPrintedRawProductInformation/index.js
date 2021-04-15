@@ -140,8 +140,10 @@ export const ViewPrintedRawProductInformation = (props) => {
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>
 
-                    <IconClose handleClose={props.handleClose} />
 
+                    <div className={classes.iconCloseWrapper}>
+                        <IconClose handleClose={props.handleClose} />
+                    </div>
                     <PageHeader>
                         Xem thông tin chi tiết sản phẩm đã in
                     </PageHeader>
