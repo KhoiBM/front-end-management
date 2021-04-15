@@ -18,9 +18,19 @@
         }
 
     
+      // toast.dark(`test switchID:${orderID}: ${!switchCheck[`switchID:${orderID}`]}`)
+        // if (switchCheck[`switchID:${orderID}`]) {
+        //     console.log('deactive')
+        // } else {
+        //     console.log('active')
+        // }
     
     
-    
+
+
+    const loadData = async (response) => {
+
+    }
     
     
     

@@ -8,7 +8,8 @@ import { AiOutlineUpload } from 'react-icons/ai'
 const useStyles = makeStyles((theme) => ({
     dropZoneUploadContainer: {
         border: "1px solid rgba(0, 0, 0, 0.23)",
-        width: "21.9rem",
+        // width: "21.9rem",
+        width: props => props.widthContainer ? `${props.widthContainer}` : "21.9rem",
         minHeight: "100px",
         height: "auto",
         position: "absolute",
@@ -46,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
     titleUpload: {
 
 
-    }, photoPreviewCard: {
+    },
+    photoPreviewCard: {
         width: "100px",
         height: "100px",
         float: "left",
@@ -60,11 +62,17 @@ const useStyles = makeStyles((theme) => ({
         width: "100px",
         height: "100px",
         // alignSelf: "flex-start",
+        objectFit: "contain",
+        maxWidth: "100%",
+        maxHeight: "100%",
+        // width: 'auto',
+        // height: 'auto',
 
     },
     dropZonePreviewContainer: {
         // border: "1px solid rgba(0, 0, 0, 0.23)",
-        width: "21.9rem",
+        // width: "21.9rem",
+        width: props => props.widthContainer ? `${props.widthContainer}` : "21.9rem",
         height: "auto",
         // background: "red",
         position: "absolute",
@@ -154,7 +162,8 @@ const getFilesFromEvent = async (event) => {
 
 
 export const DropZoneUpload = (props) => {
-    const classes = useStyles()
+    const { sizeContainer = { width: "21.9rem" } } = props
+    const classes = useStyles({ widthContainer: sizeContainer.width })
 
     const { setUploadFiles } = props
     const mimeTypes = "image/png, image/jpg, image/jpeg"
@@ -247,7 +256,6 @@ export const DropZoneUpload = (props) => {
                 </div>
 
             </Paper >
-            <Divider />
 
             <Paper elevation={0} className={classes.dropZonePreviewContainer}>
                 {/* 

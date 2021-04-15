@@ -45,7 +45,7 @@ export const useFilterHandle = (props) => {
 
                     // toast.success("Thành công")
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo.message}`)
+                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

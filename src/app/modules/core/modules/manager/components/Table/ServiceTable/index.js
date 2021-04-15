@@ -6,46 +6,22 @@ import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { useTable } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-const useStyles = makeStyles(theme => ({
-    paginationContainer: {
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        // background: "red",
-        paddingTop: "1rem",
-        paddingBottom: "5rem",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    },
-    tableWrapper: {
-        display: "flex",
-        justifyContent: "flex-end",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    }
-}));
-const StyledTableCell = withStyles((theme) => ({
-    root: {
-    },
-    head: {
-        fontWeight: "900",
-    },
-    body: {
-        fontWeight: "100",
-        // borderBottom: 'none',
-    }
-}))(TableCell);
+import { NotFound } from 'src/app/components';
 
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-    },
-}))(TableRow);
+const useStyles = makeStyles(theme => ({
+
+
+}));
+
 
 
 export const ServiceTable = (props) => {
+
+
     const classes = useStyles();
+    const { classesCustom } = useCustomStyles()
 
     // const headCells = ['Mã ID', "Mã Code", "Tên dịch vụ", "Giá dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ["Mã Code", "Tên dịch vụ", "Giá dịch vụ", "Mô tả", "Trạng thái", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
@@ -54,70 +30,98 @@ export const ServiceTable = (props) => {
     const [limit, setLimit] = useState(5);
 
     const [records, setRecords] = useState([])
-    const [totalPage, setTotalPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
 
-    const { TblContainer, TblHead } = useTable(records, headCells);
+    const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
 
     const [switchCheck, setSwitchCheck] = useState({});
 
-    const [refresh, setRefresh] = useState(false)
-    const [first, setFirst] = useState(true)
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
 
 
     useEffect(() => {
         loadInit()
-    }, [page])
+    }, [page, refresh])
+
 
     const loadInit = async () => {
-        try {
-            const response = await (await ManageServiceServices.view({ filterBy: "all", page: page, limit: limit })).data
-            const records = response.info.records
 
-            const switchObj = records.reduce((acc, curr) => {
-                acc[`switchID:${curr.serviceID}`] = curr.isActive
-                return acc
-            }, {})
-            // console.log("switchObj: " + JSON.stringify(switchObj));
-            setSwitchCheck({ ...switchCheck, ...switchObj });
-            setRecords(records)
-            setTotalPage(response.info.totalPage)
-            // console.log("page: " + page)
+        try {
+
+            const response = await (await ManageServiceServices.view({ filterBy: "all", page: page, limit: limit })).data
+
+            // console.log("response: " + JSON.stringify(response))
+
+            if (response && response != null) {
+
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    loadData(response)
+
+                    console.log("loadInit")
+
+                } else {
+
+                    toast.error(config.useMessage.resultFailure)
+
+                }
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
         } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
+
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+
         }
 
     }
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
 
-    // console.log("page:" + page)
+    const loadData = async (response) => {
+
+        const records = response.info.records
+
+        const totalPageResponse = response.info.totalPage
+
+        if (records && records != null && records.length > 0) {
+
+            const switchObj = records.reduce((acc, curr) => {
+
+                acc[`switchID:${curr.serviceID}`] = curr.active
+
+                return acc
+
+            }, {})
+
+            // console.log("switchObj: " + JSON.stringify(switchObj));
+
+            setSwitchCheck({ ...switchCheck, ...switchObj });
+
+            setRecords(records)
+
+        } else {
+
+            setRecords([])
+
+            setSwitchCheck({})
+
+        }
+
+        console.log("totalPageResponse: " + totalPageResponse)
+
+        setTotalPage(totalPageResponse && totalPageResponse != null ? totalPageResponse : 0)
+
+        // console.log("page: " + page)
+    }
+
+
+
     const handleChangeSwitch = (event) => {
         setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
     };
-
-
-    useEffect(async () => {
-        // if (!first) {
-        //     const data = await (await ManageAccountServices.viewAccountTest({ filterBy: "all", page: page })).data
-        //     const records = data.info.records
-
-        //     const switchObj = records.reduce((acc, curr) => {
-        //         acc[`switchID:${curr.id}`] = curr.isActive
-        //         return acc
-        //     }, {})
-
-        //     // console.log("switchObj: " + JSON.stringify(switchObj));
-        //     setSwitchCheck({ ...switchCheck, ...switchObj });
-        //     setRecords(records)
-        //     setTotalPage(data.info.totalPage)
-        //     // console.log("page: " + page)
-        //     console.log("page: " + data.info.page)
-        // }
-        // setFirst(false)
-    }, [refresh])
 
     // console.log("switchCheck: " + JSON.stringify(switchCheck));
     const handleChangeStatus = (row) => async (event) => {
@@ -127,7 +131,7 @@ export const ServiceTable = (props) => {
     const activeOrDeActive = async (row, event) => {
         const data = {
             id: row.serviceID,
-            isActive: !switchCheck[`switchID:${row.serviceID}`]
+            active: !switchCheck[`switchID:${row.serviceID}`]
         }
         // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {
@@ -139,7 +143,7 @@ export const ServiceTable = (props) => {
             const response = switchCheck[`switchID:${row.serviceID}`] ? await (await ManageServiceServices.deActive(data)).data : await (await ManageServiceServices.active(data)).data
             if (response.result == config.useResultStatus.SUCCESS) {
                 toast.success(`${!switchCheck[`switchID:${row.serviceID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
-                setRefresh(!refresh)
+                handleRefresh()
             } else {
                 toast.error(config.useMessage.resultFailure)
                 setSwitchCheck({
@@ -160,66 +164,65 @@ export const ServiceTable = (props) => {
         <>
             {/* <p>Table</p> */}
 
-            <div className={classes.tableWrapper}>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {records && records.map((row) => {
-                            return (
 
-                                <StyledTableRow key={row.serviceID}>
+            <TblContainer>
+                <TblHead />
+                <TblBody>
+                    {records && records != null && records.length > 0 ? records.map((row) => {
+                        return (
 
-                                    {/* <StyledTableCell>{row.serviceID}</StyledTableCell> */}
-                                    <StyledTableCell>{row.serviceCode}</StyledTableCell>
-                                    <StyledTableCell >{row.serviceName}</StyledTableCell>
-                                    <StyledTableCell >{row.servicePrice}</StyledTableCell>
-                                    <StyledTableCell >{row.description}</StyledTableCell>
+                            <StyledTableRow key={row.serviceID}>
 
-                                    <StyledTableCell>
-                                        <Switch
-                                            color="primary"
-                                            checked={switchCheck[`switchID:${row.serviceID}`]}
-                                            onChange={handleChangeSwitch}
-                                            name={`switchID:${row.serviceID}`}
-                                            onClick={handleChangeStatus(row)}
-                                        />
-                                    </StyledTableCell>
+                                {/* <StyledTableCell>{row.serviceID}</StyledTableCell> */}
+                                <StyledTableCell>{row.serviceCode}</StyledTableCell>
+                                <StyledTableCell >{row.serviceName}</StyledTableCell>
+                                <StyledTableCell >{row.servicePrice}</StyledTableCell>
+                                <StyledTableCell >{row.description}</StyledTableCell>
 
-
-                                    <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                    <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                                <StyledTableCell>
+                                    <Switch
+                                        color="primary"
+                                        checked={switchCheck[`switchID:${row.serviceID}`]}
+                                        onChange={handleChangeSwitch}
+                                        name={`switchID:${row.serviceID}`}
+                                        onClick={handleChangeStatus(row)}
+                                    />
+                                </StyledTableCell>
 
 
-                                    <StyledTableCell >
-                                        <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
-
-                                            <Button onClick={(event) => {
-                                                event.stopPropagation()
-                                                props.handleEdit(row)
-                                            }
-                                            }>
-                                                <AiOutlineEdit />
-                                            </Button>
-
-                                        </Tooltip>
-
-                                    </StyledTableCell>
+                                <StyledTableCell >{row.createdAt}</StyledTableCell>
+                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
-                                </StyledTableRow>
+                                <StyledTableCell >
+                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
 
-                            )
-                        }
+                                        <Button onClick={(event) => {
+                                            event.stopPropagation()
+                                            props.handleEdit(row)
+                                        }
+                                        }>
+                                            <AiOutlineEdit />
+                                        </Button>
+
+                                    </Tooltip>
+
+                                </StyledTableCell>
+
+
+                            </StyledTableRow>
+
                         )
-                        }
-                    </TableBody>
-                </TblContainer>
-            </div>
+                    }
+                    )
+                        : <NotFound />
+                    }
+                </TblBody>
+            </TblContainer>
 
 
-            <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
-            </div>
+            <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
+
         </>
     );
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Zoom, Tooltip } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
+import { AppBar, Toolbar, IconButton, Menu, MenuItem, makeStyles, Zoom, Tooltip, Typography, useTheme } from '@material-ui/core'
 import { RiAccountBoxLine } from 'react-icons/ri';
 import { MdMenu } from 'react-icons/md'
 import clsx from 'clsx';
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
     },
     appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: props => props.drawerWidth ? props.drawerWidth : drawerWidth,
+        width: props => props.drawerWidth ? `calc(100% - ${props.drawerWidth}px)` : `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create(["width", "margin"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen
@@ -77,8 +77,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const HeaderBar = (props) => {
     const history = useHistory();
-    const classes = useStyles();
 
+    const { drawerWidth } = props
+
+    // const []
+
+    const classes = useStyles({ drawerWidth: drawerWidth });
+
+    const theme = useTheme()
 
 
     const [anchorElMenuAccount, setAnchorElMenuAccount] = useState(null);
@@ -94,6 +100,12 @@ export const HeaderBar = (props) => {
     const handleCloseMenuAccount = () => {
         setAnchorElMenuAccount(null);
     };
+
+    useEffect(() => {
+        if (drawerWidth && drawerWidth != null) {
+            console.log("drawerWidth: " + drawerWidth)
+        }
+    }, [drawerWidth])
 
 
     return (
@@ -122,6 +134,7 @@ export const HeaderBar = (props) => {
                     <div className={classes.logoContainer}>
                         <div className={classes.logoWrapper}>
                             <img src={brandLogo} className={classes.brandLogo} alt="logo of brand" />
+                            <Typography variant={"h6"} style={{ color: "#fff", marginLeft: theme.spacing(2) }}>Quản lý dịch vụ in ảnh</Typography>
                         </div >
                     </div>
 

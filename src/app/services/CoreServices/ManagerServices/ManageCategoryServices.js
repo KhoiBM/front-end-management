@@ -15,7 +15,7 @@ export class ManageCategoryServices {
     // }
 
     static view = (data) => {
-        return useHttpModule().get(config.useApiPath.api.manageCategoryServices.view, data)
+        return useHttpModule().post(config.useApiPath.api.manageCategoryServices.view, data)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,
@@ -61,32 +61,32 @@ export class ManageCategoryServices {
         // })
     }
     static getAll = () => {
-        // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    records:
-                        [
-                            {
-                                categoryID: "1",
-                                categoryName: "abc"
-                            },
-
-                            {
-                                categoryID: "2",
-                                categoryName: "abc2"
-                            }
-                            ,
-
-                            {
-                                categoryID: "3",
-                                categoryName: "abc3"
-                            }
-                        ]
-                }
-            }
-        })
+        return useHttpModule().get(config.useApiPath.api.manageServiceServices.view)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             records:
+        //                 [
+        //                     {
+        //                         categoryID: "1",
+        //                         categoryName: "abc"
+        //                     },
+        //
+        //                     {
+        //                         categoryID: "2",
+        //                         categoryName: "abc2"
+        //                     }
+        //                     ,
+        //
+        //                     {
+        //                         categoryID: "3",
+        //                         categoryName: "abc3"
+        //                     }
+        //                 ]
+        //         }
+        //     }
+        // })
     }
     static add = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
@@ -94,7 +94,9 @@ export class ManageCategoryServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode"
+                    }
                 }
             }
         })
@@ -105,7 +107,9 @@ export class ManageCategoryServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode"
+                    }
                 }
             }
         })

@@ -18,7 +18,7 @@ export const useUploadPhoto = () => {
             try {
 
                 const uuid = `${uuidv5(uploadFile.name, uuidv4())}`
-
+                // ${uuid}
                 const fileNameCustom = uploadFile.name.indexOf("thumbnail") != -1 ? `${uploadFile.name.trim().split(/(\s+)/).join('')}` : `${uploadFile.name.trim().split(/(\s+)/).join('')}`
                 // console.log("fileNameCustom: " + fileNameCustom)
 
@@ -30,9 +30,11 @@ export const useUploadPhoto = () => {
                     fileKey: `${prefix}/${fileNameCustom}`
                 }
 
+                console.log("fileKey: " + `${prefix}/${fileNameCustom}`)
+
                 const responsePresignedURLToUpload = await (await PhotoServices.getPresignedURLToUpload(data))
 
-                // console.log("responsePresignedURLToUpload: " + JSON.stringify(responsePresignedURLToUpload))
+                console.log("responsePresignedURLToUpload: " + JSON.stringify(responsePresignedURLToUpload))
                 // console.log(responsePresignedURLToUpload)
 
                 const responseStatus = responsePresignedURLToUpload.status

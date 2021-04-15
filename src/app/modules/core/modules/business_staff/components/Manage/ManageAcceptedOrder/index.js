@@ -50,7 +50,7 @@ export const ManageAcceptedOrder = () => {
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
-    const { recordForUse, openBox: openSendDemoProduct, handleOpen: handleOpenSendDemoProduct, handleClose: handleCloseSendDemoProduct } = useToggleBox()
+    // const { recordForUse, openBox: openSendDemoProduct, handleOpen: handleOpenSendDemoProduct, handleClose: handleCloseSendDemoProduct } = useToggleBox()
 
 
 
@@ -72,7 +72,8 @@ export const ManageAcceptedOrder = () => {
 
     return (
         <>
-            {!openSendDemoProduct &&
+            {
+                // !openSendDemoProduct &&
                 <Paper elevation={0} className={classes.mainContainer}>
                     <>
 
@@ -85,7 +86,7 @@ export const ManageAcceptedOrder = () => {
 
                         {filterList && filterList != null && filterList.length > 0 && <AcceptedOrderTable
                             // statusOrderToView={statusOrderToView}
-                            handleOpenSendDemoProduct={handleOpenSendDemoProduct}
+                            // handleOpenSendDemoProduct={handleOpenSendDemoProduct}
                             // handleChangeStatus={handleChangeStatus}
                             // handleViewInformation={handleViewInformation}
                             keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} filterList={filterList} action={action} clickFilter={clickFilter} />
@@ -98,7 +99,7 @@ export const ManageAcceptedOrder = () => {
 
             {/* {openChangeStatus && statusOrderToChange && statusOrderToChange != null && statusOrderToChange.length > 0 && < ChangeStatusOrder statusOrderToChange={statusOrderToChange} recordForChangeStatus={recordForChangeStatus} handleClose={handleCloseChangeStatus} />} */}
 
-            {openSendDemoProduct && <SendDemoProduct handleClose={handleCloseSendDemoProduct} />}
+            {/* {openSendDemoProduct && <SendDemoProduct handleClose={handleCloseSendDemoProduct} />} */}
 
         </>
     )

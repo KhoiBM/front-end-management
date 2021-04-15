@@ -6,111 +6,18 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
-import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
 import { PhotoServices } from 'src/app/services/CoreServices/PhotoServices/PhotoServices.js'
 import { v4 as uuidv4 } from 'uuid';
 import { v5 as uuidv5 } from 'uuid';
+import { ChromePicker } from 'react-color'
+import { set } from 'date-fns'
+import { IconClose } from 'src/app/components'
 
 const useStyles = makeStyles(theme => ({
 
-    selectRole: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    buttonWrapper: {
-        // border: "1px solid red",
-        width: '100%',
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "flex-end"
-    },
-    button: {
-        cursor: "pointer",
-        marginTop: theme.spacing(2),
-        color: "#fff",
-        '&:hover': {
-            backgroundColor: theme.palette.primary.main,
-            // backgroundColor: "var(--secondary-color-main)",
-            boxShadow: "rgb(0 0 0 / 10 %) 0px 0.3rem 1rem",
-            transform: "scale(1.015)",
-
-        },
-        '&:focus': {
-            // outline: "1px dashed var(--primary-color-dark)",
-            outlineOffset: "4px",
-        }
-    },
-    pageForm: {
-        // width: "25rem",
-        width: "50rem",
-        padding: theme.spacing(3),
-        position: "relative",
-        height: "auto",
-        minHeight: "300px",
-        // background: "blue",
-
-    },
-    pageFormContainer: {
-        width: "100%",
-        minHeight: "800px",
-        height: "auto",  //  làm mất goc paper ở dưới 
-        // background: "red",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 999,
-        position: "relative",
-        overflow: "scroll",
-
-
-    },
-    iconCloseWrapper: {
-        position: "absolute",
-        right: theme.spacing(2),
-        top: theme.spacing(2),
-        color: "var(--primary-color-main)",
-        // color: "var(--secondary-color-main)",
-        transform: "scale(2)",
-        transition: " all 0.3s ease 0s"
-
-    },
-    iconClose: {
-        '&:hover': {
-            color: "var(--primary-color-dark)",
-            // color: "var(--secondary-color-main)",
-        },
-        '&:focus': {
-            // outline: "1px dashed var(--primary-color-dark)",
-            outlineOffset: "4px",
-            // transform: "scale(5)",
-        }
-    },
-    rootForm: {
-        marginTop: theme.spacing(3),
-        width: "100%",
-        // border: "1px solid red",
-        '& .MuiFormControl-root': {
-            width: '200%',
-            height: "auto",
-            marginBottom: theme.spacing(3),
-            // border: "1px solid red",
-        }
-    },
-    gridItem1: {
-        // background: "yellow",
-        '&  .MuiFormControl-root': {
-            width: "100%"
-        }
-    },
-    gridItem2: {
-        // background: "orange",
-        display: "flex",
-        justifyContent: "center",
-        // alignItems: "center"
-        paddingTop: theme.spacing(2)
-    }
 }))
 
 const initialFValues = {
@@ -119,7 +26,7 @@ const initialFValues = {
     unitPrice: '',
     totalQuantity: 0,
     size: '',
-    color: '',
+    color: '#000',
     description: '',
     categoryID: "",
     isActive: true,
@@ -129,16 +36,17 @@ const initialFValues = {
 export const AddRawProductForm = (props) => {
     const classes = useStyles();
 
+    const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
+
     const [uploadFiles, setUploadFiles] = useState([])
 
     const { uploadPhoto } = useUploadPhoto()
 
     const [categoryRecords, setCategoryRecords] = useState([])
 
-    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
+    const { formData, setFormData, handleInputChange, helperValid = null, validation, handleChangeColor } = useForm(initialFValues)
 
-
-
+    const [displayColorPicker, setDisplayColorPicker] = useState(false)
 
     useEffect(() => {
         loadInit()
@@ -169,7 +77,7 @@ export const AddRawProductForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log("formdata: " + JSON.stringify(formData))
+        console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
             add(formData)
@@ -187,7 +95,21 @@ export const AddRawProductForm = (props) => {
         console.log(uploadFiles)
 
         try {
-            const response = await (await ManageRawProductServices.add(formData)).data
+            const data = {
+                // rawProductID: '',
+                rawProductName: formData.rawProductName,
+                unitPrice: formData.unitPrice,
+                totalQuantity: formData.totalQuantity,
+                size: formData.size,
+                color: formData.color,
+                description: formData.description,
+                categoryID: formData.categoryID,
+                isActive: true,
+                // createdAt: new Date()
+
+            }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await ManageRawProductServices.add(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -196,8 +118,10 @@ export const AddRawProductForm = (props) => {
                     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
 
-                    const categoryCode = "categoryCode"
-                    const rawProductCode = "productcode"
+                    const record = response.info.record
+
+                    const categoryCode = record.categoryCode
+                    const rawProductCode = record.rawProductCode
 
                     const uploadInfo = {
                         bucketName,
@@ -227,22 +151,18 @@ export const AddRawProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
-            <div className={classes.pageFormContainer}>
-                <Paper elevation={5} className={classes.pageForm}>
+            <div className={classesCustomStylesAddEditForm.pageFormContainer}>
+                <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 
-                    <div className={classes.iconCloseWrapper}>
-                        <div className={classes.iconClose} onClick={props.handleCloseForm}>
-                            <RiCloseFill />
-                        </div>
-                    </div >
+                    <IconClose handleClose={props.handleCloseForm} />
 
                     <PageHeader>
                         Thêm sản phẩm thô
                     </PageHeader>
 
-                    <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
+                    <form noValidate onSubmit={handleSubmit} className={classesCustomStylesAddEditForm.rootForm}>
                         <Grid container spacing={4}>
-                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
+                            <Grid item xs={6} sm={6} md={6} className={classesCustomStylesAddEditForm.gridItem1}>
                                 <TextField
                                     variant='outlined'
                                     label="Tên sản phẩm thô"
@@ -286,16 +206,32 @@ export const AddRawProductForm = (props) => {
                                     helperText={helperValid.size}
                                     required
                                 />
+
                                 <TextField
                                     variant='outlined'
                                     label="Màu"
                                     value={formData.color}
                                     name='color'
-                                    onChange={handleInputChange}
+                                    // onChange={handleInputChange}
                                     error={helperValid.color ? true : false}
                                     helperText={helperValid.color}
                                     required
+                                    onClick={() => {
+                                        setDisplayColorPicker((prev => !prev))
+                                    }}
+                                    autoFocus={displayColorPicker ? true : false}
                                 />
+
+                                <>
+                                    <div className={classesCustomStylesAddEditForm.colorPickerInputContainer}>
+
+                                        <ColorPickerInput displayColorPicker={displayColorPicker} setDisplayColorPicker={setDisplayColorPicker} color={formData.color} handleChangeColor={handleChangeColor} />
+
+                                    </div>
+                                </>
+
+
+
 
 
                                 <TextField
@@ -314,7 +250,7 @@ export const AddRawProductForm = (props) => {
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
                                             Thể loại
-                </InputLabel>
+                                        </InputLabel>
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
@@ -346,27 +282,27 @@ export const AddRawProductForm = (props) => {
                                             marginRight: "14px",
                                             marginBottom: '16px',
 
-                                        }}>{helperValid.categoryID}
+                                        }}>
+                                            {/* {helperValid.categoryID} */}
                                         </FormHelperText>
                                     </FormControl>
                                 </>
+
                             </Grid>
 
-                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                            <Grid item xs={6} sm={6} md={6} className={classesCustomStylesAddEditForm.gridItem2}>
                                 <DropZoneUpload setUploadFiles={setUploadFiles} />
                             </Grid>
 
                         </Grid>
-                        <div className={classes.buttonWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
+                        <div className={classesCustomStylesAddEditForm.buttonWrapper}>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classesCustomStylesAddEditForm.button}>Thêm mới</Button>
                         </div>
                     </form>
 
                 </Paper>
 
             </div>
-
-
         </>
     )
 }

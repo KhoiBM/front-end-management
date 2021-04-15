@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SideMenuBarContainer } from './SideMenuBarElements'
 import { Drawer, IconButton, Divider, List, makeStyles, useTheme, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { MdChevronRight, MdChevronLeft, MdSupervisorAccount } from 'react-icons/md'
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     drawerOpen: {
-        width: drawerWidth,
+        width: props => props.drawerWidth ? props.drawerWidth : drawerWidth,
         transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen
@@ -63,11 +63,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SideMenuBar = (props) => {
-    const classes = useStyles();
+    const { drawerWidth } = props
+
+    // const []
+
+    const classes = useStyles({ drawerWidth: drawerWidth });
     const theme = useTheme();
+
     // const { path } = useRouteMatch();
     // console.log(path)
     // console.log("props.opendrawer: " + props.openDrawer)
+    useEffect(() => {
+        if (drawerWidth && drawerWidth != null) {
+            console.log("drawerWidth: " + drawerWidth)
+        }
+    }, [drawerWidth])
 
     return (
         <>

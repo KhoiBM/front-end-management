@@ -1,251 +1,321 @@
+/* eslint-disable no-empty */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl, Tooltip, Zoom } from '@material-ui/core';
+import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRow, withStyles, TableCell, Typography, Switch, Button, MenuItem, FormHelperText, Select, InputLabel, FormControl, Tooltip, Zoom, Box } from '@material-ui/core';
 
 import { toast } from 'react-toastify';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { TechnicalStaffProcessOrderServices } from '../../../../../../../services/CoreServices/TechnicalStaffServices';
-import config from '../../../../../../../../environments/config';
-import { useTable } from 'src/app/utils';
-import { PaginationBar } from 'src/app/modules/core/components';
-const useStyles = makeStyles(theme => ({
-    paginationContainer: {
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        // background: "red",
-        paddingTop: "1rem",
-        paddingBottom: "5rem",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    },
-    tableWrapper: {
-        display: "flex",
-        justifyContent: "flex-end",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    }
-}));
-const StyledTableCell = withStyles((theme) => ({
-    root: {
-    },
-    head: {
-        fontWeight: "900",
-    },
-    body: {
-        fontWeight: "100",
-        // borderBottom: 'none',
-    }
-}))(TableCell);
+import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import { RiInformationLine, RiExchangeBoxLine, RiMailSendLine } from 'react-icons/ri';
+import config from 'src/environments/config';
+import { BusinessStaffProcessOrderServices, TechnicalStaffProcessOrderServices } from 'src/app/services';
+import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { ConfirmDialog, PaginationBar, ChangeStatusOrder, ViewOrderInformation } from 'src/app/modules/core/components';
+import { NotFound } from 'src/app/components';
 
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-    },
-}))(TableRow);
+const useStyles = makeStyles(theme => ({
+}));
+
 
 
 export const AcceptedOrderTable = (props) => {
+
     const classes = useStyles();
 
-    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const { classesCustom } = useCustomStyles()
+
+    const { keywords, searchAction, clickSearch } = props
+
+    const { filterList, action, clickFilter } = props
+
+    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
 
     const [records, setRecords] = useState([])
-    const [totalPage, setTotalPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
 
-    const { TblContainer, TblHead } = useTable(records, headCells);
+    const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
 
     const [switchCheck, setSwitchCheck] = useState({});
 
-    const [refresh, setRefresh] = useState(false)
-    const [first, setFirst] = useState(true)
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
+
+    const useStatusOrder = config.useStatusOrder.TECHNICAL_STAFF
+    const statusOrderToChange = useStatusOrder.CHANGE
+
+    const [changeStatusModal, setChangeStatusModal] = useState({ isOpen: false })
+
+    const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            } else if (action == "filter") {
+                loadInitByFilter()
+            }
+
+        } else {
+            if (action == "filter") {
+                loadInitByFilter()
+            }
+        }
+    }, [page, refresh])
 
 
-    const [statusOrder, setStatusOrder] = useState("1")
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (!first) {
+            setPage(1)
+            if (keywords && keywords != null && keywords.length > 0) {
+                if (searchAction) {
+                    search()
+                } else {
+                    loadInitByFilter()
+                }
+            } else {
+                loadInitByFilter()
+            }
 
-    const handleStatusOrderChange = (event) => {
-        setStatusOrder(event.target.value)
+        } else {
+            setFirst(false)
+        }
+
+    }, [clickSearch])
+
+
+
+    useEffect(() => {
+        if (!first) {
+            console.log("clickFilter")
+            setPage(1)
+
+            if (action == "filter") {
+                loadInitByFilter()
+            }
+        } else {
+            setFirst(false)
+        }
+
+    }, [clickFilter])
+
+
+    const loadInitByFilter = async () => {
+
+        // console.log("action: " + action)
+        // console.log("filterList:" + JSON.stringify(filterList))
+        // console.log("Page: " + page)
+
+        try {
+            const response = await (await TechnicalStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    loadData(response)
+
+                    console.log("loadInitByFilter")
+
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
     }
 
+    const loadData = async (response) => {
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        console.log(page)
-    };
-    // console.log("page:" + page)
-    const handleChangeSwitch = (event) => {
-        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
-    };
-    useEffect(() => {
-        loadInit()
-    }, [page])
+        const records = response.info.records
 
-    const loadInit = async () => {
-        try {
-            const response = await (await TechnicalStaffProcessOrderServices.viewAcceptedOrder({ filterBy: "all", page: page, limit: limit })).data
-            const records = response.info.records
+        const totalPageResponse = response.info.totalPage
+
+        if (records && records != null && records.length > 0) {
 
             const switchObj = records.reduce((acc, curr) => {
+
                 acc[`switchID:${curr.orderID}`] = curr.statusPayment
+
                 return acc
+
             }, {})
+
             // console.log("switchObj: " + JSON.stringify(switchObj));
-            setSwitchCheck({ ...switchCheck, ...switchObj });
+
+            setSwitchCheck(switchCheck => ({ ...switchCheck, ...switchObj }));
+
             setRecords(records)
-            setTotalPage(response.info.totalPage)
-            // console.log("page: " + page)
-        } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
+
+        } else {
+            setRecords([])
+            setSwitchCheck({})
         }
+
+        // console.log("totalPageResponse: " + totalPageResponse)
+
+        setTotalPage(totalPageResponse && totalPageResponse != null ? totalPageResponse : 0)
+
+        // console.log("page: " + page)
 
     }
 
-    useEffect(async () => {
-        // if (!first) {
-        // }
-        // setFirst(false)
-    }, [refresh])
+    // console.log("totalPage: " + totalPage)
 
-    // console.log("switchCheck: " + JSON.stringify(switchCheck));
-    const handleChangeStatus = (row) => async (event) => {
-        await checkPayMent(row, event)
-    }
+    const search = async () => {
 
-    const checkPayMent = async (row, event) => {
-        const data = {
-            orderID: row.orderID,
-            isActive: !switchCheck[`switchID:${row.orderID}`]
-        }
-        // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
-        // if (switchCheck[`switchID:${row.id}`]) {
-        //     console.log('deactive')
-        // } else {
-        //     console.log('active')
-        // }
         try {
-            // switchCheck[`switchID:${row.id}`] ? 
-            const response = await (await TechnicalStaffProcessOrderServices.checkPayment(data)).data
-            if (response.result == config.useResultStatus.SUCCESS) {
-                toast.success(`${!switchCheck[`switchID:${row.orderID}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
-                setRefresh(!refresh)
+
+            const response = await (await TechnicalStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    loadData(response)
+
+                    console.log("search")
+
+                } else {
+
+                    toast.error(config.useMessage.resultFailure)
+
+                }
             } else {
-                toast.error(config.useMessage.resultFailure)
-                setSwitchCheck({
-                    ...switchCheck,
-                    [event.target.name]: event.target.checked
-                })
+
+                throw new Error("Response is null or undefined")
+
             }
+
         } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
-            setSwitchCheck({
-                ...switchCheck,
-                [event.target.name]: event.target.checked
-            })
+
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+
         }
+
     }
+
+
+
+
+
+
+    const handleCloseModal = () => {
+        setChangeStatusModal({ isOpen: false })
+        setViewOrderInformationModal({ isOpen: false })
+        handleRefresh()
+    }
+
 
     return (
         <>
-            <p>AcceptedOrderTable</p>
+            {/* <p>NewOrderTable</p> */}
+
+            <TblContainer>
+                <TblHead />
+                <TblBody>
+                    {records && records != null && records.length > 0 ? records.map((row) => (
+                        <StyledTableRow key={row.orderID}>
+
+                            {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
+                            <StyledTableCell>{row.orderCode}</StyledTableCell>
+                            {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
+                            <StyledTableCell >{row.customerCode}</StyledTableCell>
+
+                            {/* <StyledTableCell >{row.note}</StyledTableCell> */}
+                            <StyledTableCell >{row.statusOrder}</StyledTableCell>
+
+                            <StyledTableCell>
+                                <Switch
+                                    color="primary"
+                                    checked={switchCheck[`switchID:${row.orderID}`]}
+                                    name={`switchID:${row.orderID}`}
+
+                                />
+                            </StyledTableCell>
+
+                            {/* <StyledTableCell >{row.shipAt}</StyledTableCell> */}
+                            {/* <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell> */}
+
+                            <StyledTableCell >{row.createdAt}</StyledTableCell>
+                            <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
-            <div className={classes.tableWrapper}>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {records && records.map((row) => (
-
-                            <StyledTableRow key={row.orderID}>
-
-                                {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
-                                <StyledTableCell>{row.orderCode}</StyledTableCell>
-                                <StyledTableCell >{row.customerCode}</StyledTableCell>
-                                <StyledTableCell >{row.note}</StyledTableCell>
-                                <StyledTableCell >{row.statusOrder}</StyledTableCell>
-                                {/* <>
-                                    <FormControl variant="outlined" >
-                                        <InputLabel id="statusOrder-label">
-
-                                        </InputLabel>
-                                        <Select
-                                            labelId="statusOrder-label"
-                                            id="statusOrder"
-                                            value={statusOrder}
-                                            onChange={handleStatusOrderChange}
-                                            name="statusOrder"
-                                        >
-                                            <MenuItem value={1}>Đang xử lý</MenuItem>
-                                            <MenuItem value={2}></MenuItem>
-                                            <MenuItem value={3}></MenuItem>
-                                            <MenuItem value={4}></MenuItem>
-                                        </Select>
-                                        <FormHelperText></FormHelperText>
-                                    </FormControl>
-                                </> */}
-
-                                {/* <StyledTableCell>
-                                    <Switch
-                                        color="primary"
-                                        checked={switchCheck[`switchID:${row.orderID}`]}
-                                        onChange={handleChangeSwitch}
-                                        name={`switchID:${row.orderID}`}
-                                        onClick={handleChangeStatus(row)}
-                                    />
-                                </StyledTableCell> */}
-                                <StyledTableCell >{row.statusPayment ? "Đã thanh toán" : "Chưa thanh toán"}</StyledTableCell>
-                                <StyledTableCell >{row.shipAt}</StyledTableCell>
-                                <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell>
-
-                                <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                            <StyledTableCell style={{ minWidth: "230px" }}>
 
 
-                                <StyledTableCell >
-                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái">
-                                        <Button onClick={(event) => {
-                                            event.stopPropagation()
-                                            // props.handleEdit(row)
-                                        }
-                                        }>
-                                            <AiOutlineEdit />
+                                < Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết" >
 
-                                        </Button>
-                                    </Tooltip>
-
-
-                                    {/* <>
-                                        <Button style={{ marginLeft: "8px" }} onClick={(event) => {
-                                            event.stopPropagation()
-                                            // props.handleEdit(row)
-                                        }
-                                        }>
-
-                                            Từ chối
+                                    <Button onClick={(event) => {
+                                        event.stopPropagation()
+                                        // props.handleViewInformation(row)
+                                        setViewOrderInformationModal({
+                                            isOpen: true,
+                                            recordForViewInformation: row,
+                                            handleCloseModal
+                                        })
+                                        // console.log("ViewOrderInformationModal: " + viewOrderInformationModal)
+                                    }
+                                    }>
+                                        <RiInformationLine />
                                     </Button>
-                                    </> */}
 
-                                </StyledTableCell>
+                                </ Tooltip>
+
+                                < Tooltip TransitionComponent={Zoom} placement="top" title="Thay đổi trạng thái đơn hàng" >
+
+                                    <Button onClick={(event) => {
+                                        event.stopPropagation()
+
+                                        const data = {
+                                            orderID: row.orderID,
+                                            statusOrder: row.statusOrder
+                                        }
+                                        // console.log("data: " + JSON.stringify(data))
+                                        setChangeStatusModal({
+                                            isOpen: true,
+                                            recordForChangeStatus: data,
+                                            statusOrderToChange,
+                                            handleCloseModal
+                                        })
+
+                                    }
+                                    }>
+                                        <RiExchangeBoxLine />
+                                    </Button>
+
+                                </ Tooltip>
 
 
-                            </StyledTableRow>
+                            </StyledTableCell>
 
-                        )
+                        </StyledTableRow>
 
-                        )
-                        }
-                    </TableBody>
-                </TblContainer>
-            </div >
+                    ))
+                        : <NotFound />
+
+                    }
+                </TblBody>
+            </TblContainer>
 
 
-            <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
-            </div>
+            {<ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />}
+
+            {<ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
+
+            <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
+
         </>
     );
 }
+
 

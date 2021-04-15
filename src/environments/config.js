@@ -13,10 +13,15 @@ const useApiPath = {
             "signUp": "user/signup",
             "confirmCode": "user/confirm-email",
             "forgotPassword": "user/forgot-password",
-            "confirmForgotPassword": "user/confirm-forgor-password"
+            "confirmForgotPassword": "user/confirm-forgot-password"
+        },
+        "manageAccountServices": {
+            view: "manage/account/get-account-list",
+            viewListRole: "manage/account/get-role-list"
         },
         "manageServiceServices": {
-            view: ""
+            view: "manager/view-service",
+            add: "manager/add-service"
         },
         "manageRawProductServices": {
             view: "manager/studio-raw-product-list",
@@ -37,6 +42,7 @@ const useApiPath = {
         },
         "manageCategoryServices": {
             view: "manager/view-category",
+            add: "manager/add-category"
         }
 
     }
@@ -133,14 +139,17 @@ const useUserRole = {
     ]
 }
 const useStyles = {
-    drawerWidth: 350
+    drawerWidth: 350,
+    drawerWidthBusinessStaff: 400,
 }
+
 const useMessage = {
     invalidData: "Dữ liệu không hợp lệ",
     fetchApiFailure: "Có lỗi xảy ra khi gọi api",
     resultFailure: `Có lỗi xảy ra bên server`,
     uploadPhotoFailure: "Có lỗi xảy ra khi tải ảnh lên server "
 }
+
 const useConfigAWS = {
     STUDIOBUCKET: {
         BUCKETNAME: "photo-upload-album-1",
@@ -160,22 +169,54 @@ const useConfigAWS = {
     },
 
 }
+
+// const useStatusOrder = {
+//     "BUSINESS_STAFF": {
+//         "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+//             "Chấp nhận mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+//         "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang in mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
+//             "Hoàn thành đơn hàng"]
+//     },
+//     "TECHNICAL_STAFF": {
+//         "FILTER": ["Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
+//             "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+//         "CHANGE": ["Hoàn thành mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ"]
+//     },
+//     "CUSTOMER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang in mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+//         "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+
+// }
+
 const useStatusOrder = {
     "BUSINESS_STAFF": {
-        "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+        "FILTER": ["Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
             "Chấp nhận mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
-        "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang in mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
+        "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang làm mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
             "Hoàn thành đơn hàng"]
     },
     "TECHNICAL_STAFF": {
-        "FILTER": ["Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
-            "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+        "FILTER": ["Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu", "Chấp nhận mẫu",
+            "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ"],
         "CHANGE": ["Hoàn thành mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ"]
     },
-    "CUSTOMER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang in mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
-        "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+    "CUSTOMER": {
+        "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+            "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
+        "CHANGE": ["Hủy đơn", "Từ chối mẫu", "Chấp nhận mẫu"]
+    }
+
+
 
 }
+
+
+// const useCustomeStyles = {
+//     customStylesAddEditForm: (theme) => ({
+
+//     })
+
+
+// }
 
 const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS, useStatusOrder }
 export default config

@@ -5,9 +5,10 @@ import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useCustomStylesAddEditForm } from 'src/app/utils'
 import { MdVisibilityOff, MdVisibility } from 'react-icons/md'
 import { PageHeader } from 'src/app/modules/core/components'
+import { IconClose } from 'src/app/components'
 
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -77,27 +78,6 @@ const useStyles = makeStyles(theme => ({
         overflow: "scroll",
 
 
-    },
-    iconCloseWrapper: {
-        position: "absolute",
-        right: theme.spacing(2),
-        top: theme.spacing(2),
-        color: "var(--primary-color-main)",
-        // color: "var(--secondary-color-main)",
-        transform: "scale(2)",
-        transition: " all 0.3s ease 0s"
-
-    },
-    iconClose: {
-        '&:hover': {
-            color: "var(--primary-color-dark)",
-            // color: "var(--secondary-color-main)",
-        },
-        '&:focus': {
-            // outline: "1px dashed var(--primary-color-dark)",
-            outlineOffset: "4px",
-            // transform: "scale(5)",
-        }
     }
 }))
 
@@ -114,6 +94,8 @@ const initialFValues = {
 }
 export const AddAccountForm = (props) => {
     const classes = useStyles();
+
+    // const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
@@ -219,11 +201,7 @@ export const AddAccountForm = (props) => {
             {/* <p>addform</p> */}
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>
-                    <div className={classes.iconCloseWrapper}>
-                        <div className={classes.iconClose} onClick={props.handleCloseForm}>
-                            <RiCloseFill />
-                        </div>
-                    </div >
+                    <IconClose handleClose={props.handleCloseForm} />
                     <PageHeader>
                         Thêm tài khoản
                     </PageHeader>

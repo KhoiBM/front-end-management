@@ -19,6 +19,7 @@ import jwt_decode from 'jwt-decode';
 import { RouteService } from "src/app/services";
 import { useLoaderHandle } from "src/app/utils/handles/useLoaderHandle";
 import { Loader } from "src/app/components";
+import { throttle } from 'lodash';
 
 const initialFValues = { username: '', password: '' }
 
@@ -63,7 +64,7 @@ const SignIn = ({ toggle, isVisible }) => {
     // }, [response])
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = throttle((event) => {
         event.preventDefault();
 
         const enableSubmit = validation(formData);
@@ -77,7 +78,7 @@ const SignIn = ({ toggle, isVisible }) => {
         } else {
             toast.error(config.useMessage.invalidData);
         }
-    };
+    });
 
     async function signIn(formData, dispatch) {
         // showLoader()

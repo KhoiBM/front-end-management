@@ -107,8 +107,8 @@ export const useOptionsNumberOrderChart = (title) => {
     const stroke = {
         width: 3,
         colors: ['#b6e2f3'],
-        curve: 'smooth',
-        // curve: 'straight',
+        // curve: 'smooth',
+        curve: 'straight',
     }
 
     const titleChart = (title) => ({
@@ -227,8 +227,8 @@ export const useOptionsNumberOrderChart = (title) => {
     }]
     const grid = {
         row: {
-            colors: ['#e5e5e5', 'transparent'],
-            opacity: 0.5
+            // colors: ['#e5e5e5', 'transparent'],
+            // opacity: 0.5
         },
         // column: {
         //     colors: ['#f8f8f8', 'transparent'],
@@ -236,13 +236,13 @@ export const useOptionsNumberOrderChart = (title) => {
         xaxis: {
             lines: {
                 // show: false,
-                show: true
+                // show: true
             }
         },
         yaxis: {
             lines: {
                 // show: false,
-                show: true
+                // show: true
             }
         }
     }
@@ -267,7 +267,24 @@ export const useOptionsNumberOrderChart = (title) => {
 
     const markers = {
         size: 5,
-        colors: ['#478de3']
+        colors: ['#fff'],
+        strokeColors: "#478de3",
+        strokeWidth: 2,
+        strokeOpacity: 0.9,
+        strokeDashArray: 0,
+        fillOpacity: 1,
+        discrete: [],
+        shape: "circle",
+        radius: 2,
+        offsetX: 0,
+        offsetY: 0,
+        onClick: undefined,
+        onDblClick: undefined,
+        showNullDataPoints: true,
+        hover: {
+            size: undefined,
+            sizeOffset: 3
+        }
     }
 
 

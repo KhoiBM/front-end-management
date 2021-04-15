@@ -73,8 +73,8 @@ export const NotificationDialog = (props) => {
                         <br />
 
                         {
-                            notificationDialog.actionLinK && <Typography>
-                                Vui lòng truy cập: <Link href={notificationDialog.actionLinK}>{notificationDialog.actionLinK} </Link>
+                            notificationDialog.actionLink && <Typography>
+                                Vui lòng truy cập: <Link href={notificationDialog.actionLinK}>{notificationDialog.actionLink} </Link>
                             </Typography>
                         }
 

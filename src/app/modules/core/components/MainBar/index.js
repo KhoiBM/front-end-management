@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const MainBar = (props) => {
     const classes = useStyles();
+    const { drawerWidth } = props
     const [openDrawer, setOpenDrawer] = useState(false);
     const handleDrawerOpen = () => {
         setOpenDrawer(true);
@@ -70,13 +71,20 @@ export const MainBar = (props) => {
         // }
 
     }, [])
+
+    useEffect(() => {
+        if (drawerWidth && drawerWidth != null) {
+            console.log("drawerWidth: " + drawerWidth)
+        }
+    }, [drawerWidth])
+
     return (
         <>
             <div className={classes.root}>
 
-                <HeaderBar openDrawer={openDrawer} handleDrawerOpen={handleDrawerOpen} />
+                <HeaderBar openDrawer={openDrawer} handleDrawerOpen={handleDrawerOpen} drawerWidth={drawerWidth} />
 
-                <SideMenuBar openDrawer={openDrawer} handleDrawerClose={handleDrawerClose} userRole={props.userRole} />
+                <SideMenuBar openDrawer={openDrawer} drawerWidth={drawerWidth} handleDrawerClose={handleDrawerClose} userRole={props.userRole} />
 
                 <main className={classes.content}>
                     <div className={classes.toolbar} />

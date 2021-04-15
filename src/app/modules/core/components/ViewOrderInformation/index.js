@@ -11,30 +11,6 @@ import { ViewCart } from '../ViewCart';
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
 
 const useStyles = makeStyles(theme => ({
-    // pageViewInfomationContainer: {
-    //     width: "100%",
-    //     minHeight: "1100px",
-    //     height: "auto",  //  làm mất goc paper ở dưới 
-    //     // background: "red",
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     position: "relative",
-    //     // overflow: "scroll",
-    //     background: 'var(bg-secondary-color-main)',
-
-
-    // },
-    // pageViewInfomationWrapper: {
-    //     width: "100%",
-    //     padding: theme.spacing(3),
-    //     height: "auto",
-    //     minHeight: "1100px",
-    //     // background: "blue",
-    //     background: "#fff",
-    //     paddingBottom: theme.spacing(10)
-
-    // },
     rootGrid: {
         marginTop: theme.spacing(3),
         width: "100%",
@@ -47,28 +23,37 @@ const useStyles = makeStyles(theme => ({
             // border: "1px solid red",
         }
     },
-    gridItem1: {
+    gridItemViewCart: {
 
         // background: "blue",
         background: "#fff",
     },
-    gridItem2: {
+    gridItemContentOrder: {
         // background: "red",
+        // background: "#fff",
+        background: theme.palette.grey[50],
         width: "100%",
         // borderLeft: "1px solid rgba(0, 0, 0, 0.23)",
-        paddingLeft: theme.spacing(15),
-        background: "#fff",
+
         '& .MuiFormControl-root': {
-            width: "100%",
+            width: "95%",
+            fontWeight: '900 !important',
             color: "#000 !important",
             borderRadius: "4px",
+            background: "#fff",
             '& .MuiInputBase-input': {
                 color: "#000 !important",
-                background: "#fff",
+                // background: "#fff",
+                // background: theme.palette.grey[100],
                 // background: "red",
                 // background: 'var(--bg-secondary-color-main)',
-
+                borderColor: "none !important",
                 borderRadius: "4px",
+                height: "30px !important",
+                background: "#fff",
+                "& .MuiInputBase-inputMultiline": {
+                    // background: "red",
+                }
             }
         }
 
@@ -85,7 +70,10 @@ const useStyles = makeStyles(theme => ({
     dialog: {
 
         // background: theme.palette.grey[50],
-
+        overflowY: "scroll",
+        '& .MuiDialogContent-root': {
+            // overflowY: "hidden !important",
+        }
     },
     dialogTitle: {
         position: "relative",
@@ -95,11 +83,59 @@ const useStyles = makeStyles(theme => ({
 
     },
     dialogContent: {
-        // background: "#fff",
+        background: "#fff",
+
     },
     dialogAction: {
 
     },
+    gridItemContentContainer: {
+        // paddingLeft: theme.spacing(5)
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: "center",
+        alignItems: "center",
+
+    },
+    gridItemTotalPrice: {
+        // height: "15vh",
+        // background: "red",
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(5),
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+
+    },
+    totalPriceContainer: {
+        width: "95%",
+        height: "auto",
+        minHeight: "80px",
+        // background: "red",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        // background: "var(--tertiary-color-main)",
+        // backgroundColor: theme.palette.secondary.main,
+        // color: "#fff",
+        "& .MuiTypography-root": {
+            fontWeight: '200 !important',
+            color: "#000",
+
+        }
+    },
+    totalPriceWrapper: {
+        width: "98%",
+        // background: "red",
+
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    PageHeaderWrapper: {
+        marginLeft: theme.spacing(2.2)
+
+    }
 }))
 
 
@@ -114,28 +150,17 @@ export const ViewOrderInformation = (props) => {
     const classes = useStyles();
 
     const { viewOrderInformationModal, setViewOrderInformationModal } = props
+
     const { isOpen, recordForViewInformation, handleCloseModal } = viewOrderInformationModal
     // console.log("viewOrderInformationModal: " + JSON.stringify(viewOrderInformationModal))
-
-    // const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
-    // const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
-
-
-    // const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
-
-    // useEffect(() => {
-    // if (recordForViewInformation && recordForViewInformation != null) {
-    //     const orderID = recordForCart.orderID
-    //     const orderDetailID = recordForCart.orderDetailID
-    //     const fileKey = `${folder}/${orderID}/${orderDetailID}`
-    //     loadPhotoList(bucketName, fileKey)
-    // }
-
-    // }, [recordForViewInformation])
 
     const [recordForCart, setRecordForCart] = useState({})
 
     const [recordOrder, setRecordOrder] = useState({})
+
+    const [totalOrderPrices, setTotalOrderPrices] = useState(null)
+
+    const [refresh, setRefresh] = useState(false)
 
 
     useEffect(() => {
@@ -147,6 +172,15 @@ export const ViewOrderInformation = (props) => {
             setRecordOrder({ ...recordOrder, ...recordForViewInformation })
         }
     }, [recordForViewInformation])
+
+    useEffect(() => {
+
+    }, [totalOrderPrices, refresh])
+
+
+    const handleRefreshViewOrderInformation = () => {
+        setRefresh(prev => !prev)
+    }
 
     return (
         <>
@@ -160,121 +194,152 @@ export const ViewOrderInformation = (props) => {
                 <DialogContent className={classes.dialogContent}>
 
                     <IconClose handleClose={handleCloseModal} />
+                    <Box className={classes.PageHeaderWrapper}>
+                        <PageHeader>Xem thông tin chi tiết đơn hàng</PageHeader>
+                    </Box>
 
-                    <PageHeader>Xem thông tin chi tiết đơn hàng</PageHeader>
 
-                    <Grid container spacing={2} className={classes.rootGrid}>
+                    <Grid container spacing={1} className={classes.rootGrid}>
 
-                        <Grid item xs={9} sm={9} md={9} className={classes.gridItem1}>
-                            <ViewCart recordForCart={recordForCart} />
+                        <Grid item xs={9} sm={9} md={9} className={classes.gridItemViewCart}>
+                            <ViewCart recordForCart={recordForCart} setTotalOrderPrices={setTotalOrderPrices} handleRefreshViewOrderInformation={handleRefreshViewOrderInformation} />
                         </Grid>
 
-                        <Grid item xs={3} sm={3} md={3} className={classes.gridItem2}>
-                            <TextField
-                                variant='outlined'
-                                label="Mã ID đơn hàng"
-                                value={recordOrder.orderID}
-                                name='orderID'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Mã ID khách hàng"
-                                value={recordOrder.customerID}
-                                name='customerID'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Tên khách hàng"
-                                value={recordOrder.customerName}
-                                name='customerID'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Số điện thoại"
-                                value={recordOrder.phone}
-                                name='customerID'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Địa chỉ"
-                                value={recordOrder.address}
-                                name='shipAt'
-                                // required
-                                disabled
-                            />
+                        <Grid item xs={3} sm={3} md={3} className={classes.gridItemContentOrder}>
+                            <Grid container>
+                                <Grid item xs={12} sm={12} md={12} className={classes.gridItemTotalPrice}>
+                                    <Paper elevation={1} className={classes.totalPriceContainer}>
+                                        <div className={classes.totalPriceWrapper}>
 
-                            <TextField
-                                variant='outlined'
-                                label="Trạng thái đơn hàng"
-                                value={recordOrder.statusOrder}
-                                name='statusOrder'
-                                // required
-                                disabled
-                            />
-                            {/* <FormControlLabel
-                    label="Trạng thái thanh toán"
-                    labelPlacement="start"
-                    control={<Switch
-                        color="primary"
-                        checked={recordOrder.statusPayment}
-                        name="statusPayment"
-                        disabled
+                                            <Box>
+                                                <Typography variant={"h6"}>Tổng giá trị đơn hàng:</Typography>
+                                            </Box>
 
-                    />
+                                            <Box>
+                                                {totalOrderPrices && totalOrderPrices != null &&
+                                                    <Typography variant={"body1"}>{totalOrderPrices}</Typography>
+                                                }
+                                            </Box>
 
-                    }
-                /> */}
-                            <TextField
-                                variant='outlined'
-                                label="Trạng thái thanh toán"
-                                value={recordOrder.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
-                                name='statusOrder'
-                                // required
-                                disabled
-                            />
+                                        </div>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={12} >
+                                    <Box className={classes.gridItemContentContainer} >
 
-                            <TextField
-                                variant='outlined'
-                                label="Ngày giao"
-                                value={recordOrder.shipAt}
-                                name='shipAt'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Ghi chú"
-                                value={recordOrder.note}
-                                name='note'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Ngày tạo"
-                                value={recordOrder.createdAt}
-                                name='note'
-                                // required
-                                disabled
-                            />
-                            <TextField
-                                variant='outlined'
-                                label="Ngày sửa đổi"
-                                value={recordOrder.updatedAt}
-                                name='note'
-                                // required
-                                disabled
-                            />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Mã Code đơn hàng"
+                                            value={recordOrder.orderCode}
+                                            name='orderID'
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Mã Code khách hàng"
+                                            value={recordOrder.customerCode}
+                                            name='customerID'
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Tên khách hàng"
+                                            value={recordOrder.customerName}
+                                            name='customerID'
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Số điện thoại"
+                                            value={recordOrder.phone}
+                                            name='customerID'
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Địa chỉ"
+                                            value={recordOrder.address}
+                                            name='shipAt'
+                                            // required
+                                            // disabled
+                                            multiline
+                                        />
+
+                                        <TextField
+                                            variant='outlined'
+                                            label="Trạng thái đơn hàng"
+                                            value={recordOrder.statusOrder}
+                                            name='statusOrder'
+                                        // required
+                                        // disabled
+                                        />
+                                        {/* <FormControlLabel
+label="Trạng thái thanh toán"
+labelPlacement="start"
+control={<Switch
+color="primary"
+checked={recordOrder.statusPayment}
+name="statusPayment"
+disabled
+
+/>
+
+}
+/> */}
+                                        <TextField
+                                            variant='outlined'
+                                            label="Trạng thái thanh toán"
+                                            value={recordOrder.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
+                                            name='statusOrder'
+                                        // required
+                                        // disabled
+                                        />
+
+                                        <TextField
+                                            variant='outlined'
+                                            label="Ngày giao"
+                                            value={recordOrder.shipAt}
+                                            name='shipAt'
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Ghi chú"
+                                            value={recordOrder.note}
+                                            name='note'
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Ngày tạo"
+                                            value={recordOrder.createdAt}
+                                            name='note'
+                                        // size="medium"
+                                        // required
+                                        // disabled
+                                        />
+                                        <TextField
+                                            variant='outlined'
+                                            label="Ngày sửa đổi"
+                                            value={recordOrder.updatedAt}
+                                            name='note'
+                                        // size="medium" 
+                                        // required
+                                        // disabled
+                                        />
 
 
+                                    </Box>
+
+                                </Grid>
+
+                            </Grid>
                         </Grid>
 
                     </Grid>

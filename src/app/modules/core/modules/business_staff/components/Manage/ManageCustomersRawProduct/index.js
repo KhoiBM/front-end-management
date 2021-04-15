@@ -76,7 +76,7 @@ export const ManageCustomersRawProduct = () => {
                         <div className={classes.actionContainer}>
                             <div className={classes.actionWrapper}>
                                 <SearchBar keywords={keywords} setKeywords={setKeywords} searchAction={searchAction} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} handleKeywordsChange={handleKeywordsChange} />
-                                <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button>
+                                {/* <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm sản phẩm thô của khách hàng</Button> */}
                             </div>
                         </div>
 
@@ -86,7 +86,7 @@ export const ManageCustomersRawProduct = () => {
             }
 
             {openEditForm && <EditCustomersRawProductForm recordForEdit={recordForEdit} handleCloseForm={handleCloseForm} />}
-            {openAddForm && <AddCustomersRawProductForm handleCloseForm={handleCloseForm} />}
+            {/* {openAddForm && <AddCustomersRawProductForm handleCloseForm={handleCloseForm} />} */}
             {openViewInformation && <ViewCustomersRawProductInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />}
 
         </>

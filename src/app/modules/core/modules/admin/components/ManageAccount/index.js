@@ -61,7 +61,7 @@ export const ManageAccount = () => {
     const fetchApi = ManageAccountServices.getRoleToFilter()
 
     const mapToFilter = (records) => {
-        console.log("mapToFilter")
+        // console.log("mapToFilter")
         return records.map(({ roleID: ID, roleName: name }) => ({ ID, name }));
     }
 
@@ -82,7 +82,7 @@ export const ManageAccount = () => {
                     <>
                         <div className={classes.actionContainer}>
                             <div className={classes.actionWrapper}>
-                                <FilterChipBar inputLabel={"Vai trò"} recordsSelect={recordsSelect} setRecordsSelect={setRecordsSelect} filterList={filterList} setFilterList={setFilterList} setAction={setAction} setClickFilter={setClickFilter} />
+                                <FilterChipBar inputLabel={"Bộ lọc"} recordsSelect={recordsSelect} setRecordsSelect={setRecordsSelect} filterList={filterList} setFilterList={setFilterList} setAction={setAction} setClickFilter={setClickFilter} />
                                 <Button variant="outlined" color="primary" onClick={handleAdd} className={classes.buttonAdd}>Thêm tài khoản</Button>
                             </div>
                         </div>

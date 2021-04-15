@@ -6,46 +6,19 @@ import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices, ManageCategoryServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { useTable } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-const useStyles = makeStyles(theme => ({
-    paginationContainer: {
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        // background: "red",
-        paddingTop: "1rem",
-        paddingBottom: "5rem",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    },
-    tableWrapper: {
-        display: "flex",
-        justifyContent: "flex-end",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    }
-}));
-const StyledTableCell = withStyles((theme) => ({
-    root: {
-    },
-    head: {
-        fontWeight: "900",
-    },
-    body: {
-        fontWeight: "100",
-        // borderBottom: 'none',
-    }
-}))(TableCell);
+import { NotFound } from 'src/app/components';
 
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-    },
-}))(TableRow);
+const useStyles = makeStyles(theme => ({
+
+}));
 
 
 export const CategoryTable = (props) => {
+
     const classes = useStyles();
+    const { classesCustom } = useCustomStyles()
 
     // const headCells = ['Mã ID', "Mã Code", "Tên thể loại", "Mô tả", "Trạng thái", "Tên dịch vụ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ["Mã Code", "Tên thể loại", "Mô tả", "Trạng thái", "Tên dịch vụ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
@@ -54,48 +27,89 @@ export const CategoryTable = (props) => {
     const [limit, setLimit] = useState(5);
 
     const [records, setRecords] = useState([])
-    const [totalPage, setTotalPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
 
-    const { TblContainer, TblHead } = useTable(records, headCells);
+    const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
+
     const [switchCheck, setSwitchCheck] = useState({});
 
-    const [refresh, setRefresh] = useState(false)
-    const [first, setFirst] = useState(true)
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
 
 
     useEffect(() => {
         loadInit()
-    }, [page])
+    }, [page, refresh])
 
     const loadInit = async () => {
-        try {
-            const response = await (await ManageCategoryServices.view({ filterBy: "all", page: page, limit: limit })).data
-            const records = response.info.records
 
-            const switchObj = records.reduce((acc, curr) => {
-                acc[`switchID:${curr.categoryID}`] = curr.isActive
-                return acc
-            }, {})
-            // console.log("switchObj: " + JSON.stringify(switchObj));
-            setSwitchCheck({ ...switchCheck, ...switchObj });
-            setRecords(records)
-            setTotalPage(response.info.totalPage)
-            // console.log("page: " + page)
+        try {
+
+            const response = await (await ManageCategoryServices.view({ filterBy: "all", page: page, limit: limit })).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    loadData(response)
+
+                    console.log("loadInit")
+
+                } else {
+
+                    toast.error(config.useMessage.resultFailure)
+
+                }
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
         } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
+
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+
         }
 
     }
 
-    useEffect(async () => {
-    }, [refresh])
+
+    const loadData = async (response) => {
+
+        const records = response.info.records
+
+        const totalPageResponse = response.info.totalPage
+
+        if (records && records != null && records.length > 0) {
+
+            const switchObj = records.reduce((acc, curr) => {
+                acc[`switchID:${curr.categoryID}`] = curr.active
+                return acc
+
+            }, {})
+
+            // console.log("switchObj: " + JSON.stringify(switchObj));
+
+            setSwitchCheck({ ...switchCheck, ...switchObj });
+
+            setRecords(records)
+
+        } else {
+
+            setRecords([])
+
+            setSwitchCheck({})
+
+        }
+
+        console.log("totalPageResponse: " + totalPageResponse)
+
+        setTotalPage(totalPageResponse && totalPageResponse != null ? totalPageResponse : 0)
+
+        // console.log("page: " + page)
+    }
 
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
-    // console.log("page:" + page)
     const handleChangeSwitch = (event) => {
         setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
     };
@@ -108,7 +122,7 @@ export const CategoryTable = (props) => {
     const activeOrDeActive = async (row, event) => {
         const data = {
             id: row.categoryID,
-            isActive: !switchCheck[`switchID:${row.categoryID}`]
+            active: !switchCheck[`switchID:${row.categoryID}`]
         }
         // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {
@@ -120,7 +134,7 @@ export const CategoryTable = (props) => {
             const response = switchCheck[`switchID:${row.categoryID}`] ? await (await ManageCategoryServices.deActive(data)).data : await (await ManageCategoryServices.active(data)).data
             if (response.result == config.useResultStatus.SUCCESS) {
                 toast.success(`${!switchCheck[`switchID:${row.categoryID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
-                setRefresh(!refresh)
+                handleRefresh()
             } else {
                 toast.error(config.useMessage.resultFailure)
                 setSwitchCheck({
@@ -141,63 +155,60 @@ export const CategoryTable = (props) => {
         <>
             {/* <p>Table</p> */}
 
-            <div className={classes.tableWrapper}>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {records && records.map((row) => (
 
-                            <StyledTableRow key={row.categoryID}>
+            <TblContainer>
+                <TblHead />
+                <TblBody>
+                    {records && records != null && records.length > 0 ? records.map((row) => (
 
-                                {/* <StyledTableCell>{row.categoryID}</StyledTableCell> */}
+                        <StyledTableRow key={row.categoryID}>
 
-                                <StyledTableCell>{row.categoryCode}</StyledTableCell>
-                                <StyledTableCell >{row.categoryName}</StyledTableCell>
-                                <StyledTableCell >{row.description}</StyledTableCell>
+                            {/* <StyledTableCell>{row.categoryID}</StyledTableCell> */}
 
-                                <StyledTableCell>
-                                    <Switch
-                                        color="primary"
-                                        checked={switchCheck[`switchID:${row.categoryID}`]}
-                                        onChange={handleChangeSwitch}
-                                        name={`switchID:${row.categoryID}`}
-                                        onClick={handleChangeStatus(row)}
-                                    />
-                                </StyledTableCell>
+                            <StyledTableCell>{row.categoryCode}</StyledTableCell>
+                            <StyledTableCell >{row.categoryName}</StyledTableCell>
+                            <StyledTableCell >{row.description}</StyledTableCell>
 
-                                <StyledTableCell >{row.serviceName}</StyledTableCell>
+                            <StyledTableCell>
+                                <Switch
+                                    color="primary"
+                                    checked={switchCheck[`switchID:${row.categoryID}`]}
+                                    onChange={handleChangeSwitch}
+                                    name={`switchID:${row.categoryID}`}
+                                    onClick={handleChangeStatus(row)}
+                                />
+                            </StyledTableCell>
 
-                                <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                            <StyledTableCell >{row.serviceName}</StyledTableCell>
 
-
-                                <StyledTableCell >
-                                    <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
-                                        <Button onClick={(event) => {
-                                            event.stopPropagation()
-                                            props.handleEdit(row)
-                                        }
-                                        }>
-                                            <AiOutlineEdit />
-                                        </Button>
-                                    </Tooltip>
-
-                                </StyledTableCell>
+                            <StyledTableCell >{row.createdAt}</StyledTableCell>
+                            <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
 
-                            </StyledTableRow>
+                            <StyledTableCell >
+                                <Tooltip TransitionComponent={Zoom} placement="top" title="Chỉnh sửa">
+                                    <Button onClick={(event) => {
+                                        event.stopPropagation()
+                                        props.handleEdit(row)
+                                    }
+                                    }>
+                                        <AiOutlineEdit />
+                                    </Button>
+                                </Tooltip>
 
-                        )
-                        )
-                        }
-                    </TableBody>
-                </TblContainer>
-            </div>
+                            </StyledTableCell>
 
 
-            <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
-            </div>
+                        </StyledTableRow>
+
+                    ))
+                        : <NotFound />
+                    }
+                </TblBody>
+            </TblContainer>
+
+            <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
+
         </>
     );
 }

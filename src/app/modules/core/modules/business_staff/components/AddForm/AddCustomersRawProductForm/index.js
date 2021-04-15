@@ -7,105 +7,108 @@ import { toast } from 'react-toastify'
 import { RiCloseFill } from 'react-icons/ri'
 import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
 import config from 'src/environments/config'
-import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
-import { useForm, useUploadPhoto } from 'src/app/utils'
+import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { IconClose } from 'src/app/components'
 const useStyles = makeStyles(theme => ({
-    rootForm: {
-        marginTop: theme.spacing(3),
-        width: "100%",
-        // border: "1px solid red",
-        '& .MuiFormControl-root': {
-            width: '200%',
-            height: "auto",
-            marginBottom: theme.spacing(3),
-            // border: "1px solid red",
-        }
-    },
-    selectRole: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    buttonWrapper: {
-        // border: "1px solid red",
-        width: '100%',
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "flex-end"
-    },
-    button: {
-        cursor: "pointer",
-        marginTop: theme.spacing(2),
-        color: "#fff",
-        '&:hover': {
-            backgroundColor: theme.palette.primary.main,
-            // backgroundColor: "var(--secondary-color-main)",
-            boxShadow: "rgb(0 0 0 / 10 %) 0px 0.3rem 1rem",
-            transform: "scale(1.015)",
+    // rootForm: {
+    //     marginTop: theme.spacing(3),
+    //     width: "100%",
+    //     // border: "1px solid red",
+    //     '& .MuiFormControl-root': {
+    //         width: '200%',
+    //         height: "auto",
+    //         marginBottom: theme.spacing(3),
+    //         // border: "1px solid red",
+    //     }
+    // },
+    // selectRole: {
+    //     margin: theme.spacing(1),
+    //     minWidth: 120,
+    // },
+    // buttonWrapper: {
+    //     // border: "1px solid red",
+    //     width: '100%',
+    //     display: "flex",
+    //     justifyContent: "flex-end",
+    //     alignItems: "flex-end"
+    // },
+    // button: {
+    //     cursor: "pointer",
+    //     marginTop: theme.spacing(2),
+    //     color: "#fff",
+    //     '&:hover': {
+    //         backgroundColor: theme.palette.primary.main,
+    //         // backgroundColor: "var(--secondary-color-main)",
+    //         boxShadow: "rgb(0 0 0 / 10 %) 0px 0.3rem 1rem",
+    //         transform: "scale(1.015)",
 
-        },
-        '&:focus': {
-            // outline: "1px dashed var(--primary-color-dark)",
-            outlineOffset: "4px",
-        }
-    },
-    pageForm: {
-        // width: "25rem",
-        width: "50rem",
-        padding: theme.spacing(3),
-        position: "relative",
-        height: "auto",
-        minHeight: "300px",
-        // background: "blue",
+    //     },
+    //     '&:focus': {
+    //         // outline: "1px dashed var(--primary-color-dark)",
+    //         outlineOffset: "4px",
+    //     }
+    // },
+    // pageForm: {
+    //     // width: "25rem",
+    //     width: "50rem",
+    //     padding: theme.spacing(3),
+    //     position: "relative",
+    //     height: "auto",
+    //     minHeight: "300px",
+    //     // background: "blue",
 
-    },
-    pageFormContainer: {
-        width: "100%",
-        minHeight: "800px",
-        height: "auto",  //  làm mất goc paper ở dưới 
-        // background: "red",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: 999,
-        position: "relative",
-        overflow: "scroll",
+    // },
+    // pageFormContainer: {
+    //     width: "100%",
+    //     minHeight: "800px",
+    //     height: "auto",  //  làm mất goc paper ở dưới 
+    //     // background: "red",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     zIndex: 999,
+    //     position: "relative",
+    //     overflow: "scroll",
 
 
-    },
-    iconCloseWrapper: {
-        position: "absolute",
-        right: theme.spacing(2),
-        top: theme.spacing(2),
-        color: "var(--primary-color-main)",
-        // color: "var(--secondary-color-main)",
-        transform: "scale(2)",
-        transition: " all 0.3s ease 0s"
+    // },
+    // iconCloseWrapper: {
+    //     position: "absolute",
+    //     right: theme.spacing(2),
+    //     top: theme.spacing(2),
+    //     color: "var(--primary-color-main)",
+    //     // color: "var(--secondary-color-main)",
+    //     transform: "scale(2)",
+    //     transition: " all 0.3s ease 0s"
 
-    },
-    iconClose: {
-        '&:hover': {
-            color: "var(--primary-color-dark)",
-            // color: "var(--secondary-color-main)",
-        },
-        '&:focus': {
-            // outline: "1px dashed var(--primary-color-dark)",
-            outlineOffset: "4px",
-            // transform: "scale(5)",
-        }
-    },
-    gridItem1: {
-        // background: "yellow",
-        '&  .MuiFormControl-root': {
-            width: "100%"
-        }
-    },
-    gridItem2: {
-        // background: "orange",
-        display: "flex",
-        justifyContent: "center",
-        // alignItems: "center"
-        paddingTop: theme.spacing(2)
-    }
+    // },
+    // iconClose: {
+    //     '&:hover': {
+    //         color: "var(--primary-color-dark)",
+    //         // color: "var(--secondary-color-main)",
+    //     },
+    //     '&:focus': {
+    //         // outline: "1px dashed var(--primary-color-dark)",
+    //         outlineOffset: "4px",
+    //         // transform: "scale(5)",
+    //     }
+    // },
+    // gridItem1: {
+    //     // background: "yellow",
+    //     '&  .MuiFormControl-root': {
+    //         width: "100%"
+    //     }
+    // },
+    // gridItem2: {
+    //     // background: "orange",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     // alignItems: "center"
+    //     paddingTop: theme.spacing(2),
+    //     height: "auto",
+    //     minHeight: "500px",
+    // }
 }))
 
 const initialFValues = {
@@ -114,7 +117,7 @@ const initialFValues = {
     unitPrice: '',
     totalQuantity: 0,
     size: '',
-    color: '',
+    color: '#000',
     description: '',
     categoryID: "",
     createdAt: new Date()
@@ -122,14 +125,18 @@ const initialFValues = {
 export const AddCustomersRawProductForm = (props) => {
     const classes = useStyles();
 
+    const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
+
     const [uploadFiles, setUploadFiles] = useState([])
 
     const { uploadPhoto } = useUploadPhoto()
 
     const [categoryRecords, setCategoryRecords] = useState([])
 
-    const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
+    const { formData, setFormData, handleInputChange, helperValid = null, validation, handleChangeColor } = useForm(initialFValues)
+
+    const [displayColorPicker, setDisplayColorPicker] = useState(false)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -180,8 +187,10 @@ export const AddCustomersRawProductForm = (props) => {
                     const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
                     const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["CUSTOMER'SRAWPRODUCT"]
 
-                    const categoryCode = "categoryCode"
-                    const rawProductCode = "productcode"
+                    const record = response.info.record
+
+                    const categoryCode = record.categoryCode
+                    const rawProductCode = record.rawProductCode
 
                     const uploadInfo = {
                         bucketName,
@@ -213,22 +222,18 @@ export const AddCustomersRawProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
-            <div className={classes.pageFormContainer}>
-                <Paper elevation={5} className={classes.pageForm}>
+            <div className={classesCustomStylesAddEditForm.pageFormContainer}>
+                <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 
-                    <div className={classes.iconCloseWrapper}>
-                        <div className={classes.iconClose} onClick={props.handleCloseForm}>
-                            <RiCloseFill />
-                        </div>
-                    </div >
+                    <IconClose handleClose={props.handleCloseForm} />
 
                     <PageHeader>
                         Thêm sản phẩm thô của khách hàng
                     </PageHeader>
 
-                    <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
+                    <form noValidate onSubmit={handleSubmit} className={classesCustomStylesAddEditForm.rootForm}>
                         <Grid container spacing={4}>
-                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem1}>
+                            <Grid item xs={6} sm={6} md={6} className={classesCustomStylesAddEditForm.gridItem1}>
                                 <TextField
                                     variant='outlined'
                                     label="Tên sản phẩm thô"
@@ -261,7 +266,7 @@ export const AddCustomersRawProductForm = (props) => {
                                     helperText={helperValid.size}
                                     required
                                 />
-                                <TextField
+                                {/* <TextField
                                     variant='outlined'
                                     label="Màu"
                                     value={formData.color}
@@ -270,7 +275,30 @@ export const AddCustomersRawProductForm = (props) => {
                                     error={helperValid.color ? true : false}
                                     helperText={helperValid.color}
                                     required
+                                /> */}
+
+                                <TextField
+                                    variant='outlined'
+                                    label="Màu"
+                                    value={formData.color}
+                                    name='color'
+                                    // onChange={handleInputChange}
+                                    error={helperValid.color ? true : false}
+                                    helperText={helperValid.color}
+                                    required
+                                    onClick={() => {
+                                        setDisplayColorPicker((prev => !prev))
+                                    }}
+                                    autoFocus={displayColorPicker ? true : false}
                                 />
+
+                                <>
+                                    <div className={classesCustomStylesAddEditForm.colorPickerInputContainer}>
+
+                                        <ColorPickerInput displayColorPicker={displayColorPicker} setDisplayColorPicker={setDisplayColorPicker} color={formData.color} handleChangeColor={handleChangeColor} />
+
+                                    </div>
+                                </>
 
 
                                 <TextField
@@ -328,12 +356,12 @@ export const AddCustomersRawProductForm = (props) => {
 
 
                             </Grid>
-                            <Grid item xs={6} sm={6} md={6} className={classes.gridItem2}>
+                            <Grid item xs={6} sm={6} md={6} className={classesCustomStylesAddEditForm.gridItem2}>
                                 <DropZoneUpload setUploadFiles={setUploadFiles} />
                             </Grid>
                         </Grid>
-                        <div className={classes.buttonWrapper}>
-                            <Button type="submit" variant="contained" color="primary" size="large" className={classes.button}>Thêm mới</Button>
+                        <div className={classesCustomStylesAddEditForm.buttonWrapper}>
+                            <Button type="submit" variant="contained" color="primary" size="large" className={classesCustomStylesAddEditForm.button}>Thêm mới</Button>
                         </div>
                     </form>
                 </Paper>

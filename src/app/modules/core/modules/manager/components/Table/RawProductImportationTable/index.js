@@ -8,46 +8,21 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 import { toast } from 'react-toastify';
 import { ManageRawProductServices, ManageRawProductImportationServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { useTable } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-const useStyles = makeStyles(theme => ({
-    paginationContainer: {
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        // background: "red",
-        paddingTop: "1rem",
-        paddingBottom: "5rem",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    },
-    tableWrapper: {
-        display: "flex",
-        justifyContent: "flex-end",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2)
-    }
-}));
-const StyledTableCell = withStyles((theme) => ({
-    root: {
-    },
-    head: {
-        fontWeight: "900",
-    },
-    body: {
-        fontWeight: "100",
-        // borderBottom: 'none',
-    }
-}))(TableCell);
+import { NotFound } from 'src/app/components';
 
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-    },
-}))(TableRow);
+const useStyles = makeStyles(theme => ({
+
+}));
+
 
 
 export const RawProductImportationTable = (props) => {
+
     const classes = useStyles();
+    const { classesCustom } = useCustomStyles()
+
     // const headCells = ['ID', "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ['Mã Code', "Mã Code sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
 
@@ -55,86 +30,111 @@ export const RawProductImportationTable = (props) => {
     const [limit, setLimit] = useState(5);
 
     const [records, setRecords] = useState([])
-    const [totalPage, setTotalPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(0);
 
-    const { TblContainer, TblHead } = useTable(records, headCells);
+    const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
 
-    const [refresh, setRefresh] = useState(false)
-    const [first, setFirst] = useState(true)
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
 
 
-    const handleChangePagination = (event, value) => {
-        setPage(value);
-        // console.log(page)
-    };
     useEffect(() => {
         loadInit()
-    }, [page])
+    }, [page, refresh])
+
 
     const loadInit = async () => {
-        try {
-            const response = await (await ManageRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
-            const records = response.info.records
 
-            setRecords(records)
-            setTotalPage(response.info.totalPage)
-            // console.log("page: " + page)
+        try {
+
+            const response = await (await ManageRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
+
+            // console.log("response: " + JSON.stringify(response))
+
+            if (response && response != null) {
+
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    loadData(response)
+
+                    console.log("loadInit")
+
+                } else {
+
+                    toast.error(config.useMessage.resultFailure)
+
+                }
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
         } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
+
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+
         }
 
     }
 
-    useEffect(async () => {
-    }, [refresh])
+
+    const loadData = async (response) => {
+
+        const records = response.info.records
+
+        const totalPageResponse = response.info.totalPage
+
+        if (records && records != null && records.length > 0) {
+
+            setRecords(records)
+
+        } else {
+
+            setRecords([])
+
+        }
+
+        console.log("totalPageResponse: " + totalPageResponse)
+
+        setTotalPage(totalPageResponse && totalPageResponse != null ? totalPageResponse : 0)
+
+        // console.log("page: " + page)
+    }
+
+
 
 
     return (
         <>
             {/* <p>Table</p> */}
 
-            <div className={classes.tableWrapper}>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {records && records.map((row) => (
-                            <StyledTableRow key={row.importedRawProductID} >
+            <TblContainer>
+                <TblHead />
+                <TblBody>
+                    {records && records != null && records.length > 0 ? records.map((row) => (
+                        <StyledTableRow key={row.importedRawProductID} >
 
-                                {/* <StyledTableCell>{row.importedRawProductID}</StyledTableCell> */}
-                                <StyledTableCell>{row.importedRawProductCode}</StyledTableCell>
-                                {/* <StyledTableCell >{row.rawProductID}</StyledTableCell> */}
-                                <StyledTableCell >{row.rawProductCode}</StyledTableCell>
-                                <StyledTableCell >{row.rawProductName}</StyledTableCell>
-                                <StyledTableCell >{row.quantity}</StyledTableCell>
-                                <StyledTableCell >{row.providedBy}</StyledTableCell>
+                            {/* <StyledTableCell>{row.importedRawProductID}</StyledTableCell> */}
+                            <StyledTableCell>{row.importedRawProductCode}</StyledTableCell>
+                            {/* <StyledTableCell >{row.rawProductID}</StyledTableCell> */}
+                            <StyledTableCell >{row.rawProductCode}</StyledTableCell>
+                            <StyledTableCell >{row.rawProductName}</StyledTableCell>
+                            <StyledTableCell >{row.quantity}</StyledTableCell>
+                            <StyledTableCell >{row.providedBy}</StyledTableCell>
 
-                                <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                            <StyledTableCell >{row.createdAt}</StyledTableCell>
+                            <StyledTableCell >{row.updatedAt}</StyledTableCell>
 
+                        </StyledTableRow>
 
-                                {/* <StyledTableCell >
-                                    <Button onClick={(event) => {
-                                        event.stopPropagation()
-                                        props.handleEdit(row)
-                                    }
-                                    }>
-                                        <AiOutlineEdit />
-                                    </Button>
-                                </StyledTableCell> */}
-
-                            </StyledTableRow>
-
-                        )
-                        )
-                        }
-                    </TableBody>
-                </TblContainer>
-            </div>
+                    )) : <NotFound />
+                    }
+                </TblBody>
+            </TblContainer>
 
 
-            <div className={classes.paginationContainer}>
-                <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
-            </div>
+            <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
+
         </>
     );
 }

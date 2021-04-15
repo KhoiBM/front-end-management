@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import config from 'src/environments/config'
 import { makeStyles, InputLabel, FormControl, MenuItem, Select, Chip, Input, useTheme } from '@material-ui/core'
 
@@ -47,9 +47,6 @@ function getStyles(ID, recordsSelect, theme) {
     };
 }
 
-
-
-
 export const FilterChipBar = (props) => {
 
     const { recordsSelect, setRecordsSelect, filterList, setFilterList, inputLabel, setAction, setClickFilter } = props
@@ -60,53 +57,93 @@ export const FilterChipBar = (props) => {
         length: filterList.length
     });
 
+    const [first, setFirst] = useState(true)
+
+    const [filterSelectList, setFilterSelectList] = useState([])
+
     // console.log("filterList: " + filterList)
 
     const handleFilterChange = (event) => {
         setClickFilter((prev) => !prev)
         setAction("filter")
-        setFilterList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : [1]);
+        // console.log("event.target.value : " + JSON.stringify(event.target.value))
 
+        // setFilterSelectList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? [...recordsSelect.map((val) => (val.ID))] : []);
+        // setFilterSelectList(event.target.value);
+
+        // setFilterList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : []);
+
+
+
+
+
+        // if (event.target.value.indexOf(0) != -1) {
+        //     // console.log("0")
+        //     setFilterSelectList([0]);
+        //     setFilterList(recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : []);
+        // } else {
+        setFilterSelectList(event.target.value.length > 0 ? event.target.value : []);
+        setFilterList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : []);
+        // }
     }
 
+
+    useEffect(() => {
+        // console.log("filterSelectList: " + JSON.stringify(filterSelectList))
+    }, [filterSelectList])
 
     return (
         <>
 
             <FormControl className={classes.formControl} variant="outlined" >
 
-                <InputLabel id="filter-chip-label">{inputLabel}</InputLabel>
+                <InputLabel id="filter-chip-label">
+                    {/* {inputLabel} */}
+                </InputLabel>
                 <Select
                     labelId="filter-chip-label"
                     id="filter-mutiple-chip"
                     multiple
-                    value={filterList}
+                    value={filterSelectList}
                     onChange={handleFilterChange}
-                    renderValue={(selected) => (
-                        <div className={classes.chips}>
-                            {selected.length == recordsSelect.length
-                                ? (() => {
-                                    const allFilterList = recordsSelect.map((val) => (val.ID))
-                                    return (
-                                        < Chip key={allFilterList} label={"Tất cả"} className={classes.chip} />
-                                    )
-                                })()
-                                : selected.map((value) => {
-                                    const name = setRecordsSelect && recordsSelect.find((val) => val.ID == value).name
-                                    const labelValue = name ? name : value
-                                    // console.log(recordsSelect.find((val) => val.ID == value).name)
-                                    return (
-                                        < Chip key={value} label={labelValue} className={classes.chip} />
-                                    )
-                                })
-                            }
-                        </div>
-                    )}
+                    displayEmpty={true}
+                    // displayEmpty={false}
+                    renderValue={(selected) => {
+                        // console.log("selected: " + JSON.stringify(selected))
+                        // console.log("selectedlength: " + selected.length)
+                        return (
+                            <div className={classes.chips}>
+                                {
+                                    selected.indexOf(0) != -1
+                                        // || selected[0] == 0
+                                        || selected.length == 0
+                                        || selected == recordsSelect
+                                        ? (() => {
+                                            const allFilterList = recordsSelect.map((val) => (val.ID))
+                                            // console.log("filterAll: " + recordsSelect.map((val) => (val.ID)))
+                                            return (
+                                                < Chip key={allFilterList} label={"Tất cả"} className={classes.chip} />
+                                            )
+                                        })()
+                                        : selected.map((value) => {
+                                            const name = recordsSelect && recordsSelect.find((val) => val.ID == value).name
+                                            const labelValue = name ? name : value
+                                            // console.log(recordsSelect.find((val) => val.ID == value).name)
+                                            return (
+                                                < Chip key={value} label={labelValue} className={classes.chip} />
+                                            )
+                                        })
+
+
+                                }
+                            </div>
+                        )
+                    }}
                     MenuProps={MenuProps}
-                    labelWidth={50}
+                    // labelWidth={50}
                     className={classes.selectContainer}
                 >
-
+                    <MenuItem value={0} key={0} style={{ display: "none" }} >{"Tất cả"}</MenuItem>
                     {
                         recordsSelect && recordsSelect.map((val, index) => (<MenuItem value={val.ID} key={val.ID} style={getStyles(val.ID, recordsSelect, theme)}>{val.name}</MenuItem>))
                     }
@@ -118,11 +155,33 @@ export const FilterChipBar = (props) => {
 }
 
 
+{/* <MenuItem value={0} key={0} style={getStyles(0, recordsSelect, theme)}>{"Tất cả"}</MenuItem> */ }
+    //  // selected.length == recordsSelect.length ||
+    //  selected.indexOf(0) != -1
+    //  ? (() => {
+    //      const allFilterList = recordsSelect.map((val) => (val.ID))
+    //      // console.log("filterAll: " + recordsSelect.map((val) => (val.ID)))
+    //      return (
+    //          < Chip key={allFilterList} label={"Tất cả"} className={classes.chip} />
+    //      )
+    //  })()
+    //  : selected.map((value) => {
+    //      const name = recordsSelect && recordsSelect.find((val) => val.ID == value).name
+    //      const labelValue = name ? name : value
+    //      // console.log(recordsSelect.find((val) => val.ID == value).name)
+    //      return (
+    //          < Chip key={value} label={labelValue} className={classes.chip} />
+    //      )
+    //  })
 
 
-
-
-
+// setFilterSelectList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? [0, ...recordsSelect.map((val) => (val.ID))] : []);
+// if (event.target.value.indexOf(0) != -1) {
+//     // console.log("0")
+//     setFilterList(recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : []);
+// } else {
+//     setFilterList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : []);
+// }
 
 
 // import React, { useEffect, useState } from 'react'

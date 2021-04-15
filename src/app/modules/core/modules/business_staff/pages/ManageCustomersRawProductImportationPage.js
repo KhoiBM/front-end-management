@@ -8,12 +8,14 @@ import { Loader } from 'src/app/components';
 const ManageCustomerRawProductImportationPage = () => {
     const userRole = config.useUserRole.businessStaff;
     const { openDrawerByLink } = useOpendrawer()
+    const drawerWidth = config.useStyles.drawerWidthBusinessStaff;
+
     return (
         <>
             {/* <p>BusinessStaffPage</p> */}
             {/* <Loader loading={loading} /> */}
             {/* <CanActive isRole={config.useRoleName.businessStaff} /> */}
-            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink}>
+            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} drawerWidth={drawerWidth}>
                 <ManageCustomersRawProductImportation />
             </MainBar>
         </>

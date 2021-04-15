@@ -7,9 +7,10 @@ import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm } from 'src/app/utils'
+import { useForm, useCustomStylesAddEditForm } from 'src/app/utils'
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import { PageHeader } from 'src/app/modules/core/components'
+import { IconClose } from 'src/app/components'
 
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -95,14 +96,14 @@ const useStyles = makeStyles(theme => ({
             // transform: "scale(5)",
         }
     },
-    switchContainer: {
-        // marginRight: "25px",
-        // background: "red",
-        border: "1px solid rgba(0, 0, 0, 0.23)",
-        borderRadius: "4px",
-        minHeight: "1.1876em",
+    // switchContainer: {
+    //     // marginRight: "25px",
+    //     // background: "red",
+    //     border: "1px solid rgba(0, 0, 0, 0.23)",
+    //     borderRadius: "4px",
+    //     minHeight: "1.1876em",
 
-    }
+    // }
 }))
 const initialFValues = {
     accountID: '',
@@ -118,6 +119,8 @@ const initialFValues = {
 }
 export const EditAccountForm = (props) => {
     const classes = useStyles();
+
+    // const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
@@ -231,11 +234,7 @@ export const EditAccountForm = (props) => {
 
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>
-                    <div className={classes.iconCloseWrapper}>
-                        <div className={classes.iconClose} onClick={props.handleCloseForm}>
-                            <RiCloseFill />
-                        </div>
-                    </div >
+                    <IconClose handleClose={props.handleCloseForm} />
                     <PageHeader>
                         Chỉnh sửa tài khoản
                     </PageHeader>

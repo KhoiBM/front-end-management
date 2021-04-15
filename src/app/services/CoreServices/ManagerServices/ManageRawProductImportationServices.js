@@ -15,7 +15,7 @@ export class ManageRawProductImportationServices {
 
 
     static view = (data) => {
-        return useHttpModule().get(config.useApiPath.api.manageImportedRawProductServices.viewImportedRawProduct, data)
+        return useHttpModule().post(config.useApiPath.api.manageImportedRawProductServices.viewImportedRawProduct, data)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,
@@ -23,8 +23,8 @@ export class ManageRawProductImportationServices {
         //             records:
         //                 [
         //                     {
-        //                         importedRawProductID: 1,
-        //                         rawProductID: 1,
+        //                         importedRawProductCode: 1,
+        //                         rawProductCode: 1,
         //                         rawProductName: "afb",
         //                         quantity: 1,
         //                         providedBy: "abvc",

@@ -90,58 +90,9 @@ export const NotificationBar = () => {
 
     const useRoleName = config.useRoleName;
 
-    const [recordsNoti, setRecordsNoti] = useState(
-        [
-            {
-                title: "Có đơn hàng mới ",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                actionLinK: "http://localhost:3000/core/manager/statistics",
-                type: "Thông báo từ hệ thống",
-                isView: "false",
-                createdAt: "22-03-2021 17:13:00"
+    const [recordsNoti, setRecordsNoti] = useState([])
 
-            },
-            {
-                title: "Có đơn hàng mới ",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                actionLinK: "http://localhost:3000/core/manager/statistics",
-                type: "Thông báo từ hệ thống",
-                isView: "false",
-                createdAt: "22-03-2021 17:13:00"
-
-            },
-            {
-                title: "Có đơn hàng mới ",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                actionLinK: "http://localhost:3000/core/manager/statistics",
-                type: "Thông báo từ hệ thống",
-                isView: "false",
-                createdAt: "22-03-2021 17:13:00"
-
-            },
-            {
-                title: "Có đơn hàng mới ",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                actionLinK: "http://localhost:3000/core/manager/statistics",
-                type: "Thông báo từ hệ thống",
-                isView: "false",
-                createdAt: "22-03-2021 17:13:00"
-
-            },
-            {
-                title: "Có đơn hàng mới ",
-                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                actionLinK: "http://localhost:3000/core/manager/statistics",
-                type: "Thông báo từ hệ thống",
-                isView: "false",
-                createdAt: "22-03-2021 17:13:00"
-
-            },
-        ]
-    )
-
-
-    const [anchorElPopover, setAnchorElPopover] = React.useState(null);
+    const [anchorElPopover, setAnchorElPopover] = useState(null);
 
     const handleClickPopover = (event) => {
         setAnchorElPopover(event.currentTarget);
@@ -159,17 +110,11 @@ export const NotificationBar = () => {
         isOpen: false,
         title: "",
         content: "",
-        actionLinK: "",
+        actionLink: "",
         type: "",
         isView: false,
         createdAt: ""
     })
-
-
-
-
-
-
 
 
 
@@ -184,8 +129,14 @@ export const NotificationBar = () => {
         // console.log("loadNotiInitRefresh")
     }, [refresh])
 
-
     const loadInit = async () => {
+        loadData()
+        loadCountNoti()
+
+
+    }
+
+    const loadCountNoti = async () => {
 
         try {
             const response = await (await NotificationServices.countNotificationIsToRead()).data
@@ -207,7 +158,42 @@ export const NotificationBar = () => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
+    }
+
+    const loadData = async () => {
+
+        try {
+            const response = await (await NotificationServices.viewNotification()).data
+
+            // console.log("response: " + response)
+
+            if (response && response != null) {
+
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    // console.log("records: " + JSON.stringify(response.info.records))
+
+                    const records = response.info.records
+
+                    setRecordsNoti(records && records != null && records.length > 0 ? records : [])
+
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
+        } catch (err) {
+
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+
         }
 
     }
@@ -233,7 +219,7 @@ export const NotificationBar = () => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
 
     }
@@ -274,7 +260,7 @@ export const NotificationBar = () => {
                             anchorPosition={{ top: 70, left: 1400 }}
                             anchorReference='anchorPosition'
                         >{
-                                recordsNoti && recordsNoti.map((noti, index) => {
+                                recordsNoti && recordsNoti != null && recordsNoti.length > 0 && recordsNoti.map((noti, index) => {
 
                                     // console.log("diff: " + differenceInMinutes(new Date(), noti.createdAt))
                                     // console.log(noti.createdAt)
@@ -294,22 +280,22 @@ export const NotificationBar = () => {
                                         <Paper className={classes.rootCard} key={index} elevation={0}
 
                                             onClick={(event) => {
+
                                                 event.stopPropagation();
+
                                                 setNotificationDialog((prev) => (
                                                     {
                                                         isOpen: true,
                                                         title: noti.title,
                                                         content: noti.content,
-                                                        actionLinK: noti.actionLinK,
+                                                        actionLink: noti.actionLink,
                                                         type: noti.type,
                                                         isView: noti.isView,
-                                                        createdAt: "22-03-2021 17:13:00",
+                                                        // createdAt: "22-03-2021 17:13:00",
+                                                        createdAt: noti.createdAt,
                                                         onIsView: (isView) => { onIsView(isView) }
                                                     }
                                                 )
-
-
-
                                                 )
 
                                             }}
@@ -342,11 +328,7 @@ export const NotificationBar = () => {
                                 )
                             }
 
-
-
                         </Popover>
-
-
 
                     </>
 
@@ -355,7 +337,6 @@ export const NotificationBar = () => {
                 <NotificationDialog notificationDialog={notificationDialog} setNotificationDialog={setNotificationDialog} />
 
             </div >
-
 
         </>
     )
@@ -404,12 +385,8 @@ export const NotificationBar = () => {
 // const handleMenuNoti = (event) => {
 //     setAnchorElMenuNoti(event.currentTarget);
 // };
-
 // const handleCloseMenuNoti = (event) => {
 //     setAnchorElMenuNoti(null);
 // };
-
-
 // const [anchorElMenuNoti, setAnchorElMenuNoti] = useState(null);
-
 // const openMenuNoti = Boolean(anchorElMenuNoti);

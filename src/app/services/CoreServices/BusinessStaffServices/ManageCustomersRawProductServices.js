@@ -119,7 +119,10 @@ export class ManageCustomersRawProductServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode",
+                        rawProductCode: "rawProductCode"
+                    }
                 }
             }
         })
@@ -130,7 +133,10 @@ export class ManageCustomersRawProductServices {
             data: {
                 result: config.useResultStatus.SUCCESS,
                 info: {
-
+                    record: {
+                        categoryCode: "categoryCode",
+                        rawProductCode: "rawProductCode"
+                    }
                 }
             }
         })

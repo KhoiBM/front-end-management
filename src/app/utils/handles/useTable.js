@@ -2,13 +2,26 @@
 /* eslint-disable no-unused-vars */
 
 import React from 'react'
-import { Table, TableContainer, makeStyles, Paper, Typography, TableRow, TableHead, withStyles, TableCell } from '@material-ui/core'
+import { Table, TableContainer, makeStyles, Paper, Typography, TableRow, TableHead, withStyles, TableCell, TableBody } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
+    tableWrapper: {
+        display: "flex",
+        justifyContent: "flex-end",
+        // paddingRight: theme.spacing(6)
+        paddingRight: theme.spacing(2),
+        height: "auto",
+        minHeight: "500px",
+        // backgroundColor: "red",
+    },
     tableContainer: {
         width: "99%",
         marginTop: theme.spacing(10),
-        // backgroundColor: "red"
+        // backgroundColor: "red",
+        height: "auto",
+        minHeight: "300px",
+        marginBottom: theme.spacing(3),
+
 
     },
     table: {
@@ -27,42 +40,74 @@ const useStyles = makeStyles(theme => ({
         }
     }
 }));
-const StyledTableCell = withStyles((theme) => ({
+const StyledTableHeadCell = withStyles((theme) => ({
     root: {
     },
     head: {
-        // fontWeight: "900",
-        // borderTop: "1px solid black"
+        fontWeight: "900",
+        // borderTop: "1px solid black",
+        "& .MuiTypography-root": {
+            fontWeight: '900 !important',
+            color: "#000",
+        }
     },
     body: {
-        // fontWeight: "100",
+        fontWeight: "100",
         // borderBottom: 'none',
     }
 }))(TableCell);
 
+const StyledTableCell = withStyles((theme) => ({
+    root: {
+    },
+    head: {
+        fontWeight: "900",
+
+    },
+    body: {
+        fontWeight: "100",
+        // borderBottom: 'none',
+    }
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+    },
+}))(TableRow);
+
 export const useTable = (records, headCells) => {
     const classes = useStyles();
+
+
+
     const TblContainer = props => (
-        <TableContainer component={Paper} elevation={0} className={classes.tableContainer}>
-            <Table className={classes.table} aria-label="account table">
-                {props.children}
-            </Table>
-        </TableContainer>
+        <div className={classes.tableWrapper}>
+            <TableContainer component={Paper} elevation={0} className={classes.tableContainer}>
+                <Table className={classes.table} aria-label="account table">
+                    {props.children}
+                </Table>
+            </TableContainer>
+        </div>
     )
     const TblHead = props => (
         <TableHead>
             <TableRow >
                 {headCells.map((text, index) =>
-                    <StyledTableCell key={index} >
-                        <Typography variant="subtitle1">  {text}</Typography>
-                    </StyledTableCell>
+                    <StyledTableHeadCell key={index} >
+                        <Typography variant={"body1"}>{text}</Typography>
+                    </StyledTableHeadCell>
                 )
                 }
             </TableRow>
         </TableHead>
     )
+    const TblBody = props => (
+        <TableBody style={{ position: "relative", height: "auto", minHeight: "1000px" }}>
+            {props.children}
+        </TableBody>
+    )
 
-    return { TblContainer, TblHead }
+    return { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell }
 }
 
 

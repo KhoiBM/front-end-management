@@ -28,13 +28,14 @@ export const useLoadPhotoList = (props) => {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     let photoList = response.info.photoList
                     photoList = photoList.filter(url => {
-                        const fileName = url.split("/")[6]
+                        const urlArr = url.split("/")
+                        const fileName = urlArr[urlArr.length - 1]
                         // console.log("url: " + JSON.stringify(fileName.length > 0))
                         return fileName.length > 0
                     })
 
-
-                    console.log("photoList: " + photoList)
+                    // console.trace("photoList:")
+                    console.table(photoList)
 
                     setPhotoList(photoList)
                     // toast.success("Thành công")
