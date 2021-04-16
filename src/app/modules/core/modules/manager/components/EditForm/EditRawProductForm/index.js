@@ -6,7 +6,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat } from 'src/app/utils'
 import { ManageCategory } from '../../../../manager/components'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
@@ -261,7 +261,7 @@ export const EditRawProductForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá đơn vị"
-                                    value={formData.unitPrice}
+                                    value={`${useFormat().formatMoney(formData.unitPrice)} đ`}
                                     name='unitPrice'
                                     onChange={handleInputChange}
                                     error={helperValid.unitPrice ? true : false}

@@ -51,8 +51,23 @@ export const BusinessStaffProcessOrder = () => {
 
                 <div>
 
-                    <TabBar tabArr={["Đơn hàng mới", "Đơn hàng đã chấp nhận", "Đơn hàng đã huỷ"]} />
+                    <TabBar tabArr={[
+                        {
+                            label: "Đơn hàng mới",
+                            onClick: () => { }
+                        },
+                        {
+                            label: "Đơn hàng đã chấp nhận",
+                            onClick: () => { }
+                        },
+                        {
+                            label: "Đơn hàng đã huỷ",
+                            onClick: {}
+                        }
+                    ]} />
+
                     <Divider />
+
                     <TabPanel value={value} index={0}>
                         <ManageNewOrder />
                     </TabPanel>

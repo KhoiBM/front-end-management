@@ -39,7 +39,7 @@ export const useTab = () => {
 
         return (
             <div
-                // role="tabpanel"
+                role="tabpanel"
                 hidden={value !== index}
                 // id={`tabpanel-${index}`}
                 // {...other}
@@ -69,7 +69,7 @@ export const useTab = () => {
                     {
                         props.tabArr && props.tabArr.map((val, index) => {
                             // console.log(val)
-                            return (<Tab label={val} {...a11yProps(index)} key={index} />)
+                            return (<Tab label={val.label} {...a11yProps(index)} key={index} onClick={val.onClick} />)
                             // return (<p>test</p>)
                         })
                     }
@@ -77,12 +77,7 @@ export const useTab = () => {
                 </Tabs>
             </AppBar>
         )
-
-
     }
-
-
-
     return { TabPanel, TabBar, value, handleChange }
 }
 

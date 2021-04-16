@@ -8,13 +8,12 @@ const useStyles = makeStyles(theme => ({
         position: "absolute",
         right: theme.spacing(2),
         top: theme.spacing(2),
+    },
+    iconClose: {
         color: "var(--primary-color-main)",
         // color: "var(--secondary-color-main)",
         transform: "scale(2)",
-        transition: " all 0.3s ease 0s"
-
-    },
-    iconClose: {
+        transition: " all 0.3s ease 0s",
         '&:hover': {
             color: "var(--primary-color-dark)",
             // color: "var(--secondary-color-main)",

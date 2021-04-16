@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles, Grid, Paper, Typography, TextField, Tooltip, Zoom, Button, Box, DialogTitle, Dialog, DialogContent } from '@material-ui/core';
 import { RiInformationLine, RiCheckboxBlankCircleFill } from 'react-icons/ri';
-import { AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload, AiOutlineBlock } from 'react-icons/ai';
 import { ViewCartItemInformation } from '../ViewCartItemInformation';
-import { useFormat, useLoadPhotoList } from 'src/app/utils';
+import { useFormat, useLoadPhotoList, useRefresh } from 'src/app/utils';
 import config from 'src/environments/config';
 import { AddDemoProductPhoto } from '../../modules/technical_staff/components/AddForm/AddDemoProductPhoto';
+import { Personalize } from '../../modules/technical_staff/components/Extra/Personalize';
 
 const useStyles = makeStyles(theme => ({
     cartItemContainer: {
@@ -67,17 +68,25 @@ const useStyles = makeStyles(theme => ({
 ))
 
 export const CartItem = (props) => {
+
+    const role = localStorage.getItem("role");
+    const useRoleName = config.useRoleName;
+
+
     const classes = useStyles();
 
-    const [refresh, setRefresh] = useState(false)
 
     const { recordForCartItem } = props
 
-    const { orderCode, orderDetailCode, rawProductName, size, color, unitPrice, servicePrice, quantity, note } = recordForCartItem
+    const { orderCode, orderDetailCode, categoryCode, rawProductCode, rawProductName, size, color, unitPrice, servicePrice, quantity, note, createdBy } = recordForCartItem
 
     const [cartItemDetailModal, setCartItemDetailModal] = useState({ isOpen: false })
 
     const [addDemoPhotoModal, setAddDemoPhotoModal] = useState({ isOpen: false })
+
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
+
+    const [personalizeModal, setPersonalizeModal] = useState({ isOpen: false })
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
@@ -119,13 +128,11 @@ export const CartItem = (props) => {
     }, [photoList])
 
 
-    const handleRefresh = () => {
-        setRefresh(prev => !prev)
-    }
 
     const handleCloseModal = () => {
         setCartItemDetailModal({ isOpen: false })
         setAddDemoPhotoModal({ isOpen: false })
+        setPersonalizeModal({ isOpen: false })
         handleRefresh()
     }
 
@@ -183,22 +190,52 @@ export const CartItem = (props) => {
 
                         </ Tooltip>
 
-                        <Tooltip TransitionComponent={Zoom} placement="top" title="Tải lên ảnh mẫu sản phẩm">
 
-                            <Button onClick={(event) => {
-                                event.stopPropagation()
-                                const data = {
-                                    orderCode: orderCode,
-                                    orderDetailCode: orderDetailCode
+                        {
+                            // role == useRoleName.technicalStaff &&
+                            <Tooltip TransitionComponent={Zoom} placement="top" title="Tải lên ảnh mẫu sản phẩm">
+
+                                <Button onClick={(event) => {
+                                    event.stopPropagation()
+                                    const data = {
+                                        orderCode: orderCode,
+                                        orderDetailCode: orderDetailCode
+                                    }
+                                    setAddDemoPhotoModal({ isOpen: true, recordForDemoPhoto: data, handleCloseModal })
+
                                 }
-                                setAddDemoPhotoModal({ isOpen: true, recordForDemoPhoto: data, handleCloseModal })
+                                }>
+                                    <AiOutlineCloudUpload />
+                                </Button>
 
-                            }
-                            }>
-                                <AiOutlineCloudUpload />
-                            </Button>
+                            </Tooltip>
+                        }
+                        {
+                            // role == useRoleName.technicalStaff &&
+                            <Tooltip TransitionComponent={Zoom} placement="top" title="Cá nhân hoá">
 
-                        </Tooltip>
+                                <Button onClick={(event) => {
+                                    event.stopPropagation()
+                                    const data = {
+                                        orderCode: orderCode,
+                                        orderDetailCode: orderDetailCode,
+                                        categoryCode: categoryCode,
+                                        rawProductCode: rawProductCode,
+                                        createdBy: createdBy
+                                    }
+                                    setPersonalizeModal({
+                                        isOpen: true,
+                                        recordForPersonalize: data,
+                                        handleCloseModal
+                                    })
+                                }
+                                }>
+                                    <AiOutlineBlock />
+                                </Button>
+
+                            </Tooltip>
+                        }
+
                     </Grid>
                 </Grid>
 
@@ -207,6 +244,8 @@ export const CartItem = (props) => {
             <ViewCartItemInformation cartItemDetailModal={cartItemDetailModal} setCartItemDetailModal={setCartItemDetailModal} />
 
             <AddDemoProductPhoto addDemoPhotoModal={addDemoPhotoModal} setAddDemoPhotoModal={setAddDemoPhotoModal} />
+
+            <Personalize personalizeModal={personalizeModal} setPersonalizeModal={setPersonalizeModal} />
 
         </>
     )

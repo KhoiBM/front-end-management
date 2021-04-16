@@ -100,6 +100,11 @@ const useStyles = makeStyles(theme => ({
             outlineOffset: "4px",
         }
     },
+    iconCloseWrapper: {
+        position: "absolute",
+        right: theme.spacing(3),
+        top: theme.spacing(0.6),
+    }
 }));
 
 export const useCustomStylesAddEditForm = () => {

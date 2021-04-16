@@ -37,7 +37,7 @@ const useApiPath = {
             viewImportedRawProduct: "manager/imported-studio-raw-product-list"
         },
         "photoServices": {
-            getPresignedURLToUpload: "manage/product/upload-photo",
+            getPresignedURLToUpload: "manage/upload-photo",
             getPhotoListByLink: "manage/get-list-photo"
         },
         "manageCategoryServices": {

@@ -3,12 +3,18 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia, Divider } from '@material-ui/core';
 
-
 const useStyles = makeStyles(theme => ({
     rootContainer: {
         width: "100%",
-        height: "100%",
+        height: "auto",
+        minHeight: "15vh",
+        maxHeight: "15vh",
         // backgroundColor: "blue",
+        display: 'flex',
+        justifyContent: "center",
+        alignItems: "center",
+        // border: "1px solid red",
+
 
     },
 
@@ -20,25 +26,20 @@ const useStyles = makeStyles(theme => ({
     },
     rootGrid: {
         width: "100%",
-        minHeight: "700px",
         height: "auto",
-        // border: "1px solid red",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
-    },
-    gridItemShowPhoto: {
-        width: "100%",
-        height: "70vh",
-        // background: "red",
+        minHeight: "15vh",
+        maxHeight: "15vh",
         display: 'flex',
         justifyContent: "center",
         alignItems: "center",
+        // border: "1px solid blue",
         // border: "1px solid rgba(0, 0, 0, 0.23)",
     },
     gridItemGridList: {
         // backgroundColor: "blue",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        // border: "1px solid blue",
         width: "100%",
-        height: "14rem",
+        height: "15vh",
         display: 'flex',
         justifyContent: "flex-start",
         alignItems: "center"
@@ -48,6 +49,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         // flexWrap: 'nowrap',
         // justifyContent: 'space-around',
+        overflow: "scroll",
 
         backgroundColor: theme.palette.background.paper,
         // border: "1px solid red",
@@ -56,8 +58,8 @@ const useStyles = makeStyles(theme => ({
     },
     gridList: {
         // width: "auto",
-        width: "130%",
-        height: "12rem",
+        width: "100% !important",
+        height: "15vh",
         display: 'flex',
         // justifyContent: "space-between !important",
         justifyContent: "flex-start !important",
@@ -70,46 +72,38 @@ const useStyles = makeStyles(theme => ({
     },
     cardMedia: {
         objectFit: "contain",
-        maxWidth: "100%",
-        maxHeight: "100%",
+        maxWidth: "80%",
+        maxHeight: "80%",
         width: 'auto',
         height: 'auto',
         // border: "1px solid blue",
 
     },
-    cardMediaShow: {
-        objectFit: "contain",
-        maxWidth: "100%",
-        maxHeight: "100%",
-        width: 'auto',
-        height: 'auto'
-    },
     gridListTile: {
-        // width: "100px",
-        // minWidth: "100%",
+        overflow: "scroll !important",
+        width: "100px !important",
+        height: "auto",
+        maxHeight: "10vh !important",
         display: 'flex',
         justifyContent: "center !important",
         alignItems: "center",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        border: "1px solid rgba(0, 0, 0, 0.23)",
 
         '& .MuiGridListTile-tile': {
             display: 'flex',
-            justifyContent: "center !important",
-            alignItems: "center",
-            // border: "1px solid ",
-            // borderColor: theme.palette.primary.main
+            // justifyContent: "center !important",
+            alignItems: "center !important",
+            // border: "1px solid red",
 
         }
     }
 }))
 
 
-export const GridPhotoList = (props) => {
+export const GridSelectPhotoList = (props) => {
     const classes = useStyles();
 
-    const { photoList } = props
-
-    const [photoToShow, setPhotoToShow] = useState()
+    const { photoList, setBgPhoto } = props
 
 
     useEffect(() => {
@@ -118,8 +112,8 @@ export const GridPhotoList = (props) => {
 
 
     const loadInit = () => {
-        // console.log("GridPhotoList:" + JSON.stringify(photoList))
-        if (photoList && photoList != null) setPhotoToShow(photoList[0])
+        console.log("GridSelectPhotoList:" + JSON.stringify(photoList))
+        if (photoList && photoList != null) setBgPhoto(photoList[0])
 
     }
 
@@ -128,18 +122,7 @@ export const GridPhotoList = (props) => {
         <>
             <Paper className={classes.rootContainer} elevation={0}>
 
-                <Grid container className={classes.rootGrid} spacing={5}>
-
-                    <Grid item xs={12} sm={12} md={12} className={classes.gridItemShowPhoto}>
-
-                        <img
-                            className={classes.cardMediaShow}
-                            src={photoToShow}
-                            onClick={() => {
-
-                            }}
-                        />
-                    </Grid>
+                <Grid container className={classes.rootGrid} >
 
                     <Grid item xs={12} sm={12} md={12} className={classes.gridItemGridList}>
                         <div className={classes.rootGridList}>
@@ -150,7 +133,7 @@ export const GridPhotoList = (props) => {
                                             className={classes.cardMedia}
                                             src={url}
                                             onClick={() => {
-                                                setPhotoToShow(url)
+                                                setBgPhoto(url)
                                             }}
                                         />
                                     </GridListTile >
@@ -165,3 +148,4 @@ export const GridPhotoList = (props) => {
         </>
     )
 }
+
