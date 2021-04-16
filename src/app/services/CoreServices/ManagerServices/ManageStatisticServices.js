@@ -123,117 +123,117 @@ export class ManageStatisticServices {
 
     }
     static viewNumberOrder = () => {
-        // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    record: {
-                        inWeek: [
-                            {
-                                x: 'Chủ nhật',
-                                y: 12123123
-                            },
-                            {
-                                x: 'Thứ hai',
-                                y: 12123123
-                            },
-                            {
-                                x: 'Thứ ba',
-                                y: 13123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ tư',
-                                y: 19123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ năm',
-                                y: 10123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ sáu',
-                                y: 10123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ bảy',
-                                y: 10123123
-                            }
-                        ],
-                        inMonth: [
-                            {
-                                x: 'Chủ nhật',
-                                y: 12123123
-                            },
-                            {
-                                x: 'Thứ hai',
-                                y: 12123123
-                            },
-                            {
-                                x: 'Thứ ba',
-                                y: 13123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ tư',
-                                y: 19123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ năm',
-                                y: 10123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ sáu',
-                                y: 10123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ bảy',
-                                y: 10123123
-                            }
-                        ],
-                        inYear: [
-                            {
-                                x: 'Chủ nhật',
-                                y: 12123123
-                            },
-                            {
-                                x: 'Thứ hai',
-                                y: 12123123
-                            },
-                            {
-                                x: 'Thứ ba',
-                                y: 13123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ tư',
-                                y: 19123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ năm',
-                                y: 10123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ sáu',
-                                y: 10123123
-                            }
-                            ,
-                            {
-                                x: 'Thứ bảy',
-                                y: 10123123
-                            }
-                        ]
-                    }
-                }
-            }
-        })
+        return useHttpModule().get(config.useApiPath.api.manageStatisticServices.viewNumberOrder)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             record: {
+        //                 inWeek: [
+        //                     {
+        //                         x: 'Chủ nhật',
+        //                         y: 12123123
+        //                     },
+        //                     {
+        //                         x: 'Thứ hai',
+        //                         y: 12123123
+        //                     },
+        //                     {
+        //                         x: 'Thứ ba',
+        //                         y: 13123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ tư',
+        //                         y: 19123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ năm',
+        //                         y: 10123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ sáu',
+        //                         y: 10123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ bảy',
+        //                         y: 10123123
+        //                     }
+        //                 ],
+        //                 inMonth: [
+        //                     {
+        //                         x: 'Chủ nhật',
+        //                         y: 12123123
+        //                     },
+        //                     {
+        //                         x: 'Thứ hai',
+        //                         y: 12123123
+        //                     },
+        //                     {
+        //                         x: 'Thứ ba',
+        //                         y: 13123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ tư',
+        //                         y: 19123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ năm',
+        //                         y: 10123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ sáu',
+        //                         y: 10123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ bảy',
+        //                         y: 10123123
+        //                     }
+        //                 ],
+        //                 inYear: [
+        //                     {
+        //                         x: 'Chủ nhật',
+        //                         y: 12123123
+        //                     },
+        //                     {
+        //                         x: 'Thứ hai',
+        //                         y: 12123123
+        //                     },
+        //                     {
+        //                         x: 'Thứ ba',
+        //                         y: 13123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ tư',
+        //                         y: 19123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ năm',
+        //                         y: 10123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ sáu',
+        //                         y: 10123123
+        //                     }
+        //                     ,
+        //                     {
+        //                         x: 'Thứ bảy',
+        //                         y: 10123123
+        //                     }
+        //                 ]
+        //             }
+        //         }
+        //     }
+        // })
     }
 }   
