@@ -112,7 +112,10 @@ export const AddAccountForm = (props) => {
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     // console.log("recordsRole: " + JSON.stringify(response.info.records))
-                    setRecordsRole(response.info.records ? response.info.records : [])
+
+                    const records = response.info.records
+                    setRecordsRole(records ? records : [])
+                    setFormData({ ...formData, roleID: records[0].roleID });
                     // toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -335,16 +338,7 @@ export const AddAccountForm = (props) => {
                                             labelId="roleID-label"
                                             id="roleID"
                                             value={
-                                                formData.roleID &&
-                                                    formData.roleID != null && formData.roleID.length > 0
-                                                    ? formData.roleID
-                                                    : recordsRole && recordsRole != null && recordsRole.length > 0
-                                                        ? (() => {
-                                                            setFormData({ ...formData, roleID: recordsRole[0].roleID });
-                                                            return recordsRole[0].roleID
-                                                        })()
-                                                        : ""
-
+                                                formData.roleID
                                             }
                                             onChange={handleInputChange}
                                             name="roleID"

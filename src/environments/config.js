@@ -14,7 +14,8 @@ const useApiPath = {
             "confirmForgotPassword": "user/confirm-forgor-password"
         },
         "manageServiceServices": {
-            view: ""
+            view: "",
+            getAll: "manager/get-all-service"
         },
         "manageRawProductServices": {
             view: "homepage/get-list-product"
@@ -47,7 +48,8 @@ const useRegex = {
     regexPassword: /./,
     // regexEmail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
     regexEmail: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/i,
-    regexPhone: /^\d{10,11}$/
+    regexPhone: /^\d{10,11}$/,
+    regexPrice: /^\d{1,}$/,
 }
 //      link: "/core/admin/manage_account"
 const useUserRole = {

@@ -59,7 +59,10 @@ export const AddRawProductForm = (props) => {
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     // console.log("recordsCategory: " + JSON.stringify(response.info.records))
-                    setCategoryRecords(response.info.records ? response.info.records : [])
+
+                    const records = response.info.records
+                    setCategoryRecords(records ? records : [])
+                    setFormData({ ...formData, categoryID: records[0].categoryID });
                     // toast.success("Thành công")
                 } else {
                     toast.error(config.useMessage.resultFailure)
@@ -177,7 +180,7 @@ export const AddRawProductForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá đơn vị"
-                                    value={`${useFormat().formatMoney(formData.unitPrice)} đ`}
+                                    value={formData.unitPrice}
                                     name='unitPrice'
                                     onChange={handleInputChange}
                                     error={helperValid.unitPrice ? true : false}
@@ -254,17 +257,7 @@ export const AddRawProductForm = (props) => {
                                         <Select
                                             labelId="categoryID-label"
                                             id="categoryID"
-                                            value={formData.categoryID &&
-                                                formData.categoryID != null && formData.categoryID.length > 0
-                                                ? formData.categoryID
-                                                : categoryRecords != null && categoryRecords.length > 0
-                                                    ? (() => {
-                                                        setFormData({ ...formData, categoryID: categoryRecords[0].categoryID });
-                                                        return categoryRecords[0].categoryID
-                                                    })()
-                                                    : ""
-
-
+                                            value={formData.categoryID
                                             }
                                             onChange={handleInputChange}
                                             name="categoryID"

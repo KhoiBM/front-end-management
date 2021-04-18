@@ -141,6 +141,43 @@ export const AddCategoryForm = (props) => {
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
 
+    useEffect(() => {
+        loadInit()
+    }, [])
+    {/* formData.serviceID &&
+                                                formData.serviceID != null
+                                                ? formData.serviceID
+                                                : serviceRecords && serviceRecords != null
+                                                    ? (() => {
+                                                        setFormData({ ...formData, serviceID: serviceRecords[0].serviceID });
+                                                        return serviceRecords[0].serviceID
+                                                    })()
+                                                    : ""
+                                                     */}
+    const loadInit = async () => {
+        try {
+            const response = await (await ManageServiceServices.getAll()).data
+            // console.log("response: " + response)
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+                    // console.log("recordsService: " + JSON.stringify(response.info.records))
+                    const records = response.info.records
+                    setServiceRecords(records ? records : [])
+                    setFormData({ ...formData, serviceID: records[0].serviceID });
+                    // toast.success("Thành công")
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+    }
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("formdata: " + JSON.stringify(formData))
@@ -153,30 +190,7 @@ export const AddCategoryForm = (props) => {
         }
     }
 
-    useEffect(() => {
-        loadInit()
-    }, [])
 
-    const loadInit = async () => {
-        try {
-            const response = await (await ManageServiceServices.getAll()).data
-            // console.log("response: " + response)
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    // console.log("recordsService: " + JSON.stringify(response.info.records))
-                    setServiceRecords(response.info.records ? response.info.records : [])
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
-        }
-    }
     const add = async () => {
         try {
             const response = await (await ManageCategoryServices.add(formData)).data
@@ -213,7 +227,7 @@ export const AddCategoryForm = (props) => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
 
     }
@@ -257,6 +271,8 @@ export const AddCategoryForm = (props) => {
                                 />
 
                                 <>
+
+
                                     <FormControl variant="outlined" >
                                         <InputLabel id="serviceID-label" error={helperValid.serviceID ? true : false}>
                                             Dịch vụ
@@ -264,16 +280,7 @@ export const AddCategoryForm = (props) => {
                                         <Select
                                             labelId="serviceID-label"
                                             id="serviceID"
-                                            value={formData.serviceID &&
-                                                formData.serviceID != null && formData.serviceID.length > 0
-                                                ? formData.serviceID
-                                                : serviceRecords != null && serviceRecords.length > 0
-                                                    ? (() => {
-                                                        setFormData({ ...formData, serviceID: serviceRecords[0].serviceID });
-                                                        return serviceRecords[0].serviceID
-                                                    })()
-                                                    : ""}
-
+                                            value={formData.serviceID}
                                             onChange={handleInputChange}
                                             name="serviceID"
                                             labelWidth={60}

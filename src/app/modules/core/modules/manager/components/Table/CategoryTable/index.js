@@ -84,7 +84,7 @@ export const CategoryTable = (props) => {
 
             const switchObj = records.reduce((acc, curr) => {
 
-                acc[`switchID:${curr.categoryID}`] = curr.isActive
+                acc[`switchID:${curr.categoryID}`] = curr.active
 
                 return acc
 
@@ -124,7 +124,7 @@ export const CategoryTable = (props) => {
     const activeOrDeActive = async (row, event) => {
         const data = {
             id: row.categoryID,
-            isActive: !switchCheck[`switchID:${row.categoryID}`]
+            active: !switchCheck[`switchID:${row.categoryID}`]
         }
         // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {

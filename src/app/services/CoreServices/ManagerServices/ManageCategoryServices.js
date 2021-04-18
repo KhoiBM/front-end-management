@@ -55,7 +55,8 @@ export class ManageCategoryServices {
                                 createdAt: "02-02-2020",
                                 updatedAt: "02-02-2020"
                             }
-                        ]
+                        ],
+                    totalPage: 20
                 }
             }
         })
