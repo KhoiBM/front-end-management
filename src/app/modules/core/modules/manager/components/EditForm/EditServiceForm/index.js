@@ -114,6 +114,7 @@ const useStyles = makeStyles(theme => ({
 
 const initialFValues = {
     serviceID: '',
+    serviceCode: '',
     serviceName: '',
     servicePrice: 0,
     description: '',
@@ -223,13 +224,12 @@ export const EditServiceForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá dịch vụ"
-                                    value={`${useFormat().formatMoney(formData.servicePrice)} đ`}
+                                    value={formData.servicePrice}
                                     name='servicePrice'
                                     onChange={handleInputChange}
                                     error={helperValid.servicePrice ? true : false}
                                     helperText={helperValid.servicePrice}
                                     required
-                                    type="number"
                                 />
 
                                 <TextField

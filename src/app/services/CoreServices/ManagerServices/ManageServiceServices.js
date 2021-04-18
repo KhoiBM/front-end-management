@@ -115,48 +115,48 @@ export class ManageServiceServices {
         //     })
         // }
     }
-    static getAll = (data) => {
-        // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    records: [
-                        {
-                            serviceID: "6",
-                            serviceName: "abc6",
-                            description: "abc",
-                            isActive: false,
-                            createdAt: "03-02-2021",
-                            updatedAt: "03-02-2021",
-                        },
-                        {
-                            serviceID: "7",
-                            serviceName: "abc7",
-                            description: "abc",
-                            isActive: false,
-                            createdAt: "03-02-2021",
-                            updatedAt: "03-02-2021",
-                        }, {
-                            serviceID: "8",
-                            serviceName: "abc8",
-                            description: "abc",
-                            isActive: false,
-                            createdAt: "03-02-2021",
-                            updatedAt: "03-02-2021",
-                        }, {
-                            serviceID: "9",
-                            serviceName: "abc9",
-                            description: "abc",
-                            isActive: false,
-                            createdAt: "03-02-2021",
-                            updatedAt: "03-02-2021",
-                        },
-                    ]
+    static getAll = () => {
+        return useHttpModule().post(config.useApiPath.api.manageServiceServices.getAll)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             records: [
+        //                 {
+        //                     serviceID: "6",
+        //                     serviceName: "abc6",
+        //                     description: "abc",
+        //                     isActive: false,
+        //                     createdAt: "03-02-2021",
+        //                     updatedAt: "03-02-2021",
+        //                 },
+        //                 {
+        //                     serviceID: "7",
+        //                     serviceName: "abc7",
+        //                     description: "abc",
+        //                     isActive: false,
+        //                     createdAt: "03-02-2021",
+        //                     updatedAt: "03-02-2021",
+        //                 }, {
+        //                     serviceID: "8",
+        //                     serviceName: "abc8",
+        //                     description: "abc",
+        //                     isActive: false,
+        //                     createdAt: "03-02-2021",
+        //                     updatedAt: "03-02-2021",
+        //                 }, {
+        //                     serviceID: "9",
+        //                     serviceName: "abc9",
+        //                     description: "abc",
+        //                     isActive: false,
+        //                     createdAt: "03-02-2021",
+        //                     updatedAt: "03-02-2021",
+        //                 },
+        //             ]
 
-                }
-            }
-        })
+        //         }
+        //     }
+        // })
     }
     static add = (data) => {
         return useHttpModule().post(config.useApiPath.api.manageServiceServices.add, data)

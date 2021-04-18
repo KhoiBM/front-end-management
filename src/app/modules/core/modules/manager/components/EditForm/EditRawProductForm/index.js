@@ -261,7 +261,7 @@ export const EditRawProductForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá đơn vị"
-                                    value={`${useFormat().formatMoney(formData.unitPrice)} đ`}
+                                    value={formData.unitPrice}
                                     name='unitPrice'
                                     onChange={handleInputChange}
                                     error={helperValid.unitPrice ? true : false}

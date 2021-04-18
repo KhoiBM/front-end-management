@@ -100,6 +100,7 @@ export const useForm = (initialFValues, validOnChange = true) => {
         if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
 
 
+        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice.length > 0 && config.useRegex.regexPrice.test(fieldValues.servicePrice) ? "" : "Giá dịch vụ không hợp lệ"
 
 
 

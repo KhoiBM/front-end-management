@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/react-in-jsx-scope */
 import { MdSupervisorAccount, MdShowChart, MdImportExport } from "react-icons/md";
-import { GrBusinessService, GrCatalog, GrCatalogOption, GrServices } from 'react-icons/gr/'
+import { AiOutlineAppstore, AiOutlineTag, AiOutlineSync } from 'react-icons/ai'
 import { RiProductHuntLine } from "react-icons/ri";
-import { AiOutlineWindows, AiOutlineBorder, AiOutlineAppstore, AiOutlineTag, AiOutlineSync } from 'react-icons/ai'
-import { FcProcess } from 'react-icons/fc'
 const useApiPath = {
     "apiEndpoint": "https://tyadtos4x2.execute-api.ap-southeast-1.amazonaws.com/dev/",
     "api": {
@@ -64,9 +62,7 @@ const useRegex = {
     regexPassword: /./,
     // regexEmail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
     regexEmail: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/i,
-    regexPhone: /^[+]?(\([0-9]{1,4}\))?[0-9]{10,16}$/,
-    regexUsername: /^(?=.{4,50}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
-    regexAddress: /^([0-9]*[a-zA-Z]+[\s,-]?)+$/
+    regexPhone: /^\d{10,11}$/
 }
 //      link: "/core/admin/manage_account"
 const useUserRole = {

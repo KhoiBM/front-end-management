@@ -213,13 +213,12 @@ export const AddServiceForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá dịch vụ"
-                                    value={`${useFormat().formatMoney(formData.servicePrice)} đ`}
+                                    value={formData.servicePrice}
                                     name='servicePrice'
                                     onChange={handleInputChange}
                                     error={helperValid.servicePrice ? true : false}
                                     helperText={helperValid.servicePrice}
                                     required
-                                    type="number"
                                 />
 
 
