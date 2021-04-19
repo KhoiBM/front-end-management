@@ -143,30 +143,33 @@ const photoValidator = (file) => {
     }
     return null
 }
+
 const getFilesFromEvent = async (event) => {
     const files = event.target.files
+    console.info("getFilesFromEvent:" + JSON.stringify(files))
     const promises = []
-    for (let index = 0; index < files.length; index++) {
-        const file = files[index]
-        const promise = new Promise((resolve, reject) => {
-            const image = new Image()
-            let url = URL.createObjectURL(file)
-            image.src = url
-            image.onload = function () {
-                file.width = image.width
-                file.height = image.height
-                file.src = image.src
-                resolve(file)
-            }
-        })
-        promises.push(promise)
+    if (files && files != null) {
+        for (let index = 0; index < files.length; index++) {
+            const file = files[index]
+            const promise = new Promise((resolve, reject) => {
+                const image = new Image()
+                let url = URL.createObjectURL(file)
+                image.src = url
+                image.onload = function () {
+                    file.width = image.width
+                    file.height = image.height
+                    file.src = image.src
+                    resolve(file)
+                }
+            })
+            promises.push(promise)
+        }
     }
-
     return await Promise.all(promises)
 }
 
-
 export const DropZoneUpload = (props) => {
+
     const { sizeContainer = { width: "21.9rem" } } = props
     const classes = useStyles({ widthContainer: sizeContainer.width })
 
@@ -184,9 +187,30 @@ export const DropZoneUpload = (props) => {
     // }, []);
 
     const onDropAccepted =
-        useCallback(acceptedFiles => {
+        useCallback(async acceptedFiles => {
             console.info("acceptedFiles:")
             console.log(acceptedFiles)
+
+            // const promises = []
+            // if (acceptedFiles && acceptedFiles != null) {
+            //     for (let index = 0; index < acceptedFiles.length; index++) {
+            //         const acceptedFile = acceptedFiles[index]
+            //         const promise = new Promise((resolve, reject) => {
+            //             const image = new Image()
+            //             let url = URL.createObjectURL(acceptedFile)
+            //             image.src = url
+            //             image.onload = function () {
+            //                 acceptedFile.width = image.width
+            //                 acceptedFile.height = image.height
+            //                 acceptedFile.src = image.src
+            //                 resolve(acceptedFile)
+            //             }
+            //         })
+            //         promises.push(promise)
+            //     }
+            // }
+            // const uploadFiles = await Promise.all(promises)
+
             setUploadFiles(acceptedFiles)
         }, []);
 

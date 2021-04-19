@@ -146,7 +146,7 @@ export const EditCustomersRawProductForm = (props) => {
         if (recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
         }
-    }, [])
+    }, [recordForEdit])
 
 
     useEffect(() => {

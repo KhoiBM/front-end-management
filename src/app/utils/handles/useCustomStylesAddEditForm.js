@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         zIndex: 999,
         position: "relative",
-        overflow: "scroll",
+        // overflow: "scroll",
 
 
     },

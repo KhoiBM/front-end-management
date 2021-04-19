@@ -23,8 +23,8 @@ export class ManageServiceServices {
                     info: {
                         records: [
                             {
-                                serviceID: "1",
-                                serviceCode: "abc",
+                                serviceID: 1,
+                                serviceCode: "abc1",
                                 serviceName: "abcd",
                                 servicePrice: 100000,
                                 description: "abcd",
@@ -32,41 +32,44 @@ export class ManageServiceServices {
                                 createdAt: "03-02-2021",
                                 updatedAt: "03-02-2021",
                             },
-                            {
-                                serviceID: "2",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                            ,
-                            {
-                                serviceID: "3",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                            ,
-                            {
-                                serviceID: "4",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
-                            ,
-                            {
-                                serviceID: "5",
-                                serviceName: "abc",
-                                description: "abc",
-                                isActive: true,
-                                createdAt: "03-02-2021",
-                                updatedAt: "03-02-2021",
-                            }
+                            // {
+                            //     serviceID: 2,
+                            //     serviceCode: "abc1",
+                            //     serviceName: "abcd",
+                            //     servicePrice: 100000.3,
+                            //     description: "abcd",
+                            //     isActive: true,
+                            //     createdAt: "03-02-2021",
+                            //     updatedAt: "03-02-2021",
+                            // }, {
+                            //     serviceID: 3,
+                            //     serviceCode: "abc1",
+                            //     serviceName: "abcd",
+                            //     servicePrice: 100000.3,
+                            //     description: "abcd",
+                            //     isActive: true,
+                            //     createdAt: "03-02-2021",
+                            //     updatedAt: "03-02-2021",
+                            // }, {
+                            //     serviceID: 4,
+                            //     serviceCode: "abc1",
+                            //     serviceName: "abcd",
+                            //     servicePrice: 100000.3,
+                            //     description: "abcd",
+                            //     isActive: true,
+                            //     createdAt: "03-02-2021",
+                            //     updatedAt: "03-02-2021",
+                            // }, {
+                            //     serviceID: 5,
+                            //     serviceCode: "abc1",
+                            //     serviceName: "abcd",
+                            //     servicePrice: 100000.3,
+                            //     description: "abcd",
+                            //     isActive: true,
+                            //     createdAt: "03-02-2021",
+                            //     updatedAt: "03-02-2021",
+                            // }
+
                         ],
                         totalPage: 20
                     }

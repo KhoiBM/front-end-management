@@ -44,14 +44,13 @@ const useResultStatus = {
 }
 
 const useRegex = {
-    // regexPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
-    regexPassword: /./,
-    // regexEmail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+    regexPassword: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
     regexEmail: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/i,
     regexPhone: /^\d{10,11}$/,
+    // regexPrice: /^([\d]{1,3})([.]\d{3})*$/,
     regexPrice: /^\d{1,}$/,
 }
-//      link: "/core/admin/manage_account"
+// (?=[\\.])
 const useUserRole = {
     administrator:
         [

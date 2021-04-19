@@ -1,41 +1,13 @@
-export const useFormat = () => {
+export const useFormatPrice = () => {
 
-    const formatMoney = (val) => {
+    const formatPriceMoney = (val) => {
         let regex = /[\\.]/gi
 
         if (Number.isInteger(val)) {
 
-            // console.log("isInteger:" + Number.isInteger(val))
+            console.log("isInteger:" + Number.isInteger(val))
 
-            const arr = String(val).split('')
-
-
-            let reverseArr = arr.reverse()
-            let newArr = []
-            let count = 0
-            let result = ''
-
-
-
-
-            reverseArr.forEach((currVal, index) => {
-
-                if (count == 3) {
-                    newArr.push('.')
-                    count = 1
-                } else {
-                    count++
-                }
-
-                newArr.push(currVal)
-
-            }
-            )
-
-
-            result = newArr.reverse().join("")
-
-            return result
+            return val
 
         } else {
             // console.log("isInteger:" + Number.isInteger(val))
@@ -43,7 +15,7 @@ export const useFormat = () => {
             const arrSplitByDot = String(val)
                 .split(/\./gi)
 
-            console.log("arrSplitByDot:" + arrSplitByDot)
+            // console.log("arrSplitByDot:" + arrSplitByDot)
 
 
             const arrToFormat = arrSplitByDot[0]
@@ -109,6 +81,6 @@ export const useFormat = () => {
 
     }
 
-    return { formatMoney }
+    return { formatPriceMoney }
 
 }

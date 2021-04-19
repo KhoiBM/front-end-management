@@ -152,7 +152,7 @@ export const EditRawProductForm = (props) => {
 
     useEffect(() => {
         loadInit()
-    }, [])
+    }, [recordForEdit])
 
     const handleSubmit = (event) => {
         event.preventDefault();

@@ -19,36 +19,40 @@ export const useForm = (initialFValues, validOnChange = true) => {
             ? event.target.checked
             : event.target.value;
 
-        if (name == "gender") {
-            // value = Boolean(value)
-            // console.log(Boolean(value))
-            value = value == "female" ? true : false
-        }
-        if (name == "totalQuantityOfPrintedProduct") {
-            if (Number(value) < 1) {
-                value = 1
+        if (value != null) {
+
+            if (name == "gender") {
+                // value = Boolean(value)
+                // console.log(Boolean(value))
+                value = value == "female" ? true : false
             }
-        }
-
-        if (name == "unitPrice") {
-            if (Number(value) < 0) {
-                value = 0
+            if (name == "totalQuantityOfPrintedProduct") {
+                if (Number(value) < 1) {
+                    value = 1
+                }
             }
-        }
 
-
-        if (name == "servicePrice") {
-            if (Number(value) < 0) {
-                value = 0
+            if (name == "unitPrice") {
+                if (Number(value) < 0) {
+                    value = 0
+                }
             }
+
+
+            if (name == "servicePrice") {
+                if (Number(value) < 0) {
+                    value = 0
+                }
+            }
+
+
+            console.log(name + ": " + value)
+            setFormData({ ...formData, [name]: value });
+            // console.log("formdata" + ": " + JSON.stringify(formData))
+            if (validOnChange) validation({ [name]: value })
+            // validation(formData)
         }
 
-
-        console.log(name + ": " + value)
-        setFormData({ ...formData, [name]: value });
-        // console.log("formdata" + ": " + JSON.stringify(formData))
-        if (validOnChange) validation({ [name]: value })
-        // validation(formData)
     }
     const handleChangeDob = (date) => {
         setDobSelected(date)
@@ -61,11 +65,12 @@ export const useForm = (initialFValues, validOnChange = true) => {
 
     const validation = (fieldValues = formData) => {
         const temp = { ...helperValid };
-        if ('username' in fieldValues) temp.username = fieldValues.username && fieldValues.username.length > 0 ? "" : "Tên người dùng là bắt buộc"
-        if ('email' in fieldValues) temp.email = fieldValues.email && fieldValues.email.length > 0 && config.useRegex.regexEmail.test(fieldValues.email) ? "" : "Email không hợp lệ"
-        if ('password' in fieldValues) temp.password = fieldValues.password && fieldValues.password.length >= 8 && fieldValues.password.length <= 20 && regexPassword.test(fieldValues.password) ? "" : "Mật khẩu là bắt buộc (8 đến 20 ký tự) - Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
+        if ('username' in fieldValues) temp.username = fieldValues.username && fieldValues.username != null && fieldValues.username.length > 0 ? "" : "Tên người dùng là bắt buộc"
+        if ('email' in fieldValues) temp.email = fieldValues.email && fieldValues.email != null && fieldValues.email.length > 0 && config.useRegex.regexEmail.test(fieldValues.email) ? "" : "Email không hợp lệ"
+        if ('password' in fieldValues) temp.password = fieldValues.password && fieldValues.password != null && fieldValues.password.length >= 8 && fieldValues.password.length <= 20 && regexPassword.test(fieldValues.password) ? "" : "Mật khẩu là bắt buộc (8 đến 20 ký tự) - Phải có ít nhất 1 số, 1 chữ thường, 1 chữ in hoa, 1 ký tự đặc biệt"
         if ('rePassword' in fieldValues) {
             temp.rePassword = fieldValues.rePassword
+                && fieldValues.rePassword != null
                 && fieldValues.rePassword.length >= 8
                 && fieldValues.rePassword.length <= 20
                 && regexPassword.test(fieldValues.rePassword)
@@ -89,18 +94,24 @@ export const useForm = (initialFValues, validOnChange = true) => {
             temp.dob = compareYear ? "" : "Ngày sinh không hợp lệ"
         }
 
-        if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName && fieldValues.firstName.length > 0 ? "" : "Tên là bắt buộc"
-        if ('lastName' in fieldValues) temp.lastName = fieldValues.lastName && fieldValues.lastName.length > 0 ? "" : "Họ là bắt buộc"
-        if ('address' in fieldValues) temp.address = fieldValues.address && fieldValues.address.length > 0 ? "" : "Địa chỉ là bắt buộc"
-        if ('phone' in fieldValues) temp.phone = fieldValues.phone && fieldValues.phone.length > 9 && fieldValues.phone.length < 12 && regexPhone.test(fieldValues.phone) ? "" : "Số điện thoại không hợp lệ"
+        if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName && fieldValues.firstName != null && fieldValues.firstName.length > 0 ? "" : "Tên là bắt buộc"
+        if ('lastName' in fieldValues) temp.lastName = fieldValues.lastName && fieldValues.lastName != null && fieldValues.lastName.length > 0 ? "" : "Họ là bắt buộc"
+        if ('address' in fieldValues) temp.address = fieldValues.address && fieldValues.address != null && fieldValues.address.length > 0 ? "" : "Địa chỉ là bắt buộc"
+        if ('phone' in fieldValues) temp.phone = fieldValues.phone && fieldValues.phone != null && fieldValues.phone.length > 9 && fieldValues.phone.length < 12 && regexPhone.test(fieldValues.phone) ? "" : "Số điện thoại không hợp lệ"
 
 
 
 
-        if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
+        if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description != null && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
 
 
-        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice.length > 0 && config.useRegex.regexPrice.test(fieldValues.servicePrice) ? "" : "Giá dịch vụ không hợp lệ"
+        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice != null && fieldValues.servicePrice.length > 0
+            && config.useRegex.regexPrice.test(fieldValues.servicePrice)
+            ? "" : "Giá dịch vụ không hợp lệ"
+
+        if ('unitPrice' in fieldValues) temp.unitPrice = fieldValues.unitPrice && fieldValues.unitPrice != null && fieldValues.unitPrice.length > 0
+            && config.useRegex.regexPrice.test(fieldValues.unitPrice)
+            ? "" : "Giá không hợp lệ"
 
 
 

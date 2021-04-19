@@ -143,7 +143,7 @@ export const EditCategoryForm = (props) => {
             setFormData({ ...formData, ...recordForEdit })
         }
         loadInit()
-    }, [])
+    }, [recordForEdit])
 
     // useEffect(() => {
 
