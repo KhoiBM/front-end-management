@@ -219,6 +219,7 @@ export const AddServiceForm = (props) => {
                                     error={helperValid.servicePrice ? true : false}
                                     helperText={helperValid.servicePrice}
                                     required
+                                    type="number"
                                 />
 
 

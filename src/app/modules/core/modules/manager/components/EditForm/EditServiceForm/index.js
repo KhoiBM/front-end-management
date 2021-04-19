@@ -116,7 +116,7 @@ const initialFValues = {
     serviceID: '',
     serviceCode: '',
     serviceName: '',
-    servicePrice: 0,
+    // servicePrice: 0,
     description: '',
     isActive: true,
     updatedAt: new Date()
@@ -231,6 +231,7 @@ export const EditServiceForm = (props) => {
                                     error={helperValid.servicePrice ? true : false}
                                     helperText={helperValid.servicePrice}
                                     required
+                                    type="number"
                                 />
 
                                 <TextField
