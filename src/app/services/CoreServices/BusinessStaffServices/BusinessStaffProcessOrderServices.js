@@ -15,7 +15,7 @@ export class BusinessStaffProcessOrderServices {
 
 
     static viewNewOrder = (data) => {
-        // return useHttpModule().get(config.useApiPath.api., data)
+        // return useHttpModule().post(config.useApiPath.api., data)
         if (data.page == 1) {
             return Promise.resolve({
                 data: {
@@ -153,7 +153,7 @@ export class BusinessStaffProcessOrderServices {
 
     static viewAcceptedOrder = (data) => {
         console.log("filterListViewAcceptedOrder: " + data.filterBy)
-        // return useHttpModule().get(config.useApiPath.api., data)
+        // return useHttpModule().post(config.useApiPath.api., data)
         if (data.page == 1) {
             return Promise.resolve({
                 data: {
@@ -257,7 +257,7 @@ export class BusinessStaffProcessOrderServices {
     }
 
     static viewCanceledOrder = (data) => {
-        // return useHttpModule().get(config.useApiPath.api., data)
+        // return useHttpModule().post(config.useApiPath.api., data)
         if (data.page == 1) {
             return Promise.resolve({
                 data: {
@@ -374,7 +374,7 @@ export class BusinessStaffProcessOrderServices {
     }
 
     static viewOrderDetail = (data) => {
-        // return useHttpModule().get(config.useApiPath.api., data)
+        // return useHttpModule().post(config.useApiPath.api., data)
         return Promise.resolve({
             data: {
                 result: config.useResultStatus.SUCCESS,

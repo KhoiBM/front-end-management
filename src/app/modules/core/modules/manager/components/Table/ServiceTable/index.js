@@ -90,7 +90,7 @@ export const ServiceTable = (props) => {
 
             const switchObj = records.reduce((acc, curr) => {
 
-                acc[`switchID:${curr.serviceID}`] = curr.isActive
+                acc[`switchID:${curr.serviceID}`] = curr.active
 
                 return acc
 
@@ -131,7 +131,7 @@ export const ServiceTable = (props) => {
     const activeOrDeActive = async (row, event) => {
         const data = {
             id: row.serviceID,
-            isActive: !switchCheck[`switchID:${row.serviceID}`]
+            active: !switchCheck[`switchID:${row.serviceID}`]
         }
         // toast.dark(`test switchID:${row.id}: ${!switchCheck[`switchID:${row.id}`]}`)
         // if (switchCheck[`switchID:${row.id}`]) {
@@ -180,6 +180,9 @@ export const ServiceTable = (props) => {
                                     {`${useFormat().formatMoney(row.servicePrice)} đ`}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>
 
+                                <StyledTableCell >{row.active ? "đã kích hoạt" : "vô hiệu hoá"}</StyledTableCell>
+
+                                {/* 
                                 <StyledTableCell>
                                     <Switch
                                         color="primary"
@@ -188,7 +191,7 @@ export const ServiceTable = (props) => {
                                         name={`switchID:${row.serviceID}`}
                                         onClick={handleChangeStatus(row)}
                                     />
-                                </StyledTableCell>
+                                </StyledTableCell> */}
 
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>

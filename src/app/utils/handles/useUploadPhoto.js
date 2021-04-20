@@ -6,6 +6,8 @@ import { v5 as uuidv5 } from 'uuid';
 import { PhotoServices } from 'src/app/services/CoreServices/PhotoServices/index.js'
 export const useUploadPhoto = () => {
     const uploadPhoto = async (uploadInfo, uploadFiles) => {
+        console.log("uploadFiles:" + JSON.stringify(uploadFiles))
+        console.log(uploadFiles)
 
         getPresignedURLToUpload(uploadInfo, uploadFiles, uploadPhotoWithPresignedURL)
 
@@ -14,7 +16,8 @@ export const useUploadPhoto = () => {
     const getPresignedURLToUpload = async (uploadInfo, uploadFiles, uploadPhotoWithPresignedURL) => {
 
         uploadFiles.forEach(async (uploadFile, index) => {
-
+            console.log("uploadFile:" + JSON.stringify(uploadFile))
+            console.log(uploadFile)
             try {
 
                 const uuid = `${uuidv5(uploadFile.name, uuidv4())}`

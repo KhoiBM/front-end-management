@@ -312,14 +312,15 @@ disabled
                                             label="Ghi chú"
                                             value={recordOrder.note}
                                             name='note'
-                                        // required
-                                        // disabled
+                                            // required
+                                            // disabled
+                                            multiline
                                         />
                                         <TextField
                                             variant='outlined'
                                             label="Ngày tạo"
                                             value={recordOrder.createdAt}
-                                            name='note'
+                                            name='createdAt'
                                         // size="medium"
                                         // required
                                         // disabled
@@ -328,7 +329,7 @@ disabled
                                             variant='outlined'
                                             label="Ngày sửa đổi"
                                             value={recordOrder.updatedAt}
-                                            name='note'
+                                            name='updatedAt'
                                         // size="medium" 
                                         // required
                                         // disabled
