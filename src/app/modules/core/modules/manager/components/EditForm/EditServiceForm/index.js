@@ -6,7 +6,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat, useFormatPrice } from 'src/app/utils'
 import { ManageServices } from '../../../../manager/components'
 import { ManageServiceServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
@@ -116,7 +116,7 @@ const initialFValues = {
     serviceID: '',
     serviceCode: '',
     serviceName: '',
-    servicePrice: 0,
+    // servicePrice: 0,
     description: '',
     isActive: true,
     updatedAt: new Date()
@@ -140,7 +140,7 @@ export const EditServiceForm = (props) => {
         if (recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
         }
-    }, [])
+    }, [recordForEdit])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -224,12 +224,14 @@ export const EditServiceForm = (props) => {
                                 <TextField
                                     variant='outlined'
                                     label="Giá dịch vụ"
+                                    // value={`${useFormatPrice().formatPriceMoney(formData.servicePrice)}`}
                                     value={formData.servicePrice}
                                     name='servicePrice'
                                     onChange={handleInputChange}
                                     error={helperValid.servicePrice ? true : false}
                                     helperText={helperValid.servicePrice}
                                     required
+                                    type="number"
                                 />
 
                                 <TextField

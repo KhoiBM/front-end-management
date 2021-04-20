@@ -148,7 +148,7 @@ export const EditPrintedProductForm = (props) => {
             setFormData(prevformdata => ({ ...prevformdata, ...recordForEdit, totalQuantityOfPrintedProduct: recordForEdit.totalQuantity }))
             console.log("recordForEdit: " + JSON.stringify(recordForEdit))
         }
-    }, [])
+    }, [recordForEdit])
 
     useEffect(() => {
         loadInit()
