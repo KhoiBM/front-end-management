@@ -257,7 +257,7 @@ export const AddAccountForm = (props) => {
                                 /> */}
 
 
-                                <FormControl variant="outlined">
+                                {/* <FormControl variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Mật khẩu</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-password"
@@ -291,8 +291,8 @@ export const AddAccountForm = (props) => {
                                     </FormHelperText>
 
                                 </FormControl>
-
-
+ */}
+                                {/* 
                                 <FormControl variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-rePassword">Nhập lại mật khẩu</InputLabel>
                                     <OutlinedInput
@@ -326,7 +326,7 @@ export const AddAccountForm = (props) => {
                                     }}>{helperValid.rePassword}
                                     </FormHelperText>
                                 </FormControl>
-
+ */}
 
 
                                 <>

@@ -251,17 +251,7 @@ export const EditAccountForm = (props) => {
                                     helperText={helperValid.username}
                                     required
                                 />
-                                <TextField
-                                    variant='outlined'
-                                    label="Email"
-                                    value={formData.email}
-                                    name="email"
-                                    onChange={handleInputChange}
-                                    error={helperValid.email ? true : false}
-                                    helperText={helperValid.email}
-                                    required
-                                // {...(helperValid & { error: true, helperText: helperValid })}
-                                />
+
                                 {/* <TextField
                                     variant='outlined'
                                     label="Mật khẩu"
