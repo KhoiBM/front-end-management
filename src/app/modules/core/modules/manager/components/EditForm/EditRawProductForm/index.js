@@ -327,7 +327,7 @@ export const EditRawProductForm = (props) => {
                                     multiline
                                 />
 
-                                <>
+                                {/* <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="categoryID-label">
                                             Thể loại
@@ -356,20 +356,7 @@ export const EditRawProductForm = (props) => {
                                         }}>{helperValid.categoryID}
                                         </FormHelperText>
                                     </FormControl>
-                                </>
-                                {/* <div>
-                                    <FormControlLabel
-                                        label="Trạng thái:"
-                                        labelPlacement="start"
-                                        control={<Switch
-                                            color="primary"
-                                            checked={formData.isActive}
-                                            onChange={handleInputChange}
-                                            name="isActive"
-                                        />}
-                                    />
-                                    <FormHelperText>{helperValid.isActive}</FormHelperText>
-                                </div> */}
+                                </> */}
 
 
                             </Grid>

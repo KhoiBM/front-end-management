@@ -263,7 +263,7 @@ export const EditCategoryForm = (props) => {
                                 />
 
 
-                                <>
+                                {/* <>
                                     <FormControl variant="outlined" >
                                         <InputLabel id="serviceID-label" error={helperValid.serviceID ? true : false}>
                                             Dịch vụ
@@ -299,7 +299,7 @@ export const EditCategoryForm = (props) => {
                                         </FormHelperText>
                                     </FormControl>
 
-                                </>
+                                </> */}
                                 <div>
                                     <FormControlLabel
                                         label="Trạng thái:"
