@@ -169,7 +169,9 @@ export const CategoryTable = (props) => {
                             <StyledTableCell >{row.categoryName}</StyledTableCell>
                             <StyledTableCell >{row.description}</StyledTableCell>
 
-                            <StyledTableCell>
+                            <StyledTableCell >{row.active ? "đã kích hoạt" : "vô hiệu hoá"}</StyledTableCell>
+
+                            {/* <StyledTableCell>
                                 <Switch
                                     color="primary"
                                     checked={switchCheck[`switchID:${row.categoryID}`]}
@@ -177,7 +179,7 @@ export const CategoryTable = (props) => {
                                     name={`switchID:${row.categoryID}`}
                                     onClick={handleChangeStatus(row)}
                                 />
-                            </StyledTableCell>
+                            </StyledTableCell> */}
 
                             <StyledTableCell >{row.serviceName}</StyledTableCell>
 

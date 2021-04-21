@@ -114,7 +114,7 @@ const useStyles = makeStyles(theme => ({
 const initialFValues = {
     rawProductID: '',
     rawProductName: '',
-    unitPrice: '',
+    // unitPrice: '',
     totalQuantity: 0,
     size: '',
     color: '#000',
@@ -256,7 +256,7 @@ export const EditCustomersRawProductForm = (props) => {
                                     helperText={helperValid.rawProductName}
                                     required
                                 />
-                                <TextField
+                                {/* <TextField
                                     variant='outlined'
                                     label="Giá đơn vị"
                                     value={formData.unitPrice}
@@ -266,7 +266,7 @@ export const EditCustomersRawProductForm = (props) => {
                                     helperText={helperValid.unitPrice}
                                     required
                                     type="number"
-                                />
+                                /> */}
                                 {/* <TextField
                                     variant='outlined'
                                     label="Tổng số lượng"

@@ -14,8 +14,8 @@ const AuthRoutes = () => {
             <Switch>
                 <Route exact path={path} render={() => <Redirect to={`${path}/signin`} />} />
                 <Route path={`${path}/signin`} component={SignInPage} />
-                <Route path={`${path}/signup`} component={SignUpPage} />
-                <Route path={`${path}/confirm_code`} component={ConfirmCodePage} />
+                {/* <Route path={`${path}/signup`} component={SignUpPage} /> */}
+                {/* <Route path={`${path}/confirm_code`} component={ConfirmCodePage} /> */}
                 <Route path={`${path}/forgotpassword`} component={ForgotPasswordPage} />
                 <Route path={`${path}/confirm_forgotpassword`} component={ConfirmForgotPasswordPage} />
                 <Route component={NoMatch} />

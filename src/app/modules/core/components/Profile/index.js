@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         // overflow: "scroll",
         // border: "1px solid red",
         '& .MuiFormControl-root': {
-            width: '200%',
+            width: '100%',
             height: "auto",
             marginBottom: theme.spacing(3),
             // border: "1px solid red",
@@ -216,7 +216,7 @@ export const Profile = () => {
 
                         <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
                             <Grid container>
-                                <Grid item xs={12} sm={12} md={6}>
+                                <Grid item xs={12} sm={12} md={12}>
                                     <TextField
                                         variant='outlined'
                                         label="Tên"

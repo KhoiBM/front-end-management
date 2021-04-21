@@ -15,7 +15,7 @@ export class ManageCategoryServices {
     // }
 
     static view = (data) => {
-        return useHttpModule().post(config.useApiPath.api.manageCategoryServices.view, data)
+        return useHttpModule().get(config.useApiPath.api.manageCategoryServices.view, data)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,
@@ -28,7 +28,7 @@ export class ManageCategoryServices {
         //                         description: 'abc',
         //                         serviceID: 6,
         //                         serviceName: "abc6",
-        //                         isActive: true,
+        //                         active: true,
         //                         createdAt: "02-02-2020",
         //                         updatedAt: "02-02-2020"
         //                     },
@@ -39,7 +39,7 @@ export class ManageCategoryServices {
         //                         description: 'abc',
         //                         serviceID: 7,
         //                         serviceName: "abc7",
-        //                         isActive: true,
+        //                         active: true,
         //                         createdAt: "02-02-2020",
         //                         updatedAt: "02-02-2020"
         //                     }
@@ -51,11 +51,12 @@ export class ManageCategoryServices {
         //                         description: 'abc',
         //                         serviceID: 8,
         //                         serviceName: "abc8",
-        //                         isActive: true,
+        //                         active: true,
         //                         createdAt: "02-02-2020",
         //                         updatedAt: "02-02-2020"
         //                     }
-        //                 ]
+        //                 ],
+        //             totalPage: 20
         //         }
         //     }
         // })

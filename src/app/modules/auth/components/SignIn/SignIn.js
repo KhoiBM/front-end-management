@@ -160,12 +160,12 @@ const SignIn = ({ toggle, isVisible }) => {
                         </form >
                     </section >
 
-                    <section className={styles["signup-nav-wrapper"]}>
+                    {/* <section className={styles["signup-nav-wrapper"]}>
                         <span>Chưa có tài khoản? </span>
                         <Link to="/auth/signup">
                             <button className={styles["btn-nav-signup"]}>Tạo tài khoản.</button>
                         </Link>
-                    </section>
+                    </section> */}
 
                 </div >
             )

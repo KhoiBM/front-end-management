@@ -16,7 +16,7 @@ export class TechnicalStaffProcessOrderServices {
 
     static viewAcceptedOrder = (data) => {
         console.log("filterListViewAcceptedOrder: " + data.filterBy)
-        // return useHttpModule().get(config.useApiPath.api., data)
+        // return useHttpModule().post(config.useApiPath.api., data)
         if (data.page == 1) {
             return Promise.resolve({
                 data: {

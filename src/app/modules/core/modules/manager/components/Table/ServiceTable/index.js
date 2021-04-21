@@ -180,6 +180,9 @@ export const ServiceTable = (props) => {
                                     {`${useFormat().formatMoney(row.servicePrice)} đ`}</StyledTableCell>
                                 <StyledTableCell >{row.description}</StyledTableCell>
 
+                                <StyledTableCell >{row.active ? "đã kích hoạt" : "vô hiệu hoá"}</StyledTableCell>
+
+                                {/* 
                                 <StyledTableCell>
                                     <Switch
                                         color="primary"
@@ -188,7 +191,7 @@ export const ServiceTable = (props) => {
                                         name={`switchID:${row.serviceID}`}
                                         onClick={handleChangeStatus(row)}
                                     />
-                                </StyledTableCell>
+                                </StyledTableCell> */}
 
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
