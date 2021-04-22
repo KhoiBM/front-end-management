@@ -6,15 +6,21 @@ import useImage from 'use-image';
 const useStyles = makeStyles(theme => ({
     stageContainer: {
         // width: "30rem",
-        width: "700px !important",
+        width: "100% !important",
         height: "auto",
-        minHeight: "600px !important",
+        minHeight: "100% !important",
         display: 'flex',
         justifyContent: "center !important",
-        alignItems: "center",
+        alignItems: "center !important",
         // background: "red",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        border: "1px solid rgba(0, 0, 0, 0.23)",
         // backgroundImage: ({ bgPhoto }) => (`url("${bgPhoto && bgPhoto != null ? bgPhoto : ''}")`)
+        "& .konvajs-content": {
+            // display: 'flex',
+            // justifyContent: "center !important",
+            // alignItems: "center !important",
+        }
+
     },
     cardMedia: {
         objectFit: "contain",
@@ -31,6 +37,7 @@ const URLImage = ({ image }) => {
     const [img] = useImage(`${image.src}`);
 
     const [scaledImage, setScaledImage] = useState({ ...img })
+    console.log("image:" + JSON.stringify(image))
     console.log("scaledImage:" + JSON.stringify(scaledImage))
     useEffect(() => {
         if (img && img != null) {
@@ -62,8 +69,8 @@ const URLImage = ({ image }) => {
     return (
         <Image
             image={img}
-            x={scaledImage.x}
-            y={scaledImage.y}
+            x={image.x - 130}
+            y={image.y - 60}
 
             strokeWidth={2}
             // stroke={"red"}
@@ -105,10 +112,10 @@ const URLBGImage = ({ image }) => {
     useEffect(() => {
         if (img && img != null) {
             console.table(JSON.stringify(img))
-            console.log("width:" + JSON.stringify(img.width))
-            console.log("height:" + JSON.stringify(img.height))
+            // console.log("width:" + JSON.stringify(img.width))
+            // console.log("height:" + JSON.stringify(img.height))
             const data = getScaledImageCoordinates(700, 600, img.width, img.height)
-            console.log("data: " + JSON.stringify(data))
+            // console.log("data: " + JSON.stringify(data))
             setScaledImage(data)
         }
 
@@ -139,7 +146,7 @@ const URLBGImage = ({ image }) => {
             // width={scaledImage ? scaledImage.width : 0}
             // height={scaledImage ? scaledImage.height : 0}
 
-            offsetX={scaledImage ? -(scaledImage.newWidth / 2) : 0}
+            offsetX={scaledImage ? -(scaledImage.newWidth / 1) : 0}
             offsetY={scaledImage ? -(scaledImage.newHeight / 10) : 0}
 
         />
@@ -212,7 +219,7 @@ export const StageKonvaContainer = (props) => {
                 <Stage
                     className={classes.stageContainer}
                     ref={stageRef}
-                    width={stageWidth * 0.7} height={stageHeight * 0.6}
+                    width={stageWidth * 1.1} height={stageHeight * 0.6}
                     onMouseDown={checkDeselect}
                     onTouchStart={checkDeselect}
                 >
