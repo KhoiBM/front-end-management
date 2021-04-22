@@ -203,6 +203,7 @@ export const StageKonvaContainer = (props) => {
                             }
                         ])
                     );
+                    dragUrl.current = ""
                 }}
                 onDragOver={(e) => e.preventDefault()}
             >

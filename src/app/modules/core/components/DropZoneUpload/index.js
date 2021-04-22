@@ -155,8 +155,8 @@ export const DropZoneUpload = (props) => {
     const mimeTypes = "image/png, image/jpg, image/jpeg"
     // const mimeTypes = ""
     // 5242880    5Mb
-    // const maxSize = 1048576;
-    const maxSize = 5242880;
+    const maxSize = 10485760;
+    // const maxSize = 5242880;
 
 
 
@@ -272,7 +272,7 @@ export const DropZoneUpload = (props) => {
                 <Box component="div" className={classes.rootListPreview} > */}
                 {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
 
-                    <Card key={index} className={classes.photoPreviewCard}>
+                    <Card elevation={0} key={index} className={classes.photoPreviewCard}>
                         <Tooltip TransitionComponent={Zoom} placement="left" title={acceptedFile.name} >
 
                             <CardMedia image={acceptedFile.src} className={classes.photoPreview}

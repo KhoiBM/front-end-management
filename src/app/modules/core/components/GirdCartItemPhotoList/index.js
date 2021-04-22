@@ -38,18 +38,6 @@ export const GirdCartItemPhotoList = (props) => {
 
             switch (value) {
                 case 0:
-                    bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
-                    folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
-                    fileKey = `${folder}/${orderCode}/${orderDetailCode}/ToPrint/`
-
-                    break;
-                case 1:
-                    bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
-                    folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
-                    fileKey = `${folder}/${orderCode}/${orderDetailCode}/Preview/`
-
-                    break;
-                case 2:
                     switch (recordForGridCartItemPhotoList.createdBy) {
                         case "Khách hàng":
                             bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
@@ -64,12 +52,26 @@ export const GirdCartItemPhotoList = (props) => {
                     }
 
                     break;
+                case 1:
+                    bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
+                    folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
+                    fileKey = `${folder}/${orderCode}/${orderDetailCode}/ToPrint/`
+
+                    break;
+                case 2:
+
+                    bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
+                    folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
+                    fileKey = `${folder}/${orderCode}/${orderDetailCode}/Preview/`
+
+                    break;
                 case 3:
                     bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
                     folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
                     fileKey = `${folder}/${orderCode}/${orderDetailCode}/Demo/`
                     break;
             }
+
             loadPhotoList(bucketName, fileKey)
 
 
@@ -93,15 +95,16 @@ export const GirdCartItemPhotoList = (props) => {
 
             <TabBar tabArr={[
                 {
+                    label: "Hình sản phẩm thô",
+
+                    onClick: () => { }
+                },
+                {
                     label: "Hình để in",
                     onClick: () => { }
                 },
                 {
                     label: "Hình xem trước",
-                    onClick: () => { }
-                },
-                {
-                    label: "Hình sản phẩm thô",
                     onClick: {}
                 }
                 ,
