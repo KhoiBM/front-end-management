@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react'
-import { PageHeader, DropZoneUploadBar } from 'src/app/modules/core/components'
+import { PageHeader, DropZoneUploadBar, GridCustomersPhotoToPrint } from 'src/app/modules/core/components'
 import { IconClose } from 'src/app/components'
-import { DialogContent, DialogTitle, Dialog, Slide, makeStyles, Grid, Button } from '@material-ui/core'
+import { DialogContent, DialogTitle, Dialog, Slide, makeStyles, Grid, Button, Box } from '@material-ui/core'
 import { useUploadPhoto } from 'src/app/utils'
 import { RiCloseFill } from 'react-icons/ri'
 import MainPersonalize from 'src/app/modules/core/components/PersonalizeComponents/MainPersonalize'
@@ -64,15 +64,16 @@ const useStyles = makeStyles(theme => ({
         minHeight: "95vh",
         overflow: "scroll !important",
     },
-    gridItemUpload: {
+    gridItemSideBar: {
         width: "100%",
         height: "auto",
         // background: "orange",
         display: "flex",
-        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
         border: "1px solid rgb(0,0,0,0.23)",
         overflow: "scroll !important",
-        paddingTop: theme.spacing(2)
+
     },
     gridItemMain: {
         width: "100%",
@@ -82,6 +83,23 @@ const useStyles = makeStyles(theme => ({
         borderBottom: "1px solid rgb(0,0,0,0.23)",
         // background: "red",
         overflow: "hidden !important",
+    },
+    uploadZoneWrapper: {
+        width: "100%",
+        height: "50%",
+        paddingTop: theme.spacing(1),
+        // border: "1px solid rgb(0,0,0,0.23)",
+        display: "flex",
+        justifyContent: "center",
+    },
+    customersPhotoToPrintWrapper: {
+        width: "100%",
+        height: "50%",
+        paddingTop: theme.spacing(1),
+        // border: "1px solid rgb(0,0,0,0.23)",
+        display: "flex",
+        justifyContent: "center",
+
     }
 }))
 
@@ -98,6 +116,8 @@ export const Personalize = (props) => {
 
     const { isOpen, recordForPersonalize, handleCloseModal } = personalizeModal
 
+    // const { orderCode, orderDetailCode, categoryCode, rawProductCode, createdBy } = recordForPersonalize
+
     const [uploadFiles, setUploadFiles] = useState([])
 
     const { uploadPhoto } = useUploadPhoto()
@@ -106,8 +126,15 @@ export const Personalize = (props) => {
 
     const stageRef = useRef();
 
+    const [recordToUse, setRecordToUse] = useState({})
+
+    console.log("recordToUse: " + JSON.stringify(recordToUse))
+
     useEffect(() => {
-        // console.log("recordForPersonalize: " + JSON.stringify(recordForPersonalize))
+        console.log("recordForPersonalize: " + JSON.stringify(recordForPersonalize))
+        if (recordForPersonalize && recordForPersonalize != null) {
+            setRecordToUse(recordForPersonalize)
+        }
     }, [recordForPersonalize])
 
     const handleSubmit = (event) => {
@@ -133,14 +160,26 @@ export const Personalize = (props) => {
 
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
                         <Grid container className={classes.rootGridContainer}>
-                            <Grid item xs={2} sm={2} md={2} className={classes.gridItemUpload}>
-                                <DropZoneUploadBar setUploadFiles={setUploadFiles} sizeContainer={{ width: "15vw" }}
-                                    dragUrl={dragUrl}
-                                />
+                            <Grid item xs={2} sm={2} md={2} className={classes.gridItemSideBar}>
+                                <Box className={classes.uploadZoneWrapper}>
+                                    <DropZoneUploadBar
+                                        setUploadFiles={setUploadFiles}
+                                        sizeContainer={{ width: "15vw" }}
+                                        dragUrl={dragUrl}
+                                    />
+                                </Box>
+                                <Box className={classes.customersPhotoToPrintWrapper}>
+                                    <GridCustomersPhotoToPrint
+                                        recordForCustomersPhotoToPrint={{ orderCode: recordToUse.orderCode, orderDetailCode: recordToUse.orderDetailCode }}
+                                        sizeContainer={{ width: "15vw" }}
+                                        dragUrl={dragUrl}
+                                    />
+                                </Box>
+
                             </Grid>
                             <Grid item xs={10} sm={10} md={10} className={classes.gridItemMain}>
                                 <MainPersonalize
-                                    recordForMainPersonalize={recordForPersonalize}
+                                    recordForMainPersonalize={recordToUse}
                                     dragUrl={dragUrl}
                                     stageRef={stageRef}
                                 />

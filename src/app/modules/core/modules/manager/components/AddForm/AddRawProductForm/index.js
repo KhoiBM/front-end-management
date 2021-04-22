@@ -29,7 +29,6 @@ const initialFValues = {
     color: '#000',
     description: '',
     categoryID: "",
-    isActive: true,
     createdAt: new Date()
 }
 
@@ -107,7 +106,7 @@ export const AddRawProductForm = (props) => {
                 color: formData.color,
                 description: formData.description,
                 categoryID: formData.categoryID,
-                isActive: true,
+                // isActive: true,
                 // createdAt: new Date()
 
             }

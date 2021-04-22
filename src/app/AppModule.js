@@ -73,7 +73,7 @@ const AppModule = () => {
                     {/* <p>AppModule</p> */}
 
                     <ToastContainer
-                        position="top-right"
+                        position="bottom-center"
                         autoClose={3000}
                         hideProgressBar={false}
                         newestOnTop={true}

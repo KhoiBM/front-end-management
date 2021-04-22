@@ -55,7 +55,17 @@ const useStyles = makeStyles((theme) => ({
         // border: "1px solid rgba(0, 0, 0, 0.23)",
         // backgroundColor: "blue",
         marginLeft: theme.spacing(1),
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing(1),
+        // borderRadius: "4px",
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+        transition: "all 0.2 ease -in -out",
+        // border: "1px solid red",
+
+        '&:hover': {
+            // transform: "scale(1.02)",
+            transition: "all 0.2 ease -in -out",
+            cursor: "pointer"
+        }
 
     },
     photoPreview: {
@@ -79,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(24),
         // width: '100%',
         // height: "auto",
-        minHeight: "75%",
-        maxHeight: "75%",
+        minHeight: "30%",
+        maxHeight: "30%",
         overflowY: "scroll !important",
         padding: theme.spacing(1),
         backgroundColor: theme.palette.background.paper,
@@ -176,8 +186,8 @@ export const DropZoneUploadBar = (props) => {
     const mimeTypes = "image/png, image/jpg, image/jpeg"
     // const mimeTypes = ""
     // 5242880    5Mb
-    // const maxSize = 1048576;
-    const maxSize = 5242880;
+    const maxSize = 10485760;
+    // const maxSize = 5242880;
 
 
 
@@ -186,10 +196,34 @@ export const DropZoneUploadBar = (props) => {
     // }, []);
 
     const onDropAccepted =
-        useCallback(acceptedFiles => {
+        useCallback(async acceptedFiles => {
             console.info("acceptedFiles:")
             console.log(acceptedFiles)
-            setUploadFiles(acceptedFiles)
+
+            const promises = []
+            if (acceptedFiles && acceptedFiles != null) {
+                for (let index = 0; index < acceptedFiles.length; index++) {
+                    const acceptedFile = acceptedFiles[index]
+                    const promise = new Promise((resolve, reject) => {
+                        const image = new Image()
+                        let url = URL.createObjectURL(acceptedFile)
+                        image.src = url
+                        image.onload = function () {
+                            acceptedFile.width = image.width
+                            acceptedFile.height = image.height
+                            acceptedFile.src = image.src
+                            resolve(acceptedFile)
+                        }
+                    })
+                    promises.push(promise)
+                }
+            }
+            const uploadFiles = await Promise.all(promises)
+
+            // console.info("uploadFiles:")
+            // console.log(uploadFiles)
+
+            setUploadFiles(uploadFiles)
         }, []);
 
 
@@ -217,7 +251,7 @@ export const DropZoneUploadBar = (props) => {
         maxSize: maxSize,
         onDropAccepted,
         onDropRejected,
-        getFilesFromEvent: getFilesFromEvent,
+        // getFilesFromEvent: getFilesFromEvent,
         validator: photoValidator,
 
     });
@@ -266,7 +300,7 @@ export const DropZoneUploadBar = (props) => {
             <Paper elevation={0} className={classes.dropZonePreviewContainer}>
                 {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
 
-                    <Card key={index} className={classes.photoPreviewCard}>
+                    <Card elevation={0} key={index} className={classes.photoPreviewCard}>
                         <Tooltip TransitionComponent={Zoom} placement="left" title={acceptedFile.name} >
                             <img src={acceptedFile.src} className={classes.photoPreview}
                                 draggable="true"

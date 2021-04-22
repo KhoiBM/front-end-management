@@ -4,6 +4,8 @@ import { makeStyles, Grid, Button, Box, Tooltip, Zoom } from '@material-ui/core'
 import { Stage } from 'react-konva';
 import { StageKonvaContainer } from '../StageKonvaContainer';
 import { VscOpenPreview } from 'react-icons/vsc'
+import { PreviewDesignedPhoto } from '../PreviewDesignedPhoto';
+import { useRefresh } from 'src/app/utils';
 const useStyles = makeStyles(theme => ({
     rootGridContainer: {
         width: "100%",
@@ -51,25 +53,63 @@ const useStyles = makeStyles(theme => ({
 }))
 export const MainStageBar = (props) => {
     const classes = useStyles();
+
     const { bgPhoto, dragUrl, stageRef } = props
-    const [imagePreviews, setImagePreviews] = useState([]);
+
+    const [previewDesignedPhotoModal, setPreviewDesignedPhotoModal] = useState({ isOpen: false })
+
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
+
+    // const [photoPreviews, setPhotoPreviews] = useState([]);
+    const [photoPreview, setPhotoPreview] = useState([]);
+
+    // useEffect(() => {
+    //     console.log("photoPreviews: ")
+    //     console.log(photoPreviews)
+    // }, [bgPhoto, stageRef, photoPreviews])
+
 
     useEffect(() => {
-        console.log("imagePreviews: ")
-        console.log(imagePreviews)
-    }, [bgPhoto, stageRef, imagePreviews])
+        console.log("photoPreview: ")
+        console.log(photoPreview)
+    }, [bgPhoto, stageRef, photoPreview])
+
+
+
+    // const handlePreview = () => {
+    //     const image = stageRef.current.toImage({
+    //         callback(img) {
+    //             // console.log(img);
+
+    //             setPhotoPreviews(photoPreviews.concat(img))
+    //         },
+    //         quality: 1,
+    //         pixelRatio: 2
+    //     });
+    // };
 
     const handlePreview = () => {
         const image = stageRef.current.toImage({
-            callback(img) {
+            async callback(img) {
                 // console.log(img);
-
-                setImagePreviews(imagePreviews.concat(img))
+                await setPhotoPreview(img)
+                setPreviewDesignedPhotoModal({
+                    isOpen: true,
+                    photoPreview: img,
+                    handleCloseModal
+                })
             },
             quality: 1,
             pixelRatio: 2
         });
+
+
     };
+
+    const handleCloseModal = () => {
+        setPreviewDesignedPhotoModal({ isOpen: false })
+        handleRefresh()
+    }
     return (
         <>
             <Grid container className={classes.rootGridContainer}>
@@ -78,13 +118,15 @@ export const MainStageBar = (props) => {
                     <StageKonvaContainer bgPhoto={bgPhoto} dragUrl={dragUrl} stageRef={stageRef} />
                     <br />
                     <Tooltip TransitionComponent={Zoom} placement="left" title={"Xem trước"} >
-                        <Button size="small" className={classes.buttonPreview} onClick={handlePreview}><VscOpenPreview /></Button>
+                        <Button size="small" className={classes.buttonPreview} onClick={handlePreview}>
+                            <VscOpenPreview />
+                        </Button>
                     </Tooltip>
 
 
                 </Grid>
 
-                <Grid item xs={2} sm={2} md={2} className={classes.gridItemPreview}>
+                {/* <Grid item xs={2} sm={2} md={2} className={classes.gridItemPreview}>
                     {imagePreviews && imagePreviews != null && imagePreviews.length > 0 &&
                         imagePreviews.map((imagePreview, index) => (
                             <Box key={index} className={classes.previewCardWrapper}>
@@ -93,9 +135,10 @@ export const MainStageBar = (props) => {
 
                         ))
                     }
-                </Grid>
+                </Grid> */}
 
             </Grid>
+            {<PreviewDesignedPhoto previewDesignedPhotoModal={previewDesignedPhotoModal} setPreviewDesignedPhotoModal={setPreviewDesignedPhotoModal} />}
 
         </>
     )
