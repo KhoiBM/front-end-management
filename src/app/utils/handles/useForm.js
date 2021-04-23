@@ -4,13 +4,15 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core';
 import config from 'src/environments/config';
-
+import format from 'date-fns/format'
+import parse from 'date-fns/parse'
 export const useForm = (initialFValues, validOnChange = true) => {
     const regexPassword = config.useRegex.regexPassword
     const regexPhone = config.useRegex.regexPhone
 
     const [formData, setFormData] = useState(initialFValues);
     const [dobSelected, setDobSelected] = useState(new Date())
+    const [shipAtSelected, setShipAtSelected] = useState(new Date())
     const [helperValid, setHelperValid] = useState({});
 
     const handleInputChange = (event) => {
@@ -58,12 +60,22 @@ export const useForm = (initialFValues, validOnChange = true) => {
         setDobSelected(date)
         // console.log(date)
     }
+    const handleChangeShipAt = (date) => {
+        setShipAtSelected(date)
+
+        console.log(date)
+
+        setFormData({ ...formData, shipAt: format(date, "dd-MM-yyyy") });
+    }
     const handleChangeColor = (color, event) => {
         setFormData({ ...formData, color: color.hex });
         // console.log(JSON.stringify(color))
     }
 
     const validation = (fieldValues = formData) => {
+
+        console.log("fieldValues:" + JSON.stringify(fieldValues))
+
         const temp = { ...helperValid };
         if ('username' in fieldValues) temp.username = fieldValues.username && fieldValues.username != null && fieldValues.username.length > 0 ? "" : "Tên người dùng là bắt buộc"
         if ('email' in fieldValues) temp.email = fieldValues.email && fieldValues.email != null && fieldValues.email.length > 0 && config.useRegex.regexEmail.test(fieldValues.email) ? "" : "Email không hợp lệ"
@@ -91,7 +103,10 @@ export const useForm = (initialFValues, validOnChange = true) => {
             const currentYear = new Date().getFullYear();
             const compareYear = currentYear >= dobSelected.getFullYear();
             // console.log("validDob: " + compareYear)
-            temp.dob = compareYear ? "" : "Ngày sinh không hợp lệ"
+            temp.dob = dobSelected && dobSelected != null && compareYear ? "" : "Ngày sinh không hợp lệ"
+        }
+        if ('shipAt' in fieldValues) {
+            temp.shipAt = shipAtSelected && shipAtSelected != null ? "" : "Ngày giao không hợp lệ"
         }
 
         if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName && fieldValues.firstName != null && fieldValues.firstName.length > 0 ? "" : "Tên là bắt buộc"
@@ -105,11 +120,11 @@ export const useForm = (initialFValues, validOnChange = true) => {
         if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description != null && fieldValues.description.length > 0 ? "" : "Mô tả là bắt buộc"
 
 
-        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice != null && fieldValues.servicePrice.length > 0
+        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice != null
             && config.useRegex.regexPrice.test(fieldValues.servicePrice)
             ? "" : "Giá dịch vụ không hợp lệ"
 
-        if ('unitPrice' in fieldValues) temp.unitPrice = fieldValues.unitPrice && fieldValues.unitPrice != null && fieldValues.unitPrice.length > 0
+        if ('unitPrice' in fieldValues) temp.unitPrice = fieldValues.unitPrice && fieldValues.unitPrice != null
             && config.useRegex.regexPrice.test(fieldValues.unitPrice)
             ? "" : "Giá không hợp lệ"
 
@@ -120,7 +135,7 @@ export const useForm = (initialFValues, validOnChange = true) => {
     }
 
     return {
-        formData, setFormData, handleInputChange, helperValid, validation, dobSelected, setDobSelected, handleChangeDob, setHelperValid, handleChangeColor
+        formData, setFormData, handleInputChange, helperValid, validation, dobSelected, setDobSelected, handleChangeDob, setHelperValid, handleChangeColor, shipAtSelected, setShipAtSelected, handleChangeShipAt
     }
 }
 

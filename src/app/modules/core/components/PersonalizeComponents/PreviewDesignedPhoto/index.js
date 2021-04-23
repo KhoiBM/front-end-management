@@ -6,7 +6,7 @@ import { IconClose } from 'src/app/components';
 const useStyles = makeStyles(theme => ({
 
     dialog: {
-        width: "70vw !important",
+        width: "90vw !important",
         maxWidth: "100vw !important",
         height: "auto",
         minHeight: "90vh",
@@ -40,8 +40,8 @@ const useStyles = makeStyles(theme => ({
     },
     cardMedia: {
         objectFit: "contain",
-        maxWidth: "80%",
-        maxHeight: "80%",
+        maxWidth: "100%",
+        maxHeight: "100%",
         width: 'auto',
         height: 'auto',
         // border: "1px solid blue",

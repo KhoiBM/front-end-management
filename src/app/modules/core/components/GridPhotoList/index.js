@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center"
     },
     rootGridList: {
-        // width: "100%",
+        width: "100%",
         display: 'flex',
         // flexWrap: 'nowrap',
         // justifyContent: 'space-around',
@@ -85,19 +85,35 @@ const useStyles = makeStyles(theme => ({
         height: 'auto'
     },
     gridListTile: {
-        // width: "100px",
-        // minWidth: "100%",
+        // // width: "100px",
+        // // minWidth: "100%",
+        // display: 'flex',
+        // justifyContent: "center !important",
+        // alignItems: "center",
+        // border: "1px solid rgba(0, 0, 0, 0.23)",
+
+        // '& .MuiGridListTile-tile': {
+        //     display: 'flex',
+        //     justifyContent: "center !important",
+        //     alignItems: "center",
+        //     // border: "1px solid ",
+        //     // borderColor: theme.palette.primary.main
+
+        // }
+        overflow: "scroll !important",
+        width: "100px !important",
+        height: "auto",
+        maxHeight: "10vh !important",
         display: 'flex',
         justifyContent: "center !important",
         alignItems: "center",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
+        border: "1px solid rgba(0, 0, 0, 0.23)",
 
         '& .MuiGridListTile-tile': {
             display: 'flex',
-            justifyContent: "center !important",
-            alignItems: "center",
-            // border: "1px solid ",
-            // borderColor: theme.palette.primary.main
+            // justifyContent: "center !important",
+            alignItems: "center !important",
+            // border: "1px solid red",
 
         }
     }

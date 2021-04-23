@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         // border: "1px solid red",
+        padding: theme.spacing(2)
 
 
     },
