@@ -187,6 +187,7 @@ export const AddAccountForm = (props) => {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
                     toast.success("Thành công")
+
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -203,7 +204,7 @@ export const AddAccountForm = (props) => {
 
     return (
         <>
-            {/* <p>addform</p> */}
+
             <Loader loading={loading} />
 
             <div className={classes.pageFormContainer}>
