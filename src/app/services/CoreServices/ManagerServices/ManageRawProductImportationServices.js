@@ -40,14 +40,14 @@ export class ManageRawProductImportationServices {
 
 
     static update = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageImportedRawProductServices.addImportedRawProduct, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //
+        //         }
+        //     }
+        // })
     }
 }

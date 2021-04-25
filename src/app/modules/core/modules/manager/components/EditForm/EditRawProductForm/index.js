@@ -121,7 +121,6 @@ const initialFValues = {
     color: '#000',
     description: '',
     categoryID: "",
-    isActive: true,
     updatedAt: new Date()
 }
 export const EditRawProductForm = (props) => {
@@ -160,7 +159,7 @@ export const EditRawProductForm = (props) => {
         console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add()
+            edit()
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -186,7 +185,7 @@ export const EditRawProductForm = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
     }
-    const add = async () => {
+    const edit = async () => {
         uploadFiles.forEach((file) => {
             console.log("name: " + JSON.stringify(file.name))
             console.log("type: " + JSON.stringify(file.type))
@@ -194,7 +193,7 @@ export const EditRawProductForm = (props) => {
         // console.log("uploadFiles: " + JSON.stringify(uploadFiles))
         console.log(uploadFiles)
         try {
-            const response = await (await ManageRawProductServices.add(formData)).data
+            const response = await (await ManageRawProductServices.edit(formData)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {

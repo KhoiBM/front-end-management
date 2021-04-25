@@ -125,7 +125,7 @@ const initialFValues = {
     categoryName: '',
     description: '',
     serviceID: "",
-    isActive: true,
+    active: true,
     createdAt: new Date()
 }
 export const AddCategoryForm = (props) => {
@@ -322,12 +322,12 @@ export const AddCategoryForm = (props) => {
                                         labelPlacement="start"
                                         control={<Switch
                                             color="primary"
-                                            checked={formData.isActive}
+                                            checked={formData.active}
                                             onChange={handleInputChange}
-                                            name="isActive"
+                                            name="active"
                                         />}
                                     />
-                                    <FormHelperText>{helperValid.isActive}</FormHelperText>
+                                    <FormHelperText>{helperValid.active}</FormHelperText>
                                 </div> */}
 
                             </Grid>

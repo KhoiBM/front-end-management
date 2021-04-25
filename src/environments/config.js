@@ -15,12 +15,17 @@ const useApiPath = {
         },
         "manageServiceServices": {
             view: "manager/view-service",
-            add: "manager/add-service"
+            add: "manager/add-service",
+            edit: "manager/edit-service",
+            viewAll: "manager/get-all-service"
         },
         "manageRawProductServices": {
-            view: "manager/studio-raw-product-list",
+            viewStudioRawProductList: "manager/studio-raw-product-list",
             viewSearch: "manager/studio-raw-product-search-list",
-            viewDetail: "manager/studio-raw-product-info"
+            viewDetail: "manager/studio-raw-product-info",
+            editStudioRawProduct: "manager/edit-studio-raw-product",
+            addStudioRawProduct: "manager/add-studio-raw-product",
+            deleteStudioRawProduct: "manager/delete-studio-raw-product"
         },
         "manageStatisticServices": {
             viewOverallRevenue: "manager/overall-revenue",
@@ -28,7 +33,8 @@ const useApiPath = {
             viewNumberOrder: "manager/number-order"
         },
         "manageImportedRawProductServices": {
-            viewImportedRawProduct: "manager/imported-studio-raw-product-list"
+            viewImportedRawProduct: "manager/imported-studio-raw-product-list",
+            addImportedRawProduct: "manager/add-quantity-studio-raw-product"
         },
         "photoServices": {
             getPresignedURLToUpload: "manage/upload-photo",
@@ -36,7 +42,13 @@ const useApiPath = {
         },
         "manageCategoryServices": {
             view: "manager/view-category",
-            add: "manager/add-category"
+            add: "manager/add-category",
+            edit: "manager/edit-category",
+            viewAll: "manager/get-all-category"
+        },
+        "manageProfile": {
+            viewProfile: "manager/view-profile",
+            editProfile: "manager/edit-profile"
         }
 
     }

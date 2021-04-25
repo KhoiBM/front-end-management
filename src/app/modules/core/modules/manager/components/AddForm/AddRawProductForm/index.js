@@ -117,7 +117,6 @@ export const AddRawProductForm = (props) => {
                 color: formData.color,
                 description: formData.description,
                 categoryID: formData.categoryID,
-                // isActive: true,
                 // createdAt: new Date()
 
             }

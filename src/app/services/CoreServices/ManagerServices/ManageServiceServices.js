@@ -116,7 +116,7 @@ export class ManageServiceServices {
         // }
     }
     static getAll = () => {
-        return useHttpModule().post(config.useApiPath.api.manageServiceServices.getAll)
+        return useHttpModule().post(config.useApiPath.api.manageServiceServices.viewAll)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,
@@ -153,7 +153,7 @@ export class ManageServiceServices {
         //                     updatedAt: "03-02-2021",
         //                 },
         //             ]
-
+        //
         //         }
         //     }
         // })
@@ -175,17 +175,17 @@ export class ManageServiceServices {
 
 
     static edit = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    record: {
-                        serviceCode: "serviceCode"
-                    }
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageServiceServices.edit, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             record: {
+        //                 serviceCode: "serviceCode"
+        //             }
+        //         }
+        //     }
+        // })
     }
     static active = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)

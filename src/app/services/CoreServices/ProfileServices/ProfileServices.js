@@ -14,25 +14,25 @@ export class ProfileServices {
     //     })
     // }
     static view = () => {
-        // return useHttpModule().get(config.useApiPath.api.view, data)
+        return useHttpModule().post(config.useApiPath.api.manageProfile.viewProfile)
 
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    record: {
-                        profileID: 1,
-                        firstName: "khoi",
-                        lastName: "bui",
-                        phone: "0387741552",
-                        dob: "05-06-1998",
-                        gender: false,
-                        address: "tay ninh",
-                    }
-                }
-
-            }
-        })
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             record: {
+        //                 profileID: 1,
+        //                 firstName: "khoi",
+        //                 lastName: "bui",
+        //                 phone: "0387741552",
+        //                 dob: "05-06-1998",
+        //                 gender: false,
+        //                 address: "tay ninh",
+        //             }
+        //         }
+        //
+        //     }
+        // })
 
     }
 
@@ -40,12 +40,12 @@ export class ProfileServices {
 
 
     static edit = (data) => {
-        // return useHttpModule().post(config.useApiPath.api.edit, data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageProfile.editProfile, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //     }
+        // })
     }
 
 
