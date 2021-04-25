@@ -15,6 +15,7 @@ import { v5 as uuidv5 } from 'uuid';
 import { ChromePicker } from 'react-color'
 import { set } from 'date-fns'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
 
@@ -47,7 +48,8 @@ export const AddRawProductForm = (props) => {
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         loadInit()

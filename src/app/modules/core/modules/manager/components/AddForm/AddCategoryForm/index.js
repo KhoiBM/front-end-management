@@ -13,6 +13,7 @@ import { ManageCategory } from '../../../../manager/components'
 import { ManageCategoryServices, ManageServiceServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
     // selectRole: {
     //     margin: theme.spacing(1),
@@ -140,7 +141,8 @@ export const AddCategoryForm = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         loadInit()

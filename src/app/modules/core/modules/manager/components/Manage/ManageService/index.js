@@ -55,11 +55,11 @@ export const ManageService = () => {
         setOpenEditForm(false);
         setOpenAddForm(false);
     }
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>

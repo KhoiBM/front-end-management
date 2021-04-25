@@ -11,6 +11,7 @@ import { ManageServices } from '../../../../manager/components'
 import { ManageServiceServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
     // rootForm: {
     //     marginTop: theme.spacing(3),
@@ -134,7 +135,8 @@ export const EditServiceForm = (props) => {
 
     const { recordForEdit } = props
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
