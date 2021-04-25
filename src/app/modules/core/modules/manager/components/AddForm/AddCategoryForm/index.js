@@ -241,7 +241,7 @@ export const AddCategoryForm = (props) => {
     }
     return (
         <>
-            {/* <p>addform</p> */}
+
             <Loader loading={loading} />
 
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
