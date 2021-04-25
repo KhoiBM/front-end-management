@@ -13,6 +13,12 @@ const useApiPath = {
             "forgotPassword": "user/forgot-password",
             "confirmForgotPassword": "user/confirm-forgot-password"
         },
+        "manageAccountServices": {
+            view: "manage/account/get-account-list",
+            viewListRole: "manage/account/get-role-list",
+            edit: "manage/account/update-account-info",
+            viewAll: "manager/get-all-service"
+        },
         "manageServiceServices": {
             view: "manager/view-service",
             add: "manager/add-service",

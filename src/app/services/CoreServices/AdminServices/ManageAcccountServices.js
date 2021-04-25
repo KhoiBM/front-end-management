@@ -226,22 +226,22 @@ export class ManageAccountServices {
         })
     }
     static add = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-
-            }
-        })
+        // return useHttpModule().post(config.useApiPath.api.manageAccountServices., data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //
+        //     }
+        // })
     }
     static edit = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageAccountServices.edit, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //
+        //     }
+        // })
     }
     static active = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)
@@ -267,34 +267,34 @@ export class ManageAccountServices {
 
 
     static getRoleToSelectAddOrEdit = () => {
-        // return useHttpModule().get(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                    records: [
-                        {
-                            roleID: "1",
-                            roleName: "Khách hàng"
-                        },
-                        {
-                            roleID: "2",
-                            roleName: "Quản lý"
-                        },
-
-                        {
-                            roleID: "3",
-                            roleName: "Nhân viên kinh doanh"
-                        },
-
-                        {
-                            roleID: "4",
-                            roleName: "Nhân viên kỹ thuật"
-                        },
-                    ]
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageAccountServices.viewListRole)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //             records: [
+        //                 {
+        //                     roleID: "1",
+        //                     roleName: "Khách hàng"
+        //                 },
+        //                 {
+        //                     roleID: "2",
+        //                     roleName: "Quản lý"
+        //                 },
+        //
+        //                 {
+        //                     roleID: "3",
+        //                     roleName: "Nhân viên kinh doanh"
+        //                 },
+        //
+        //                 {
+        //                     roleID: "4",
+        //                     roleName: "Nhân viên kỹ thuật"
+        //                 },
+        //             ]
+        //         }
+        //     }
+        // })
     }
     static getRoleToFilter = () => {
         return useHttpModule().post(config.useApiPath.api.manageAccountServices.viewListRole)
