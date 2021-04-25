@@ -13,62 +13,33 @@ import { useDispatch, useStore, useSelector } from "react-redux";
 import config from "src/environments/config";
 import ConfirmCode from "../ConfirmCode/ConfirmCode";
 import { toast } from "react-toastify";
-import { useForm, useWait } from "src/app/utils";
+import { useForm, useWait, useLoadingEffect } from "src/app/utils";
 import { Loader } from "src/app/components";
 import { useLoaderHandle } from "src/app/utils/handles/useLoaderHandle";
+import { RouteService } from "src/app/services";
 
 const initialFValues = { username: '', email: '', password: '', rePassword: '' }
 
 const SignUp = ({ toggle, isVisible }) => {
 
-
-
     const store = useStore();
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const { response } = useSelector((state) => state.auth)
+
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
-
-
-    const { response } = useSelector((state) => state.auth)
     const [isFirst, setIsFirst] = useState(true)
 
-    const regexPassword = config.useRegex.regexPassword
-    const regexEmail = config.useRegex.regexEmail
-
+    const [enableSubmit, setEnableSubmit] = useState(false)
 
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         // document.title = 'Đăng ký';
-        // showLoader()
-        // hideLoader()
     }, [])
 
-    useEffect(() => {
-        if (!isFirst) {
-            console.log("response: " + JSON.stringify(response))
-            if (response && response.result == config.useResultStatus.SUCCESS) {
-                toast.info("Vui lòng kích hoạt code trong email")
-                // history.push(`/auth/confirm_code?username=${formData.username}&&email=${formData.email}`)
-
-                history.push({
-                    pathname: `${"/auth/confirm_code"}`,
-                    search: "",
-                    state: {
-                        username: formData.username,
-                        email: formData.email
-                    }
-                })
-
-            } else {
-                toast.error(`${response.errorInfo || "Đăng ký thất bại"}`)
-
-            }
-        }
-        setIsFirst(false);
-    }, [response])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -78,24 +49,39 @@ const SignUp = ({ toggle, isVisible }) => {
 
         console.log("enableSubmit: " + enableSubmit);
 
+        setEnableSubmit(enableSubmit)
+
         if (enableSubmit) {
+
+            console.log("enableSubmit: " + enableSubmit);
+
             signUp(formData, dispatch);
+
+            setEnableSubmit(false)
+
         } else {
             toast.error("Dữ liệu không hợp lệ")
         }
     };
 
     const signUp = async (formData, dispatch) => {
-        // showLoader()
+
+        showLoader()
+
         const data = {
             username: formData.username,
             email: formData.email,
             password: formData.password,
-            role: "customer"
+            role: "customer",
         };
+
         console.log(data)
+
+        await RouteService.init(history)
+
         await dispatch(useAuthAction().signUp(data));
-        // hideLoader()
+
+        hideLoader()
     }
 
 
@@ -103,7 +89,7 @@ const SignUp = ({ toggle, isVisible }) => {
 
     return (
         <>
-            {/* {<Loader loading={loading} />} */}
+            {<Loader loading={loading} />}
 
             < div className={styles["signup-page-container"]}>
                 {isVisible && (
@@ -195,7 +181,7 @@ const SignUp = ({ toggle, isVisible }) => {
                         <section className={styles["signin-nav-wrapper"]} >
                             <span>Bạn có tài khoản? </span>
                             <Link to="/auth/signin">
-                                <button className={styles["btn-nav-signin"]}>Đăng nhập.</button>
+                                <button className={styles["btn-nav-signin"]}>Đăng nhập</button>
                             </Link >
                         </section >
                     </>

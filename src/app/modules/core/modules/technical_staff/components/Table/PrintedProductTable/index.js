@@ -5,12 +5,13 @@ import { makeStyles, TableContainer, Table, TableHead, TableBody, Paper, TableRo
 
 import { toast } from 'react-toastify';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
-import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { ManagePrintedProductServices } from 'src/app/services';
 import config from 'src/environments/config';
 import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { RiInformationLine } from 'react-icons/ri';
-import { NotFound } from 'src/app/components';
+import { NotFound, Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
 
 }));
@@ -18,7 +19,8 @@ const useStyles = makeStyles(theme => ({
 
 
 export const PrintedProductTable = (props) => {
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
@@ -203,6 +205,7 @@ export const PrintedProductTable = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
 
             <TblContainer>
                 <TblHead />
@@ -282,7 +285,7 @@ export const PrintedProductTable = (props) => {
             </TblContainer>
 
 
-            <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />
+            {confirmDialog.isOpen && <ConfirmDialog confirmDialog={confirmDialog} setConfirmDialog={setConfirmDialog} />}
 
 
             <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />

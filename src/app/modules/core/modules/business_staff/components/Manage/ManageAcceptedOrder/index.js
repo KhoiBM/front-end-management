@@ -3,11 +3,12 @@
 import React, { useState } from 'react'
 import { makeStyles, Paper, Button } from '@material-ui/core';
 import { SearchBar, ViewOrderInformation, ChangeStatusOrder, FilterChipBar } from 'src/app/modules/core/components';
-import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit, useToggleChangeStatusForm, useToggleBox, useFilterHandle } from 'src/app/utils';
+import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit, useToggleChangeStatusForm, useToggleBox, useFilterHandle, useLoadingEffect } from 'src/app/utils';
 import { AcceptedOrderTable } from '../../Table';
 import config from 'src/environments/config';
 import { SendDemoProduct } from '../../AddForm';
 import { BusinessStaffProcessOrderServices } from 'src/app/services';
+import { Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -68,10 +69,13 @@ export const ManageAcceptedOrder = () => {
         }
     )
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
 
     return (
         <>
+            <Loader loading={loading} />
+
             {
                 // !openSendDemoProduct &&
                 <Paper elevation={0} className={classes.mainContainer}>

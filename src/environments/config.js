@@ -13,10 +13,6 @@ const useApiPath = {
             "forgotPassword": "user/forgot-password",
             "confirmForgotPassword": "user/confirm-forgot-password"
         },
-        "manageAccountServices": {
-            view: "manage/account/get-account-list",
-            viewListRole: "manage/account/get-role-list"
-        },
         "manageServiceServices": {
             view: "manager/view-service",
             add: "manager/add-service"
@@ -58,7 +54,7 @@ const useResultStatus = {
 }
 
 const useRegex = {
-    regexPassword: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/,
+    regexPassword: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$/,
     regexEmail: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/i,
     regexPhone: /^\d{10,11}$/,
     // regexPrice: /^([\d]{1,3})([.]\d{3})*$/,
@@ -143,7 +139,9 @@ const useMessage = {
     invalidData: "Dữ liệu không hợp lệ",
     fetchApiFailure: "Có lỗi xảy ra khi gọi api",
     resultFailure: `Có lỗi xảy ra bên server`,
-    uploadPhotoFailure: "Có lỗi xảy ra khi tải ảnh lên server "
+    uploadPhotoFailure: "Có lỗi xảy ra khi tải ảnh lên server ",
+    uploadPhotoFiles: "Vui lòng tải ảnh lên ",
+
 }
 
 const useConfigAWS = {

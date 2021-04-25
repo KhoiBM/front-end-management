@@ -6,11 +6,11 @@ import { toast } from 'react-toastify';
 import { PhotoServices } from 'src/app/services';
 import { PageHeader, GridPhotoList } from 'src/app/modules/core/components';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
-import { IconClose } from 'src/app/components';
+import { IconClose, Loader } from 'src/app/components';
 import photoDemo from 'src/app/assets/image/demoPhoto.jpeg'
 import photoDemo2 from 'src/app/assets/image/demoPhoto2.jpg'
 import photoDemo3 from 'src/app/assets/image/demoPhoto3.jpg'
-import { useFormat, useLoadPhotoList } from 'src/app/utils';
+import { useFormat, useLoadPhotoList, useLoadingEffect } from 'src/app/utils';
 
 const useStyles = makeStyles(theme => ({
     pageViewInfomationContainer: {
@@ -111,7 +111,7 @@ export const ViewRawProductInformation = (props) => {
     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
-
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
 
     useEffect(() => {
@@ -127,6 +127,8 @@ export const ViewRawProductInformation = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>
 

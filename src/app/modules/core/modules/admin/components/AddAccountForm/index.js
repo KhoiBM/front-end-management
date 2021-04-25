@@ -5,10 +5,10 @@ import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServices/ManageAcccountServices'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { MdVisibilityOff, MdVisibility } from 'react-icons/md'
 import { PageHeader } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
 
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -101,6 +101,8 @@ export const AddAccountForm = (props) => {
 
     const [recordsRole, setRecordsRole] = useState([])
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
     useEffect(() => {
         loadInit()
     }, [])
@@ -185,6 +187,7 @@ export const AddAccountForm = (props) => {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
                     toast.success("Thành công")
+
                 } else {
                     toast.error(config.useMessage.resultFailure)
                 }
@@ -201,7 +204,9 @@ export const AddAccountForm = (props) => {
 
     return (
         <>
-            {/* <p>addform</p> */}
+
+            <Loader loading={loading} />
+
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>
                     <IconClose handleClose={props.handleCloseForm} />

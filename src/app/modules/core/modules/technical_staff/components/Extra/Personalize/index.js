@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from 'react'
 import { PageHeader, DropZoneUploadBar, GridCustomersPhotoToPrint } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
 import { DialogContent, DialogTitle, Dialog, Slide, makeStyles, Grid, Button, Box } from '@material-ui/core'
-import { useUploadPhoto } from 'src/app/utils'
+import { useUploadPhoto, useLoadingEffect } from 'src/app/utils'
 import { RiCloseFill } from 'react-icons/ri'
 import MainPersonalize from 'src/app/modules/core/components/PersonalizeComponents/MainPersonalize'
 import useImage from 'use-image'
 import { Image, Stage, Layer } from 'react-konva'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
     iconCloseWrapper: {
@@ -109,7 +110,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 export const Personalize = (props) => {
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
     const { personalizeModal, setPersonalizeModal } = props
@@ -143,6 +145,8 @@ export const Personalize = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <Dialog fullScreen open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>
 
                 <DialogTitle className={classes.dialogTitle}>

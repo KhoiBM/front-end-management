@@ -6,7 +6,7 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat, useLoadingEffect } from 'src/app/utils'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
 import { PhotoServices } from 'src/app/services/CoreServices/PhotoServices/PhotoServices.js'
@@ -14,7 +14,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { v5 as uuidv5 } from 'uuid';
 import { ChromePicker } from 'react-color'
 import { set } from 'date-fns'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
 
@@ -46,6 +47,9 @@ export const AddRawProductForm = (props) => {
     const { formData, setFormData, handleInputChange, helperValid = null, validation, handleChangeColor } = useForm(initialFValues)
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
+
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         loadInit()
@@ -82,7 +86,14 @@ export const AddRawProductForm = (props) => {
         console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add(formData)
+
+            if (uploadFiles && uploadFiles != null && uploadFiles.length > 0) {
+                add(formData)
+            }
+            else {
+                toast.error(config.useMessage.uploadPhotoFiles);
+            }
+
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -153,6 +164,8 @@ export const AddRawProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 

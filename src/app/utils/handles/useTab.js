@@ -41,8 +41,8 @@ export const useTab = () => {
             <div
                 role="tabpanel"
                 hidden={value !== index}
-                // id={`tabpanel-${index}`}
-                // {...other}
+                id={`tabpanel-${index}`}
+                {...other}
                 className={classes.tablePanel}
             >
                 {value === index && (

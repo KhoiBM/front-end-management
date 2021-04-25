@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
+
 import React from 'react'
 import { Paper, makeStyles, Dialog, DialogTitle, DialogContent, Typography, DialogActions, Slide, Button, Link } from '@material-ui/core'
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
+import { Loader } from 'src/app/components'
+import { useLoadingEffect } from 'src/app/utils'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles((theme) => ({
     dialog: {
@@ -37,6 +40,9 @@ export const NotificationDialog = (props) => {
 
     const { notificationDialog, setNotificationDialog } = props
 
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     // console.log(parse(notificationDialog.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
 
     // console.log(format(notificationDialog.createdAt, "dd-MM-yyyy HH:mm:ss"))
@@ -45,6 +51,8 @@ export const NotificationDialog = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             {notificationDialog &&
                 <Dialog open={notificationDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition} onClose={() => {
 

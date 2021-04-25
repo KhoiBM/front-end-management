@@ -5,9 +5,9 @@ import config from 'src/environments/config';
 import { toast } from 'react-toastify';
 import { PhotoServices, OrderServices } from 'src/app/services';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
-import { IconClose } from 'src/app/components';
+import { IconClose, Loader } from 'src/app/components';
 import { PageHeader } from 'src/app/modules/core/components';
-import { useLoadPhotoList, useFormat } from 'src/app/utils';
+import { useLoadPhotoList, useFormat, useLoadingEffect } from 'src/app/utils';
 import { CartItem } from '../CartItem';
 
 const useStyles = makeStyles(theme => ({
@@ -111,6 +111,7 @@ export const ViewCart = (props) => {
 
     const [orderDetailList, setOrderDetailList] = useState([])
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         if (recordForCart && recordForCart != null) {
@@ -154,6 +155,8 @@ export const ViewCart = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <div className={classes.cartContainer}>
                 <Grid container spacing={0} className={classes.rootGrid}>
                     <Grid item xs={12} sm={12} md={12} className={classes.gridItemCount}>

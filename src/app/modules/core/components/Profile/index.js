@@ -15,6 +15,8 @@ import parse from 'date-fns/parse'
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
 import { useForm } from 'src/app/utils'
 import { PageHeader } from '../PageHeader'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
+import { Loader } from 'src/app/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -36,7 +38,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 999,
+        zIndex: 500,
         position: "relative",
         overflow: "scroll",
 
@@ -119,7 +121,7 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         height: "100%",
         // background: "red",
-        zIndex: 999,
+        zIndex: 500,
         margin: "6rem auto"
     }
 }))
@@ -143,6 +145,8 @@ export const Profile = () => {
     const { formData, setFormData, handleInputChange, helperValid = null, validation, dobSelected, setDobSelected, handleChangeDob } = useForm(initialFValues)
 
     const [record, setRecord] = useState({});
+
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     useEffect(async () => {
@@ -199,6 +203,8 @@ export const Profile = () => {
     return (
         <>
             {/* <p>Profile</p> */}
+            <Loader loading={loading} />
+
             <div className={classes.profileContainer}>
                 <div className={classes.pageFormContainer}>
                     <Paper elevation={5} className={classes.pageForm}>

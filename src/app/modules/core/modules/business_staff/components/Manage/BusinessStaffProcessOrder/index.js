@@ -5,9 +5,11 @@ import { makeStyles, Paper, Button, Divider } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable, NewOrderTable, CanceledOrderTable } from '../../Table/index'
-import { useTab } from 'src/app/utils';
+import { useTab, useLoadingEffect } from 'src/app/utils';
 import { ManageNewOrder } from '../ManageNewOrder';
 import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
+import { Loader } from 'src/app/components';
+import { ManageCanceledOrder } from '../ManageCanceledOrder';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         // background: '#B6E2F3',
@@ -44,9 +46,13 @@ export const BusinessStaffProcessOrder = () => {
 
     const { TabPanel, TabBar, value, handleChange } = useTab()
 
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
 
     return (
         <>
+            {/* <Loader loading={loading} /> */}
+
             <Paper elevation={2} className={classes.mainContainer}>
 
                 <div>
@@ -77,7 +83,7 @@ export const BusinessStaffProcessOrder = () => {
                     </TabPanel>
 
                     <TabPanel value={value} index={2}>
-                        <CanceledOrderTable />
+                        <ManageCanceledOrder />
                     </TabPanel>
 
 

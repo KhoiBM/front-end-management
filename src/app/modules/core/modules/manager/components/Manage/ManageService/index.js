@@ -5,6 +5,8 @@ import zIndex from '@material-ui/core/styles/zIndex';
 import { ServiceTable } from '../../Table/index'
 import { AddServiceForm } from '../../AddForm';
 import { EditServiceForm } from '../../EditForm';
+import { useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -53,9 +55,12 @@ export const ManageService = () => {
         setOpenEditForm(false);
         setOpenAddForm(false);
     }
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     return (
         <>
+            {/* <Loader loading={loading} /> */}
+
             {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>
 

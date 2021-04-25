@@ -9,7 +9,8 @@ import { AddRawProductForm } from '../../AddForm/index';
 import { EditRawProductForm } from '../../EditForm';
 import { SearchBar } from 'src/app/modules/core/components';
 import { ViewRawProductInformation } from '../../Extra';
-import { useToggleFormAddEdit, useToggleViewInformation, useSearchHandle } from 'src/app/utils';
+import { useToggleFormAddEdit, useToggleViewInformation, useSearchHandle, useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -62,9 +63,11 @@ export const ManageRawProduct = () => {
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
-
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     return (
         <>
+            <Loader loading={loading} />
+
             {!openEditForm && !openAddForm && !openViewInformation &&
                 <Paper elevation={2} className={classes.mainContainer}>
                     <>

@@ -3,49 +3,39 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import HelperValidation from '../HelperValidation/HelperValidation'
-
 import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useStore, useSelector } from 'react-redux';
 import { useAuthAction } from 'src/app/stores/actions';
-import { useQueryURL } from 'src/app/utils/handles/useQueryURL';
 import config from 'src/environments/config';
 import { RiCloseFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
-
 import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink, InputLabel } from '../../styles/styles'
 import { FormWrapper, InputText } from './ConfirmCodeElements';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
+import { Loader } from 'src/app/components';
+import { RouteService } from 'src/app/services';
 
 const ConfirmCode = (props) => {
-    // const { showSnackbar } = useShowSnackbar()
-    // let query = useQueryURL();
-    const store = useStore()
+
     const history = useHistory()
+
     const dispatch = useDispatch()
+
     let location = useLocation();
+
+    const { response } = useSelector((state) => state.auth)
 
     const [formData, setFormData] = useState({ confirmCode: "" });
 
-
     const [isFirst, setIsFirst] = useState(true)
-    const { response } = useSelector((state) => state.auth)
+
     const [helperValid, setHelperValid] = useState({});
 
-    useEffect(() => {
-        if (!isFirst) {
-            const response = store.getState().auth.response;
-            console.log("valueResponse: " + JSON.stringify(response));
-            if (response && response.result == config.useResultStatus.SUCCESS) {
-                // showSnackbar('Đăng ký thành công', 'success');
-                toast.success('Đăng ký thành công')
-                history.push("/auth/signin")
-            }
-            else {
-                // showSnackbar(`${response.errorInfo || "Xác nhận thất bại"}`, 'error');
-                toast.error(`${response.errorInfo || "Xác nhận thất bại"}`)
-            }
-        }
-        setIsFirst(false);
-    }, [response])
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
+
+
+
     const handleSubmit = () => {
         event.preventDefault();
         const enableSubmit = validation(formData);
@@ -53,11 +43,10 @@ const ConfirmCode = (props) => {
         if (enableSubmit) {
             confirmCode(formData, dispatch);
         } else {
-            // showSnackbar(`${"Dữ liệu không hợp lệ"}`, 'error')
-            toast.error(`${"Dữ liệu không hợp lệ"}`)
+            toast.error(config.useMessage.invalidData)
         }
     }
-    function confirmCode(formData, dispatch) {
+    const confirmCode = async (formData, dispatch) => {
         // const username = query.get("username");
         // const email = query.get("email");
         const username = location.state.username;
@@ -69,6 +58,7 @@ const ConfirmCode = (props) => {
                 code: formData.confirmCode
             };
             console.log("data: " + JSON.stringify(data))
+            await RouteService.init(history)
             dispatch(useAuthAction().confirmCode(data));
         } else {
             toast.error("Lỗi khi truyền tên người dùng hoặc email ")
@@ -76,12 +66,12 @@ const ConfirmCode = (props) => {
 
     }
 
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
         validation({ [name]: value })
     }
+
     const validation = (fieldValues = formData) => {
         const temp = { ...helperValid };
         if ('confirmCode' in fieldValues) temp.confirmCode = fieldValues.confirmCode && fieldValues.confirmCode.length > 0 ? "" : "Code là bắt buộc"
@@ -91,6 +81,7 @@ const ConfirmCode = (props) => {
 
     return (
         <>
+            {<Loader loading={loading} />}
             <ConfirmFormContainer>
                 <FormWrapper onSubmit={handleSubmit} noValidate>
                     <IconWrapper>

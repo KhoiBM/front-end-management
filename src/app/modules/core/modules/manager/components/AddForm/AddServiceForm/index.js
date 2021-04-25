@@ -6,11 +6,12 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useFormat, useLoadingEffect } from 'src/app/utils'
 import { ManageServices } from '../../../../manager/components'
 import { ManageServiceServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
 
     // rootForm: {
@@ -132,12 +133,21 @@ export const AddServiceForm = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add()
+            if (uploadFiles && uploadFiles != null && uploadFiles.length > 0) {
+                add()
+            }
+            else {
+                toast.error(config.useMessage.uploadPhotoFiles);
+            }
+
         } else {
             toast.error(config.useMessage.invalidData);
         }
@@ -187,6 +197,8 @@ export const AddServiceForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 

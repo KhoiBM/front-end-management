@@ -1,17 +1,32 @@
 import React, { useState } from 'react'
 import { useWait } from './useWait'
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoadingAction } from 'src/app/stores/actions';
 
 export const useLoaderHandle = () => {
-    const [loading, setLoading] = useState(true)
+
+
+    const dispatch = useDispatch();
+
+    const { loading } = useSelector((state) => state.loadingState)
+
     const { wait } = useWait()
 
     const hideLoader = async () => {
-        await wait(500)
-        setLoading(false)
+
+        await wait(1000)
+
+        await dispatch(useLoadingAction().hideLoading())
+
     }
     const showLoader = async () => {
-        setLoading(true)
+        await dispatch(useLoadingAction().showLoading())
+
     }
 
-    return { loading, setLoading, showLoader, hideLoader }
+    return {
+        loading,
+        showLoader,
+        hideLoader
+    }
 }

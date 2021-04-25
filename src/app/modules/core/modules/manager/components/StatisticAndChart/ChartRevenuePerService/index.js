@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react'
 import { Paper, makeStyles, Typography, AppBar, Tabs, Tab, Box, Card, Button } from '@material-ui/core'
 import Chart from "react-apexcharts";
 
-import { useTab, useOptionsRevenueServiceChart } from 'src/app/utils'
+import { useTab, useOptionsRevenueServiceChart, useLoadingEffect } from 'src/app/utils'
 import config from 'src/environments/config';
 import { toast } from 'react-toastify';
 import { useFormat } from 'src/app/utils'
 // import { BiExport } from 'react-icons/bi';
 
 import { ManageStatisticServices } from 'src/app/services/CoreServices/ManagerServices/ManageStatisticServices.js'
+import { Loader } from 'src/app/components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -54,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const ChartRevenuePerService = () => {
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const classes = useStyles();
 
     const [refresh, setRefresh] = useState(false)
@@ -133,6 +135,8 @@ const ChartRevenuePerService = () => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <div className={classes.chartContainer}>
 
                 <div className={classes.rootTab}>

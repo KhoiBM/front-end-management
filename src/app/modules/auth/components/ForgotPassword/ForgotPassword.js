@@ -12,6 +12,9 @@ import { toast } from 'react-toastify'
 import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink, InputLabel } from '../../styles/styles'
 
 import { FormWrapper, InputText } from './ForgotPasswordElements'
+import { Loader } from 'src/app/components'
+import { RouteService } from 'src/app/services'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const ForgotPassword = () => {
     // const { showSnackbar } = useShowSnackbar()
@@ -28,22 +31,10 @@ const ForgotPassword = () => {
     const { response } = useSelector((state) => state.auth)
     const [helperValid, setHelperValid] = useState({});
 
-    useEffect(() => {
-        if (!isFirst) {
-            const response = store.getState().auth.response;
-            console.log("valueResponse: " + JSON.stringify(response));
-            if (response.result == config.useResultStatus.SUCCESS) {
-                // showSnackbar('Vui lòng nhập code để đổi mật khẩu', 'info');
-                toast.info('Vui lòng nhập Code để đổi mật khẩu')
-                history.push(`/auth/confirm_forgotpassword?username=${formData.username}`);
-            }
-            else {
-                // showSnackbar(`${response.errorInfo || "Xác nhận thất bại"}`, 'error');
-                toast.error(`${response.errorInfo || "Xác nhận thất bại"}`)
-            }
-        }
-        setIsFirst(false);
-    }, [response])
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
+
+
     const handleSubmit = () => {
         event.preventDefault();
         const enableSubmit = validation(formData);
@@ -51,14 +42,14 @@ const ForgotPassword = () => {
         if (enableSubmit) {
             forgotPassword(formData, dispatch);
         } else {
-            // showSnackbar(`${"Dữ liệu không hợp lệ"}`, 'error')
-            toast.error("Dữ liệu không hợp lệ");
+            toast.error(config.useMessage.invalidData);
         }
     }
     async function forgotPassword(formData, dispatch) {
         const data = {
             username: formData.username
         };
+        await RouteService.init(history)
         await dispatch(useAuthAction().forgotPassword(data));
     }
 
@@ -76,6 +67,7 @@ const ForgotPassword = () => {
     }
     return (
         <>
+            {<Loader loading={loading} />}
             <ConfirmFormContainer>
                 <FormWrapper onSubmit={handleSubmit} noValidate>
                     <IconWrapper>

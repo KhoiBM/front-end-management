@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { ManageAccount } from '../components'
 import { MainBar } from '../../../components'
 import { Loader } from 'src/app/components/Loader'
+import { useLoadingEffect } from 'src/app/utils'
 const ManageAccountPage = () => {
     const userRole = config.useUserRole.administrator;
     let location = useLocation();
@@ -16,11 +17,16 @@ const ManageAccountPage = () => {
         }
 
     }, [])
+
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
+
+
     return (
         <>
             {/* <p>ManageAccountPage</p> */}
             {/* <CanActive isRole={config.useRoleName.administrator} /> */}
-            {/* <Loader loading={loading} /> */}
+            <Loader loading={loading} />
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageAccount />
             </MainBar>

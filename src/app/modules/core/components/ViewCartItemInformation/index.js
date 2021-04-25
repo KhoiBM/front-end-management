@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, Typography, Container, Box, TextField, Switch, FormControlLabel, Divider, DialogTitle, DialogContent, Slide, Dialog } from '@material-ui/core'
 import { toast } from 'react-toastify';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
-import { IconClose } from 'src/app/components';
+import { IconClose, Loader } from 'src/app/components';
 import config from 'src/environments/config';
-import { useLoadPhotoList, useRefresh, useFormat } from 'src/app/utils';
+import { useLoadPhotoList, useRefresh, useFormat, useLoadingEffect } from 'src/app/utils';
 import { PageHeader } from 'src/app/modules/core/components';
 import { ViewCart } from '../ViewCart';
 import { GirdCartItemPhotoList } from '../GirdCartItemPhotoList';
@@ -153,6 +153,7 @@ export const ViewCartItemInformation = (props) => {
 
     const { rawProductCode, rawProductName, size, color, unitPrice, servicePrice, quantity, note, createdBy, createdAt, updatedAt } = cartItemDetail
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         if (recordForCartItemDetail && recordForCartItemDetail != null) {
@@ -183,6 +184,8 @@ export const ViewCartItemInformation = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <Dialog fullScreen open={isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
 
                 <DialogTitle className={classes.dialogTitle}>

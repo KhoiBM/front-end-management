@@ -9,7 +9,8 @@ import { EditCustomersRawProductForm } from '../../EditForm';
 import { AddCustomersRawProductForm } from '../../AddForm';
 import { SearchBar } from 'src/app/modules/core/components';
 import { ViewCustomersRawProductInformation } from '../../Extra';
-import { useSearchHandle, useToggleFormAddEdit, useToggleViewInformation } from 'src/app/utils';
+import { useSearchHandle, useToggleFormAddEdit, useToggleViewInformation, useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
 
 // import { CustomersRawProductTable } from '../../Table/CustomersRawProductTable'
 const useStyles = makeStyles(theme => ({
@@ -63,10 +64,13 @@ export const ManageCustomersRawProduct = () => {
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
 
     return (
         <>
+            {/* <Loader loading={loading} /> */}
+
             {!openEditForm && !openAddForm && !openViewInformation &&
                 <Paper elevation={2} className={classes.mainContainer}>
 

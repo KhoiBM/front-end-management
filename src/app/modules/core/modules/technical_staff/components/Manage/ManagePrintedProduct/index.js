@@ -9,7 +9,9 @@ import { AddPrintedProductForm } from '../../AddForm';
 import { EditPrintedProductForm } from '../../EditForm';
 import { SearchBar } from 'src/app/modules/core/components';
 import { ViewPrintedRawProductInformation } from '../../Extra';
-import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit } from 'src/app/utils';
+import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit, useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -64,10 +66,13 @@ export const ManagePrintedProduct = () => {
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
+            <Loader loading={loading} />
+
             {!openEditForm && !openAddForm && !openViewInformation &&
                 <Paper elevation={2} className={classes.mainContainer}>
                     <>

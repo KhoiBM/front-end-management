@@ -8,8 +8,8 @@ import { RiCloseFill } from 'react-icons/ri'
 import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
 import config from 'src/environments/config'
 import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
-import { IconClose } from 'src/app/components'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
+import { IconClose, Loader } from 'src/app/components'
 const useStyles = makeStyles(theme => ({
 
 }))
@@ -40,6 +40,8 @@ export const AddCustomersRawProductForm = (props) => {
     const { formData, setFormData, handleInputChange, helperValid = null, validation, handleChangeColor } = useForm(initialFValues)
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
+
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         loadInit()
@@ -129,6 +131,8 @@ export const AddCustomersRawProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 
