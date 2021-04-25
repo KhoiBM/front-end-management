@@ -6,9 +6,10 @@ import { toast } from 'react-toastify';
 import { PhotoServices } from 'src/app/services';
 import { PageHeader, GridPhotoList } from 'src/app/modules/core/components';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
-import { IconClose } from 'src/app/components';
+import { IconClose, Loader } from 'src/app/components';
 
-import { useFormat, useLoadPhotoList } from 'src/app/utils';
+import { useFormat, useLoadPhotoList, useLoadingEffect } from 'src/app/utils';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     pageViewInfomationContainer: {
@@ -118,7 +119,8 @@ export const ViewPrintedRawProductInformation = (props) => {
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {
@@ -137,6 +139,8 @@ export const ViewPrintedRawProductInformation = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>
 

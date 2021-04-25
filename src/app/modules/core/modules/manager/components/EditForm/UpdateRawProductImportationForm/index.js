@@ -6,10 +6,10 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { ManageRawProductImportationServices, ManageRawProductServices } from 'src/app/services'
 import { PageHeader } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -92,6 +92,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
     const [rawProductRecords, setRawProductRecords] = useState([])
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     // useEffect(() => {
     //     loadInit()
@@ -165,6 +166,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
 
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>

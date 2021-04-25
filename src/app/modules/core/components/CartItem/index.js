@@ -4,10 +4,11 @@ import { makeStyles, Grid, Paper, Typography, TextField, Tooltip, Zoom, Button, 
 import { RiInformationLine, RiCheckboxBlankCircleFill } from 'react-icons/ri';
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineCloudUpload, AiOutlineBlock } from 'react-icons/ai';
 import { ViewCartItemInformation } from '../ViewCartItemInformation';
-import { useFormat, useLoadPhotoList, useRefresh } from 'src/app/utils';
+import { useFormat, useLoadPhotoList, useRefresh, useLoadingEffect } from 'src/app/utils';
 import config from 'src/environments/config';
 import { AddDemoProductPhoto } from '../../modules/technical_staff/components/AddForm/AddDemoProductPhoto';
 import { Personalize } from '../../modules/technical_staff/components/Extra/Personalize';
+import { Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
     cartItemContainer: {
@@ -90,6 +91,7 @@ export const CartItem = (props) => {
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         loadInit()
@@ -139,6 +141,8 @@ export const CartItem = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <Box className={classes.cartItemContainer}>
                 <Grid container className={classes.rootCartItemGrid}>
                     <Grid item xs={2} sm={2} md={2} className={classes.cardItemPhotoDemoGridContainer}>

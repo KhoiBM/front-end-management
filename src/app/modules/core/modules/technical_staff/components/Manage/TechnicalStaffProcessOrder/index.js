@@ -5,9 +5,11 @@ import { makeStyles, Paper, Button, Divider } from '@material-ui/core';
 import { RiCloseFill } from 'react-icons/ri';
 import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable } from '../../Table/index'
-import { useTab, useRefresh } from 'src/app/utils';
+import { useTab, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
 import { Personalize } from '../../Extra/Personalize';
+import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         // background: '#B6E2F3',
@@ -53,10 +55,13 @@ export const TechnicalStaffProcessOrder = () => {
         setPersonalizeModal({ isOpen: false })
         handleRefresh()
     }
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
+            <Loader loading={loading} />
+
             <Paper elevation={2} className={classes.mainContainer}>
 
                 {/* <p>TechnicalStaffProcessOrder</p> */}
@@ -90,10 +95,6 @@ export const TechnicalStaffProcessOrder = () => {
 
                     <TabPanel value={value} index={0}>
                         <ManageAcceptedOrder />
-                    </TabPanel>
-
-                    <TabPanel value={value} index={1} >
-                        {/* <Personalize personalizeModal={personalizeModal} setPersonalizeModal={setPersonalizeModal} /> */}
                     </TabPanel>
 
 

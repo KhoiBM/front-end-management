@@ -7,9 +7,9 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { BusinessStaffProcessOrderServices } from 'src/app/services'
-import { useForm } from 'src/app/utils'
+import { useForm, useLoadingEffect } from 'src/app/utils'
 import { PageHeader } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
 
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -86,6 +86,7 @@ export const ChangeStatusOrder = (props) => {
 
     const { isOpen, recordForChangeStatus, statusOrderToChange, handleCloseModal } = changeStatusModal
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
 
@@ -141,6 +142,8 @@ export const ChangeStatusOrder = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <Dialog open={isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
 
 

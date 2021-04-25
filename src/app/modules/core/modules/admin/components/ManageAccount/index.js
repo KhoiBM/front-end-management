@@ -8,7 +8,8 @@ import { FilterBar, FilterChipBar } from 'src/app/modules/core/components';
 import { ManageAccountServices } from 'src/app/services';
 import config from 'src/environments/config';
 import { toast } from 'react-toastify';
-import { useFilterHandle, useToggleFormAddEdit } from 'src/app/utils';
+import { useFilterHandle, useToggleFormAddEdit, useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -72,10 +73,13 @@ export const ManageAccount = () => {
         }
     )
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
 
     return (
         <>
+            <Loader loading={loading} />
+
             {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>
 

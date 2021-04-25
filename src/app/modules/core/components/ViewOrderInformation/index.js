@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, Typography, Container, Box, TextField, Switch, FormControlLabel, Divider, DialogTitle, DialogContent, Slide, Dialog, Button, FormHelperText } from '@material-ui/core'
 import { toast } from 'react-toastify';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
-import { IconClose } from 'src/app/components';
+import { IconClose, Loader } from 'src/app/components';
 import config from 'src/environments/config';
-import { useLoadPhotoList, useForm } from 'src/app/utils';
+import { useLoadPhotoList, useForm, useLoadingEffect } from 'src/app/utils';
 import { PageHeader } from 'src/app/modules/core/components';
 import { ViewCart } from '../ViewCart';
 import bgAuth from "src/app/assets/image/bg_auth.jpeg"
@@ -223,6 +223,7 @@ export const ViewOrderInformation = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, setHelperValid, validation, shipAtSelected, setShipAtSelected, handleChangeShipAt } = useForm(initialFValues)
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {
@@ -298,6 +299,8 @@ export const ViewOrderInformation = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             {/* isOpen */}
             <Dialog fullScreen open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>
 

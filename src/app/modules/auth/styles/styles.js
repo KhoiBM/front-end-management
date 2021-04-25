@@ -37,15 +37,15 @@ width: 90%;
 
 
   &:hover {
-    background-color: var(--secondary-color-main);
-  border: 1px solid var(--secondary-color-main);
+    background-color: var(--primary-color-main);
+  border: 1px solid var(--primary-color-main);
   box-shadow: rgb(0 0 0 / 10%) 0px 0.3rem 1rem;
   cursor: pointer;
   transform: scale(1.015);
   }
 
   &:focus {
-  /* outline: 1px dashed var(--secondary-color-main); */
+  /* outline: 1px dashed var(--primary-color-main); */
   outline-offset: 4px;
 }
  `
@@ -64,10 +64,10 @@ transform: scale(2) !important;
 transition: all 0.3s ease 0s;
 
   &:hover {
-    color: var(--secondary-color-main);
+    color: var(--primary-color-main);
 }
   &:focus{
-  /* outline: 1px dashed var(--secondary-color-main); */
+  /* outline: 1px dashed var(--primary-color-main); */
 }
 
 `

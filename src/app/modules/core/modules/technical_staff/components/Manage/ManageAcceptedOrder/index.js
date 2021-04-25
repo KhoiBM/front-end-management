@@ -3,11 +3,13 @@
 import React, { useState } from 'react'
 import { makeStyles, Paper, Button } from '@material-ui/core';
 import { SearchBar, ViewOrderInformation, ChangeStatusOrder, FilterChipBar } from 'src/app/modules/core/components';
-import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit, useToggleChangeStatusForm, useToggleBox, useFilterHandle } from 'src/app/utils';
+import { useSearchHandle, useToggleViewInformation, useToggleFormAddEdit, useToggleChangeStatusForm, useToggleBox, useFilterHandle, useLoadingEffect } from 'src/app/utils';
 import { AcceptedOrderTable } from '../../Table';
 import config from 'src/environments/config';
 import { SendDemoProduct } from '../../AddForm';
 import { TechnicalStaffProcessOrderServices } from 'src/app/services';
+import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -68,10 +70,12 @@ export const ManageAcceptedOrder = () => {
         }
     )
 
-
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     return (
         <>
+            <Loader loading={loading} />
+
             {
                 // !openSendDemoProduct &&
                 <Paper elevation={0} className={classes.mainContainer}>
@@ -95,11 +99,6 @@ export const ManageAcceptedOrder = () => {
                 </Paper>
             }
 
-            {/* {openViewInformation && <ViewOrderInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />} */}
-
-            {/* {openChangeStatus && statusOrderToChange && statusOrderToChange != null && statusOrderToChange.length > 0 && < ChangeStatusOrder statusOrderToChange={statusOrderToChange} recordForChangeStatus={recordForChangeStatus} handleClose={handleCloseChangeStatus} />} */}
-
-            {/* {openSendDemoProduct && <SendDemoProduct handleClose={handleCloseSendDemoProduct} />} */}
 
         </>
     )

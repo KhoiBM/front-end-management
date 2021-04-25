@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { makeStyles, Paper, Button } from '@material-ui/core';
 import { SearchBar, ViewOrderInformation } from 'src/app/modules/core/components';
 import { useSearchHandle, useToggleViewInformation, useLoadingEffect } from 'src/app/utils';
-import { NewOrderTable } from '../../Table';
+import { NewOrderTable, CanceledOrderTable } from '../../Table';
 import { Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
@@ -36,13 +36,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const ManageNewOrder = () => {
+export const ManageCanceledOrder = () => {
     const classes = useStyles();
 
-
-    // const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
-
-    const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
     const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
@@ -52,24 +48,14 @@ export const ManageNewOrder = () => {
             <Loader loading={loading} />
 
             {
-                // !openViewInformation &&
+
                 <Paper elevation={0} className={classes.mainContainer}>
                     <>
-
-                        <div className={classes.actionContainer}>
-                            <div className={classes.actionWrapper}>
-                                <SearchBar keywords={keywords} setKeywords={setKeywords} searchAction={searchAction} setSearchAction={setSearchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} handleKeywordsChange={handleKeywordsChange} />
-                            </div>
-                        </div>
-
-                        <NewOrderTable
-                            // handleViewInformation={handleViewInformation}
-                            keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
+                        <CanceledOrderTable />
                     </>
                 </Paper>
             }
 
-            {/* {openViewInformation && <ViewOrderInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />} */}
 
         </>
     )

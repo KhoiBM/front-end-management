@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { makeStyles, Button, Paper, Grid, Slide, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
-import { useCustomStylesAddEditForm, useUploadPhoto } from 'src/app/utils';
+import { useCustomStylesAddEditForm, useUploadPhoto, useLoadingEffect } from 'src/app/utils';
 import { DropZoneUpload, PageHeader } from 'src/app/modules/core/components';
-import { IconClose } from 'src/app/components';
+import { IconClose, Loader } from 'src/app/components';
 import { toast } from 'react-toastify';
 import config from 'src/environments/config';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     dialog: {
@@ -74,7 +75,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 export const AddDemoProductPhoto = (props) => {
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
     const [uploadFiles, setUploadFiles] = useState([])
@@ -91,8 +93,13 @@ export const AddDemoProductPhoto = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (uploadFiles && uploadFiles != null && uploadFiles.length > 0) {
+            add()
+        }
+        else {
+            toast.error(config.useMessage.uploadPhotoFiles);
+        }
 
-        add()
 
     }
 
@@ -133,6 +140,8 @@ export const AddDemoProductPhoto = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <Dialog open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>
 
                 <DialogTitle className={classes.dialogTitle}>

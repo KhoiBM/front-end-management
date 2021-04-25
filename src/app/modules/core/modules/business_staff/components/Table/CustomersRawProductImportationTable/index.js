@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import config from '../../../../../../../../environments/config';
-import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-import { NotFound } from 'src/app/components';
+import { NotFound, Loader } from 'src/app/components';
 import { makeStyles } from '@material-ui/core';
 import { ManageCustomersRawProductImportationServices } from 'src/app/services';
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 
 export const CustomersRawProductImportationTable = (props) => {
-
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
@@ -105,6 +105,7 @@ export const CustomersRawProductImportationTable = (props) => {
     return (
         <>
             {/* <p>Table</p> */}
+            <Loader loading={loading} />
 
             <TblContainer>
                 <TblHead />

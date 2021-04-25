@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 import config from 'src/environments/config'
-import { useLoadPhotoList, useTab } from 'src/app/utils'
+import { useLoadPhotoList, useTab, useLoadingEffect } from 'src/app/utils'
 import { makeStyles, Divider } from '@material-ui/core'
 import { GridPhotoList } from '../GridPhotoList'
+import { Loader } from 'src/app/components'
 
 const useStyles = makeStyles(theme => ({
 
@@ -19,6 +20,7 @@ export const GirdCartItemPhotoList = (props) => {
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
 
@@ -92,6 +94,7 @@ export const GirdCartItemPhotoList = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
 
             <TabBar tabArr={[
                 {

@@ -2,6 +2,8 @@
 import React from 'react'
 import { Dialog, DialogTitle, DialogContentText, Button, DialogActions, DialogContent, makeStyles, Typography, Fade, Slide } from '@material-ui/core'
 import { FiAlertTriangle } from 'react-icons/fi'
+import { useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
     dialog: {
@@ -32,8 +34,12 @@ export const ConfirmDialog = (props) => {
     const classes = useStyles();
     const { confirmDialog, setConfirmDialog } = props
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
     return (
         <>
+            <Loader loading={loading} />
+
             <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
                 <DialogTitle className={classes.dialogTitle}>
 

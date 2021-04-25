@@ -10,6 +10,9 @@ import parse from 'date-fns/parse'
 import { differenceInDays, parseISO } from 'date-fns';
 import differenceInHours from 'date-fns/differenceInHours'
 import { NotificationDialog } from '../NotificationDialog';
+import { useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles((theme) => ({
 
     icon: {
@@ -80,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export const NotificationBar = () => {
+
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
     const [refresh, setRefresh] = useState(false)
@@ -226,6 +232,8 @@ export const NotificationBar = () => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <div>
                 {
                     role != useRoleName.administrator && role != useRoleName.manager &&

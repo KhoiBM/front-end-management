@@ -8,10 +8,10 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { ManageCategoryServices, ManageServiceServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
 const useStyles = makeStyles(theme => ({
     // rootForm: {
     //     marginTop: theme.spacing(3),
@@ -137,6 +137,7 @@ export const EditCategoryForm = (props) => {
 
     const { recordForEdit } = props
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
@@ -225,6 +226,8 @@ export const EditCategoryForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 

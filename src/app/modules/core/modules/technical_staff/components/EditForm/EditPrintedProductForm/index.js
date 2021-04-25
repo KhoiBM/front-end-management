@@ -8,11 +8,12 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { ManagePrintedProductServices, TechnicalStaffProcessOrderServices, ManageRawProductServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { ManagePrintedProduct } from '../../Manage'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
     // rootForm: {
     //     marginTop: theme.spacing(3),
@@ -126,6 +127,10 @@ const initialFValues = {
     createdAt: new Date()
 }
 export const EditPrintedProductForm = (props) => {
+
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     const classes = useStyles();
 
     const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
@@ -266,6 +271,8 @@ export const EditPrintedProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 

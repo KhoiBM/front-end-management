@@ -7,9 +7,9 @@ import { toast } from 'react-toastify'
 import { RiCloseFill } from 'react-icons/ri'
 import config from 'src/environments/config'
 import { ManageCategoryServices, ManageCustomersRawProductServices } from 'src/app/services'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { DropZoneUpload, PageHeader, ColorPickerInput } from 'src/app/modules/core/components'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
 const useStyles = makeStyles(theme => ({
     // rootForm: {
     //     marginTop: theme.spacing(3),
@@ -141,6 +141,7 @@ export const EditCustomersRawProductForm = (props) => {
 
     const { recordForEdit } = props
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
@@ -234,6 +235,8 @@ export const EditCustomersRawProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 

@@ -11,7 +11,7 @@ import HelperValidation from "../HelperValidation/HelperValidation";
 import Box from '@material-ui/core/Box';
 import { AuthService } from "../../../../services/AuthServices/AuthService";
 import { useSelector, useDispatch, useStore } from "react-redux";
-import { useAuthAction } from "src/app/stores/actions";
+import { useAuthAction, useLoadingAction } from "src/app/stores/actions";
 import config from "src/environments/config";
 import { useForm } from "src/app/utils/handles/index";
 import { toast } from "react-toastify";
@@ -31,38 +31,18 @@ const SignIn = ({ toggle, isVisible }) => {
 
     const dispatch = useDispatch();
 
-
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
-
     const [isFirst, setIsFirst] = useState(true)
-
 
     const { response } = useSelector((state) => state.auth)
 
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
+
     useEffect(() => {
         // document.title = 'Đăng nhập';
-        // hideLoader()
     }, [])
-
-
-
-    // useEffect(async () => {
-    //     if (!isFirst) {
-    //         const auth = store.getState().auth;
-    //         if (auth.isSignedIn) {
-    //             const role = localStorage.getItem("role");
-    //             redirectByRole(role)
-
-    //         } else {
-    //             toast.error("Đăng nhập thất bại")
-    //         }
-    //     }
-    //     setIsFirst(false);
-    // }, [response])
-
 
     const handleSubmit = throttle((event) => {
         event.preventDefault();
@@ -81,30 +61,38 @@ const SignIn = ({ toggle, isVisible }) => {
     });
 
     async function signIn(formData, dispatch) {
+
         // showLoader()
+
         const data = {
             username: formData.username,
             password: formData.password
         };
 
+        await RouteService.init(history)
+
         await dispatch(useAuthAction().signIn(data));
-        RouteService.init(history)
+
+
+
         // hideLoader()
+
     }
 
 
     return (
         <>
-            {/* {<Loader loading={loading} />} */}
+            {<Loader loading={loading} />}
+
             {isVisible && (
                 <div className={styles["signin-page-container"]}>
                     <section className={styles["signin-wrapper"]} >
 
-                        {/* <div className={styles["icon-close-wrapper"]}>
-                            <Link to='#' className={styles["icon-close"]} onClick={toggle}>
+                        <div className={styles["icon-close-wrapper"]}>
+                            <Link to='#' className={styles["icon-close"]} onClick={() => history.push("/core/home_page")}>
                                 <RiCloseFill />
                             </Link>
-                        </div> */}
+                        </div >
 
                         <div className={styles["logo-wrapper"]}>
                             <img src={brandLogo} className={styles["brand-logo"]} alt="logo of brand" />
@@ -136,9 +124,7 @@ const SignIn = ({ toggle, isVisible }) => {
                                     <section className={styles["label-password-container"]} >
                                         <p>Mật khẩu</p>
                                         <Link to="/auth/forgotpassword">
-                                            <button className={styles["btn-forgetpassword"]}
-                                                // tabIndex="2"
-                                                type="button">
+                                            <button className={styles["btn-forgetpassword"]}>
                                                 Quên mật khẩu?
                                         </button>
                                         </Link >
@@ -156,21 +142,13 @@ const SignIn = ({ toggle, isVisible }) => {
                             </label >
                             {<HelperValidation>{helperValid.password}</HelperValidation>}
 
-                            <button
-                                tabIndex="1"
-                                type="submit"
-                                className={styles["btn-signin"]} >
+                            <button type="submit" className={styles["btn-signin"]}>
                                 Đăng nhập
                             </button >
                         </form >
                     </section >
 
-                    {/* <section className={styles["signup-nav-wrapper"]}>
-                        <span>Chưa có tài khoản? </span>
-                        <Link to="/auth/signup">
-                            <button className={styles["btn-nav-signup"]}>Tạo tài khoản.</button>
-                        </Link>
-                    </section> */}
+
 
                 </div >
             )

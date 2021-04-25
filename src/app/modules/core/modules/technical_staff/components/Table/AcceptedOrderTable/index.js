@@ -9,9 +9,10 @@ import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { RiInformationLine, RiExchangeBoxLine, RiMailSendLine } from 'react-icons/ri';
 import config from 'src/environments/config';
 import { BusinessStaffProcessOrderServices, TechnicalStaffProcessOrderServices } from 'src/app/services';
-import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { ConfirmDialog, PaginationBar, ChangeStatusOrder, ViewOrderInformation } from 'src/app/modules/core/components';
-import { NotFound } from 'src/app/components';
+import { NotFound, Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 }));
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export const AcceptedOrderTable = (props) => {
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
     const { classesCustom } = useCustomStyles()
@@ -219,6 +221,7 @@ export const AcceptedOrderTable = (props) => {
     return (
         <>
             {/* <p>NewOrderTable</p> */}
+            <Loader loading={loading} />
 
             <TblContainer>
                 <TblHead />
@@ -308,9 +311,9 @@ export const AcceptedOrderTable = (props) => {
             </TblContainer>
 
 
-            {<ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />}
+            {changeStatusModal.isOpen && <ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />}
 
-            {<ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
+            {viewOrderInformationModal.isOpen && <ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
 
             <PaginationBar totalPage={totalPage} setPage={setPage} page={page} />
 

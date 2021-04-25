@@ -5,8 +5,8 @@ import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper,
 import { toast } from 'react-toastify';
 import { RiCheckboxBlankCircleFill } from 'react-icons/ri';
 import config from 'src/environments/config';
-import { IconClose } from 'src/app/components';
-import { useLoadPhotoList, useFormat } from 'src/app/utils';
+import { IconClose, Loader } from 'src/app/components';
+import { useLoadPhotoList, useFormat, useLoadingEffect } from 'src/app/utils';
 import { GridPhotoList, PageHeader } from 'src/app/modules/core/components';
 
 
@@ -108,7 +108,7 @@ export const ViewCustomersRawProductInformation = (props) => {
     const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
     const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["CUSTOMER'SRAWPRODUCT"]
 
-
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
@@ -129,6 +129,8 @@ export const ViewCustomersRawProductInformation = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
+
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>
 

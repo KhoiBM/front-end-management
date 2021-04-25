@@ -8,9 +8,9 @@ import { ManageAccountServices } from 'src/app/services/CoreServices/AdminServic
 import config from 'src/environments/config';
 import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { useTable, useRefresh } from 'src/app/utils';
+import { useTable, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-import { NotFound } from 'src/app/components';
+import { NotFound, Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
 
@@ -36,6 +36,7 @@ export const AccountTable = (props) => {
 
     const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     useEffect(() => {
 
@@ -178,6 +179,7 @@ export const AccountTable = (props) => {
     return (
         <>
             {/* <p>AccountTable</p> */}
+            <Loader loading={loading} />
 
 
             <TblContainer>

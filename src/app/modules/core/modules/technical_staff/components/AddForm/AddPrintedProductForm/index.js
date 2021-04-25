@@ -6,11 +6,12 @@ import { makeStyles, Grid, TextField, Switch, FormControlLabel, Button, MenuItem
 import { toast } from 'react-toastify'
 import config from 'src/environments/config'
 import { RiCloseFill } from 'react-icons/ri'
-import { useForm, useUploadPhoto, useCustomStylesAddEditForm } from 'src/app/utils'
+import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { ManagePrintedProductServices, TechnicalStaffProcessOrderServices, ManageRawProductServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload } from 'src/app/modules/core/components'
 import { ManagePrintedProduct } from '../../Manage'
-import { IconClose } from 'src/app/components'
+import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
     // rootForm: {
@@ -127,6 +128,9 @@ const initialFValues = {
 export const AddPrintedProductForm = (props) => {
     const classes = useStyles();
 
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
 
     const [uploadFiles, setUploadFiles] = useState([])
@@ -198,8 +202,13 @@ export const AddPrintedProductForm = (props) => {
                 createdAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
+            if (uploadFiles && uploadFiles != null && uploadFiles.length > 0) {
+                add(data)
+            }
+            else {
+                toast.error(config.useMessage.uploadPhotoFiles);
+            }
 
-            add(data)
 
         } else {
             toast.error(config.useMessage.invalidData);
@@ -239,7 +248,7 @@ export const AddPrintedProductForm = (props) => {
                     if (uploadFiles.length > 0) {
                         uploadPhoto(uploadInfo, uploadFiles)
                     } else {
-                        toast.success("Thành công")
+                        // toast.success("Thành công")
                     }
 
 
@@ -260,6 +269,8 @@ export const AddPrintedProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
+            <Loader loading={loading} />
+
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>
 

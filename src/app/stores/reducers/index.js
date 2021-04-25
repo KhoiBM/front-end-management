@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { useAuthReducer } from './useAuthReducers';
-
+import { useAuthReducer } from './useAuthReducer';
+import { useLoadingReducer } from './useLoadingReducer';
 
 export const useRootReducer = () => (combineReducers({
     auth: useAuthReducer,
-    // loading: useLoadingReducer
+    loadingState: useLoadingReducer,
 }));

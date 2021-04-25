@@ -1,6 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core';
 import { OverallRevenueStatistic, ChartRevenuePerService, NumberOrderStatistic } from '../../StatisticAndChart/index'
+import { useLoadingEffect } from 'src/app/utils';
+import { Loader } from 'src/app/components';
 const useStyles = makeStyles(theme => ({
     chartContainer: {
         display: "flex",
@@ -17,8 +19,11 @@ const useStyles = makeStyles(theme => ({
 }))
 export const ManageStatistic = () => {
     const classes = useStyles();
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     return (
         <>
+            <Loader loading={loading} />
+
             <OverallRevenueStatistic />
             <div className={classes.chartContainer}>
 

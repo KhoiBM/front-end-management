@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { ManageServiceServices } from '../../../../../../../services/CoreServices/ManagerServices';
 import config from '../../../../../../../../environments/config';
-import { useTable, useCustomStyles, useRefresh, useFormat } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useFormat, useLoadingEffect } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
-import { NotFound } from 'src/app/components';
+import { NotFound, Loader } from 'src/app/components';
 
 const useStyles = makeStyles(theme => ({
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 export const ServiceTable = (props) => {
 
-
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
@@ -163,6 +163,7 @@ export const ServiceTable = (props) => {
     return (
         <>
             {/* <p>Table</p> */}
+            <Loader loading={loading} />
 
 
             <TblContainer>

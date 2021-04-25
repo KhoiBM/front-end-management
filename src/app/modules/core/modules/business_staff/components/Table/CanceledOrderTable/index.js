@@ -7,9 +7,9 @@ import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { RiInformationLine, RiExchangeBoxLine, RiMailSendLine } from 'react-icons/ri';
 import config from 'src/environments/config';
 import { BusinessStaffProcessOrderServices } from 'src/app/services';
-import { useTable, useCustomStyles, useRefresh } from 'src/app/utils';
+import { useTable, useCustomStyles, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { PaginationBar, ChangeStatusOrder, ViewOrderInformation } from 'src/app/modules/core/components';
-import { NotFound } from 'src/app/components';
+import { NotFound, Loader } from 'src/app/components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,16 +20,11 @@ const useStyles = makeStyles(theme => ({
 
 
 export const CanceledOrderTable = (props) => {
+    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
 
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
-    const { keywords, searchAction, clickSearch } = props
-
-    const { filterList, action, clickFilter } = props
-
-    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
@@ -43,7 +38,6 @@ export const CanceledOrderTable = (props) => {
     const [switchCheck, setSwitchCheck] = useState({});
 
     const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
-
 
     const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
@@ -113,48 +107,7 @@ export const CanceledOrderTable = (props) => {
 
     }
 
-    // console.log("totalPage: " + totalPage)
-
-    // const search = async () => {
-
-    //     try {
-
-    //         const response = await (await BusinessStaffProcessOrderServices.search({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
-    //         // console.log("response: " + JSON.stringify(response))
-    //         if (response && response != null) {
-
-    //             if (response.result == config.useResultStatus.SUCCESS) {
-
-    //                 loadData(response)
-
-    //                 console.log("search")
-
-    //             } else {
-
-    //                 toast.error(config.useMessage.resultFailure)
-
-    //             }
-    //         } else {
-
-    //             throw new Error("Response is null or undefined")
-
-    //         }
-
-    //     } catch (err) {
-
-    //         toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-
-    //     }
-
-    // }
-
-
-
-
-
-
     const handleCloseModal = () => {
-        // setChangeStatusModal({ isOpen: false })
         setViewOrderInformationModal({ isOpen: false })
         handleRefresh()
     }
@@ -163,6 +116,7 @@ export const CanceledOrderTable = (props) => {
 
     return (
         <>
+            <Loader loading={loading} />
 
             <div className={classes.tableWrapper}>
                 <TblContainer>
@@ -231,8 +185,6 @@ export const CanceledOrderTable = (props) => {
                     </TblBody>
                 </TblContainer>
             </div >
-
-            {/* {<ChangeStatusOrder changeStatusModal={changeStatusModal} setChangeStatusModal={setChangeStatusModal} />} */}
 
             {<ViewOrderInformation viewOrderInformationModal={viewOrderInformationModal} setViewOrderInformationModal={setViewOrderInformationModal} />}
 
