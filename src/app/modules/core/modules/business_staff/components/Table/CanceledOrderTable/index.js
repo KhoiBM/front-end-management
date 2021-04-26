@@ -52,7 +52,10 @@ export const CanceledOrderTable = (props) => {
 
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.viewCanceledOrder({ filterBy: "all", page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.ALL.FILTER[1]], page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+            const response = await (await BusinessStaffProcessOrderServices.viewCanceledOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {

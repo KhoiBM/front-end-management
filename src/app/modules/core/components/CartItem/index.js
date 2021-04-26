@@ -116,7 +116,8 @@ export const CartItem = (props) => {
                 case "Quản lý":
                     bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
                     folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
-                    fileKey = `${folder}/${categoryCode}/${rawProductCode}/thumbnail`
+                    // fileKey = `${folder}/${categoryCode}/${rawProductCode}/thumbnail`
+                    fileKey = `${folder}/${categoryCode}/${rawProductCode}/`
                     break;
             }
             loadPhotoList(bucketName, fileKey)

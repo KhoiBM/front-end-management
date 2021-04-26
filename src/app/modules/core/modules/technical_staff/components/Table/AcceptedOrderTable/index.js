@@ -114,6 +114,7 @@ export const AcceptedOrderTable = (props) => {
         // console.log("Page: " + page)
 
         try {
+
             const response = await (await TechnicalStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
@@ -177,7 +178,11 @@ export const AcceptedOrderTable = (props) => {
 
         try {
 
-            const response = await (await TechnicalStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.TECHNICAL_STAFF.FILTER], keywords: keywords, page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+
+            const response = await (await TechnicalStaffProcessOrderServices.searchAcceptedOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
 

@@ -118,6 +118,8 @@ export const AcceptedOrderTable = (props) => {
         console.log("Page: " + page)
 
         try {
+
+
             const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
@@ -181,7 +183,11 @@ export const AcceptedOrderTable = (props) => {
 
         try {
 
-            const response = await (await BusinessStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+
+            const data = { filterBy: [config.useStatusOrder.BUSINESS_STAFF.FILTER], keywords: keywords, page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+            const response = await (await BusinessStaffProcessOrderServices.searchAcceptedOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
 

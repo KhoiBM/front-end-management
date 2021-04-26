@@ -95,7 +95,9 @@ export const NewOrderTable = (props) => {
     const loadInit = async () => {
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.viewNewOrder({ filterBy: "all", page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await BusinessStaffProcessOrderServices.viewNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -159,10 +161,12 @@ export const NewOrderTable = (props) => {
 
     }
 
-
     const search = async () => {
         try {
-            const response = await (await BusinessStaffProcessOrderServices.searchNewOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], keywords: keywords, page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+            const response = await (await BusinessStaffProcessOrderServices.searchNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
