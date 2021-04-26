@@ -11,6 +11,7 @@ import photoDemo from 'src/app/assets/image/demoPhoto.jpeg'
 import photoDemo2 from 'src/app/assets/image/demoPhoto2.jpg'
 import photoDemo3 from 'src/app/assets/image/demoPhoto3.jpg'
 import { useFormat, useLoadPhotoList, useLoadingEffect } from 'src/app/utils';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     pageViewInfomationContainer: {
@@ -111,7 +112,8 @@ export const ViewRawProductInformation = (props) => {
     const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
     const folder = config.useConfigAWS.STUDIOBUCKET.FOLDER["STUDIO'SRAWPRODUCT"]
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     useEffect(() => {
@@ -127,7 +129,7 @@ export const ViewRawProductInformation = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>

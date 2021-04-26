@@ -11,6 +11,7 @@ import { ManageCategory } from '../../../../manager/components'
 import { ManageRawProductServices, ManageCategoryServices } from 'src/app/services'
 import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
     // rootForm: {
     //     marginTop: theme.spacing(3),
@@ -142,7 +143,8 @@ export const EditRawProductForm = (props) => {
 
     const { recordForEdit } = props
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForEdit != null && recordForEdit != undefined) {
@@ -236,7 +238,7 @@ export const EditRawProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>

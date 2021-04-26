@@ -6,6 +6,7 @@ import { SearchBar, ViewOrderInformation } from 'src/app/modules/core/components
 import { useSearchHandle, useToggleViewInformation, useLoadingEffect } from 'src/app/utils';
 import { NewOrderTable } from '../../Table';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -44,12 +45,13 @@ export const ManageNewOrder = () => {
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {
                 // !openViewInformation &&

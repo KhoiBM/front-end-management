@@ -10,6 +10,7 @@ import config from 'src/environments/config';
 import { toast } from 'react-toastify';
 import { useFilterHandle, useToggleFormAddEdit, useLoadingEffect } from 'src/app/utils';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -73,12 +74,14 @@ export const ManageAccount = () => {
         }
     )
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
 
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>

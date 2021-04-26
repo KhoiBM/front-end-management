@@ -10,6 +10,7 @@ import { useFormat, useLoadingEffect } from 'src/app/utils';
 import { AiOutlineExport } from 'react-icons/ai';
 import { CgExport } from 'react-icons/cg'
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 
 const useStyles = makeStyles(theme => ({
@@ -172,7 +173,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OverallRevenueStatistic = () => {
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     const classes = useStyles();
 
@@ -241,7 +243,7 @@ const OverallRevenueStatistic = () => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.overallStatisticRoot}>
                 {/* <div className={classes.overallContainer}>

@@ -11,6 +11,7 @@ import { useFormat } from 'src/app/utils'
 
 import { ManageStatisticServices } from 'src/app/services/CoreServices/ManagerServices/ManageStatisticServices.js'
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 
 const useStyles = makeStyles(theme => ({
@@ -57,7 +58,8 @@ const useStyles = makeStyles(theme => ({
 
 
 const NumberOrderStatistic = () => {
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
     const [refresh, setRefresh] = useState(false)
@@ -136,7 +138,7 @@ const NumberOrderStatistic = () => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.chartContainer}>
 

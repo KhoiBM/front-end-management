@@ -127,6 +127,7 @@ export const AddDemoProductPhoto = (props) => {
 
             if (uploadFiles.length > 0) {
                 uploadPhoto(uploadInfo, uploadFiles)
+                // setUploadFiles([])
             } else {
                 toast.success("Không có tệp để tải lên")
             }

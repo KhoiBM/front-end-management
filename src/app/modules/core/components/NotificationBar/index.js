@@ -85,7 +85,8 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationBar = () => {
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     const classes = useStyles();
 
     const [refresh, setRefresh] = useState(false)
@@ -232,7 +233,7 @@ export const NotificationBar = () => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div>
                 {

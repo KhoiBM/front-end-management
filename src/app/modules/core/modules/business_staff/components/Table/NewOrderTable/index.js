@@ -13,6 +13,7 @@ import { BusinessStaffProcessOrderServices } from 'src/app/services';
 import { useTable, useCustomStyles, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { ConfirmDialog, PaginationBar, ChangeStatusOrder, ViewOrderInformation } from 'src/app/modules/core/components';
 import { NotFound, Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 
@@ -24,7 +25,9 @@ const useStyles = makeStyles(theme => ({
 
 export const NewOrderTable = (props) => {
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
 
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
@@ -300,7 +303,7 @@ export const NewOrderTable = (props) => {
     return (
         <>
             {/* <p>NewOrderTable</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <TblContainer>
                 <TblHead />

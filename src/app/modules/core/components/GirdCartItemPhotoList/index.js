@@ -5,6 +5,7 @@ import { useLoadPhotoList, useTab, useLoadingEffect } from 'src/app/utils'
 import { makeStyles, Divider } from '@material-ui/core'
 import { GridPhotoList } from '../GridPhotoList'
 import { Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
 
@@ -20,7 +21,8 @@ export const GirdCartItemPhotoList = (props) => {
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
 
@@ -94,7 +96,7 @@ export const GirdCartItemPhotoList = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <TabBar tabArr={[
                 {

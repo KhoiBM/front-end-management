@@ -13,6 +13,7 @@ import { OrderServices } from 'src/app/services';
 import { DatePicker } from '@material-ui/pickers';
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     rootGrid: {
         marginTop: theme.spacing(3),
@@ -223,7 +224,8 @@ export const ViewOrderInformation = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, setHelperValid, validation, shipAtSelected, setShipAtSelected, handleChangeShipAt } = useForm(initialFValues)
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {
@@ -296,10 +298,303 @@ export const ViewOrderInformation = (props) => {
         }
 
     }
+    const OrderEditForm = (props) => {
+        return (
+            <>
+                <TextField
+                    variant='outlined'
+                    label="Mã Code đơn hàng"
+                    value={formData.orderCode}
+                    name='orderCode'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Mã Code khách hàng"
+                    value={formData.customerCode}
+                    name='customerCode'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Tên khách hàng"
+                    value={formData.customerName}
+                    name='customerName'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Số điện thoại"
+                    value={formData.phone}
+                    name='phone'
+                    // required
+                    // disabled
+                    onChange={handleInputChange}
+                    error={helperValid.phone ? true : false}
+                    helperText={helperValid.phone}
+                />
+                <TextField
+                    variant='outlined'
+                    label="Địa chỉ"
+                    value={formData.address}
+                    name='address'
+                    // required
+                    // disabled
+                    multiline
+                    // onChange={handleInputChange}
+                    error={helperValid.address ? true : false}
+                    helperText={helperValid.address}
+                />
 
+                <TextField
+                    variant='outlined'
+                    label="Trạng thái đơn hàng"
+                    value={formData.statusOrder}
+                    name='statusOrder'
+                    // required
+                    disabled
+                />
+                {/* <FormControlLabel
+label="Trạng thái thanh toán"
+labelPlacement="start"
+control={<Switch
+color="primary"
+checked={recordOrder.statusPayment}
+name="statusPayment"
+disabled
+
+/>
+
+}
+/> */}
+                <TextField
+                    variant='outlined'
+                    label="Trạng thái thanh toán"
+                    value={formData.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
+                    name='statusPayment'
+                    // required
+                    disabled
+                />
+
+                {/* <TextField
+    variant='outlined'
+    label="Ngày giao"
+    value={formData.shipAt}
+    name='shipAt'
+    // required
+    // disabled
+    onChange={handleInputChange}
+    error={helperValid.shipAt ? true : false}
+    helperText={helperValid.shipAt}
+/> */}
+
+                <DatePicker value={shipAtSelected} onChange={handleChangeShipAt}
+                    openTo="year"
+                    format="dd-MM-yyyy"
+                    label="Ngày giao"
+                    views={["year", "month", "date"]}
+                    autoOk
+                    inputVariant="outlined"
+                    inputadornmentprops={{ position: "start" }}
+
+                />
+                <FormHelperText style={{
+                    color: "#f44336",
+                    marginLeft: "14px",
+                    marginRight: "14px",
+                    marginBottom: '16px',
+                    marginTop: "-20px"
+
+                }}>{helperValid.shipAt}
+                </FormHelperText>
+
+                <TextField
+                    variant='outlined'
+                    label="Ghi chú"
+                    value={formData.note}
+                    name='note'
+                    // required
+                    // disabled
+                    multiline
+                    onChange={handleInputChange}
+                    error={helperValid.note ? true : false}
+                    helperText={helperValid.note}
+                />
+                <TextField
+                    variant='outlined'
+                    label="Ngày tạo"
+                    value={formData.createdAt}
+                    name='createdAt'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Ngày sửa đổi"
+                    value={formData.updatedAt}
+                    name='updatedAt'
+                    // required
+                    disabled
+                />
+
+                <div className={classes.buttonEditWrapper}>
+                    <Button type="submit" variant="outlined" color="primary" size="large" className={classes.buttonEdit} >Lưu</Button>
+                </div>
+
+            </>
+        )
+    }
+
+    const ViewOrderForm = (props) => {
+        return (
+            <>
+                <TextField
+                    variant='outlined'
+                    label="Mã Code đơn hàng"
+                    value={formData.orderCode}
+                    name='orderCode'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Mã Code khách hàng"
+                    value={formData.customerCode}
+                    name='customerCode'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Tên khách hàng"
+                    value={formData.customerName}
+                    name='customerName'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Số điện thoại"
+                    value={formData.phone}
+                    name='phone'
+                // required
+                // disabled
+                // onChange={handleInputChange}
+                // error={helperValid.phone ? true : false}
+                // helperText={helperValid.phone}
+                />
+                <TextField
+                    variant='outlined'
+                    label="Địa chỉ"
+                    value={formData.address}
+                    name='address'
+                    // required
+                    // disabled
+                    multiline
+                // onChange={handleInputChange}
+                // error={helperValid.address ? true : false}
+                // helperText={helperValid.address}
+                />
+
+                <TextField
+                    variant='outlined'
+                    label="Trạng thái đơn hàng"
+                    value={formData.statusOrder}
+                    name='statusOrder'
+                    // required
+                    disabled
+                />
+                {/* <FormControlLabel
+label="Trạng thái thanh toán"
+labelPlacement="start"
+control={<Switch
+color="primary"
+checked={recordOrder.statusPayment}
+name="statusPayment"
+disabled
+
+/>
+
+}
+/> */}
+                <TextField
+                    variant='outlined'
+                    label="Trạng thái thanh toán"
+                    value={formData.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
+                    name='statusPayment'
+                    // required
+                    disabled
+                />
+
+                {/* <TextField
+    variant='outlined'
+    label="Ngày giao"
+    value={formData.shipAt}
+    name='shipAt'
+    // required
+    // disabled
+    onChange={handleInputChange}
+    error={helperValid.shipAt ? true : false}
+    helperText={helperValid.shipAt}
+/> */}
+
+                <DatePicker value={shipAtSelected}
+                    // onChange={handleChangeShipAt}
+                    openTo="year"
+                    format="dd-MM-yyyy"
+                    label="Ngày giao"
+                    views={["year", "month", "date"]}
+                    autoOk
+                    inputVariant="outlined"
+                    inputadornmentprops={{ position: "start" }}
+                    disabled
+
+                />
+                <FormHelperText style={{
+                    color: "#f44336",
+                    marginLeft: "14px",
+                    marginRight: "14px",
+                    marginBottom: '16px',
+                    marginTop: "-20px"
+
+                }}>{helperValid.shipAt}
+                </FormHelperText>
+
+                <TextField
+                    variant='outlined'
+                    label="Ghi chú"
+                    value={formData.note}
+                    name='note'
+                    // required
+                    // disabled
+                    multiline
+
+                />
+                <TextField
+                    variant='outlined'
+                    label="Ngày tạo"
+                    value={formData.createdAt}
+                    name='createdAt'
+                    // required
+                    disabled
+                />
+                <TextField
+                    variant='outlined'
+                    label="Ngày sửa đổi"
+                    value={formData.updatedAt}
+                    name='updatedAt'
+                    // required
+                    disabled
+                />
+            </>
+        )
+    }
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {/* isOpen */}
             <Dialog fullScreen open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>
@@ -348,293 +643,10 @@ export const ViewOrderInformation = (props) => {
                                         <Box className={classes.gridItemContentContainer} >
 
                                             {
-                                                role == useRoleName.businessStaff ?
-                                                    <>
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Mã Code đơn hàng"
-                                                            value={formData.orderCode}
-                                                            name='orderCode'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Mã Code khách hàng"
-                                                            value={formData.customerCode}
-                                                            name='customerCode'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Tên khách hàng"
-                                                            value={formData.customerName}
-                                                            name='customerName'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Số điện thoại"
-                                                            value={formData.phone}
-                                                            name='phone'
-                                                            // required
-                                                            // disabled
-                                                            onChange={handleInputChange}
-                                                            error={helperValid.phone ? true : false}
-                                                            helperText={helperValid.phone}
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Địa chỉ"
-                                                            value={formData.address}
-                                                            name='address'
-                                                            // required
-                                                            // disabled
-                                                            multiline
-                                                            // onChange={handleInputChange}
-                                                            error={helperValid.address ? true : false}
-                                                            helperText={helperValid.address}
-                                                        />
-
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Trạng thái đơn hàng"
-                                                            value={formData.statusOrder}
-                                                            name='statusOrder'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        {/* <FormControlLabel
-label="Trạng thái thanh toán"
-labelPlacement="start"
-control={<Switch
-color="primary"
-checked={recordOrder.statusPayment}
-name="statusPayment"
-disabled
-
-/>
-
-}
-/> */}
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Trạng thái thanh toán"
-                                                            value={formData.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
-                                                            name='statusPayment'
-                                                            // required
-                                                            disabled
-                                                        />
-
-                                                        {/* <TextField
-                                                variant='outlined'
-                                                label="Ngày giao"
-                                                value={formData.shipAt}
-                                                name='shipAt'
-                                                // required
-                                                // disabled
-                                                onChange={handleInputChange}
-                                                error={helperValid.shipAt ? true : false}
-                                                helperText={helperValid.shipAt}
-                                            /> */}
-
-                                                        <DatePicker value={shipAtSelected} onChange={handleChangeShipAt}
-                                                            openTo="year"
-                                                            format="dd-MM-yyyy"
-                                                            label="Ngày giao"
-                                                            views={["year", "month", "date"]}
-                                                            autoOk
-                                                            inputVariant="outlined"
-                                                            inputadornmentprops={{ position: "start" }}
-
-                                                        />
-                                                        <FormHelperText style={{
-                                                            color: "#f44336",
-                                                            marginLeft: "14px",
-                                                            marginRight: "14px",
-                                                            marginBottom: '16px',
-                                                            marginTop: "-20px"
-
-                                                        }}>{helperValid.shipAt}
-                                                        </FormHelperText>
-
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Ghi chú"
-                                                            value={formData.note}
-                                                            name='note'
-                                                            // required
-                                                            // disabled
-                                                            multiline
-                                                            onChange={handleInputChange}
-                                                            error={helperValid.note ? true : false}
-                                                            helperText={helperValid.note}
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Ngày tạo"
-                                                            value={formData.createdAt}
-                                                            name='createdAt'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Ngày sửa đổi"
-                                                            value={formData.updatedAt}
-                                                            name='updatedAt'
-                                                            // required
-                                                            disabled
-                                                        />
-
-                                                        <div className={classes.buttonEditWrapper}>
-                                                            <Button type="submit" variant="outlined" color="primary" size="large" className={classes.buttonEdit} onClick={editOrder}>Lưu</Button>
-                                                        </div>
-
-                                                    </>
-                                                    :
-                                                    <>
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Mã Code đơn hàng"
-                                                            value={formData.orderCode}
-                                                            name='orderCode'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Mã Code khách hàng"
-                                                            value={formData.customerCode}
-                                                            name='customerCode'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Tên khách hàng"
-                                                            value={formData.customerName}
-                                                            name='customerName'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Số điện thoại"
-                                                            value={formData.phone}
-                                                            name='phone'
-                                                        // required
-                                                        // disabled
-                                                        // onChange={handleInputChange}
-                                                        // error={helperValid.phone ? true : false}
-                                                        // helperText={helperValid.phone}
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Địa chỉ"
-                                                            value={formData.address}
-                                                            name='address'
-                                                            // required
-                                                            // disabled
-                                                            multiline
-                                                        // onChange={handleInputChange}
-                                                        // error={helperValid.address ? true : false}
-                                                        // helperText={helperValid.address}
-                                                        />
-
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Trạng thái đơn hàng"
-                                                            value={formData.statusOrder}
-                                                            name='statusOrder'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        {/* <FormControlLabel
-label="Trạng thái thanh toán"
-labelPlacement="start"
-control={<Switch
-color="primary"
-checked={recordOrder.statusPayment}
-name="statusPayment"
-disabled
-
-/>
-
-}
-/> */}
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Trạng thái thanh toán"
-                                                            value={formData.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
-                                                            name='statusPayment'
-                                                            // required
-                                                            disabled
-                                                        />
-
-                                                        {/* <TextField
-                                                variant='outlined'
-                                                label="Ngày giao"
-                                                value={formData.shipAt}
-                                                name='shipAt'
-                                                // required
-                                                // disabled
-                                                onChange={handleInputChange}
-                                                error={helperValid.shipAt ? true : false}
-                                                helperText={helperValid.shipAt}
-                                            /> */}
-
-                                                        <DatePicker value={shipAtSelected}
-                                                            // onChange={handleChangeShipAt}
-                                                            openTo="year"
-                                                            format="dd-MM-yyyy"
-                                                            label="Ngày giao"
-                                                            views={["year", "month", "date"]}
-                                                            autoOk
-                                                            inputVariant="outlined"
-                                                            inputadornmentprops={{ position: "start" }}
-                                                            disabled
-
-                                                        />
-                                                        <FormHelperText style={{
-                                                            color: "#f44336",
-                                                            marginLeft: "14px",
-                                                            marginRight: "14px",
-                                                            marginBottom: '16px',
-                                                            marginTop: "-20px"
-
-                                                        }}>{helperValid.shipAt}
-                                                        </FormHelperText>
-
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Ghi chú"
-                                                            value={formData.note}
-                                                            name='note'
-                                                            // required
-                                                            // disabled
-                                                            multiline
-
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Ngày tạo"
-                                                            value={formData.createdAt}
-                                                            name='createdAt'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                        <TextField
-                                                            variant='outlined'
-                                                            label="Ngày sửa đổi"
-                                                            value={formData.updatedAt}
-                                                            name='updatedAt'
-                                                            // required
-                                                            disabled
-                                                        />
-                                                    </>
+                                                // role == useRoleName.businessStaff ?
+                                                <OrderEditForm />
+                                                // :
+                                                // <ViewOrderForm />
 
                                             }
                                         </Box>

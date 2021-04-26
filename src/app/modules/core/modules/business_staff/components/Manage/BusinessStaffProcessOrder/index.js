@@ -10,6 +10,7 @@ import { ManageNewOrder } from '../ManageNewOrder';
 import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
 import { Loader } from 'src/app/components';
 import { ManageCanceledOrder } from '../ManageCanceledOrder';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         // background: '#B6E2F3',
@@ -47,6 +48,7 @@ export const BusinessStaffProcessOrder = () => {
     const { TabPanel, TabBar, value, handleChange } = useTab()
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     return (

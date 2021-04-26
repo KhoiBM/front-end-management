@@ -56,11 +56,11 @@ export const TechnicalStaffProcessOrder = () => {
         handleRefresh()
     }
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <Paper elevation={2} className={classes.mainContainer}>
 

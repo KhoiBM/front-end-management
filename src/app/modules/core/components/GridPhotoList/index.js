@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia, Divider } from '@material-ui/core';
 import { useLoadingEffect } from 'src/app/utils';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 
 const useStyles = makeStyles(theme => ({
@@ -129,7 +130,8 @@ export const GridPhotoList = (props) => {
 
     const [photoToShow, setPhotoToShow] = useState()
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         loadInit()
@@ -145,7 +147,7 @@ export const GridPhotoList = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <Paper className={classes.rootContainer} elevation={0}>
 

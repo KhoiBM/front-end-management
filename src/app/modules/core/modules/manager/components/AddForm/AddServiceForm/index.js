@@ -197,7 +197,7 @@ export const AddServiceForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>

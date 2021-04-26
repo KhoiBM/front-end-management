@@ -9,6 +9,7 @@ import { PaginationBar } from 'src/app/modules/core/components';
 import { NotFound, Loader } from 'src/app/components';
 import { makeStyles } from '@material-ui/core';
 import { ManageCustomersRawProductImportationServices } from 'src/app/services';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 
@@ -17,8 +18,11 @@ const useStyles = makeStyles(theme => ({
 
 
 export const CustomersRawProductImportationTable = (props) => {
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     const classes = useStyles();
+
     const { classesCustom } = useCustomStyles()
 
     // const headCells = ['ID', "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
@@ -105,7 +109,7 @@ export const CustomersRawProductImportationTable = (props) => {
     return (
         <>
             {/* <p>Table</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <TblContainer>
                 <TblHead />

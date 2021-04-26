@@ -9,6 +9,7 @@ import config from '../../../../../../../../environments/config';
 import { useTable, useCustomStyles, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
 import { NotFound, Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 
@@ -16,7 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 
 export const CategoryTable = (props) => {
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
@@ -157,7 +159,7 @@ export const CategoryTable = (props) => {
     return (
         <>
             {/* <p>Table</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
 
             <TblContainer>

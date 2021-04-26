@@ -9,6 +9,7 @@ import config from 'src/environments/config';
 import { SendDemoProduct } from '../../AddForm';
 import { BusinessStaffProcessOrderServices } from 'src/app/services';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -69,7 +70,8 @@ export const ManageAcceptedOrder = () => {
         }
     )
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     return (

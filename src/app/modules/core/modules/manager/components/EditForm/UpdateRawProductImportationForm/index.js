@@ -10,6 +10,7 @@ import { useForm, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/u
 import { ManageRawProductImportationServices, ManageRawProductServices } from 'src/app/services'
 import { PageHeader } from 'src/app/modules/core/components'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
     rootForm: {
         marginTop: theme.spacing(3),
@@ -92,7 +93,8 @@ export const UpdateRawProductImportationForm = (props) => {
 
     const [rawProductRecords, setRawProductRecords] = useState([])
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     // useEffect(() => {
     //     loadInit()
@@ -166,7 +168,7 @@ export const UpdateRawProductImportationForm = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>

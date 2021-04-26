@@ -11,6 +11,7 @@ import { useForm, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/u
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'
 import { PageHeader } from 'src/app/modules/core/components'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -113,8 +114,8 @@ const initialFValues = {
     // rePassword: "",
     roleID: "",
     isActive: true,
-    showPassword: false,
-    showRePassword: false,
+    // showPassword: false,
+    // showRePassword: false,
     // updatedAt: new Date()
 }
 export const EditAccountForm = (props) => {
@@ -126,7 +127,9 @@ export const EditAccountForm = (props) => {
 
     const { recordForEdit } = props
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
 
     useEffect(() => {
         if (recordForEdit && recordForEdit != null && recordForEdit != undefined) {
@@ -182,6 +185,7 @@ export const EditAccountForm = (props) => {
     }
 
     const edit = async (formData) => {
+        showLoader()
         try {
             const data = {
                 accountID: formData.accountID,
@@ -209,6 +213,7 @@ export const EditAccountForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
+        hideLoader()
     }
 
 
@@ -233,7 +238,7 @@ export const EditAccountForm = (props) => {
     return (
         <>
             {/* <p>editform</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>
@@ -253,6 +258,18 @@ export const EditAccountForm = (props) => {
                                     error={helperValid.username ? true : false}
                                     helperText={helperValid.username}
                                     required
+                                    disabled
+                                />
+                                <TextField
+                                    variant='outlined'
+                                    label="Email"
+                                    value={formData.email}
+                                    name="email"
+                                    onChange={handleInputChange}
+                                    error={helperValid.email ? true : false}
+                                    helperText={helperValid.email}
+                                    required
+                                    disabled
                                 />
 
                                 {/* <TextField

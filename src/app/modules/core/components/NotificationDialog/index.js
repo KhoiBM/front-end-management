@@ -41,7 +41,7 @@ export const NotificationDialog = (props) => {
     const { notificationDialog, setNotificationDialog } = props
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     // console.log(parse(notificationDialog.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
 
@@ -51,7 +51,7 @@ export const NotificationDialog = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {notificationDialog &&
                 <Dialog open={notificationDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition} onClose={() => {
