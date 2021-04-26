@@ -62,7 +62,7 @@ export const AddCustomersRawProductForm = (props) => {
                     setFormData({ ...formData, categoryID: records[0].categoryID });
                     // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -126,7 +126,7 @@ export const AddCustomersRawProductForm = (props) => {
 
                     // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

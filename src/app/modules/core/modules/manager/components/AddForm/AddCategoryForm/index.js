@@ -169,7 +169,7 @@ export const AddCategoryForm = (props) => {
                     setFormData({ ...formData, serviceID: records[0].serviceID });
                     // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -230,7 +230,7 @@ export const AddCategoryForm = (props) => {
 
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

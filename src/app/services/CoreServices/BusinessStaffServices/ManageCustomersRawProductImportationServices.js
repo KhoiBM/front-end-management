@@ -23,7 +23,9 @@ export class ManageCustomersRawProductImportationServices {
                     records: [
                         {
                             importedRawProductID: 1,
+                            importedRawProductCode: "IRP12345",
                             rawProductID: 1,
+                            rawProductCode: "RP12345",
                             rawProductName: "afb",
                             quantity: 1,
                             providedBy: "abvc",

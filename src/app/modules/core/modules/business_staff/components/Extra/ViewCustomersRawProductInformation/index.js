@@ -171,22 +171,19 @@ export const ViewCustomersRawProductInformation = (props) => {
                                     <Grid container>
                                         <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
                                             <Box >
-                                                <Typography variant={"h5"} color={"textSecondary"}>Giá</Typography>
-                                                <Box className={classes.contentWrapper}>
-                                                    <Typography variant={"body1"} >{useFormat().formatMoney(recordForViewInformation.unitPrice)} đ</Typography>
-                                                </Box>
 
-                                            </Box>
-                                        </Grid>
-                                        <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
-                                            <Box>
                                                 <Typography variant={"h5"} color={"textSecondary"}>Tổng số lượng</Typography>
                                                 <Box className={classes.contentWrapper}>
                                                     <Typography variant={"body1"}>{recordForViewInformation.totalQuantity}</Typography>
                                                 </Box>
-
                                             </Box>
                                         </Grid>
+                                        {/* <Grid item xs={6} sm={6} md={6} className={classes.gridItemContent}>
+                                            <Box>
+
+
+                                            </Box>
+                                        </Grid> */}
                                     </Grid>
 
                                     <Grid container>

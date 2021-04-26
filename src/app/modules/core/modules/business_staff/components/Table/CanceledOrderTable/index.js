@@ -62,7 +62,7 @@ export const CanceledOrderTable = (props) => {
                     console.log("loadInit")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

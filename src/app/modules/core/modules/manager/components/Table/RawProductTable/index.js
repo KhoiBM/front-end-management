@@ -112,7 +112,7 @@ export const RawProductTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
 
                 }
             } else {
@@ -166,9 +166,26 @@ export const RawProductTable = (props) => {
 
             // console.log("response: " + JSON.stringify(response))
 
-            loadData(response)
+            if (response && response != null) {
 
-            console.log("search")
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+
+                    loadData(response)
+
+                    console.log("search")
+
+                } else {
+
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+
+                }
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
 
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
@@ -194,7 +211,7 @@ export const RawProductTable = (props) => {
                     toast.success("Thành công")
                     handleRefresh()
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

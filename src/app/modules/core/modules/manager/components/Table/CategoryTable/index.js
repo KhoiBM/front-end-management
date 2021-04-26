@@ -59,7 +59,7 @@ export const CategoryTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
 
                 }
             } else {
@@ -141,7 +141,7 @@ export const CategoryTable = (props) => {
                 toast.success(`${!switchCheck[`switchID:${row.categoryID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
                 handleRefresh()
             } else {
-                toast.error(config.useMessage.resultFailure)
+                toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 setSwitchCheck({
                     ...switchCheck,
                     [event.target.name]: event.target.checked

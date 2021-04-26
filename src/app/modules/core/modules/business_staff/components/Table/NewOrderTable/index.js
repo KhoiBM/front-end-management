@@ -107,7 +107,7 @@ export const NewOrderTable = (props) => {
 
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -172,7 +172,7 @@ export const NewOrderTable = (props) => {
                     console.log("search")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -227,7 +227,7 @@ export const NewOrderTable = (props) => {
                     toast.success(`${!switchCheck[`switchID:${orderID}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
                     handleRefresh()               // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                     setSwitchCheck({
                         ...switchCheck,
                         [event.target.name]: event.target.checked
@@ -262,7 +262,7 @@ export const NewOrderTable = (props) => {
 
                     handleRefresh()
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -294,7 +294,7 @@ export const NewOrderTable = (props) => {
 
                     handleRefresh()
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

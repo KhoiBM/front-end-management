@@ -128,7 +128,7 @@ export const AcceptedOrderTable = (props) => {
                     console.log("loadInitByFilter")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -193,8 +193,7 @@ export const AcceptedOrderTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
-
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
 
@@ -255,7 +254,7 @@ export const AcceptedOrderTable = (props) => {
                     handleRefresh()
                     // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                     setSwitchCheck({
                         ...switchCheck,
                         [event.target.name]: event.target.checked
@@ -295,8 +294,7 @@ export const AcceptedOrderTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
-
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
 
