@@ -38,7 +38,8 @@ export const NewOrderTable = (props) => {
 
     // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -94,7 +95,9 @@ export const NewOrderTable = (props) => {
     const loadInit = async () => {
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.viewNewOrder({ filterBy: "all", page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await BusinessStaffProcessOrderServices.viewNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -106,7 +109,7 @@ export const NewOrderTable = (props) => {
 
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -123,6 +126,8 @@ export const NewOrderTable = (props) => {
     const loadData = async (response) => {
 
         const records = response.info.records
+
+        console.log("records: " + JSON.stringify(records))
 
         const totalPageResponse = response.info.totalPage
 
@@ -156,10 +161,12 @@ export const NewOrderTable = (props) => {
 
     }
 
-
     const search = async () => {
         try {
-            const response = await (await BusinessStaffProcessOrderServices.searchNewOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], keywords: keywords, page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+            const response = await (await BusinessStaffProcessOrderServices.searchNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -169,7 +176,7 @@ export const NewOrderTable = (props) => {
                     console.log("search")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -224,7 +231,7 @@ export const NewOrderTable = (props) => {
                     toast.success(`${!switchCheck[`switchID:${orderID}`] ? "Đã thanh toán thành công" : "Chưa thanh toán"}`)
                     handleRefresh()               // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                     setSwitchCheck({
                         ...switchCheck,
                         [event.target.name]: event.target.checked
@@ -244,6 +251,35 @@ export const NewOrderTable = (props) => {
     }
 
 
+
+    const onAccept = async (orderID) => {
+
+        try {
+            const data = { orderID, statusOrder: config.useStatusOrder.BUSINESS_STAFF.CHANGE[0] }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await BusinessStaffProcessOrderServices.acceptNewOrder(data)).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    toast.success("Chấp nhận thành công")
+
+                    handleRefresh()
+                } else {
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+            console.log("onAccept")
+            console.log("orderID: " + orderID)
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+
+
+    }
+
     const onReject = async (orderID) => {
         setConfirmDialog({
             ...confirmDialog,
@@ -251,7 +287,9 @@ export const NewOrderTable = (props) => {
         })
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.rejectNewOrder({ orderID })).data
+            const data = { orderID, statusOrder: config.useStatusOrder.BUSINESS_STAFF.CHANGE[1] }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await BusinessStaffProcessOrderServices.rejectNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -260,7 +298,7 @@ export const NewOrderTable = (props) => {
 
                     handleRefresh()
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -274,31 +312,6 @@ export const NewOrderTable = (props) => {
         }
     }
 
-    const onAccept = async (orderID) => {
-
-        try {
-            const response = await (await BusinessStaffProcessOrderServices.acceptNewOrder({ orderID })).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-
-                    toast.success("Chấp nhận thành công")
-
-                    handleRefresh()
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-            console.log("onAccept")
-            console.log("orderID: " + orderID)
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
-
-
-    }
 
     return (
         <>
@@ -314,7 +327,9 @@ export const NewOrderTable = (props) => {
                             {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                             <StyledTableCell>{row.orderCode}</StyledTableCell>
                             {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
-                            <StyledTableCell >{row.customerCode}</StyledTableCell>
+                            {/* <StyledTableCell >{row.customerCode}</StyledTableCell> */}
+                            <StyledTableCell >{row.username}</StyledTableCell>
+                            <StyledTableCell >{row.customerName}</StyledTableCell>
 
                             {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                             <StyledTableCell >{row.statusOrder}</StyledTableCell>
@@ -339,7 +354,7 @@ export const NewOrderTable = (props) => {
                             <StyledTableCell style={{ minWidth: "230px" }}>
 
 
-                                < Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết" >
+                                <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết" >
 
                                     <Button onClick={(event) => {
                                         event.stopPropagation()

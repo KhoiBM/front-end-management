@@ -209,10 +209,11 @@ const useStatusOrder = {
             "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ"],
         "CHANGE": ["Hoàn thành mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ"]
     },
-    "CUSTOMER": {
+    "ALL": {
         "FILTER": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
             "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
-        "CHANGE": ["Hủy đơn", "Từ chối mẫu", "Chấp nhận mẫu"]
+        "CHANGE": ["Đơn chờ duyệt", "Hủy đơn", "Đơn được duyệt", "Đang làm mẫu", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
+            "Chấp nhận mẫu", "Đang in sản phẩm", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
     }
 
 

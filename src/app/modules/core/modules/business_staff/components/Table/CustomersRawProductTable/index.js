@@ -35,7 +35,7 @@ export const CustomersRawProductTable = (props) => {
     const { keywords, searchAction, clickSearch } = props
 
     // const headCells = ['Mã ID sản phẩm thô', 'Mã Code sản phẩm thô', "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Kích thước", "Màu sắc", "Mô tả", "Thể loại", "Tạo bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ["Mã Code", "Tên sản phẩm thô", "Giá đơn vị", "Tổng sản phẩm", "Thể loại", "Thao tác"]
+    const headCells = ["Mã Code", "Tên sản phẩm thô", "Tổng sản phẩm", "Thể loại", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -117,8 +117,7 @@ export const CustomersRawProductTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
-
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
 
@@ -171,9 +170,24 @@ export const CustomersRawProductTable = (props) => {
 
             // console.log("response: " + JSON.stringify(response))
 
-            loadData(response)
+            if (response && response != null) {
 
-            console.log("search")
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    loadData(response)
+
+                    console.log("search")
+
+                } else {
+
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                }
+            } else {
+
+                throw new Error("Response is null or undefined")
+
+            }
+
 
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
@@ -199,7 +213,7 @@ export const CustomersRawProductTable = (props) => {
                     toast.success("Thành công")
                     handleRefresh()
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

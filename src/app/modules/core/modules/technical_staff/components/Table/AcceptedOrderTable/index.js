@@ -30,7 +30,7 @@ export const AcceptedOrderTable = (props) => {
 
     const { filterList, action, clickFilter } = props
 
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -114,6 +114,7 @@ export const AcceptedOrderTable = (props) => {
         // console.log("Page: " + page)
 
         try {
+
             const response = await (await TechnicalStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
@@ -177,7 +178,11 @@ export const AcceptedOrderTable = (props) => {
 
         try {
 
-            const response = await (await TechnicalStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.TECHNICAL_STAFF.FILTER], keywords: keywords, page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+
+            const response = await (await TechnicalStaffProcessOrderServices.searchAcceptedOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
 
@@ -232,7 +237,9 @@ export const AcceptedOrderTable = (props) => {
                             {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                             <StyledTableCell>{row.orderCode}</StyledTableCell>
                             {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
-                            <StyledTableCell >{row.customerCode}</StyledTableCell>
+                            {/* <StyledTableCell >{row.customerCode}</StyledTableCell> */}
+                            <StyledTableCell >{row.username}</StyledTableCell>
+                            <StyledTableCell >{row.customerName}</StyledTableCell>
 
                             {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                             <StyledTableCell >{row.statusOrder}</StyledTableCell>

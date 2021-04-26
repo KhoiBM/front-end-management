@@ -184,7 +184,7 @@ export const EditServiceForm = (props) => {
 
                     // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

@@ -64,7 +64,7 @@ export const ServiceTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
 
                 }
             } else {
@@ -147,7 +147,7 @@ export const ServiceTable = (props) => {
                 toast.success(`${!switchCheck[`switchID:${row.serviceID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
                 handleRefresh()
             } else {
-                toast.error(config.useMessage.resultFailure)
+                toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 setSwitchCheck({
                     ...switchCheck,
                     [event.target.name]: event.target.checked

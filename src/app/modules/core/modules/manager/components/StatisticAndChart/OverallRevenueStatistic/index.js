@@ -216,7 +216,7 @@ const OverallRevenueStatistic = () => {
                     console.log(JSON.stringify(overallRevenue))
                     setOverallRevenue(overallRevenue)
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

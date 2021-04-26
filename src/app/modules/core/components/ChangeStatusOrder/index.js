@@ -130,7 +130,7 @@ export const ChangeStatusOrder = (props) => {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     toast.success("Thành công")
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo}`)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

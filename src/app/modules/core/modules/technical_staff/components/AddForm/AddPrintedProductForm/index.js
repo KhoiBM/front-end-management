@@ -160,7 +160,7 @@ export const AddPrintedProductForm = (props) => {
                     orderRecords = responseOrder.info.records
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${responseOrder.errorInfo}`)
                 }
             } else {
                 throw new Error("responseOrder is null or undefined")
@@ -169,7 +169,7 @@ export const AddPrintedProductForm = (props) => {
                 if (responseRawProduct.result == config.useResultStatus.SUCCESS) {
                     recordsRawProduct = responseRawProduct.info.records
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${responseRawProduct.errorInfo}`)
                 }
             } else {
                 throw new Error("responseRawProduct is null or undefined")
@@ -255,7 +255,7 @@ export const AddPrintedProductForm = (props) => {
                     // toast.success("Thành công")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")

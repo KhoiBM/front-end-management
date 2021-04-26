@@ -27,7 +27,7 @@ export const CanceledOrderTable = (props) => {
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -52,7 +52,10 @@ export const CanceledOrderTable = (props) => {
 
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.viewCanceledOrder({ filterBy: "all", page: page, limit: limit })).data
+            const data = { filterBy: [config.useStatusOrder.ALL.FILTER[1]], page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+            const response = await (await BusinessStaffProcessOrderServices.viewCanceledOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -62,7 +65,7 @@ export const CanceledOrderTable = (props) => {
                     console.log("loadInit")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -130,7 +133,10 @@ export const CanceledOrderTable = (props) => {
                                 {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
                                 {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
-                                <StyledTableCell >{row.customerCode}</StyledTableCell>
+                                {/* <StyledTableCell >{row.customerCode}</StyledTableCell>
+                                 */}
+                                <StyledTableCell >{row.username}</StyledTableCell>
+                                <StyledTableCell >{row.customerName}</StyledTableCell>
 
                                 {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>

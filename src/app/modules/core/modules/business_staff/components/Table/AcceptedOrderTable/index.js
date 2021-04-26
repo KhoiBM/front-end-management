@@ -34,7 +34,7 @@ export const AcceptedOrderTable = (props) => {
 
     // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -118,6 +118,8 @@ export const AcceptedOrderTable = (props) => {
         console.log("Page: " + page)
 
         try {
+
+
             const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
@@ -128,7 +130,7 @@ export const AcceptedOrderTable = (props) => {
                     console.log("loadInitByFilter")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -181,7 +183,11 @@ export const AcceptedOrderTable = (props) => {
 
         try {
 
-            const response = await (await BusinessStaffProcessOrderServices.searchAcceptedOrder({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
+
+            const data = { filterBy: [config.useStatusOrder.BUSINESS_STAFF.FILTER], keywords: keywords, page: page, limit: limit }
+            console.log("data: " + JSON.stringify(data))
+
+            const response = await (await BusinessStaffProcessOrderServices.searchAcceptedOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
 
@@ -193,8 +199,7 @@ export const AcceptedOrderTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
-
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
 
@@ -255,7 +260,7 @@ export const AcceptedOrderTable = (props) => {
                     handleRefresh()
                     // toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                     setSwitchCheck({
                         ...switchCheck,
                         [event.target.name]: event.target.checked
@@ -295,8 +300,7 @@ export const AcceptedOrderTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
-
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
 
@@ -327,7 +331,10 @@ export const AcceptedOrderTable = (props) => {
                             {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                             <StyledTableCell>{row.orderCode}</StyledTableCell>
                             {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
-                            <StyledTableCell >{row.customerCode}</StyledTableCell>
+                            {/* <StyledTableCell >{row.customerCode}</StyledTableCell> */}
+                            <StyledTableCell >{row.username}</StyledTableCell>
+                            <StyledTableCell >{row.customerName}</StyledTableCell>
+
 
                             {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                             <StyledTableCell >{row.statusOrder}</StyledTableCell>

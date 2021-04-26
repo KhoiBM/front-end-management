@@ -62,7 +62,7 @@ export const useUploadPhoto = () => {
                         if (index == uploadFiles.length - 1) toast.success("Thành công")
 
                     } else {
-                        // toast.error(`${config.useMessage.resultFailure} - ${responseData.errorInfo}`)
+                        toast.error(`${config.useMessage.resultFailure} - ${responseData.errorInfo}`)
                         throw new Error(`${config.useMessage.resultFailure} - ${responseData.errorInfo}`)
                     }
 
@@ -94,7 +94,7 @@ export const useUploadPhoto = () => {
                 toast.success(`Tải lên ảnh ${uploadFile.name} thành công`)
 
             } else {
-                // toast.error(config.useMessage.resultFailure)
+                toast.error(`${config.useMessage.resultFailure}`)
                 throw new Error(`${config.useMessage.resultFailure}`)
             }
         } else {

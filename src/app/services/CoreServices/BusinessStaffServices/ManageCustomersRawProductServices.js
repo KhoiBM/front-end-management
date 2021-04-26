@@ -34,6 +34,7 @@ export class ManageCustomersRawProductServices {
                                 categoryID: "1",
                                 categoryCode: "categoryCode",
                                 categoryName: "abc",
+                                createdBy: "Khách hàng",
                                 createdAt: "03-03-2021",
                                 updatedAt: "03-03-2021"
 
@@ -48,6 +49,7 @@ export class ManageCustomersRawProductServices {
                                 description: "d",
                                 categoryID: "2",
                                 categoryName: "ab2",
+                                createdBy: "Khách hàng",
                                 createdAt: "03-03-2021",
                                 updatedAt: "03-03-2021"
 
@@ -63,6 +65,7 @@ export class ManageCustomersRawProductServices {
                                 description: "d",
                                 categoryID: "3",
                                 categoryName: "abc",
+                                createdBy: "Khách hàng",
                                 createdAt: "03-03-2021",
                                 updatedAt: "03-03-2021"
 

@@ -190,7 +190,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const initialFValues = {
     orderCode: "",
-    customerCode: "",
+    // customerCode: "",
+    username: "",
     customerName: "",
     phone: "",
     address: "",
@@ -287,7 +288,7 @@ export const ViewOrderInformation = (props) => {
                     toast.success("Thành công")
 
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
@@ -309,11 +310,20 @@ export const ViewOrderInformation = (props) => {
                     // required
                     disabled
                 />
-                <TextField
+                {/* <TextField
                     variant='outlined'
                     label="Mã Code khách hàng"
                     value={formData.customerCode}
                     name='customerCode'
+                    // required
+                    disabled
+                /> */}
+
+                <TextField
+                    variant='outlined'
+                    label="Tên người dùng"
+                    value={formData.username}
+                    name='username'
                     // required
                     disabled
                 />

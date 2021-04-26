@@ -170,7 +170,7 @@ export const Profile = () => {
                 // setDobSelected(response.info.record.dob)
 
             } else {
-                toast.error(config.useMessage.resultFailure)
+                toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
             }
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
@@ -196,7 +196,7 @@ export const Profile = () => {
                 if (response.result == config.useResultStatus.SUCCESS) {
                     toast.success("Thành công")
                 } else {
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } catch (err) {
                 toast.error(config.useMessage.fetchApiFailure)

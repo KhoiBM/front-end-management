@@ -62,7 +62,7 @@ export const RawProductImportationTable = (props) => {
 
                 } else {
 
-                    toast.error(config.useMessage.resultFailure)
+                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
 
                 }
             } else {
