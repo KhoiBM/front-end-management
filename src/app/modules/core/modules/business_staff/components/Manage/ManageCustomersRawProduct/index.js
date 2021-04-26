@@ -11,6 +11,7 @@ import { SearchBar } from 'src/app/modules/core/components';
 import { ViewCustomersRawProductInformation } from '../../Extra';
 import { useSearchHandle, useToggleFormAddEdit, useToggleViewInformation, useLoadingEffect } from 'src/app/utils';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 // import { CustomersRawProductTable } from '../../Table/CustomersRawProductTable'
 const useStyles = makeStyles(theme => ({
@@ -65,6 +66,7 @@ export const ManageCustomersRawProduct = () => {
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     return (

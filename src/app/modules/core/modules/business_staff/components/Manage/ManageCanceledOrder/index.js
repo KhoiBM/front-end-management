@@ -6,6 +6,7 @@ import { SearchBar, ViewOrderInformation } from 'src/app/modules/core/components
 import { useSearchHandle, useToggleViewInformation, useLoadingEffect } from 'src/app/utils';
 import { NewOrderTable, CanceledOrderTable } from '../../Table';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -40,7 +41,8 @@ export const ManageCanceledOrder = () => {
     const classes = useStyles();
 
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     return (

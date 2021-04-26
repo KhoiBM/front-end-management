@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import { OverallRevenueStatistic, ChartRevenuePerService, NumberOrderStatistic } from '../../StatisticAndChart/index'
 import { useLoadingEffect } from 'src/app/utils';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     chartContainer: {
         display: "flex",
@@ -19,10 +20,11 @@ const useStyles = makeStyles(theme => ({
 }))
 export const ManageStatistic = () => {
     const classes = useStyles();
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <OverallRevenueStatistic />
             <div className={classes.chartContainer}>

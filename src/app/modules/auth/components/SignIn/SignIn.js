@@ -124,7 +124,7 @@ const SignIn = ({ toggle, isVisible }) => {
                                     <section className={styles["label-password-container"]} >
                                         <p>Mật khẩu</p>
                                         <Link to="/auth/forgotpassword">
-                                            <button className={styles["btn-forgetpassword"]}>
+                                            <button type="button" tabIndex="1" className={styles["btn-forgetpassword"]}>
                                                 Quên mật khẩu?
                                         </button>
                                         </Link >
@@ -142,13 +142,18 @@ const SignIn = ({ toggle, isVisible }) => {
                             </label >
                             {<HelperValidation>{helperValid.password}</HelperValidation>}
 
-                            <button type="submit" className={styles["btn-signin"]}>
+                            <button tabIndex="0" type="submit" className={styles["btn-signin"]}>
                                 Đăng nhập
                             </button >
                         </form >
                     </section >
 
-
+                    <section className={styles["signup-nav-wrapper"]}>
+                        <span>Chưa có tài khoản? </span>
+                        <Link to="/auth/signup">
+                            <button className={styles["btn-nav-signup"]} >Tạo tài khoản</button>
+                        </Link>
+                    </section>
 
                 </div >
             )

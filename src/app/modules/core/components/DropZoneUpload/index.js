@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Dropzone from 'react-dropzone'
 import { Paper, makeStyles, Typography, List, ListItem, CardMedia, Divider, Card, Tooltip, Zoom, Box } from '@material-ui/core'
 import { toast } from 'react-toastify'
@@ -163,6 +163,10 @@ export const DropZoneUpload = (props) => {
     // const onDrop = useCallback(acceptedFiles => {
     //     console.log(acceptedFiles);
     // }, []);
+
+    useEffect(() => {
+        setUploadFiles([])
+    }, [])
 
     const onDropAccepted =
         useCallback(async acceptedFiles => {

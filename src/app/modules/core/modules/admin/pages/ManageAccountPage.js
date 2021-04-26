@@ -7,6 +7,7 @@ import { ManageAccount } from '../components'
 import { MainBar } from '../../../components'
 import { Loader } from 'src/app/components/Loader'
 import { useLoadingEffect } from 'src/app/utils'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const ManageAccountPage = () => {
     const userRole = config.useUserRole.administrator;
     let location = useLocation();
@@ -15,12 +16,10 @@ const ManageAccountPage = () => {
         if (location?.state?.openDrawer != null && location?.state?.openDrawer != undefined) {
             setOpenDrawerByLink(location.state.openDrawer)
         }
-
     }, [])
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>

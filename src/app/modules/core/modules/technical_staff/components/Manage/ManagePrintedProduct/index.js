@@ -71,7 +71,7 @@ export const ManagePrintedProduct = () => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {!openEditForm && !openAddForm && !openViewInformation &&
                 <Paper elevation={2} className={classes.mainContainer}>

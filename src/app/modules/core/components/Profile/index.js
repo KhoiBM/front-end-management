@@ -158,10 +158,16 @@ export const Profile = () => {
                 setRecord({ ...response.info.record })
                 setFormData({ ...formData, ...response.info.record })
 
-                const formatDob = parse(response.info.record.dob, 'dd-MM-yyyy', new Date())
-                console.log("formatDob: " + formatDob)
+                const parseDob = parse(response.info.record.dob, 'dd-MM-yyyy', new Date())
 
-                setDobSelected(formatDob)
+                console.log("parseDob: " + parseDob)
+
+                // const formatDob = format(parseDob, "dd-MM-yyyy")
+
+                // console.log("formatDob: " + formatDob)
+
+                setDobSelected(parseDob)
+                // setDobSelected(response.info.record.dob)
 
             } else {
                 toast.error(config.useMessage.resultFailure)
@@ -203,7 +209,7 @@ export const Profile = () => {
     return (
         <>
             {/* <p>Profile</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.profileContainer}>
                 <div className={classes.pageFormContainer}>

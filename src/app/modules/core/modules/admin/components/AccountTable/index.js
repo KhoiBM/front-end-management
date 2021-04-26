@@ -11,6 +11,7 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { useTable, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { PaginationBar } from 'src/app/modules/core/components';
 import { NotFound, Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 
@@ -36,7 +37,9 @@ export const AccountTable = (props) => {
 
     const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
 
     useEffect(() => {
 
@@ -179,7 +182,7 @@ export const AccountTable = (props) => {
     return (
         <>
             {/* <p>AccountTable</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
 
             <TblContainer>

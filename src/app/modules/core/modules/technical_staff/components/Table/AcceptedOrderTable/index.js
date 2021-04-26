@@ -221,7 +221,7 @@ export const AcceptedOrderTable = (props) => {
     return (
         <>
             {/* <p>NewOrderTable</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <TblContainer>
                 <TblHead />

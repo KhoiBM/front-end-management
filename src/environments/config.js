@@ -8,8 +8,6 @@ const useApiPath = {
     "api": {
         "auth": {
             "signIn": "user/login",
-            "signUp": "user/signup",
-            "confirmCode": "user/confirm-email",
             "forgotPassword": "user/forgot-password",
             "confirmForgotPassword": "user/confirm-forgot-password"
         },

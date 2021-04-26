@@ -9,6 +9,7 @@ import config from 'src/environments/config';
 import { AddDemoProductPhoto } from '../../modules/technical_staff/components/AddForm/AddDemoProductPhoto';
 import { Personalize } from '../../modules/technical_staff/components/Extra/Personalize';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     cartItemContainer: {
@@ -91,7 +92,8 @@ export const CartItem = (props) => {
 
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         loadInit()
@@ -141,7 +143,7 @@ export const CartItem = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <Box className={classes.cartItemContainer}>
                 <Grid container className={classes.rootCartItemGrid}>

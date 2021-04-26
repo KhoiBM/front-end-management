@@ -129,7 +129,7 @@ export const AddPrintedProductForm = (props) => {
     const classes = useStyles();
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
 
@@ -269,7 +269,7 @@ export const AddPrintedProductForm = (props) => {
     return (
         <>
             {/* <p>addform</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>

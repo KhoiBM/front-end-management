@@ -7,12 +7,14 @@ import { useOpendrawer, useLoadingEffect } from 'src/app/utils'
 import { ManageStatistic } from '../components/Manage'
 import { MainBar } from '../../../components'
 import { Loader } from 'src/app/components/Loader'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const ManagerPage = () => {
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>

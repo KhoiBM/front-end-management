@@ -7,6 +7,7 @@ import { CustomersRawProductImportationTable } from '../../Table/index'
 import { UpdateCustomersRawProductImportationForm } from '../../EditForm';
 import { useLoadingEffect } from 'src/app/utils';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -50,6 +51,7 @@ export const ManageCustomersRawProductImportation = () => {
     }
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
 

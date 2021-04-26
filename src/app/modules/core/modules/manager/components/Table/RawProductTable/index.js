@@ -10,6 +10,7 @@ import { useTable, useCustomStyles, useRefresh, useFormat, useLoadingEffect } fr
 import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { RiTruckLine, RiInformationLine } from 'react-icons/ri';
 import { NotFound, Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 
@@ -20,7 +21,8 @@ const useStyles = makeStyles(theme => ({
 
 
 export const RawProductTable = (props) => {
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
@@ -66,24 +68,28 @@ export const RawProductTable = (props) => {
     useEffect(() => {
         // console.log("keywords: " + keywords)
         // console.log("searchAction: " + searchAction)
-        setPage(1)
+        if (!first) {
+            setPage(1)
 
-        if (keywords && keywords != null && keywords.length > 0) {
+            if (keywords && keywords != null && keywords.length > 0) {
 
-            if (searchAction) {
+                if (searchAction) {
 
-                search()
+                    search()
+
+                } else {
+
+                    loadInit()
+
+                }
 
             } else {
 
                 loadInit()
 
             }
-
         } else {
-
-            loadInit()
-
+            setFirst(false)
         }
 
     }, [clickSearch])
@@ -208,7 +214,7 @@ export const RawProductTable = (props) => {
         <>
             {/* <p>Table</p> */}
 
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
 
             <TblContainer>

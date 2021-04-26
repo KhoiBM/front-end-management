@@ -9,6 +9,7 @@ import { IconClose, Loader } from 'src/app/components';
 import { PageHeader } from 'src/app/modules/core/components';
 import { useLoadPhotoList, useFormat, useLoadingEffect } from 'src/app/utils';
 import { CartItem } from '../CartItem';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     cartContainer: {
@@ -111,7 +112,8 @@ export const ViewCart = (props) => {
 
     const [orderDetailList, setOrderDetailList] = useState([])
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForCart && recordForCart != null) {
@@ -155,7 +157,7 @@ export const ViewCart = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.cartContainer}>
                 <Grid container spacing={0} className={classes.rootGrid}>

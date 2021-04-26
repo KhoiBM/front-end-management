@@ -7,6 +7,7 @@ import { RawProductImportationTable } from '../../Table/index'
 import { UpdateRawProductImportationForm } from '../../EditForm/UpdateRawProductImportationForm';
 import { useLoadingEffect } from 'src/app/utils';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
@@ -47,10 +48,11 @@ export const ManageRawProductImportation = () => {
     const handleCloseForm = () => {
         setOpenUpdateForm(false);
     }
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {!openUpdateForm &&
                 <Paper elevation={2} className={classes.mainContainer}>

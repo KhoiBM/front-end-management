@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core';
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { MainBar } from '../../../components';
 import { Loader } from 'src/app/components';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 
 
@@ -13,8 +14,8 @@ const StatisticPage = () => {
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>

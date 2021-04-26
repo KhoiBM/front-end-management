@@ -10,6 +10,7 @@ import config from 'src/environments/config'
 import { PageHeader, DropZoneUpload, ColorPickerInput } from 'src/app/modules/core/components'
 import { useForm, useUploadPhoto, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/utils'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
 
 }))
@@ -41,7 +42,9 @@ export const AddCustomersRawProductForm = (props) => {
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
 
     useEffect(() => {
         loadInit()
@@ -75,7 +78,13 @@ export const AddCustomersRawProductForm = (props) => {
         console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
         if (enableSubmit) {
-            add()
+            if (uploadFiles && uploadFiles != null && uploadFiles.length > 0) {
+                add()
+            }
+            else {
+                toast.error(config.useMessage.uploadPhotoFiles);
+            }
+
         } else {
             toast.error(config.useMessage.invalidData);
         }

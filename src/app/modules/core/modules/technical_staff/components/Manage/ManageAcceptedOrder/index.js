@@ -71,10 +71,11 @@ export const ManageAcceptedOrder = () => {
     )
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             {
                 // !openSendDemoProduct &&

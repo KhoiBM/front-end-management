@@ -23,10 +23,10 @@ export class RouteService {
     }
     static redirectByRole = (role) => {
         switch (role) {
-            case config.useRoleName.administrator: this.history.push("/core/admin/home"); break;
-            case config.useRoleName.manager: this.history.push("/core/manager/home"); break;
-            case config.useRoleName.businessStaff: this.history.push("/core/business_staff/home"); break;
-            case config.useRoleName.technicalStaff: this.history.push("/core/technical_staff/home"); break;
+            case config.useRoleName.administrator: this.history.replace("/core/admin/home"); break;
+            case config.useRoleName.manager: this.history.replace("/core/manager/home"); break;
+            case config.useRoleName.businessStaff: this.history.replace("/core/business_staff/home"); break;
+            case config.useRoleName.technicalStaff: this.history.replace("/core/technical_staff/home"); break;
         }
     }
 

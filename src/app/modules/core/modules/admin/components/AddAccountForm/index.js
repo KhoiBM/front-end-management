@@ -9,6 +9,7 @@ import { useForm, useCustomStylesAddEditForm, useLoadingEffect } from 'src/app/u
 import { MdVisibilityOff, MdVisibility } from 'react-icons/md'
 import { PageHeader } from 'src/app/modules/core/components'
 import { IconClose, Loader } from 'src/app/components'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles(theme => ({
     rootForm: {
@@ -82,14 +83,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const initialFValues = {
-    accountID: '',
+    // accountID: '',
     username: "",
     email: "",
-    password: "",
-    rePassword: "",
+    // password: "",
+    // rePassword: "",
     roleID: "",
-    showPassword: false,
-    showRePassword: false,
+    // showPassword: false,
+    // showRePassword: false,
     // createdAt: new Date()
 }
 export const AddAccountForm = (props) => {
@@ -101,7 +102,9 @@ export const AddAccountForm = (props) => {
 
     const [recordsRole, setRecordsRole] = useState([])
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
 
     useEffect(() => {
         loadInit()
@@ -170,12 +173,13 @@ export const AddAccountForm = (props) => {
 
 
     const add = async (formData) => {
+        showLoader()
         try {
             const data = {
                 // accountID: "",
                 username: formData.username,
                 email: formData.email,
-                password: formData.password,
+                // password: formData.password,
                 roleID: formData.roleID,
                 isActive: true,
                 // createdAt: new Date()
@@ -198,6 +202,7 @@ export const AddAccountForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
 
@@ -205,7 +210,7 @@ export const AddAccountForm = (props) => {
     return (
         <>
 
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.pageFormContainer}>
                 <Paper elevation={5} className={classes.pageForm}>

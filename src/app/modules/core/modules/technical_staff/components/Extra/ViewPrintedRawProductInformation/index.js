@@ -120,7 +120,7 @@ export const ViewPrintedRawProductInformation = (props) => {
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {
@@ -139,7 +139,7 @@ export const ViewPrintedRawProductInformation = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>

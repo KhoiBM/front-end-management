@@ -165,7 +165,7 @@ export const ServiceTable = (props) => {
     return (
         <>
             {/* <p>Table</p> */}
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
 
             <TblContainer>

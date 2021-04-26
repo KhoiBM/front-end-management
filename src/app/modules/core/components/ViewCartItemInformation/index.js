@@ -11,6 +11,7 @@ import { useLoadPhotoList, useRefresh, useFormat, useLoadingEffect } from 'src/a
 import { PageHeader } from 'src/app/modules/core/components';
 import { ViewCart } from '../ViewCart';
 import { GirdCartItemPhotoList } from '../GirdCartItemPhotoList';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
 
@@ -153,7 +154,8 @@ export const ViewCartItemInformation = (props) => {
 
     const { rawProductCode, rawProductName, size, color, unitPrice, servicePrice, quantity, note, createdBy, createdAt, updatedAt } = cartItemDetail
 
-    const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         if (recordForCartItemDetail && recordForCartItemDetail != null) {
@@ -184,7 +186,7 @@ export const ViewCartItemInformation = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+            {/* <Loader loading={loading} /> */}
 
             <Dialog fullScreen open={isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
 
