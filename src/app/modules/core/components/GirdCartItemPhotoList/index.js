@@ -98,6 +98,7 @@ export const GirdCartItemPhotoList = (props) => {
         <>
             {/* <Loader loading={loading} /> */}
 
+
             <TabBar tabArr={[
                 {
                     label: "Hình sản phẩm thô",
@@ -110,14 +111,15 @@ export const GirdCartItemPhotoList = (props) => {
                 },
                 {
                     label: "Hình xem trước",
-                    onClick: {}
+                    onClick: () => { }
                 }
                 ,
                 {
                     label: "Hình thiết kế mẫu",
-                    onClick: {}
+                    onClick: () => { }
                 }
             ]} />
+
 
             <Divider />
 
