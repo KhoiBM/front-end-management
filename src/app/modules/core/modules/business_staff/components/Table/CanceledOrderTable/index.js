@@ -27,7 +27,7 @@ export const CanceledOrderTable = (props) => {
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -130,7 +130,10 @@ export const CanceledOrderTable = (props) => {
                                 {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                                 <StyledTableCell>{row.orderCode}</StyledTableCell>
                                 {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
-                                <StyledTableCell >{row.customerCode}</StyledTableCell>
+                                {/* <StyledTableCell >{row.customerCode}</StyledTableCell>
+                                 */}
+                                <StyledTableCell >{row.username}</StyledTableCell>
+                                <StyledTableCell >{row.customerName}</StyledTableCell>
 
                                 {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>

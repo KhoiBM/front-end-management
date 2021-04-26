@@ -38,7 +38,8 @@ export const NewOrderTable = (props) => {
 
     // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -123,6 +124,8 @@ export const NewOrderTable = (props) => {
     const loadData = async (response) => {
 
         const records = response.info.records
+
+        console.log("records: " + JSON.stringify(records))
 
         const totalPageResponse = response.info.totalPage
 
@@ -244,40 +247,13 @@ export const NewOrderTable = (props) => {
     }
 
 
-    const onReject = async (orderID) => {
-        setConfirmDialog({
-            ...confirmDialog,
-            isOpen: false
-        })
-
-        try {
-            const response = await (await BusinessStaffProcessOrderServices.rejectNewOrder({ orderID })).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-
-                    toast.success("Từ chối thành công")
-
-                    handleRefresh()
-                } else {
-                    toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-
-            console.log("onReject")
-            console.log("orderID: " + orderID)
-
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
-    }
 
     const onAccept = async (orderID) => {
 
         try {
-            const response = await (await BusinessStaffProcessOrderServices.acceptNewOrder({ orderID })).data
+            const data = { orderID, statusOrder: config.useStatusOrder.BUSINESS_STAFF.CHANGE[0] }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await BusinessStaffProcessOrderServices.acceptNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
                 if (response.result == config.useResultStatus.SUCCESS) {
@@ -300,6 +276,39 @@ export const NewOrderTable = (props) => {
 
     }
 
+    const onReject = async (orderID) => {
+        setConfirmDialog({
+            ...confirmDialog,
+            isOpen: false
+        })
+
+        try {
+            const data = { orderID, statusOrder: config.useStatusOrder.BUSINESS_STAFF.CHANGE[1] }
+            console.log("data: " + JSON.stringify(data))
+            const response = await (await BusinessStaffProcessOrderServices.rejectNewOrder(data)).data
+            // console.log("response: " + JSON.stringify(response))
+            if (response && response != null) {
+                if (response.result == config.useResultStatus.SUCCESS) {
+
+                    toast.success("Từ chối thành công")
+
+                    handleRefresh()
+                } else {
+                    toast.error(config.useMessage.resultFailure)
+                }
+            } else {
+                throw new Error("Response is null or undefined")
+            }
+
+            console.log("onReject")
+            console.log("orderID: " + orderID)
+
+        } catch (err) {
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+        }
+    }
+
+
     return (
         <>
             {/* <p>NewOrderTable</p> */}
@@ -314,7 +323,9 @@ export const NewOrderTable = (props) => {
                             {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
                             <StyledTableCell>{row.orderCode}</StyledTableCell>
                             {/* <StyledTableCell >{row.customerID}</StyledTableCell> */}
-                            <StyledTableCell >{row.customerCode}</StyledTableCell>
+                            {/* <StyledTableCell >{row.customerCode}</StyledTableCell> */}
+                            <StyledTableCell >{row.username}</StyledTableCell>
+                            <StyledTableCell >{row.customerName}</StyledTableCell>
 
                             {/* <StyledTableCell >{row.note}</StyledTableCell> */}
                             <StyledTableCell >{row.statusOrder}</StyledTableCell>
@@ -339,7 +350,7 @@ export const NewOrderTable = (props) => {
                             <StyledTableCell style={{ minWidth: "230px" }}>
 
 
-                                < Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết" >
+                                <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết" >
 
                                     <Button onClick={(event) => {
                                         event.stopPropagation()

@@ -190,7 +190,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const initialFValues = {
     orderCode: "",
-    customerCode: "",
+    // customerCode: "",
+    username: "",
     customerName: "",
     phone: "",
     address: "",
@@ -309,11 +310,20 @@ export const ViewOrderInformation = (props) => {
                     // required
                     disabled
                 />
-                <TextField
+                {/* <TextField
                     variant='outlined'
                     label="Mã Code khách hàng"
                     value={formData.customerCode}
                     name='customerCode'
+                    // required
+                    disabled
+                /> */}
+
+                <TextField
+                    variant='outlined'
+                    label="Tên người dùng"
+                    value={formData.username}
+                    name='username'
                     // required
                     disabled
                 />
