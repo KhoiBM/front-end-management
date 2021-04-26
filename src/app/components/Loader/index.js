@@ -41,6 +41,7 @@ const useStyles = makeStyles(theme => ({
     }
 
 }));
+//loading
 export const Loader = (props) => {
     const classes = useStyles();
     const { loading } = props
