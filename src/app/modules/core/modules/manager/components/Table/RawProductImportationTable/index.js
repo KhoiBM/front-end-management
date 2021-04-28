@@ -26,7 +26,7 @@ export const RawProductImportationTable = (props) => {
     const { classesCustom } = useCustomStyles()
 
     // const headCells = ['ID', "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ['Mã Code', "Mã Code sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo", "Ngày sửa đổi"]
+    const headCells = ['Mã Code', "Mã Code sản phẩm thô", "Tên sản phẩm thô", "Số lượng", "Cung cấp bởi", "Ngày tạo"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -126,7 +126,7 @@ export const RawProductImportationTable = (props) => {
                             <StyledTableCell >{row.providedBy}</StyledTableCell>
 
                             <StyledTableCell >{row.createdAt}</StyledTableCell>
-                            <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                            {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
                         </StyledTableRow>
 

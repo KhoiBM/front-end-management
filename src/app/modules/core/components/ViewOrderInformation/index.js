@@ -237,13 +237,11 @@ export const ViewOrderInformation = (props) => {
 
             setFormData({ ...formData, ...recordForViewInformation })
 
-
             console.log("shipAt:" + recordForViewInformation.shipAt)
-
 
             console.log("formatshipAt:" + format(parse(recordForViewInformation.shipAt, "dd-MM-yyyy", new Date()), "dd-MM-yyyy"))
 
-            setShipAtSelected(parse(recordForViewInformation.shipAt, "dd-MM-yyyy", new Date()))
+            setShipAtSelected(parse(recordForViewInformation.shipAt, 'yyyy-MM-dd', new Date()))
 
             // setRecordOrder({ ...recordOrder, ...recordForViewInformation })
         }

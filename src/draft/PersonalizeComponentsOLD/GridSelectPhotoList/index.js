@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
-import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia, Divider, Box } from '@material-ui/core';
-import { Loader } from 'src/app/components';
-import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
+import { makeStyles, GridList, GridListTile, GridListTileBar, IconButton, Paper, Grid, CardMedia, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     rootContainer: {
@@ -16,11 +14,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         // border: "1px solid red",
-        padding: theme.spacing(2),
-        // backgroundColor: "#f7f3e9 !important",
-
-        // backgroundColor: "var(--tertiary-color-main) !important",
-        backgroundColor: "#fff !important",
+        padding: theme.spacing(2)
 
 
     },
@@ -41,9 +35,6 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         // border: "1px solid blue",
         // border: "1px solid rgba(0, 0, 0, 0.23)",
-        // backgroundColor: "#f7f3e9 !important",
-        // background: "var(--tertiary-color-main) !important",
-        backgroundColor: "#fff !important",
     },
     gridItemGridList: {
         // backgroundColor: "blue",
@@ -52,21 +43,18 @@ const useStyles = makeStyles(theme => ({
         height: "15vh",
         display: 'flex',
         justifyContent: "flex-start",
-        alignItems: "center",
-        // backgroundColor: "#f7f3e9 !important",
-        // background: "var(--tertiary-color-main) !important",
+        alignItems: "center"
     },
     rootGridList: {
         // width: "100%",
         display: 'flex',
         // flexWrap: 'nowrap',
-        // justifyContent: 'center',
+        // justifyContent: 'space-around',
         overflow: "scroll",
 
-        // backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper,
         // border: "1px solid red",
         // border: "1px solid rgba(0, 0, 0, 0.23)",
-        // background: "var(--tertiary-color-main) !important",
 
     },
     gridList: {
@@ -80,17 +68,13 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'nowrap',
         gap: theme.spacing(2),
         // border: "1px solid red",
-        padding: theme.spacing(2),
         // backgroundColor: "blue",
-        // backgroundColor: "#f7f3e9 !important",
-
-        // backgroundColor: "var(--tertiary-color-main) !important",
 
     },
     cardMedia: {
         objectFit: "contain",
-        maxWidth: "90%",
-        maxHeight: "90%",
+        maxWidth: "80%",
+        maxHeight: "80%",
         width: 'auto',
         height: 'auto',
         // border: "1px solid blue",
@@ -99,29 +83,18 @@ const useStyles = makeStyles(theme => ({
     gridListTile: {
         overflow: "scroll !important",
         width: "100px !important",
-        height: "100px !important",
-        // maxHeight: "10vh !important",
+        height: "auto",
+        maxHeight: "10vh !important",
         display: 'flex',
         justifyContent: "center !important",
         alignItems: "center",
-        // border: "1px solid rgba(0, 0, 0, 0.23)",
-        // backgroundColor: "#fff !important",
-        // background: "var(--tertiary-color-main) !important",
-        borderRadius: "10px",
-        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
-        transition: "all 0.2 ease -in -out",
+        border: "1px solid rgba(0, 0, 0, 0.23)",
 
-        '&:hover': {
-            transform: "scale(1.02)",
-            transition: "all 0.2 ease -in -out",
-            cursor: "pointer"
-        },
         '& .MuiGridListTile-tile': {
             display: 'flex',
             // justifyContent: "center !important",
             alignItems: "center !important",
             // border: "1px solid red",
-            // background: "var(--tertiary-color-main) !important",
 
         }
     }
@@ -129,9 +102,6 @@ const useStyles = makeStyles(theme => ({
 
 
 export const GridSelectPhotoList = (props) => {
-
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
     const classes = useStyles();
 
     const { photoList, setBgPhoto } = props
@@ -151,8 +121,7 @@ export const GridSelectPhotoList = (props) => {
 
     return (
         <>
-            {/* {<Loader loading={loading} />} */}
-            <Box className={classes.rootContainer} elevation={0}>
+            <Paper className={classes.rootContainer} elevation={0}>
 
                 <Grid container className={classes.rootGrid} >
 
@@ -164,9 +133,8 @@ export const GridSelectPhotoList = (props) => {
                                         <img
                                             className={classes.cardMedia}
                                             src={url}
-                                            onClick={(e) => {
-                                                // setBgPhoto(url)
-                                                setBgPhoto(e.target.src)
+                                            onClick={() => {
+                                                setBgPhoto(url)
                                             }}
                                         />
                                     </GridListTile >
@@ -177,7 +145,7 @@ export const GridSelectPhotoList = (props) => {
 
                 </Grid>
 
-            </Box>
+            </Paper >
         </>
     )
 }

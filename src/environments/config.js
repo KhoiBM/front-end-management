@@ -201,7 +201,13 @@ const useStatusOrder = {
 
 // }
 
-const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS, useStatusOrder }
+const usePersonalizeType = {
+    "createYourOwn": "1",
+    "studioRawProductDetail": "2",
+    "technicalCartItem": "3"
+}
+
+const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS, useStatusOrder, usePersonalizeType }
 export default config
 
 

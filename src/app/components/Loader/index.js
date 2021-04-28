@@ -2,21 +2,31 @@
 import React, { useEffect, useState } from 'react'
 import { Container, makeStyles, CircularProgress, Paper, Typography, Box } from '@material-ui/core';
 import { useWait } from 'src/app/utils';
+import { IconClose } from '../IconClose';
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     loaderContainer: {
+        // zIndex: "1100 !important",
+        zIndex: "1 !important",
         width: "100%",
         height: "auto",
         minHeight: "100vh",
         position: "fixed",
+        // top: 80,
         top: 0,
-        // backgroundColor: "red",
+        bottom: 0,
+        right: 0,
+        left: 0,
+        backgroundColor: "red",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        zIndex: 1000
+
+
 
     },
     loaderWrapper: {
+        zIndex: props => props.zIndexValue ? `${props.zIndexValue} !important` : "1100 !important",
         backgroundColor: "#fff",
         display: "flex",
         flexDirection: "column",
@@ -25,11 +35,12 @@ const useStyles = makeStyles(theme => ({
         gap: theme.spacing(3),
         width: "300px",
         height: "150px",
-        zIndex: 1000,
-        padding: "15px 15px",
+        // padding: "15px 15px",
+        // border: "1px solid red",
         borderRadius: "10px",
         boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
         transition: "all 0.2 ease -in -out",
+        position: "relative",
 
         '&:hover': {
             transform: "scale(1.02)",
@@ -38,14 +49,24 @@ const useStyles = makeStyles(theme => ({
         }
 
 
+    },
+    iconCloseWrapper: {
+        position: "absolute",
+        top: theme.spacing(2),
+        right: theme.spacing(0)
     }
 
 }));
-//loading
 export const Loader = (props) => {
-    const classes = useStyles();
-    const { loading } = props
+
+    const { loading, zIndexValue } = props
     const { status } = loading
+    const classes = useStyles({ zIndexValue });
+    // const { showLoader, hideLoader } = useLoaderHandle()
+
+    // useEffect(() => {
+
+    // }, [status])
 
     return (
         <>
@@ -54,6 +75,12 @@ export const Loader = (props) => {
                 status &&
                 <div className={classes.loaderContainer} >
                     <div className={classes.loaderWrapper}>
+                        {/* <Box className={classes.iconCloseWrapper} onClick={(e) => {
+                            hideLoader()
+                        }}>
+                            <IconClose />
+                        </Box> */}
+
                         <Typography variant={"subtitle1"}>Đang tải...</Typography>
                         <Box>
                             <CircularProgress color="primary" />
