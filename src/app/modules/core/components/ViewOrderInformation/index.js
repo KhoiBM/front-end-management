@@ -651,11 +651,10 @@ disabled
                                         <Box className={classes.gridItemContentContainer} >
 
                                             {
-                                                // role == useRoleName.businessStaff ?
-                                                <OrderEditForm />
-                                                // :
-                                                // <ViewOrderForm />
-
+                                                role == useRoleName.businessStaff ?
+                                                    <OrderEditForm />
+                                                    :
+                                                    <ViewOrderForm />
                                             }
                                         </Box>
                                     </Grid>
