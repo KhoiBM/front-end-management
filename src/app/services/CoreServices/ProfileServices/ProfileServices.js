@@ -27,7 +27,7 @@ export class ProfileServices {
                         phone: "0387741552",
                         dob: "05-06-1998",
                         gender: false,
-                        address: "tay ninh",
+                        address: "Tay ninh",
                     }
                 }
 
