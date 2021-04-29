@@ -53,6 +53,17 @@ const AppModule = () => {
                 rounded: {
                     // borderRadius: "0",
                 }
+            },
+            MuiDialog: {
+                root: {
+                    // zIndex: 100
+
+                }
+            },
+            MuiModal: {
+                root: {
+                    zIndex: 2000,
+                }
             }
         },
 

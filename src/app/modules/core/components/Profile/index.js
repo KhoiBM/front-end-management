@@ -158,7 +158,7 @@ export const Profile = () => {
                 setRecord({ ...response.info.record })
                 setFormData({ ...formData, ...response.info.record })
 
-                const parseDob = parse(response.info.record.dob, 'dd-MM-yyyy', new Date())
+                const parseDob = parse(response.info.record.dob, 'yyyy-MM-dd', new Date())
 
                 console.log("parseDob: " + parseDob)
 

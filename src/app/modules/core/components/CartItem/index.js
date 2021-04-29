@@ -7,10 +7,9 @@ import { ViewCartItemInformation } from '../ViewCartItemInformation';
 import { useFormat, useLoadPhotoList, useRefresh, useLoadingEffect } from 'src/app/utils';
 import config from 'src/environments/config';
 import { AddDemoProductPhoto } from '../../modules/technical_staff/components/AddForm/AddDemoProductPhoto';
-import { Personalize } from '../../modules/technical_staff/components/Extra/Personalize';
 import { Loader } from 'src/app/components';
+import { Personalize } from '../PersonalizeComponents';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
-
 const useStyles = makeStyles(theme => ({
     cartItemContainer: {
         width: "98%",
@@ -93,6 +92,7 @@ export const CartItem = (props) => {
     const { loadPhotoList, photoList, setPhotoList } = useLoadPhotoList()
 
     // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
@@ -228,7 +228,8 @@ export const CartItem = (props) => {
                                         orderDetailCode: orderDetailCode,
                                         categoryCode: categoryCode,
                                         rawProductCode: rawProductCode,
-                                        createdBy: createdBy
+                                        createdBy: createdBy,
+                                        personalizeType: config.usePersonalizeType.technicalCartItem
                                     }
                                     setPersonalizeModal({
                                         isOpen: true,

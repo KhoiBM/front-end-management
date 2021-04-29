@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import Dropzone from 'react-dropzone'
 import { Paper, makeStyles, Typography, List, ListItem, CardMedia, Divider, Card, Tooltip, Zoom, Box } from '@material-ui/core'
 import { toast } from 'react-toastify'
@@ -22,10 +22,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: "100px",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#fff !important",
-        borderRadius: "4px"
-
+        alignItems: "center"
 
     },
     rootListPreview: {
@@ -59,30 +56,27 @@ const useStyles = makeStyles((theme) => ({
         // backgroundColor: "blue",
         marginLeft: theme.spacing(1),
         marginTop: theme.spacing(1),
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-
-        borderRadius: "10px",
+        // borderRadius: "4px",
         boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
         transition: "all 0.2 ease -in -out",
+        // border: "1px solid red",
 
         '&:hover': {
-            transform: "scale(1.02)",
+            // transform: "scale(1.02)",
             transition: "all 0.2 ease -in -out",
             cursor: "pointer"
-        },
+        }
 
     },
     photoPreview: {
-        // width: "100px",
-        // height: "100px",
+        width: "100px",
+        height: "100px",
         // alignSelf: "flex-start",
         objectFit: "contain",
-        maxWidth: "80%",
-        maxHeight: "80%",
-        width: 'auto',
-        height: 'auto',
+        maxWidth: "100%",
+        maxHeight: "100%",
+        // width: 'auto',
+        // height: 'auto',
 
     },
     dropZonePreviewContainer: {
@@ -95,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(24),
         // width: '100%',
         // height: "auto",
-        minHeight: "75%",
-        maxHeight: "75%",
+        minHeight: "30%",
+        maxHeight: "30%",
         overflowY: "scroll !important",
         padding: theme.spacing(1),
         backgroundColor: theme.palette.background.paper,
@@ -106,7 +100,6 @@ const useStyles = makeStyles((theme) => ({
 
         // flexWrap: "wrap",
         // gap: theme.spacing(1)
-
     }
 }))
 
@@ -196,9 +189,7 @@ export const DropZoneUploadBar = (props) => {
     const maxSize = 10485760;
     // const maxSize = 5242880;
 
-    useEffect(() => {
-        setUploadFiles([])
-    }, [])
+
 
     // const onDrop = useCallback(acceptedFiles => {
     //     console.log(acceptedFiles);
@@ -292,6 +283,8 @@ export const DropZoneUploadBar = (props) => {
                         </>
 
                     }
+
+
                     <Typography variant={"caption"}>
                         {isDragActive && !isDragReject && "Hãy thả nó xuống"}
                     </Typography>
@@ -303,32 +296,26 @@ export const DropZoneUploadBar = (props) => {
                 </div>
 
             </Paper >
-            <Tooltip TransitionComponent={Zoom} placement="top" title="Vui lòng kéo ảnh này vào để thiết kế">
-                <Paper elevation={0} className={classes.dropZonePreviewContainer}>
-                    {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
 
-                        <Card elevation={0} key={index} className={classes.photoPreviewCard}>
-                            <Tooltip TransitionComponent={Zoom} placement="left" title={acceptedFile.name} >
-                                <img src={acceptedFile.src} className={classes.photoPreview}
-                                    draggable="true"
-                                    onDragStart={(e) => {
-                                        e.stopPropagation()
-                                        dragUrl.current = {
-                                            acceptedFile,
-                                            src: e.target.src
+            <Paper elevation={0} className={classes.dropZonePreviewContainer}>
+                {acceptedFiles.length > 0 && acceptedFiles.map((acceptedFile, index) => (
 
-                                        }
-                                        console.log("dragUrl: " + dragUrl.current)
-                                    }}
-                                />
-                            </Tooltip>
-                        </Card>
+                    <Card elevation={0} key={index} className={classes.photoPreviewCard}>
+                        <Tooltip TransitionComponent={Zoom} placement="left" title={acceptedFile.name} >
+                            <img src={acceptedFile.src} className={classes.photoPreview}
+                                draggable="true"
+                                onDragStart={(e) => {
+                                    e.stopPropagation()
+                                    dragUrl.current = e.target.src;
+                                    console.log("dragUrl: " + dragUrl.current)
+                                }}
+                            />
+                        </Tooltip>
+                    </Card>
 
 
-                    ))}
-                </Paper>
-
-            </Tooltip>
+                ))}
+            </Paper>
 
         </>
     )
