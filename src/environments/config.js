@@ -31,6 +31,12 @@ const useApiPath = {
             addStudioRawProduct: "manager/add-studio-raw-product",
             deleteStudioRawProduct: "manager/delete-studio-raw-product"
         },
+        "manageCusRawProductServices": {
+            viewCusRawProductList: "businessstaff/customer-raw-product-list",
+            viewSearch: "businessstaff/search-customer-raw-product-list",
+            editCusRawProduct: "businessstaff/edit-customer-raw-product",
+            deleteCusRawProduct: "businessstaff/delete-customer-raw-product"
+        },
         "manageStatisticServices": {
             viewOverallRevenue: "manager/overall-revenue",
             viewRevenueOfEachService: "manager/service-revenue",
@@ -39,6 +45,10 @@ const useApiPath = {
         "manageImportedRawProductServices": {
             viewImportedRawProduct: "manager/imported-studio-raw-product-list",
             addImportedRawProduct: "manager/add-quantity-studio-raw-product"
+        },
+        "manageImportedCusRawProductServices": {
+            viewImportedCusRawProduct: "businessstaff/imported-customer-raw-product-list",
+            updateImportedCusRawProduct: "businessstaff/update-customer-raw-product"
         },
         "photoServices": {
             getPresignedURLToUpload: "manage/upload-photo",
@@ -53,15 +63,19 @@ const useApiPath = {
         "manageProfile": {
             viewProfile: "manager/view-profile",
             editProfile: "manager/edit-profile"
+        },
+        "manageOrder": {
+            viewAcceptedOrder: "businessstaff/get-order-list",
+            viewAcceptedSearchOrder: "businessstaff/get-search-order-list"
         }
 
     }
 }
 const useRoleName = {
-    administrator: "administrator",
-    manager: "manager",
-    businessStaff: "businessStaff",
-    technicalStaff: "technicalStaff"
+    administrator: "Administrator",
+    manager: "Manager",
+    businessStaff: "Business Staff",
+    technicalStaff: "Technical Staff"
 };
 
 const useResultStatus = {
