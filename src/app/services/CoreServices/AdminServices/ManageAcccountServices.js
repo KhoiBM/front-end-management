@@ -23,15 +23,14 @@ export class ManageAccountServices {
                         result: config.useResultStatus.SUCCESS,
                         info: {
                             records: [
-                                { accountID: 15, username: "khoibm", email: "fsadfsafdffdsfsfsdfsfd@gmail.com", roleID: "2", roleName: "manager", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                                { accountID: 25, username: "khoibm", email: "fsad@gmail.com", roleID: "3", roleName: "businessStaff", isActive: false, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                                { accountID: 35, username: "khoibm", email: "fsad@gmail.com", roleID: "4", roleName: "technicalStaff", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                                { accountID: 45, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "manager", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" },
-                                { accountID: 55, username: "khoibm", email: "fsad@gmail.com", roleID: "1", roleName: "customer", isActive: true, createdAt: "10-03-2020", updatedAt: "10-3-2020" }],
+                                { accountID: 15, username: "khoibm", email: "khoibmhe141771@fpt.edu.vn", roleID: "2", roleName: "Quản lý", isActive: true, createdAt: "10-03-2021", updatedAt: "10-3-2021" },
+                                { accountID: 25, username: "khoibm", email: "fsad@gmail.com", roleID: "3", roleName: "BusinessStaff", isActive: false, createdAt: "10-03-2021", updatedAt: "10-3-2021" },
+                                { accountID: 35, username: "khoibm", email: "fsad@gmail.com", roleID: "4", roleName: "TechnicalStaff", isActive: true, createdAt: "10-03-2021", updatedAt: "10-3-2021" },
+                                { accountID: 45, username: "khoibm", email: "fsad@gmail.com", roleID: "2", roleName: "Manager", isActive: true, createdAt: "10-03-2021", updatedAt: "10-3-2021" },
+                                { accountID: 55, username: "khoibm", email: "fsad@gmail.com", roleID: "1", roleName: "Customer", isActive: true, createdAt: "10-03-2021", updatedAt: "10-3-2021" }],
                             totalPage: 20,
                             page: data.page
                         }
-
                     }
                 })
             }
