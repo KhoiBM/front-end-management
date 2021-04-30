@@ -13,7 +13,7 @@ export class ManageAccountServices {
     //     })
     // }
     static view = (data) => {
-        // console.log("dataFilterroleIDList: " + JSON.stringify(data.roleIDList))
+        console.log("dataFilterroleIDList: " + JSON.stringify(data.roleIDList))
         // console.log("includes1 : " + data.roleIDList.includes(1))
         return useHttpModule().post(config.useApiPath.api.manageAccountServices.view, data)
     //     if (data.roleIDList.includes(1) && data.roleIDList.includes(2) && data.roleIDList.includes(3) && data.roleIDList.includes(4)) {
