@@ -113,7 +113,7 @@ const initialFValues = {
     // password: "",
     // rePassword: "",
     roleID: "",
-    isActive: true,
+    active: true,
     // showPassword: false,
     // showRePassword: false,
     // updatedAt: new Date()
@@ -193,7 +193,7 @@ export const EditAccountForm = (props) => {
                 email: formData.email,
                 // password: formData.password,
                 roleID: formData.roleID,
-                isActive: formData.isActive,
+                active: formData.active,
                 // updatedAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
@@ -396,12 +396,12 @@ export const EditAccountForm = (props) => {
                                     labelPlacement="start"
                                     control={<Switch
                                         color="primary"
-                                        checked={formData.isActive}
+                                        checked={formData.active}
                                         onChange={handleInputChange}
-                                        name="isActive"
+                                        name="active"
                                     />}
                                 />
-                                <FormHelperText>{helperValid.isActive}</FormHelperText>
+                                <FormHelperText>{helperValid.active}</FormHelperText>
                                 {/* </div> */}
 
                             </Grid>
