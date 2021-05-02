@@ -1,22 +1,39 @@
 /* eslint-disable react/prop-types */
-import { useEffect, } from 'react'
+import {useEffect, useState,} from 'react'
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const CanActive = (props) => {
     const history = useHistory();
+    const [ready,setReady]=useState(false)
     useEffect(() => {
         const token = localStorage.getItem("pps-token");
         const role = localStorage.getItem("role");
-        if (!token || !role) history.push("/auth/signin")
         console.log("role:" + role);
         console.log("isRole:" + props.isRole);
-        if (role != props.isRole) {
+
+        if (!token || !role) {
             toast.error("Không có quyền truy cập")
             history.push("/auth/signin")
+        }else if (role != props.isRole) {
+            toast.error("Không có quyền truy cập")
+            history.push("/auth/signin")
+        }else{
+            setReady(true)
         }
+
     }, [])
-    return null
+    return(
+        // eslint-disable-next-line react/react-in-jsx-scope
+        <>
+            {ready &&
+            // eslint-disable-next-line react/react-in-jsx-scope
+            <>
+                {props.children}
+            </>
+        }
+        </>
+    )
 }
 
 

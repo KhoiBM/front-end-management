@@ -1,10 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
-import CanActive from 'src/app/components/CanActive'
+import {CanActive, Loader} from 'src/app/components';
 import config from '../../../../../../environments/config';
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { ManageCustomersRawProduct } from '../components/Manage'
 import { MainBar } from '../../../components';
-import { Loader } from 'src/app/components';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const ManageCustomersRawProductPage = () => {
     const userRole = config.useUserRole.businessStaff;
@@ -19,10 +18,11 @@ const ManageCustomersRawProductPage = () => {
         <>
             {/* <p>BusinessStaffPage</p> */}
             <Loader loading={loading} />
-            {/* <CanActive isRole={config.useRoleName.businessStaff} /> */}
+             <CanActive isRole={config.useRoleName.businessStaff} >
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} drawerWidth={drawerWidth}>
                 <ManageCustomersRawProduct />
             </MainBar>
+             </CanActive>
         </>
     )
 }

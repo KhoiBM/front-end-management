@@ -266,8 +266,8 @@ export class ManageAccountServices {
     }
 
 
-    static getRoleToSelectAddOrEdit = () => {
-        return useHttpModule().post(config.useApiPath.api.manageAccountServices.viewListRole)
+    static getRoleToSelectAddOrEdit = (data = {type:1}) => {
+        return useHttpModule().post(config.useApiPath.api.manageAccountServices.viewListRole,data)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,
@@ -296,8 +296,8 @@ export class ManageAccountServices {
         //     }
         // })
     }
-    static getRoleToFilter = () => {
-        return useHttpModule().post(config.useApiPath.api.manageAccountServices.viewListRole)
+    static getRoleToFilter = (data = {type:0}) => {
+        return useHttpModule().post(config.useApiPath.api.manageAccountServices.viewListRole,data)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,

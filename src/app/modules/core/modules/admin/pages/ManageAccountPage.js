@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import CanActive from 'src/app/components/CanActive'
+import {CanActive} from "../../../../../components";
 import config from 'src/environments/config'
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -24,11 +24,12 @@ const ManageAccountPage = () => {
     return (
         <>
             {/* <p>ManageAccountPage</p> */}
-            {/* <CanActive isRole={config.useRoleName.administrator} /> */}
+             <CanActive isRole={config.useRoleName.administrator} >
             <Loader loading={loading} />
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageAccount />
             </MainBar>
+             </CanActive>
         </>
     )
 }

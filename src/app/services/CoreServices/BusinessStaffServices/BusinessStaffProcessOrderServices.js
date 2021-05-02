@@ -15,164 +15,164 @@ export class BusinessStaffProcessOrderServices {
 
 
     static viewNewOrder = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        if (data.page == 1) {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "24-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-
-
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        } else {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "24-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        }
+        return useHttpModule().post(config.useApiPath.api.manageOrder.viewOrderList, data)
+        // if (data.page == 1) {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "24-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //
+        //
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // } else {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "24-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // }
 
     }
 
     static viewAcceptedOrder = (data) => {
         console.log("filterListViewAcceptedOrder: " + data.filterBy)
-        // return useHttpModule().post(config.useApiPath.api.manageOrder.viewAcceptedOrder, data)
-        if (data.page == 1) {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "24-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        }
+        return useHttpModule().post(config.useApiPath.api.manageOrder.viewOrderList, data)
+        // if (data.page == 1) {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "24-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // }
 
     }
 
     static viewCanceledOrder = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        if (data.page == 1) {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "24-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        } else {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "24-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        }
+        return useHttpModule().post(config.useApiPath.api.manageOrder.viewOrderList, data)
+        // if (data.page == 1) {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "24-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // } else {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "24-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // }
     }
     static getStatusOrderToFilter = () => {
 
@@ -214,39 +214,39 @@ export class BusinessStaffProcessOrderServices {
     }
 
     static acceptNewOrder = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageOrder.changeStatus, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //
+        //         }
+        //     }
+        // })
     }
 
     static rejectNewOrder = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageOrder.changeStatus, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //
+        //         }
+        //     }
+        // })
     }
 
     static changeStatusOrder = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageOrder.changeStatus, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //
+        //         }
+        //     }
+        // })
     }
 
     static sendDemoProduct = (data) => {
@@ -275,7 +275,7 @@ export class BusinessStaffProcessOrderServices {
     }
 
     static searchAcceptedOrder = (data) => {
-        return useHttpModule().post(config.useApiPath.api.manageOrder.viewAcceptedSearchOrder, data)
+        return useHttpModule().post(config.useApiPath.api.manageOrder.viewOrderList, data)
         // if (data.page == 1) {
         //     return Promise.resolve({
         //         data: {
@@ -337,64 +337,64 @@ export class BusinessStaffProcessOrderServices {
     }
 
     static searchNewOrder = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        if (data.page == 1) {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "02-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        } else {
-            return Promise.resolve({
-                data: {
-                    result: config.useResultStatus.SUCCESS,
-                    info: {
-                        records: [
-                            {
-                                orderID: 1,
-                                orderCode: 1,
-                                username: "KhoiBM",
-                                customerID: 1,
-                                customerCode: 23334,
-                                customerName: "KhoiBM",
-                                note: "abc",
-                                statusOrder: "abc",
-                                statusPayment: false,
-                                shipAt: "24-12-2021",
-                                phone: "0313823823",
-                                address: "hcm",
-                                createdAt: "20-02-2021",
-                                updatedAt: "20-02-2021"
-                            }
-                        ],
-                        totalPage: 20
-
-                    }
-                }
-            })
-        }
+        return useHttpModule().post(config.useApiPath.api.manageOrder.viewOrderList, data)
+        // if (data.page == 1) {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "02-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // } else {
+        //     return Promise.resolve({
+        //         data: {
+        //             result: config.useResultStatus.SUCCESS,
+        //             info: {
+        //                 records: [
+        //                     {
+        //                         orderID: 1,
+        //                         orderCode: 1,
+        //                         username: "KhoiBM",
+        //                         customerID: 1,
+        //                         customerCode: 23334,
+        //                         customerName: "KhoiBM",
+        //                         note: "abc",
+        //                         statusOrder: "abc",
+        //                         statusPayment: false,
+        //                         shipAt: "24-12-2021",
+        //                         phone: "0313823823",
+        //                         address: "hcm",
+        //                         createdAt: "20-02-2021",
+        //                         updatedAt: "20-02-2021"
+        //                     }
+        //                 ],
+        //                 totalPage: 20
+        //
+        //             }
+        //         }
+        //     })
+        // }
     }
 }

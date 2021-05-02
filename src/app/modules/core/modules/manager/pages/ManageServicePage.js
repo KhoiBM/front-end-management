@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { ManageService } from '../components/Manage';
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { MainBar } from '../../../components';
-import { Loader } from 'src/app/components';
+import {CanActive, Loader} from 'src/app/components';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const ManageServicePage = () => {
@@ -19,7 +19,7 @@ const ManageServicePage = () => {
     return (
         <>
             {/* <p>ManagerPage</p> */}
-            {/* <CanActive isRole={config.useRoleName.manager} /> */}
+             <CanActive isRole={config.useRoleName.manager} />
             <Loader loading={loading} />
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageService />

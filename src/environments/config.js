@@ -65,8 +65,15 @@ const useApiPath = {
             editProfile: "manager/edit-profile"
         },
         "manageOrder": {
-            viewAcceptedOrder: "businessstaff/get-order-list",
-            viewAcceptedSearchOrder: "businessstaff/get-search-order-list"
+            viewOrderList: "staff/get-order-list",
+            changeStatus: "staff/change-order-status",
+            viewOrderDetailList: "order/get-list-order-detail"
+        },
+        "managePrintedProduct": {
+            viewPrintedProductList: "technicalstaff/get-printed-product"
+        },
+        "notification": {
+            viewAndCountNoti: "order/get-list-notification"
         }
 
     }

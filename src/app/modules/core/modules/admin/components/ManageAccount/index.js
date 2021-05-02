@@ -64,7 +64,7 @@ export const ManageAccount = () => {
 
     const mapToFilter = (records) => {
         // console.log("mapToFilter")
-        return records.map(({ roleID: ID, roleNameVN: name }) => ({ ID, name }));
+        return records.map(({ roleID: ID, roleName: name }) => ({ ID, name }));
     }
 
     const { recordsSelect, setRecordsSelect, filterList, setFilterList, action, setAction, clickFilter, setClickFilter } = useFilterHandle(

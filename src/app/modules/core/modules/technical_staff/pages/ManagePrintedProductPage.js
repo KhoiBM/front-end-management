@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import CanActive from 'src/app/components/CanActive'
+import {CanActive} from "../../../../../components";
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { ManagePrintedProduct } from '../components';
 import { MainBar } from '../../../components';
@@ -18,11 +18,12 @@ const ManagePrintedProductPage = () => {
     return (
         <>
             {/* <p>BusinessStaffPage</p> */}
-            {/* <CanActive isRole={config.useRoleName.technicalStaff} /> */}
+             <CanActive isRole={config.useRoleName.technicalStaff} >
             <Loader loading={loading} />
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManagePrintedProduct />
             </MainBar>
+             </CanActive>
         </>
     )
 }

@@ -5,7 +5,7 @@ import { ManageStatistic } from '../components/Manage/index'
 import { makeStyles } from '@material-ui/core';
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { MainBar } from '../../../components';
-import { Loader } from 'src/app/components';
+import {CanActive, Loader} from 'src/app/components';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 
@@ -20,7 +20,7 @@ const StatisticPage = () => {
     return (
         <>
             {/* <p>StatisticPage</p> */}
-            {/* <CanActive isRole={config.useRoleName.manager} /> */}
+             <CanActive isRole={config.useRoleName.manager} />
             <Loader loading={loading} />
             <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                 <ManageStatistic />
