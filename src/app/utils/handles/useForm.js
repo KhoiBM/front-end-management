@@ -199,7 +199,7 @@ export const useForm = (initialFValues, validOnChange = true) => {
         // if ('importedRawProductID' in fieldValues) temp.importedRawProductID = fieldValues.importedRawProductID && fieldValues.importedRawProductID.length > 0 ? "" : "ID không hợp lệ"
         if ('importedRawProductCode' in fieldValues) temp.importedRawProductCode = fieldValues.importedRawProductCode && fieldValues.importedRawProductCode.length > 0 && fieldValues.importedRawProductCode.length < 30 && config.useRegex.regexCode.test(fieldValues.importedRawProductCode) ? "" : "Code không hợp lệ"
         if ('providedBy' in fieldValues) temp.providedBy = fieldValues.providedBy && fieldValues.providedBy != null && fieldValues.providedBy.length <= 100 ? "" : "Tên nhà cung cấp không hợp lệ"
-        if ('quantity' in fieldValues) temp.quantity = fieldValues.quantity && config.useRegex.regexInteger.test(fieldValues.quantity) ? "" : "Yêu cầu nhập lại Số lượng"
+        if ('quantity' in fieldValues) temp.quantity = fieldValues.quantity && fieldValues.quantity != 0 && config.useRegex.regexInteger.test(fieldValues.quantity) ? "" : "Yêu cầu nhập lại Số lượng"
         // if ('rawProductID' in fieldValues) temp.rawProductID = fieldValues.rawProductID && fieldValues.rawProductID.length > 0 ? "" : "ID không hợp lệ"
 
         /*-------------------------------------------------*/
@@ -216,13 +216,13 @@ export const useForm = (initialFValues, validOnChange = true) => {
         /*----------------------Order Detail---------------------------*/
 
         // if ('orderDetailID' in fieldValues) temp.orderDetailID = fieldValues.orderDetailID && fieldValues.orderDetailID.length > 0 ? "" : "ID không hợp lệ"
-        if ('note' in fieldValues) temp.note = fieldValues.note && fieldValues.note.length > 0 && fieldValues.note.length <= 1000 ? "" : "Ghi chú không hợp lệ"
+        if ('note' in fieldValues) temp.note = fieldValues.note != null && fieldValues.note.length <= 1000 ? "" : "Ghi chú không hợp lệ"
         if ('orderDetailCode' in fieldValues) temp.orderDetailCode = fieldValues.orderDetailCode && fieldValues.orderDetailCode.length > 0 && fieldValues.orderDetailCode.length <= 30 && config.useRegex.regexCode.test(fieldValues.orderDetailCode) ? "" : "Code không hợp lệ"
         // if ('orderID' in fieldValues) temp.orderID = fieldValues.orderID && fieldValues.orderID.length > 0 ? "" : "ID không hợp lệ"
         // if ('quantity' in fieldValues) temp.quantity = fieldValues.quantity && config.useRegex.regexInteger.test(fieldValues.quantity) ? "" : "Yêu cầu nhập lại Số lượng"
         // if ('rawProductID' in fieldValues) temp.rawProductID = fieldValues.rawProductID && fieldValues.rawProductID.length > 0 ? "" : "ID không hợp lệ"
         if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice > 0 && String(fieldValues.servicePrice).length > 0 ? "" : "Yêu cầu nhập lại giá cả dịch vụ"
-        if ('unitPrice' in fieldValues) temp.unitPrice = fieldValues.unitPrice && fieldValues.unitPrice > 0 && String(fieldValues.unitPrice).length > 0 ? "" : "Yêu cầu nhập lại Đơn giá"
+        if ('unitPrice' in fieldValues) temp.unitPrice = fieldValues.unitPrice && String(fieldValues.unitPrice).length > 0 && config.useRegex.regexPositiveInteger.test(fieldValues.unitPrice) ? "" : "Yêu cầu nhập lại Đơn giá"
 
         /*-------------------------------------------------*/
 
@@ -230,17 +230,17 @@ export const useForm = (initialFValues, validOnChange = true) => {
         /*----------------------Orders---------------------------*/
 
         // if ('orderID' in fieldValues) temp.orderID = fieldValues.orderID && fieldValues.orderID.length > 0 ? "" : "ID không hợp lệ"
-        if ('address' in fieldValues) temp.address = fieldValues.address && fieldValues.address.length > 0 && fieldValues.address.length <= 500 && config.useRegex.regexAddress.test(fieldValues.address) ? "" : "Địa chỉ không hợp lệ"
         // if ('customerID' in fieldValues) temp.customerID = fieldValues.customerID && fieldValues.customerID.length > 0 ? "" : "ID không hợp lệ"
         // if ('note' in fieldValues) temp.note = fieldValues.note && fieldValues.note.length > 0 && fieldValues.note.length <= 1000 ? "" : "Ghi chú không hợp lệ"
         if ('orderCode' in fieldValues) temp.orderCode = fieldValues.orderCode && fieldValues.orderCode.length > 0 && fieldValues.orderCode.length <= 30 && config.useRegex.regexCode.test(fieldValues.orderCode) ? "" : "Code không hợp lệ"
-        if ('phone' in fieldValues) temp.phone = fieldValues.phone && fieldValues.phone.length > 9 && fieldValues.phone.length < 12 && config.useRegex.regexPhone.test(fieldValues.phone) ? "" : "Số điện thoại không hợp lệ"
-        if ('shipAt' in fieldValues) {
-            const currentDate = new Date();
-            const compareDate = currentDate <= shipAtSelected;
-            temp.shipAt = currentDate ? "" : "Ngày ship không hợp lệ"
-        }
-        if ('customerName' in fieldValues) temp.customerName = fieldValues.customerName && fieldValues.customerName.length > 0 && fieldValues.username.length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.customerName) ? "" : "Tên khách hàng không hợp lệ"
+        // if ('addressOrder' in fieldValues) temp.addressOrder = fieldValues.addressOrder && fieldValues.addressOrder.length > 0 && fieldValues.addressOrder.length <= 500 && config.useRegex.regexAddress.test(fieldValues.addressOrder) ? "" : "Địa chỉ không hợp lệ"
+        // if ('phoneOrder' in fieldValues) temp.phoneOrder = fieldValues.phoneOrder && fieldValues.phoneOrder.length >= 10 && fieldValues.phoneOrder.length <= 20 && config.useRegex.regexPhone.test(fieldValues.phoneOrder) ? "" : "Số điện thoại không hợp lệ"
+        // if ('shipAt' in fieldValues) {
+        //     const currentDate = new Date();
+        //     const compareDate = currentDate <= shipAtSelected;
+        //     temp.shipAt = currentDate ? "" : "Ngày ship không hợp lệ"
+        // }
+        if ('customerName' in fieldValues) temp.customerName = fieldValues.customerName && String(fieldValues.customerName).length > 0 && String(fieldValues.customerName).length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.customerName) ? "" : "Tên khách hàng không hợp lệ"
         
         /*-------------------------------------------------*/
 
@@ -252,9 +252,9 @@ export const useForm = (initialFValues, validOnChange = true) => {
         // if ('note' in fieldValues) temp.note = fieldValues.note && fieldValues.note.length > 0 && fieldValues.note.length <= 1000 ? "" : "Mô tả không hợp lệ"
         // if ('orderDetailID' in fieldValues) temp.orderDetailID = fieldValues.orderDetailID && fieldValues.orderDetailID.length > 0 ? "" : "ID không hợp lệ"
         if ('printedProductCode' in fieldValues) temp.printedProductCode = fieldValues.printedProductCode && fieldValues.printedProductCode.length > 0 && fieldValues.printedProductCode.length <= 30 && config.useRegex.regexCode.test(fieldValues.printedProductCode) ? "" : "Code không hợp lệ"
-        if ('printedProductName' in fieldValues) temp.printedProductName = fieldValues.printedProductName && fieldValues.printedProductName.length > 0 && fieldValues.printedProductName.length <= 100 && config.useRegex.regexVietnameseName.test(fieldValues.customerName) ? "" : "Tên sản phẩm đã in không hợp lệ"
+        if ('printedProductName' in fieldValues) temp.printedProductName = fieldValues.printedProductName && fieldValues.printedProductName.length > 0 && fieldValues.printedProductName.length <= 100 && config.useRegex.regexVietnameseName.test(fieldValues.printedProductName) ? "" : "Tên sản phẩm đã in không hợp lệ"
         // if ('rawProductID' in fieldValues) temp.rawProductID = fieldValues.rawProductID && fieldValues.rawProductID.length > 0 ? "" : "ID không hợp lệ"
-        if ('totalQuantity' in fieldValues) temp.totalQuantity = fieldValues.totalQuantity && fieldValues.totalQuantity < 0 && config.useRegex.regexPositiveInteger.test(fieldValues.totalQuantity) ? "" : "Yêu cầu nhập lại Tổng số lượng"    
+        // if ('totalQuantity' in fieldValues) temp.totalQuantity = fieldValues.totalQuantity && fieldValues.totalQuantity <= 0 && config.useRegex.regexPositiveInteger.test(fieldValues.totalQuantity) ? "" : "Yêu cầu nhập lại Tổng số lượng"    
 
         /*-------------------------------------------------*/
 
@@ -262,16 +262,20 @@ export const useForm = (initialFValues, validOnChange = true) => {
         /*----------------------Profile---------------------------*/
 
         // if ('profileID' in fieldValues) temp.profileID = fieldValues.profileID && fieldValues.profileID.length > 0 ? "" : "ID không hợp lệ"
-        // if ('address' in fieldValues) temp.address = fieldValues.address && fieldValues.address.length > 0 && fieldValues.address.length <= 500 && config.useRegex.regexAddress.test(fieldValues.address) ? "" : "Địa chỉ không hợp lệ"
+        if ('address' in fieldValues) temp.address = fieldValues.address != null && String(fieldValues.address).length <= 500 && config.useRegex.regexAddress.test(fieldValues.address) ? "" : "Địa chỉ không hợp lệ"
         if ('dob' in fieldValues) {
             const currentDate = new Date();
             const compareDate = currentDate >= dobSelected;
             // console.log("validDob: " + compareDate)
             temp.dob = compareDate ? "" : "Ngày sinh không hợp lệ"
         }
-        if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName && fieldValues.firstName.length > 0 && fieldValues.firstName.length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.firstName) ? "" : "Tên không hợp lệ"
-        if ('lastName' in fieldValues) temp.lastName = fieldValues.lastName && fieldValues.lastName.length > 0 && fieldValues.lastName.length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.lastName) ? "" : "Họ không hợp lệ"
-        // if ('phone' in fieldValues) temp.phone = fieldValues.phone && fieldValues.phone.length > 9 && fieldValues.phone.length < 12 && config.useRegex.regexPhone.test(fieldValues.phone) ? "" : "Số điện thoại không hợp lệ"
+        if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName != null && String(fieldValues.firstName).length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.firstName) ? "" : "Tên không hợp lệ"
+        if ('lastName' in fieldValues) temp.lastName = fieldValues.lastName != null && String(fieldValues.lastName).length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.lastName) ? "" : "Họ không hợp lệ"
+        if ('phone' in fieldValues) {
+            if (fieldValues.phone == "") temp.phone = ""
+            else if (fieldValues.phone != "" && String(fieldValues.phone).length >= 10 && String(fieldValues.phone).length <= 20 && config.useRegex.regexPhone.test(fieldValues.phone)) temp.phone = ""
+            else temp.phone = "Số điện thoại không hợp lệ"
+        }
         if ('profileCode' in fieldValues) temp.profileCode = fieldValues.profileCode && fieldValues.profileCode.length > 0 && fieldValues.profileCode.length <= 30 && config.useRegex.regexCode.test(fieldValues.profileCode) ? "" : "Code không hợp lệ"
         
         /*-------------------------------------------------*/
@@ -296,7 +300,7 @@ export const useForm = (initialFValues, validOnChange = true) => {
         /*----------------------Role---------------------------*/
 
         // if ('roleID' in fieldValues) temp.roleID = fieldValues.roleID && fieldValues.roleID.length > 0 ? "" : "ID không hợp lệ"
-        if ('roleName' in fieldValues) temp.roleName = fieldValues.roleName && fieldValues.roleName.length > 0 && fieldValues.roleName.length <= 30 && config.useRegex.regexName.test(fieldValues.roleName) ? "" : "Tên không hợp lệ"
+        if ('roleName' in fieldValues) temp.roleName = fieldValues.roleName && fieldValues.roleName.length > 0 && fieldValues.roleName.length <= 30 && config.useRegex.regexVietnameseName.test(fieldValues.roleName) ? "" : "Tên không hợp lệ"
         if ('roleNameVn' in fieldValues) temp.roleNameVn = fieldValues.roleNameVn && fieldValues.roleNameVn.length > 0 && fieldValues.roleNameVn.length <= 30 && config.useRegex.regexVietnameseName.test(fieldValues.roleNameVn) ? "" : "Tên không hợp lệ"
 
         /*-------------------------------------------------*/
@@ -309,7 +313,8 @@ export const useForm = (initialFValues, validOnChange = true) => {
         // if ('description' in fieldValues) temp.description = fieldValues.description && fieldValues.description.length > 0 && fieldValues.description.length <= 1000 ? "" : "Mô tả không hợp lệ"
         if ('serviceCode' in fieldValues) temp.serviceCode = fieldValues.serviceCode && fieldValues.serviceCode.length > 0 && fieldValues.serviceCode.length <= 30 && config.useRegex.regexCode.test(fieldValues.serviceCode) ? "" : "Code không hợp lệ"
         if ('serviceName' in fieldValues) temp.serviceName = fieldValues.serviceName && fieldValues.serviceName != null && fieldValues.serviceName.length <= 50 && config.useRegex.regexVietnameseName.test(fieldValues.serviceName) ? "" : "Tên dịch vụ không hợp lệ"
-        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && fieldValues.servicePrice > 0 && String(fieldValues.servicePrice).length > 0 && config.useRegex.regexName.test(fieldValues.servicePrice) ? "" : "Yêu cầu nhập lại giá cả dịch vụ"
+        // if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice != null && config.useRegex.regexNumber.test(fieldValues.servicePrice) ? "" : "Yêu cầu nhập lại giá cả dịch vụ"
+        if ('servicePrice' in fieldValues) temp.servicePrice = fieldValues.servicePrice && String(fieldValues.servicePrice).length > 0 && config.useRegex.regexPositiveInteger.test(fieldValues.servicePrice) ? "" : "Yêu cầu nhập lại giá cả dịch vụ"
 
         /*-------------------------------------------------*/
         
