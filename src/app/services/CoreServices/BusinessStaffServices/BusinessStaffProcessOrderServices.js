@@ -189,17 +189,17 @@ export class BusinessStaffProcessOrderServices {
         })
     }
 
-    static viewOrderDetail = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
-    }
+    // static viewOrderDetail = (data) => {
+    //     // return useHttpModule().post(config.useApiPath.api., data)
+    //     return Promise.resolve({
+    //         data: {
+    //             result: config.useResultStatus.SUCCESS,
+    //             info: {
+    //
+    //             }
+    //         }
+    //     })
+    // }
 
     static checkPayment = (data) => {
         // return useHttpModule().post(config.useApiPath.api., data)

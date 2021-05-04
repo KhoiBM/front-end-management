@@ -66,14 +66,14 @@ const useApiPath = {
         },
         "manageOrder": {
             viewOrderList: "staff/get-order-list",
-            changeStatus: "staff/change-order-status",
+            changeStatus: "manage/order/update-order-info",
             viewOrderDetailList: "order/get-list-order-detail"
         },
         "managePrintedProduct": {
             viewPrintedProductList: "technicalstaff/get-printed-product"
         },
         "notification": {
-            viewAndCountNoti: "order/get-list-notification"
+            viewAndCountNoti: "notification/get-list-notification"
         }
 
     }

@@ -247,7 +247,7 @@ export const AcceptedOrderTable = (props) => {
         showLoader()
         const data = {
             orderID: orderID,
-            isActive: !switchCheck[`switchID:${orderID}`]
+            active: !switchCheck[`switchID:${orderID}`]
         }
         // toast.dark(`test switchID:${orderID}: ${!switchCheck[`switchID:${orderID}`]}`)
         // if (switchCheck[`switchID:${orderID}`]) {
