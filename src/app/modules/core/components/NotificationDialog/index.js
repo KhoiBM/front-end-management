@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
-
+/* eslint-disable no-undef */
 import React from 'react'
 import { Paper, makeStyles, Dialog, DialogTitle, DialogContent, Typography, DialogActions, Slide, Button, Link } from '@material-ui/core'
 import format from 'date-fns/format'
 import parse from 'date-fns/parse'
-import { Loader } from 'src/app/components'
-import { useLoadingEffect } from 'src/app/utils'
-import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const useStyles = makeStyles((theme) => ({
+    dialogContainer: {
+        zIndex: "1110 !important",
+    },
     dialog: {
         width: "30rem",
         height: "40rem",
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: "nowrap",
         position: 'absolute',
         // top: theme.spacing(24),
+
     },
     dialogTitle: {
         textAlign: "center"
@@ -40,9 +41,6 @@ export const NotificationDialog = (props) => {
 
     const { notificationDialog, setNotificationDialog } = props
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
     // console.log(parse(notificationDialog.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
 
     // console.log(format(notificationDialog.createdAt, "dd-MM-yyyy HH:mm:ss"))
@@ -51,10 +49,8 @@ export const NotificationDialog = (props) => {
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
-
             {notificationDialog &&
-                <Dialog open={notificationDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition} onClose={() => {
+                <Dialog open={notificationDialog.isOpen} classes={{ paper: classes.dialog }} className={classes.dialogContainer} TransitionComponent={Transition} onClose={() => {
 
                     notificationDialog.onIsView(true)
                 }}>
@@ -81,7 +77,8 @@ export const NotificationDialog = (props) => {
                         <br />
 
                         {
-                            notificationDialog.actionLink && <Typography>
+                            notificationDialog.actionLink && notificationDialog.actionLink != null && notificationDialog.actionLink.length > 0 &&
+                            <Typography >
                                 Vui lòng truy cập: <Link href={notificationDialog.actionLinK}>{notificationDialog.actionLink} </Link>
                             </Typography>
                         }

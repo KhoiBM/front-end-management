@@ -7,22 +7,16 @@ import { Table, TableContainer, makeStyles, Paper, Typography, TableRow, TableHe
 const useStyles = makeStyles(theme => ({
     tableWrapper: {
         display: "flex",
-        justifyContent: "flex-end",
-        // paddingRight: theme.spacing(6)
-        paddingRight: theme.spacing(2),
+        justifyContent: "center",
+        alignItems: "center",
         height: "auto",
         minHeight: "500px",
         // backgroundColor: "red",
     },
     tableContainer: {
         width: "99%",
-        marginTop: theme.spacing(10),
-        // backgroundColor: "red",
         height: "auto",
         minHeight: "300px",
-        marginBottom: theme.spacing(3),
-
-
     },
     table: {
         '& thead th': {
@@ -33,6 +27,12 @@ const useStyles = makeStyles(theme => ({
         },
         '& tbody td': {
             fontWeight: "200",
+            height: "50px",
+        },
+        '& .MuiTableBody-root': {
+            fontWeight: "200",
+            width: "100%",
+            maxHeight: "500px !important"
         },
         '& tbody tr:hover': {
             backgroundColor: "#fffbf2",

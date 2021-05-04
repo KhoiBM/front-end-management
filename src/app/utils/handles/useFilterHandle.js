@@ -45,14 +45,14 @@ export const useFilterHandle = (props) => {
 
                     // toast.success("Thành công")
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo}`)
+                    // toast.error(`${config.useMessage.resultFailure} - ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
     }
 

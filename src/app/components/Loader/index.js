@@ -73,17 +73,8 @@ export const Loader = (props) => {
 
             {
                 status &&
-                // <ClickAwayListener onClickAway={() => {
-                //     hideLoader()
-                // }}>
                 <div className={classes.loaderContainer} >
                     <div className={classes.loaderWrapper}>
-                        {/* <Box className={classes.iconCloseWrapper} onClick={(e) => {
-                            hideLoader()
-                        }}>
-                            <IconClose />
-                        </Box> */}
-
                         <Typography variant={"subtitle1"} color="primary">Đang tải...</Typography>
                         <Box>
                             <CircularProgress color="primary" />
@@ -91,7 +82,7 @@ export const Loader = (props) => {
 
                     </div>
                 </div>
-                // </ClickAwayListener>
+
 
 
 

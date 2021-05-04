@@ -102,7 +102,7 @@ export const AddAccountForm = (props) => {
 
     const [recordsRole, setRecordsRole] = useState([])
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
@@ -111,6 +111,7 @@ export const AddAccountForm = (props) => {
     }, [])
 
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageAccountServices.getRoleToSelectAddOrEdit()).data
             // console.log("response: " + response)
@@ -123,15 +124,16 @@ export const AddAccountForm = (props) => {
                     setFormData({ ...formData, roleID: records[0].roleID });
                     // toast.success("Thành công")
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                    // toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
 

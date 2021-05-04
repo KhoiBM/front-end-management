@@ -12,7 +12,6 @@ import { CanActive } from 'src/app/components'
 const ManagerPage = () => {
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
-
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
@@ -20,7 +19,9 @@ const ManagerPage = () => {
             <CanActive isRole={config.useRoleName.manager}>
                 <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
                     <Loader loading={loading} />
+                    {/* {!loading.status && */}
                     <ManageStatistic />
+                    {/* } */}
                 </MainBar>
             </CanActive>
         </>

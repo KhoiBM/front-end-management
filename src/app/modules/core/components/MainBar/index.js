@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         // border: "1px solid red",
         width: "100vw",
         height: "auto",
-        overflow: "scroll",
+        // overflow: "scroll",
 
     },
     bg: {

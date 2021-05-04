@@ -20,18 +20,16 @@ const useStyles = makeStyles(theme => ({
 }))
 export const ManageStatistic = () => {
     const classes = useStyles();
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     return (
         <>
-            {/* <Loader loading={loading} /> */}
-
             <OverallRevenueStatistic />
             <div className={classes.chartContainer}>
 
                 <ChartRevenuePerService />
                 <NumberOrderStatistic />
             </div>
+
+
         </>
     )
 }

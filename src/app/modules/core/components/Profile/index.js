@@ -151,6 +151,7 @@ export const Profile = () => {
 
     useEffect(async () => {
         document.body.classList.add(classes.bg)
+        showLoader()
         try {
             const response = await (await ProfileServices.view()).data
             if (response.result == config.useResultStatus.SUCCESS) {
@@ -170,21 +171,19 @@ export const Profile = () => {
                 // setDobSelected(response.info.record.dob)
 
             } else {
-                toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                // toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
             }
         } catch (err) {
-            toast.error(config.useMessage.fetchApiFailure)
+            // toast.error(config.useMessage.fetchApiFailure)
         }
+        hideLoader()
     }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         // console.log("formdata: " + JSON.stringify(formData))
         const enableSubmit = validation(formData)
-
-
-        // const enableSubmit = true
-        // gender: formData.gender == "male" ? false : true,
+        showLoader()
         if (enableSubmit) {
             try {
                 const data = {
@@ -204,6 +203,7 @@ export const Profile = () => {
         } else {
             toast.error(config.useMessage.invalidData);
         }
+        hideLoader()
     }
 
     return (

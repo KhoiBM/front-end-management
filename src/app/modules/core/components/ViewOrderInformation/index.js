@@ -368,6 +368,7 @@ export const ViewOrderInformation = (props) => {
                     // required
                     // disabled
                     multiline
+                    className={classes.areaTextField}
                     // onChange={handleInputChange}
                     error={helperValid.address ? true : false}
                     helperText={helperValid.address}
@@ -519,6 +520,7 @@ disabled
                     // required
                     // disabled
                     multiline
+                    className={classes.areaTextField}
                 // onChange={handleInputChange}
                 // error={helperValid.address ? true : false}
                 // helperText={helperValid.address}
@@ -668,10 +670,10 @@ disabled
                                         <Box className={classes.gridItemContentContainer} >
 
                                             {
-                                                role == useRoleName.businessStaff ?
-                                                    <OrderEditForm />
-                                                    :
-                                                    <ViewOrderForm />
+                                                // role == useRoleName.businessStaff ?
+                                                //     <OrderEditForm />
+                                                //     :
+                                                <ViewOrderForm />
                                             }
                                         </Box>
                                     </Grid>

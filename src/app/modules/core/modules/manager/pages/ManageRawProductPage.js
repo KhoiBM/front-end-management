@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
-
-import CanActive from 'src/app/components/CanActive'
-
 import config from 'src/environments/config'
 import { useLocation } from 'react-router-dom'
 import { ManageRawProduct } from '../components/Manage'
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils'
 import { MainBar } from '../../../components'
-import { Loader, CanActive } from 'src/app/components'
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
+import { Loader, CanActive } from 'src/app/components'
 const ManageRawProductPage = () => {
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
@@ -24,8 +21,6 @@ const ManageRawProductPage = () => {
                     <ManageRawProduct />
                 </MainBar>
             </CanActive>
-
-
         </>
     )
 }

@@ -26,7 +26,8 @@ export const CanceledOrderTable = (props) => {
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
-    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -143,20 +144,21 @@ export const CanceledOrderTable = (props) => {
                                 <StyledTableCell >{row.statusOrder}</StyledTableCell>
 
                                 <StyledTableCell>
-                                    <Switch
+                                    {/* <Switch
                                         color="primary"
                                         checked={switchCheck[`switchID:${row.orderID}`]}
                                         // onChange={handleChangeSwitch}
                                         name={`switchID:${row.orderID}`}
                                     // onClick={handleStatusPaymentChange(row.orderID)}
-                                    />
+                                    /> */}
+                                    {`${row.statusPayment ? "Đã thanh toán" : "Chưa thanh toán"}`}
                                 </StyledTableCell>
 
                                 {/* <StyledTableCell >{row.shipAt}</StyledTableCell> */}
                                 {/* <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell> */}
 
                                 <StyledTableCell >{row.createdAt}</StyledTableCell>
-                                <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                                {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
 
                                 <StyledTableCell style={{ minWidth: "230px" }}>

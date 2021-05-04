@@ -130,7 +130,7 @@ const ChartRevenuePerService = () => {
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
+            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
         hideLoader()
     }
@@ -138,6 +138,8 @@ const ChartRevenuePerService = () => {
 
     return (
         <>
+
+            {/* {!loading.status && */}
 
 
             <div className={classes.chartContainer}>
@@ -198,7 +200,7 @@ const ChartRevenuePerService = () => {
                 </div>
             </div>
 
-
+            {/* } */}
         </>
     )
 }

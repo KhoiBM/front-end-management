@@ -35,7 +35,8 @@ export const NewOrderTable = (props) => {
 
     const { filterList, action, clickFilter } = props
 
-    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    // const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -107,7 +108,7 @@ export const NewOrderTable = (props) => {
 
     const loadInit = async () => {
         console.log("loadInit")
-        // showLoader()
+
         try {
             const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], page: page, limit: limit }
             console.log("data: " + JSON.stringify(data))
@@ -123,16 +124,16 @@ export const NewOrderTable = (props) => {
 
 
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                    // toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
-                throw new Error("Response is null or undefined")
+                // throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-        // hideLoader()
+
     }
 
 
@@ -296,7 +297,7 @@ export const NewOrderTable = (props) => {
         })
 
         try {
-            const data = { orderID, statusOrder: config.useStatusOrder.BUSINESS_STAFF.CHANGE[1] }
+            const data = { orderID, statusOrder: config.useStatusOrder.ALL.CHANGE[1] }
             console.log("data: " + JSON.stringify(data))
             const response = await (await BusinessStaffProcessOrderServices.rejectNewOrder(data)).data
             // console.log("response: " + JSON.stringify(response))
@@ -358,7 +359,7 @@ export const NewOrderTable = (props) => {
                             {/* <StyledTableCell style={{ maxWidth: "100px", whiteSpace: "normal" }}>{row.address}</StyledTableCell> */}
 
                             <StyledTableCell >{row.createdAt}</StyledTableCell>
-                            <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                            {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
 
                             <StyledTableCell style={{ minWidth: "230px" }}>

@@ -121,32 +121,31 @@ const initialFValues = {
 export const EditAccountForm = (props) => {
     const classes = useStyles();
 
-    // const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
-
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
     const { recordForEdit } = props
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+    const [recordsRole, setRecordsRole] = useState([])
+
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
-
-    useEffect(() => {
-        if (recordForEdit && recordForEdit != null && recordForEdit != undefined) {
-            setFormData({ ...formData, ...recordForEdit })
-        }
-    }, [])
+    console.log("recordForEdit:" + JSON.stringify(recordForEdit))
 
 
-
-
-    const [recordsRole, setRecordsRole] = useState([])
 
     useEffect(() => {
         loadInit()
     }, [])
 
+    useEffect(() => {
+        if (recordForEdit && recordForEdit != null && Object.keys(recordForEdit).length > 0) {
+            setFormData({ ...formData, ...recordForEdit })
+        }
+    }, [recordForEdit])
+
+
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageAccountServices.getRoleToSelectAddOrEdit()).data
             // console.log("response: " + response)
@@ -156,15 +155,16 @@ export const EditAccountForm = (props) => {
                     setRecordsRole(response.info.records ? response.info.records : [])
                     // toast.success("Thành công")
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                    // toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
 
@@ -367,7 +367,7 @@ export const EditAccountForm = (props) => {
                                 </FormControl> */}
 
 
-                                {
+                                {formData.roleID != null && String(formData.roleID) != "5" &&
                                     <>
                                         <FormControl variant="outlined" >
                                             <InputLabel id="roleID-label">

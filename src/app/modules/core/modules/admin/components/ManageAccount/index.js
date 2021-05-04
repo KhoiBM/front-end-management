@@ -15,6 +15,7 @@ import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({
     mainContainer: {
         paddingTop: theme.spacing(6),
+        paddingBottom: theme.spacing(6),
         // background: '#B6E2F3',
         background: 'var(bg-secondary-color-main)',
         minHeight: "90%",
@@ -26,7 +27,8 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "flex-end",
         // paddingRight: theme.spacing(6),
-        paddingRight: theme.spacing(2)
+        paddingRight: theme.spacing(2),
+        // background: '#B6E2F3',
     },
     actionWrapper: {
         display: "flex",

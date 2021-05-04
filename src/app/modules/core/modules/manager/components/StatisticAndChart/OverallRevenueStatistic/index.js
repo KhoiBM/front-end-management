@@ -245,7 +245,7 @@ const OverallRevenueStatistic = () => {
     return (
         <>
 
-
+            {/* {!loading.status && */}
             <div className={classes.overallStatisticRoot}>
 
 
@@ -355,7 +355,7 @@ const OverallRevenueStatistic = () => {
 
                 </div>
             </div>
-
+            {/* } */}
         </>
     )
 }
