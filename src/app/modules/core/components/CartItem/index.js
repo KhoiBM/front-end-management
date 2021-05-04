@@ -227,7 +227,7 @@ export const CartItem = (props) => {
                                         categoryCode: categoryCode,
                                         rawProductCode: rawProductCode,
                                         // createdBy: createdBy,
-                                        createdBy: config.useCreateBy.manager,
+                                        createdBy: config.useCreatedBy.manager,
                                         personalizeType: config.usePersonalizeType.technicalCartItem
                                     }
                                     setPersonalizeModal({
