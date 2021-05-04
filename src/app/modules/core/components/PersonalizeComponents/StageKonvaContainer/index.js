@@ -502,30 +502,41 @@ export const StageKonvaContainer = (props) => {
             <div
                 onDrop={async (e) => {
                     e.preventDefault();
-                    // register event position
-                    stageRef.current.setPointersPositions(e);
-                    // console.log("PointersPositions:" + stageRef.current.setPointersPositions(e))
-                    // add image
-                    // console.log("dragUrl.current")
-                    // console.log(dragUrl.current)
-                    const uuid = await `${uuidv4()}${new Date().getTime()}`
-                    const source = await dragUrl.current.src
-                    const acceptedFile = await dragUrl.current.acceptedFile
-                    // console.log("acceptedFile")
-                    // console.log(acceptedFile)
-                    dragUrl.current = await ""
-                    await setToPrintInStageImages(
-                        toPrintInStageImages.concat([
-                            {
-                                ...stageRef.current.getPointerPosition(),
-                                src: source,
-                                acceptedFile,
-                                id: uuid
-                            }
-                        ])
-                    );
+                    if (dragUrl.current && dragUrl.current != null && dragUrl.current.src && dragUrl.current.src != null && dragUrl.current.acceptedFile && dragUrl.current.acceptedFile != null) {
+                        // register event position
+                        stageRef.current.setPointersPositions(e);
+                        // console.log("PointersPositions:" + stageRef.current.setPointersPositions(e))
+                        // add image
+                        // console.log("dragUrl.current")
+                        // console.log(dragUrl.current)
+                        const uuid = await `${uuidv4()}${new Date().getTime()}`
+                        const source = dragUrl.current.src
+                        const acceptedFile = dragUrl.current.acceptedFile
+                        console.log("source")
+                        console.log(source)
+                        // console.log("acceptedFile")
+                        // console.log(acceptedFile)
+                        if (source && source != null && acceptedFile && acceptedFile != null) {
+                            await setToPrintInStageImages(
+                                toPrintInStageImages.concat([
+                                    {
+                                        ...stageRef.current.getPointerPosition(),
+                                        src: source,
+                                        acceptedFile,
+                                        id: uuid
+                                    }
+                                ])
+                            );
 
-                    handleRefresh()
+                            handleRefresh()
+                            dragUrl.current.src = ""
+                            dragUrl.current.acceptedFile = ""
+                        }
+                    }
+
+
+
+
 
 
                 }}

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles, Grid, Box, Button } from '@material-ui/core';
 import { PageHeader } from 'src/app/modules/core/components';
 import { toast } from 'react-toastify';
+import { useAsyncFunction, useDataUrlToFile, useUploadPhoto } from 'src/app/utils';
+import config from 'src/environments/config';
 const useStyles = makeStyles(theme => ({
     rootGridContainer: {
         width: "100%",
@@ -139,11 +141,72 @@ const useStyles = makeStyles(theme => ({
 
 export const ToolbarPersonalize = (props) => {
     const classes = useStyles();
-    const { stageRef, handleExport, handleUpload, handleCloseModal, setRecordRawProduct, photoCustomerUploadList, setPhotoCustomerUploadList, photoDataURLPreviews, setPhotoDataURLPreviews } = props
+    const { recordForToolBar, stageRef, handleExport, handleUpload, handleCloseModal, setRecordRawProduct, photoCustomerUploadList, setPhotoCustomerUploadList, photoDataURLPreviews, setPhotoDataURLPreviews } = props
+
+    const { dataURLtoFile } = useDataUrlToFile()
+
+    const { asyncEvery } = useAsyncFunction()
+
+    const { uploadPhoto } = useUploadPhoto()
+
+    const [recordToolBar, setRecordToolBar] = useState([])
 
     useEffect(() => {
 
     }, [photoCustomerUploadList, photoDataURLPreviews])
+
+    useEffect(() => {
+        console.log("recordForToolBar" + JSON.stringify(recordForToolBar))
+        if (recordForToolBar && recordForToolBar != null && Object.keys(recordForToolBar).length > 0) {
+            setRecordToolBar(recordForToolBar)
+        }
+    }, [recordForToolBar])
+
+
+    const uploadPhotoPersonalize = async (orderCode, orderDetailCode, dataPhoto,) => {
+        try {
+            const bucketName = config.useConfigAWS.CUSTOMERBUCKET.BUCKETNAME
+
+            const folder = config.useConfigAWS.CUSTOMERBUCKET.FOLDER["ORDER"]
+
+
+
+
+            const uploadInfoToPrintPhoto = {
+                bucketName,
+                prefix: `${folder}/${orderCode}/${orderDetailCode}/ToPrint`
+            }
+
+            console.log("prefixUploadInfoToPrintPhoto:" + `${folder}/${orderCode}/${orderDetailCode}/ToPrint`)
+            console.log("dataPhoto.toPrintPhotoList")
+            console.log(dataPhoto.toPrintPhotoList)
+
+            let uploadToPrintPhotoFlag = await uploadPhoto(uploadInfoToPrintPhoto, dataPhoto.toPrintPhotoList.map((val) => val.acceptedFile))
+
+            if (!(await Boolean(uploadToPrintPhotoFlag))) throw new Error(config.useMessage.uploadPhotoFailure)
+
+
+
+
+            const uploadInfoPreviewPhoto = {
+                bucketName,
+                prefix: `${folder}/${orderCode}/${orderDetailCode}/Preview`
+            }
+
+            console.log("prefixUploadInfoPreviewPhoto:" + `${folder}/${orderCode}/${orderDetailCode}/Preview`)
+
+            let uploadPreviewPhotoFlag = await uploadPhoto(uploadInfoPreviewPhoto, dataPhoto.createdPreviewPhotoList.map((val, index) => dataURLtoFile(val.dataURL, `preview.${val.dataURL.split(",")[0].match(/:(.*?);/)[1].split("/")[1]}`)))
+
+            if (!(await Boolean(uploadPreviewPhotoFlag))) throw new Error(config.useMessage.uploadPhotoFailure)
+
+
+        } catch (err) {
+            toast.error(`${config.useMessage.uploadPhotoFailure} + ${err}`)
+            return false
+        }
+
+        return true
+    }
 
     return (
         <>
@@ -173,11 +236,22 @@ export const ToolbarPersonalize = (props) => {
                             } else {
 
                                 if (photoCustomerUploadList && photoCustomerUploadList != null && photoCustomerUploadList.length > 0 && photoDataURLPreviews && photoDataURLPreviews != null && photoDataURLPreviews.length > 0) {
-                                    await setRecordRawProduct(prev => ({
-                                        ...prev,
+                                    // await setRecordRawProduct(prev => ({
+                                    //     ...prev,
+                                    //     toPrintPhotoList: photoCustomerUploadList,
+                                    //     createdPreviewPhotoList: photoDataURLPreviews
+                                    // }))
+
+
+                                    const dataPhoto = {
                                         toPrintPhotoList: photoCustomerUploadList,
                                         createdPreviewPhotoList: photoDataURLPreviews
-                                    }))
+                                    }
+                                    const { orderCode, orderDetailCode } = recordToolBar
+                                    const flag = await uploadPhotoPersonalize(orderCode, orderDetailCode, dataPhoto)
+
+                                    if (flag) toast.success("Lưu thành công")
+
 
                                     handleCloseModal()
                                     await setPhotoCustomerUploadList([])

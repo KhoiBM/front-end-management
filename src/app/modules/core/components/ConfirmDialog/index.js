@@ -35,12 +35,10 @@ export const ConfirmDialog = (props) => {
     const classes = useStyles();
     const { confirmDialog, setConfirmDialog } = props
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
 
             <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }} TransitionComponent={Transition}>
                 <DialogTitle className={classes.dialogTitle}>

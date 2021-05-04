@@ -70,13 +70,12 @@ export const ManageAcceptedOrder = () => {
         }
     )
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     return (
         <>
-            <Loader loading={loading} />
+
 
             {
                 // !openSendDemoProduct &&
@@ -91,21 +90,12 @@ export const ManageAcceptedOrder = () => {
                         </div>
 
                         {filterList && filterList != null && filterList.length > 0 && <AcceptedOrderTable
-                            // statusOrderToView={statusOrderToView}
-                            // handleOpenSendDemoProduct={handleOpenSendDemoProduct}
-                            // handleChangeStatus={handleChangeStatus}
-                            // handleViewInformation={handleViewInformation}
+
                             keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} filterList={filterList} action={action} clickFilter={clickFilter} />
                         }
                     </>
                 </Paper>
             }
-
-            {/* {openViewInformation && <ViewOrderInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />} */}
-
-            {/* {openChangeStatus && statusOrderToChange && statusOrderToChange != null && statusOrderToChange.length > 0 && < ChangeStatusOrder statusOrderToChange={statusOrderToChange} recordForChangeStatus={recordForChangeStatus} handleClose={handleCloseChangeStatus} />} */}
-
-            {/* {openSendDemoProduct && <SendDemoProduct handleClose={handleCloseSendDemoProduct} />} */}
 
         </>
     )

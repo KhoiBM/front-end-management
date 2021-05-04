@@ -15,7 +15,7 @@ const CoreRoutes = () => {
         <>
             {/* <p>AuthRoutes</p> */}
             <Switch>
-                <Route path={`${path}/profile`} component={ProfilePage} />
+                <Route path={`${path}/profile_page`} component={ProfilePage} />
 
                 <Route path={`${path}/admin`} component={AdminModule} />
 

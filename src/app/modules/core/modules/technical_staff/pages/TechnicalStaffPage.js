@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {CanActive} from "../../../../../components";
+import { CanActive } from "../../../../../components";
 import config from '../../../../../../environments/config';
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { TechnicalStaffProcessOrder } from '../components';
@@ -16,12 +16,12 @@ const TechnicalStaffPage = () => {
     return (
         <>
             {/* <p>TechnicalStaffPage</p> */}
-             <CanActive isRole={config.useRoleName.technicalStaff} >
-            <Loader loading={loading} />
-            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink}>
-                <TechnicalStaffProcessOrder />
-            </MainBar>
-             </CanActive>
+            <CanActive isRole={config.useRoleName.technicalStaff} >
+                {/* <Loader loading={loading} /> */}
+                <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink}>
+                    <TechnicalStaffProcessOrder />
+                </MainBar>
+            </CanActive>
         </>
     )
 }

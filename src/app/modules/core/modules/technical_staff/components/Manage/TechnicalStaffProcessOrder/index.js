@@ -55,33 +55,16 @@ export const TechnicalStaffProcessOrder = () => {
         setPersonalizeModal({ isOpen: false })
         handleRefresh()
     }
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             <Paper elevation={2} className={classes.mainContainer}>
 
-                {/* <p>TechnicalStaffProcessOrder</p> */}
+
                 <div>
 
-                    {/* <TabBar tabArr={[
-                        {
-                            label: "Đơn hàng đã chấp nhận",
-                            onClick: () => { }
-                        },
-                        {
-                            label: "Cá nhân hoá",
-                            onClick: () => {
-                                setPersonalizeModal({
-                                    isOpen: true,
-                                    handleCloseModal
-                                })
-                            }
-                        }]}
-                    /> */}
 
                     <TabBar tabArr={[
                         {

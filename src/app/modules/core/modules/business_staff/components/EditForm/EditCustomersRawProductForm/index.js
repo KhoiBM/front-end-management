@@ -12,104 +12,7 @@ import { DropZoneUpload, PageHeader, ColorPickerInput } from 'src/app/modules/co
 import { IconClose, Loader } from 'src/app/components'
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 const useStyles = makeStyles(theme => ({
-    // rootForm: {
-    //     marginTop: theme.spacing(3),
-    //     width: "100%",
-    //     // border: "1px solid red",
-    //     '& .MuiFormControl-root': {
-    //         width: '200%',
-    //         height: "auto",
-    //         marginBottom: theme.spacing(3),
-    //         // border: "1px solid red",
-    //     }
-    // },
-    // selectRole: {
-    //     margin: theme.spacing(1),
-    //     minWidth: 120,
-    // },
-    // buttonWrapper: {
-    //     // border: "1px solid red",
-    //     width: '100%',
-    //     display: "flex",
-    //     justifyContent: "flex-end",
-    //     alignItems: "flex-end"
-    // },
-    // button: {
-    //     cursor: "pointer",
-    //     marginTop: theme.spacing(2),
-    //     color: "#fff",
-    //     '&:hover': {
-    //         backgroundColor: theme.palette.primary.main,
-    //         // backgroundColor: "var(--secondary-color-main)",
-    //         boxShadow: "rgb(0 0 0 / 10 %) 0px 0.3rem 1rem",
-    //         transform: "scale(1.015)",
 
-    //     },
-    //     '&:focus': {
-    //         // outline: "1px dashed var(--primary-color-dark)",
-    //         outlineOffset: "4px",
-    //     }
-    // },
-    // pageForm: {
-    //     // width: "25rem",
-    //     width: "50rem",
-    //     padding: theme.spacing(3),
-    //     position: "relative",
-    //     height: "auto",
-    //     minHeight: "300px",
-    //     // background: "blue",
-
-    // },
-    // pageFormContainer: {
-    //     width: "100%",
-    //     minHeight: "800px",
-    //     height: "auto",  //  làm mất goc paper ở dưới 
-    //     // background: "red",
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     zIndex: 999,
-    //     position: "relative",
-    //     overflow: "scroll",
-
-
-    // },
-    // iconCloseWrapper: {
-    //     position: "absolute",
-    //     right: theme.spacing(2),
-    //     top: theme.spacing(2),
-    //     color: "var(--primary-color-main)",
-    //     // color: "var(--secondary-color-main)",
-    //     transform: "scale(2)",
-    //     transition: " all 0.3s ease 0s"
-
-    // },
-    // iconClose: {
-    //     '&:hover': {
-    //         color: "var(--primary-color-dark)",
-    //         // color: "var(--secondary-color-main)",
-    //     },
-    //     '&:focus': {
-    //         // outline: "1px dashed var(--primary-color-dark)",
-    //         outlineOffset: "4px",
-    //         // transform: "scale(5)",
-    //     }
-    // },
-    // gridItem1: {
-    //     // background: "yellow",
-    //     '&  .MuiFormControl-root': {
-    //         width: "100%"
-    //     }
-    // },
-    // gridItem2: {
-    //     // background: "orange",
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     // alignItems: "center"
-    //     paddingTop: theme.spacing(2),
-    //     height: "auto",
-    //     minHeight: "500px",
-    // }
 }))
 
 const initialFValues = {
@@ -135,14 +38,12 @@ export const EditCustomersRawProductForm = (props) => {
 
     const [categoryRecords, setCategoryRecords] = useState([])
 
-
     const { formData, setFormData, handleInputChange, helperValid = null, validation, handleChangeColor } = useForm(initialFValues)
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
 
     const { recordForEdit } = props
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
@@ -169,6 +70,7 @@ export const EditCustomersRawProductForm = (props) => {
     }
 
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageCategoryServices.getAll()).data
             // console.log("response: " + response)
@@ -187,8 +89,10 @@ export const EditCustomersRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
+        hideLoader()
     }
     const edit = async () => {
+        showLoader()
         uploadFiles.forEach((file) => {
             console.log("name: " + JSON.stringify(file.name))
             console.log("type: " + JSON.stringify(file.type))
@@ -233,7 +137,7 @@ export const EditCustomersRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
-
+        hideLoader()
     }
     return (
         <>

@@ -48,7 +48,6 @@ export const AddRawProductForm = (props) => {
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false)
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
@@ -56,6 +55,7 @@ export const AddRawProductForm = (props) => {
     }, [])
 
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageCategoryServices.getAll()).data
             // console.log("response: " + response)
@@ -77,6 +77,7 @@ export const AddRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
+        hideLoader()
     }
 
 
@@ -100,6 +101,7 @@ export const AddRawProductForm = (props) => {
     }
 
     const add = async (formData) => {
+        showLoader()
         // uploadFiles.forEach((file) => {
         //     console.log("name: " + JSON.stringify(file.name))
         //     console.log("type: " + JSON.stringify(file.type))
@@ -158,7 +160,7 @@ export const AddRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
         }
-
+        hideLoader()
     }
     return (
         <>

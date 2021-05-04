@@ -144,7 +144,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
 
 
     const update = async () => {
-
+        showLoader()
         try {
             const response = await (await ManageCustomersRawProductImportationServices.update(formData)).data
             // console.log("response: " + JSON.stringify(response))
@@ -162,7 +162,7 @@ export const UpdateCustomersRawProductImportationForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        hideLoader()
     }
 
     return (

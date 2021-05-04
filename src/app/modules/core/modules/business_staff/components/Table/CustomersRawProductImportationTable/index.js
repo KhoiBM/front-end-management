@@ -45,7 +45,7 @@ export const CustomersRawProductImportationTable = (props) => {
 
 
     const loadInit = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageCustomersRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -75,7 +75,7 @@ export const CustomersRawProductImportationTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 

@@ -75,7 +75,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 
 export const AddDemoProductPhoto = (props) => {
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
@@ -141,7 +141,7 @@ export const AddDemoProductPhoto = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+
 
             <Dialog open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>
 

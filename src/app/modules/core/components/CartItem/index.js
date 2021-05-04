@@ -73,9 +73,7 @@ export const CartItem = (props) => {
     const role = localStorage.getItem("role");
     const useRoleName = config.useRoleName;
 
-
     const classes = useStyles();
-
 
     const { recordForCartItem } = props
 
@@ -199,7 +197,7 @@ export const CartItem = (props) => {
 
 
                         {
-                            // role == useRoleName.technicalStaff &&
+                            role == useRoleName.technicalStaff &&
                             <Tooltip TransitionComponent={Zoom} placement="top" title="Tải lên ảnh mẫu sản phẩm">
 
                                 <Button onClick={(event) => {
@@ -218,7 +216,7 @@ export const CartItem = (props) => {
                             </Tooltip>
                         }
                         {
-                            // role == useRoleName.technicalStaff &&
+                            role == useRoleName.technicalStaff &&
                             <Tooltip TransitionComponent={Zoom} placement="top" title="Cá nhân hoá">
 
                                 <Button onClick={(event) => {
@@ -228,7 +226,8 @@ export const CartItem = (props) => {
                                         orderDetailCode: orderDetailCode,
                                         categoryCode: categoryCode,
                                         rawProductCode: rawProductCode,
-                                        createdBy: createdBy,
+                                        // createdBy: createdBy,
+                                        createdBy: config.useCreateBy.manager,
                                         personalizeType: config.usePersonalizeType.technicalCartItem
                                     }
                                     setPersonalizeModal({

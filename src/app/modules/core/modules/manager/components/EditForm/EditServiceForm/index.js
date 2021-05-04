@@ -117,7 +117,7 @@ const initialFValues = {
     serviceID: '',
     serviceCode: '',
     serviceName: '',
-    // servicePrice: 0,
+    servicePrice: 0,
     description: '',
     active: true,
     updatedAt: new Date()
@@ -156,6 +156,7 @@ export const EditServiceForm = (props) => {
     }
 
     const edit = async () => {
+        showLoader()
         try {
             const response = await (await ManageServiceServices.edit(formData)).data
 
@@ -193,7 +194,7 @@ export const EditServiceForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
-
+        hideLoader()
 
     }
 

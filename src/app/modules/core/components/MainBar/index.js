@@ -15,9 +15,11 @@ import { SideMenuBar } from '../SideMenuBar'
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
-        height: 'auto',
         // flexShrink: 0,
         // border: "1px solid red",
+        width: "100vw",
+        height: "auto",
+        overflow: "scroll",
 
     },
     bg: {
@@ -36,17 +38,20 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
-        // backgroundColor: "blue",
+        // backgroundColor: "orange",
+        height: "30px"
 
     },
     content: {
         flexGrow: 1,
         padding: theme.spacing(2),
-        // paddingTop: theme.spacing(10),
+        paddingTop: theme.spacing(10),
         // backgroundColor: "blue",
         minHeight: '100%',
+        height: "auto",
         color: "#fff",
         overflow: "hidden",
+        position: "relative"
     }
 }));
 
@@ -72,11 +77,11 @@ export const MainBar = (props) => {
 
     }, [])
 
-    useEffect(() => {
-        if (drawerWidth && drawerWidth != null) {
-            console.log("drawerWidth: " + drawerWidth)
-        }
-    }, [drawerWidth])
+    // useEffect(() => {
+    //     if (drawerWidth && drawerWidth != null) {
+    //         console.log("drawerWidth: " + drawerWidth)
+    //     }
+    // }, [drawerWidth])
 
     return (
         <>
@@ -87,7 +92,7 @@ export const MainBar = (props) => {
                 <SideMenuBar openDrawer={openDrawer} drawerWidth={drawerWidth} handleDrawerClose={handleDrawerClose} userRole={props.userRole} />
 
                 <main className={classes.content}>
-                    <div className={classes.toolbar} />
+                    {/* <div className={classes.toolbar} /> */}
                     {props.children}
                 </main>
             </div>

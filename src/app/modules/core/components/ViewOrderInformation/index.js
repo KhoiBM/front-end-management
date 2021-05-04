@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
                 // background: 'var(--bg-secondary-color-main)',
                 borderColor: "none !important",
                 borderRadius: "4px",
-                height: "30px !important",
+                // height: "30px !important",
                 background: "#fff",
                 "& .MuiInputBase-inputMultiline": {
                     // background: "red",
@@ -180,6 +180,21 @@ const useStyles = makeStyles(theme => ({
         // border: "1px solid blue",
         width: "100%",
         height: "auto",
+    },
+    areaTextField: {
+        width: "95%",
+        height: "auto",
+        minHeight: "200px !important",
+        background: "red",
+        // border: "1px solid red !important",
+        '& .MuiInputBase-root': {
+            width: "100%",
+            minHeight: "200px !important",
+            height: "auto",
+            display: "flex",
+            alignItems: "flex-start",
+            // border: "1px solid red !important",
+        }
     }
 }))
 
@@ -225,7 +240,6 @@ export const ViewOrderInformation = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, setHelperValid, validation, shipAtSelected, setShipAtSelected, handleChangeShipAt } = useForm(initialFValues)
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
@@ -432,6 +446,7 @@ disabled
                     onChange={handleInputChange}
                     error={helperValid.note ? true : false}
                     helperText={helperValid.note}
+                    className={classes.areaTextField}
                 />
                 <TextField
                     variant='outlined'
@@ -581,6 +596,7 @@ disabled
                     // required
                     // disabled
                     multiline
+                    className={classes.areaTextField}
 
                 />
                 <TextField
@@ -604,7 +620,6 @@ disabled
     }
     return (
         <>
-            {/* <Loader loading={loading} /> */}
 
             {/* isOpen */}
             <Dialog fullScreen open={isOpen} classes={{ paper: `${classes.dialog}` }} TransitionComponent={Transition}>

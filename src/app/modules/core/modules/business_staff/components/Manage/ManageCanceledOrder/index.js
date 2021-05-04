@@ -40,14 +40,8 @@ const useStyles = makeStyles(theme => ({
 export const ManageCanceledOrder = () => {
     const classes = useStyles();
 
-
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
-
     return (
         <>
-            <Loader loading={loading} />
 
             {
 

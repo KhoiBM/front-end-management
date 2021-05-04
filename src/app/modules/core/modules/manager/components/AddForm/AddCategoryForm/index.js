@@ -141,23 +141,14 @@ export const AddCategoryForm = (props) => {
 
     const { formData, setFormData, handleInputChange, helperValid = null, validation } = useForm(initialFValues)
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
         loadInit()
     }, [])
-    {/* formData.serviceID &&
-                                                formData.serviceID != null
-                                                ? formData.serviceID
-                                                : serviceRecords && serviceRecords != null
-                                                    ? (() => {
-                                                        setFormData({ ...formData, serviceID: serviceRecords[0].serviceID });
-                                                        return serviceRecords[0].serviceID
-                                                    })()
-                                                    : ""
-                                                     */}
+
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageServiceServices.getAll()).data
             // console.log("response: " + response)
@@ -178,6 +169,7 @@ export const AddCategoryForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
 
@@ -202,6 +194,7 @@ export const AddCategoryForm = (props) => {
 
 
     const add = async () => {
+        showLoader()
         try {
             const response = await (await ManageCategoryServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
@@ -239,7 +232,7 @@ export const AddCategoryForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        hideLoader()
     }
     return (
         <>

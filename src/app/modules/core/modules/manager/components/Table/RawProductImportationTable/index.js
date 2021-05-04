@@ -45,7 +45,7 @@ export const RawProductImportationTable = (props) => {
 
 
     const loadInit = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageRawProductImportationServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -76,7 +76,7 @@ export const RawProductImportationTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 

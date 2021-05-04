@@ -25,20 +25,16 @@ const useStyles = makeStyles(theme => ({
 
 export const NewOrderTable = (props) => {
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
-
     const classes = useStyles();
+
     const { classesCustom } = useCustomStyles()
 
     const { keywords, searchAction, clickSearch } = props
 
     const { filterList, action, clickFilter } = props
 
-    // const headCells = ['Mã ID', "Mã Code", "Mã khách hàng", "Ghi chú", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày giao", "Địa chỉ", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    // const headCells = ["Mã Code", "Mã ID khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    // const headCells = ["Mã Code", "Mã Code khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
     const headCells = ["Mã Code", "Tên người dùng", "Tên khách hàng", "Trạng thái đơn hàng", "Trạng thái thanh toán", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
 
     const [page, setPage] = useState(1);
@@ -59,41 +55,59 @@ export const NewOrderTable = (props) => {
 
 
 
-    useEffect(() => {
-        // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-                search()
-            } else {
-                loadInit()
-            }
-        } else {
-            loadInit()
-        }
-    }, [page, refresh])
-
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        setPage(1)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-                search()
-            } else {
-                loadInit()
-            }
-        } else {
-            loadInit()
-        }
+        console.log("searchAction: " + searchAction)
+        if (!first) {
+            setPage(1)
 
+            if (keywords && keywords != null && keywords.length > 0) {
+
+                if (searchAction) {
+
+                    search()
+
+                } else {
+
+                    loadInit()
+
+                }
+
+            } else {
+
+                loadInit()
+
+            }
+        }
     }, [clickSearch])
 
 
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+
+                search()
+
+            } else {
+
+                loadInit()
+            }
+        } else {
+
+            loadInit()
+
+        }
+        setFirst(false)
+
+    }, [page, refresh])
+
 
     const loadInit = async () => {
-
+        console.log("loadInit")
+        // showLoader()
         try {
             const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], page: page, limit: limit }
             console.log("data: " + JSON.stringify(data))
@@ -105,7 +119,7 @@ export const NewOrderTable = (props) => {
 
                     loadData(response)
 
-                    console.log("loadInit")
+
 
 
                 } else {
@@ -118,7 +132,7 @@ export const NewOrderTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        // hideLoader()
     }
 
 
@@ -162,6 +176,9 @@ export const NewOrderTable = (props) => {
     }
 
     const search = async () => {
+        console.log("search")
+
+        // showLoader()
         try {
             const data = { filterBy: [config.useStatusOrder.ALL.FILTER[0]], keywords: keywords, page: page, limit: limit }
             console.log("data: " + JSON.stringify(data))
@@ -173,7 +190,6 @@ export const NewOrderTable = (props) => {
 
                     loadData(response)
 
-                    console.log("search")
 
                 } else {
                     toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
@@ -185,18 +201,8 @@ export const NewOrderTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        // hideLoader()
     }
-
-
-
-
-
-
-
-
-
-
 
     const handleCloseModal = () => {
         setViewOrderInformationModal({ isOpen: false })
@@ -213,6 +219,7 @@ export const NewOrderTable = (props) => {
     }
 
     const checkPayMent = async (orderID, event) => {
+        showLoader()
         const data = {
             orderID: orderID,
             isActive: !switchCheck[`switchID:${orderID}`]
@@ -248,12 +255,13 @@ export const NewOrderTable = (props) => {
                 [event.target.name]: event.target.checked
             })
         }
+        hideLoader()
     }
 
 
 
     const onAccept = async (orderID) => {
-
+        showLoader()
         try {
             const data = { orderID, statusOrder: config.useStatusOrder.BUSINESS_STAFF.CHANGE[0] }
             console.log("data: " + JSON.stringify(data))
@@ -276,11 +284,12 @@ export const NewOrderTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        hideLoader()
 
     }
 
     const onReject = async (orderID) => {
+        showLoader()
         setConfirmDialog({
             ...confirmDialog,
             isOpen: false
@@ -310,6 +319,7 @@ export const NewOrderTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
 

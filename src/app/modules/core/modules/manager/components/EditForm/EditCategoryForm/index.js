@@ -145,7 +145,7 @@ export const EditCategoryForm = (props) => {
         if (recordForEdit != null && recordForEdit != undefined) {
             setFormData({ ...formData, ...recordForEdit })
         }
-        loadInit()
+        // loadInit()
     }, [recordForEdit])
 
     // useEffect(() => {
@@ -156,6 +156,7 @@ export const EditCategoryForm = (props) => {
 
 
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageServiceServices.getAll()).data
             // console.log("response: " + response)
@@ -174,6 +175,7 @@ export const EditCategoryForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
     const handleSubmit = (event) => {
@@ -189,6 +191,7 @@ export const EditCategoryForm = (props) => {
     }
 
     const edit = async () => {
+        showLoader()
         try {
             const response = await (await ManageCategoryServices.edit(formData)).data
             // console.log("response: " + JSON.stringify(response))
@@ -224,6 +227,7 @@ export const EditCategoryForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
+        hideLoader()
 
     }
     return (

@@ -76,6 +76,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const HeaderBar = (props) => {
+
+    const role = localStorage.getItem("role");
+
+    const useRoleName = config.useRoleName;
+
     const history = useHistory();
 
     const { drawerWidth } = props
@@ -101,11 +106,11 @@ export const HeaderBar = (props) => {
         setAnchorElMenuAccount(null);
     };
 
-    useEffect(() => {
-        if (drawerWidth && drawerWidth != null) {
-            console.log("drawerWidth: " + drawerWidth)
-        }
-    }, [drawerWidth])
+    // useEffect(() => {
+    //     if (drawerWidth && drawerWidth != null) {
+    //         console.log("drawerWidth: " + drawerWidth)
+    //     }
+    // }, [drawerWidth])
 
 
     return (
@@ -154,10 +159,11 @@ export const HeaderBar = (props) => {
 
 
 
+                        {
+                            role != useRoleName.administrator && role != useRoleName.manager &&
+                            <NotificationBar />
 
-                        <NotificationBar />
-
-
+                        }
 
 
                         <div>
@@ -188,7 +194,7 @@ export const HeaderBar = (props) => {
 
                                 <MenuItem onClick={() => {
                                     handleCloseMenuAccount();
-                                    history.push('/core/profile')
+                                    history.push('/core/profile_page')
                                 }}><span style={{ marginRight: "16px", display: "flex", justifyContent: "center", alignItems: "center" }}><AiOutlineProfile /></span>
                             Hồ sơ của tôi
                             </MenuItem>

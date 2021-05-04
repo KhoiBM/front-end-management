@@ -124,10 +124,9 @@ export const ViewPrintedRawProductInformation = (props) => {
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {
-            const orderCode = recordForViewInformation.orderCode
+            const orderDetailCode = recordForViewInformation.orderDetailCode
             const printedProductCode = recordForViewInformation.printedProductCode
-            const fileKey = `${folder}/${orderCode}/${printedProductCode}/`
-            // const fileKey = `${folder}/${"categoryCode"}/${"printedProductCode"}/`
+            const fileKey = `${folder}/${orderDetailCode}/${printedProductCode}/`
 
             // console.log("fileKey:" + fileKey)
 
@@ -139,7 +138,6 @@ export const ViewPrintedRawProductInformation = (props) => {
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
 
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>
@@ -167,7 +165,7 @@ export const ViewPrintedRawProductInformation = (props) => {
                                 <Grid item xs={12} sm={12} md={12} >
                                     <Box className={classes.categoryContainer}>
                                         {/* <Typography variant={"subtitle1"} color={"textSecondary"}>Mã ID đơn hàng: {recordForViewInformation.orderID}</Typography> */}
-                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã Code đơn hàng: {recordForViewInformation.orderCode}</Typography>
+                                        <Typography variant={"subtitle1"} color={"textSecondary"}>Mã Code đơn hàng chi tiết: {recordForViewInformation.orderDetailCode}</Typography>
                                     </Box>
 
                                     <Box className={classes.categoryContainer}>

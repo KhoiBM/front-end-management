@@ -93,10 +93,6 @@ export const NotificationBar = () => {
 
     const [countNoti, setCountNoti] = useState(0)
 
-    const role = localStorage.getItem("role");
-
-    const useRoleName = config.useRoleName;
-
     const [recordsNoti, setRecordsNoti] = useState([])
 
     const [anchorElPopover, setAnchorElPopover] = useState(null);
@@ -127,20 +123,14 @@ export const NotificationBar = () => {
 
     useEffect(() => {
         loadInit()
-        // console.log("loadNotiInit")
+        console.log("loadNotiInit")
 
     }, [])
 
-    useEffect(() => {
-        loadInit()
-        // console.log("loadNotiInitRefresh")
-    }, [refresh])
 
     const loadInit = async () => {
-        loadData()
         loadCountNoti()
-
-
+        loadData()
     }
 
     const loadCountNoti = async () => {
@@ -236,112 +226,111 @@ export const NotificationBar = () => {
             {/* <Loader loading={loading} /> */}
 
             <div>
-                {
-                    role != useRoleName.administrator && role != useRoleName.manager &&
-                    <>
-                        <Tooltip TransitionComponent={Zoom} placement="left" title="Thông báo">
-                            <IconButton
-                                onClick={handleClickPopover}
-                                color="inherit"
-                            >
-                                <Badge
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    badgeContent={countNoti}
-                                    className={classes.badgeNoti}
-                                    color="error">
 
-                                    <RiNotification2Line className={classes.icon} />
+                <>
+                    <Tooltip TransitionComponent={Zoom} placement="left" title="Thông báo">
+                        <IconButton
+                            onClick={handleClickPopover}
+                            color="inherit"
+                        >
+                            <Badge
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                badgeContent={countNoti}
+                                className={classes.badgeNoti}
+                                color="error">
 
-                                </Badge>
-                            </IconButton>
-                        </Tooltip>
+                                <RiNotification2Line className={classes.icon} />
 
-                        <Popover
-                            id="notificationList"
-                            open={openPopover}
-                            anchorEl={anchorElPopover}
-                            onClose={handleClosePopover}
-                            className={classes.popoverContainer}
-                            elevation={8}
-                            anchorPosition={{ top: 70, left: 1400 }}
-                            anchorReference='anchorPosition'
-                        >{
-                                recordsNoti && recordsNoti != null && recordsNoti.length > 0 && recordsNoti.map((noti, index) => {
+                            </Badge>
+                        </IconButton>
+                    </Tooltip>
 
-                                    // console.log("diff: " + differenceInMinutes(new Date(), noti.createdAt))
-                                    // console.log(noti.createdAt)
-                                    // console.log(parse("22-03-2021 16:40:00", "dd-MM-yyyy HH:mm:ss", new Date()))
+                    <Popover
+                        id="notificationList"
+                        open={openPopover}
+                        anchorEl={anchorElPopover}
+                        onClose={handleClosePopover}
+                        className={classes.popoverContainer}
+                        elevation={8}
+                        anchorPosition={{ top: 70, left: 1400 }}
+                        anchorReference='anchorPosition'
+                    >{
+                            recordsNoti && recordsNoti != null && recordsNoti.length > 0 && recordsNoti.map((noti, index) => {
 
-                                    // console.log(parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
-                                    // console.log(format(parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date())))
+                                // console.log("diff: " + differenceInMinutes(new Date(), noti.createdAt))
+                                // console.log(noti.createdAt)
+                                // console.log(parse("22-03-2021 16:40:00", "dd-MM-yyyy HH:mm:ss", new Date()))
 
-                                    // console.log(format(noti.createdAt, "dd-MM-yyyy HH:mm:ss"))
+                                // console.log(parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
+                                // console.log(format(parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date())))
 
-                                    const diffMinutes = differenceInMinutes(new Date(), parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
-                                    const diffHours = differenceInHours(new Date(), parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
-                                    const diffDays = differenceInDays(new Date(), parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
+                                // console.log(format(noti.createdAt, "dd-MM-yyyy HH:mm:ss"))
 
-                                    return (
+                                const diffMinutes = differenceInMinutes(new Date(), parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
+                                const diffHours = differenceInHours(new Date(), parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
+                                const diffDays = differenceInDays(new Date(), parse(noti.createdAt, "dd-MM-yyyy HH:mm:ss", new Date()))
 
-                                        <Paper className={classes.rootCard} key={index} elevation={0}
+                                return (
 
-                                            onClick={(event) => {
+                                    <Paper className={classes.rootCard} key={index} elevation={0}
 
-                                                event.stopPropagation();
+                                        onClick={(event) => {
 
-                                                setNotificationDialog((prev) => (
+                                            event.stopPropagation();
+
+                                            setNotificationDialog((prev) => (
+                                                {
+                                                    isOpen: true,
+                                                    title: noti.title,
+                                                    content: noti.content,
+                                                    actionLink: noti.actionLink,
+                                                    type: noti.type,
+                                                    isView: noti.isView,
+                                                    // createdAt: "22-03-2021 17:13:00",
+                                                    createdAt: noti.createdAt,
+                                                    onIsView: (isView) => { onIsView(isView) }
+                                                }
+                                            )
+                                            )
+
+                                        }}
+
+                                    >
+                                        <Box className={classes.notiWrapper}>
+                                            <Box className={classes.titleWrapper}>
+                                                <Typography variant={"h6"} className={classes.contentTitle}>{noti.title}</Typography>
+                                                <Typography className={classes.dateAgo} color={"textSecondary"}>
                                                     {
-                                                        isOpen: true,
-                                                        title: noti.title,
-                                                        content: noti.content,
-                                                        actionLink: noti.actionLink,
-                                                        type: noti.type,
-                                                        isView: noti.isView,
-                                                        // createdAt: "22-03-2021 17:13:00",
-                                                        createdAt: noti.createdAt,
-                                                        onIsView: (isView) => { onIsView(isView) }
-                                                    }
-                                                )
-                                                )
-
-                                            }}
-
-                                        >
-                                            <Box className={classes.notiWrapper}>
-                                                <Box className={classes.titleWrapper}>
-                                                    <Typography variant={"h6"} className={classes.contentTitle}>{noti.title}</Typography>
-                                                    <Typography className={classes.dateAgo} color={"textSecondary"}>
-                                                        {
-                                                            `${diffMinutes <= 60
-                                                                ? diffMinutes + " phút"
-                                                                : diffHours <= 24
-                                                                    ? diffHours + " giờ"
-                                                                    : diffDays + " ngày"}  cách đây
+                                                        `${diffMinutes <= 60
+                                                            ? diffMinutes + " phút"
+                                                            : diffHours <= 24
+                                                                ? diffHours + " giờ"
+                                                                : diffDays + " ngày"}  cách đây
                                                                     `
-                                                        }
-                                                    </Typography>
-
-                                                </Box>
-
-                                                <Typography className={classes.contentNoti} variant={"body2"} >
-                                                    {noti.content}
+                                                    }
                                                 </Typography>
-                                            </Box>
-                                        </Paper>
 
-                                    )
-                                }
+                                            </Box>
+
+                                            <Typography className={classes.contentNoti} variant={"body2"} >
+                                                {noti.content}
+                                            </Typography>
+                                        </Box>
+                                    </Paper>
+
                                 )
                             }
+                            )
+                        }
 
-                        </Popover>
+                    </Popover>
 
-                    </>
+                </>
 
-                }
+
 
                 <NotificationDialog notificationDialog={notificationDialog} setNotificationDialog={setNotificationDialog} />
 
@@ -350,52 +339,3 @@ export const NotificationBar = () => {
         </>
     )
 }
-
-
-
-// const intervalID = setInterval(() => {
-
-//     // console.log("setInterval")
-
-//     // loadInit()
-//     setRefresh(!refresh)
-// }, 1000)
-
-// return () => clearInterval(intervalID);
-{/* <Menu
-                                id="noti-appbar"
-                                anchorEl={anchorElMenuNoti}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
-                                keepMounted
-                                open={openMenuNoti}
-                                onClose={handleCloseMenuNoti}
-                            >
-                                <MenuList>
-                                    <MenuItem onClick={() => {
-                                        handleCloseMenuNoti();
-                                    }}>
-
-                                    </MenuItem>
-
-                                    <MenuItem onClick={() => {
-                                        handleCloseMenuNoti();
-                                    }}>
-
-                                    </MenuItem>
-                                </MenuList>
-
-                            </Menu> */}
-
-
-
-// const handleMenuNoti = (event) => {
-//     setAnchorElMenuNoti(event.currentTarget);
-// };
-// const handleCloseMenuNoti = (event) => {
-//     setAnchorElMenuNoti(null);
-// };
-// const [anchorElMenuNoti, setAnchorElMenuNoti] = useState(null);
-// const openMenuNoti = Boolean(anchorElMenuNoti);

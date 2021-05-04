@@ -11,7 +11,8 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
-        // top: 50,
+        right: 0,
+        // top: 0,
         color: theme.palette.primary.main
     }
 }));

@@ -51,24 +51,6 @@ export const CustomersRawProductTable = (props) => {
 
 
 
-    useEffect(() => {
-        // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-
-                search()
-
-            } else {
-
-                loadInit()
-            }
-        } else {
-
-            loadInit()
-
-        }
-    }, [page, refresh])
 
 
     useEffect(() => {
@@ -94,13 +76,34 @@ export const CustomersRawProductTable = (props) => {
                 loadInit()
 
             }
-        } else {
-            setFirst(false)
         }
     }, [clickSearch])
 
-    const loadInit = async () => {
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
 
+                search()
+
+            } else {
+
+                loadInit()
+            }
+        } else {
+
+            loadInit()
+
+        }
+
+        setFirst(false)
+
+    }, [page, refresh])
+
+
+    const loadInit = async () => {
+        showLoader()
         try {
 
             const response = await (await ManageCustomersRawProductServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -130,7 +133,7 @@ export const CustomersRawProductTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 
@@ -163,7 +166,7 @@ export const CustomersRawProductTable = (props) => {
 
 
     const search = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageCustomersRawProductServices.search({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
@@ -192,11 +195,11 @@ export const CustomersRawProductTable = (props) => {
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }
-
+        hideLoader()
     }
 
     const onDelete = async (rawProductID) => {
-
+        showLoader()
         setConfirmDialog({
             ...confirmDialog,
             isOpen: false
@@ -223,7 +226,7 @@ export const CustomersRawProductTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
 
-
+        hideLoader()
     }
 
 
@@ -233,7 +236,6 @@ export const CustomersRawProductTable = (props) => {
         <>
             {/* <p>Table</p> */}
 
-            {/* <Loader loading={loading} /> */}
 
 
             <TblContainer>

@@ -104,6 +104,7 @@ const NumberOrderStatistic = () => {
     }, [refresh])
 
     const loadInit = async () => {
+        showLoader()
         console.log("Loadinit")
         try {
             const response = await (await ManageStatisticServices.viewNumberOrder()).data
@@ -133,6 +134,7 @@ const NumberOrderStatistic = () => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
         }
+        hideLoader()
     }
 
 
@@ -154,7 +156,7 @@ const NumberOrderStatistic = () => {
                         },
                         {
                             label: "Năm",
-                            onClick: {}
+                            onClick: () => { }
                         }
                     ]} />
                     <TabPanel value={value} index={0}>
@@ -204,64 +206,3 @@ const NumberOrderStatistic = () => {
 }
 
 export { NumberOrderStatistic }
-
-// NumberOrderStatistic
-
-
-// {/* <div className={classes.numberOrderContainer}>
-//                     <Card className={classes.titlenumberOrderContainer}>
-//                         <Box className={classes.titlenumberOrderlWrapper} >
-//                             <Typography variant="h6">
-//                                 Số lượng đơn hàng
-//                             </Typography>
-
-//                         </Box>
-//                     </Card>
-//                 </div> */}
-
-
-
-// // function a11yProps(index) {
-// //     return {
-// //         id: `tab-${index}`
-// //     };
-// // }
-
-// // function TabPanel(props) {
-// //     const { children, value, index, ...other } = props;
-// //     const classes = useStyles();
-
-// //     return (
-// //         <div
-// //             role="tabpanel"
-// //             hidden={value !== index}
-// //             id={`tabpanel-${index}`}
-// //             {...other}
-// //             className={classes.tablePanel}
-// //         >
-// //             {value === index && (
-// //                 <Box p={3}>
-// //                     {children}
-// //                 </Box>
-// //             )}
-// //         </div>
-// //     );
-// // }
-
-
-
-// {/* <AppBar position="static" className={classes.TabContainer}>
-//                         <Tabs value={value} onChange={handleChange} indicatorColor="secondary" textColor="secondary" variant="fullWidth">
-//                             <Tab label="Tuần" {...a11yProps(0)} />
-//                             <Tab label="Tháng" {...a11yProps(1)} />
-//                             <Tab label="Năm" {...a11yProps(2)} />
-//                         </Tabs>
-//                     </AppBar> */}
-
-
-
-//                         // const [value, setValue] = useState(0);
-
-//     // const handleChange = (event, newValue) => {
-//     //     setValue(newValue);
-//     // };

@@ -154,7 +154,7 @@ export const AddServiceForm = (props) => {
     }
 
     const add = async () => {
-
+        showLoader()
         try {
             const response = await (await ManageServiceServices.add(formData)).data
             // console.log("response: " + JSON.stringify(response))
@@ -189,7 +189,7 @@ export const AddServiceForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
-
+        hideLoader()
 
     }
     return (

@@ -45,16 +45,7 @@ const useStyles = makeStyles(theme => ({
 export const ManageAcceptedOrder = () => {
     const classes = useStyles();
 
-
-    // const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
-
-    // const { recordForChangeStatus, openChangeStatus, handleChangeStatus, handleCloseChangeStatus } = useToggleChangeStatusForm()
-
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
-
-    // const { recordForUse, openBox: openSendDemoProduct, handleOpen: handleOpenSendDemoProduct, handleClose: handleCloseSendDemoProduct } = useToggleBox()
-
-
 
     const fetchApi = TechnicalStaffProcessOrderServices.getStatusOrderToFilter()
 
@@ -70,15 +61,13 @@ export const ManageAcceptedOrder = () => {
         }
     )
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             {
-                // !openSendDemoProduct &&
+
                 <Paper elevation={0} className={classes.mainContainer}>
                     <>
 
@@ -90,10 +79,6 @@ export const ManageAcceptedOrder = () => {
                         </div>
 
                         {filterList && filterList != null && filterList.length > 0 && <AcceptedOrderTable
-                            // statusOrderToView={statusOrderToView}
-                            // handleOpenSendDemoProduct={handleOpenSendDemoProduct}
-                            // handleChangeStatus={handleChangeStatus}
-                            // handleViewInformation={handleViewInformation}
                             keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} filterList={filterList} action={action} clickFilter={clickFilter} />
                         }
                     </>

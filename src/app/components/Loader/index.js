@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
-import { Container, makeStyles, CircularProgress, Paper, Typography, Box } from '@material-ui/core';
+import { Container, makeStyles, CircularProgress, Paper, Typography, Box, ClickAwayListener } from '@material-ui/core';
 import { useWait } from 'src/app/utils';
 import { IconClose } from '../IconClose';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
@@ -10,13 +10,13 @@ const useStyles = makeStyles(theme => ({
         width: "100%",
         height: "auto",
         minHeight: "100vh",
-        position: "fixed",
+        position: "absolute",
         // top: 80,
-        top: 0,
+        top: 64,
         bottom: 0,
         right: 0,
         left: 0,
-        // backgroundColor: "red",
+        backgroundColor: "red",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => ({
         boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
         transition: "all 0.2 ease -in -out",
         position: "relative",
+        color: "#000",
 
         '&:hover': {
             transform: "scale(1.02)",
@@ -61,7 +62,7 @@ export const Loader = (props) => {
     const { loading, zIndexValue } = props
     const { status } = loading
     const classes = useStyles({ zIndexValue });
-    // const { showLoader, hideLoader } = useLoaderHandle()
+    const { showLoader, hideLoader } = useLoaderHandle()
 
     // useEffect(() => {
 
@@ -72,6 +73,9 @@ export const Loader = (props) => {
 
             {
                 status &&
+                // <ClickAwayListener onClickAway={() => {
+                //     hideLoader()
+                // }}>
                 <div className={classes.loaderContainer} >
                     <div className={classes.loaderWrapper}>
                         {/* <Box className={classes.iconCloseWrapper} onClick={(e) => {
@@ -80,13 +84,15 @@ export const Loader = (props) => {
                             <IconClose />
                         </Box> */}
 
-                        <Typography variant={"subtitle1"}>Đang tải...</Typography>
+                        <Typography variant={"subtitle1"} color="primary">Đang tải...</Typography>
                         <Box>
                             <CircularProgress color="primary" />
                         </Box>
 
                     </div>
                 </div>
+                // </ClickAwayListener>
+
 
 
             }

@@ -213,39 +213,41 @@ export const MainStageBar = (props) => {
 
             if (isToImage) {
                 console.log("toImage");
-                // if (isBg) {
-                //     if (isToPrintPhoto) {
-                const image = stageRef.current.toImage({
-                    callback(img) {
-                        // console.log("toImage");
-                        // console.log(img);
+                if (isBg) {
+                    if (isToPrintPhoto) {
+                        const image = stageRef.current.toImage({
+                            callback(img) {
+                                // console.log("toImage");
+                                // console.log(img);
 
-                        setPhotoPreviewID(uuid)
-                        setPhotoPreviews(photoPreviews.concat({
-                            id: uuid,
-                            img: img
-                        }))
-                    },
-                    quality: 1,
-                    pixelRatio: 2
-                });
-                const uri = stageRef.current.toDataURL({
-                    quality: 1,
-                    pixelRatio: 2,
-                    mimeType: "image/jpeg",
-                    callback(uri) {
-                        console.log("setPhotoDataURLPreviews")
-                        setPhotoDataURLPreviews(prev => prev.concat({ photoPreviewID: uuid, dataURL: uri }))
-                        // console.log("handleCreatePreviewPhotoDATAURL");
-                        // console.log(uri);
-                    },
-                });
-                //         } else {
-                //             toast.info("Không thể tạo ảnh xem trước thiết kế khi không có ảnh để in")
-                //         }
-                //     } else {
-                //         toast.info("Không thể tạo ảnh xem trước thiết kế khi không có ảnh nền sản phẩm")
-                // }
+                                setPhotoPreviewID(uuid)
+                                setPhotoPreviews(photoPreviews.concat({
+                                    id: uuid,
+                                    img: img
+                                }))
+                            },
+                            quality: 1,
+                            pixelRatio: 2
+                        });
+
+                        const uri = stageRef.current.toDataURL({
+                            quality: 1,
+                            pixelRatio: 2,
+                            // mimeType: "image/jpeg",
+                            mimeType: "image/png",
+                            callback(uri) {
+                                console.log("setPhotoDataURLPreviews")
+                                setPhotoDataURLPreviews(prev => prev.concat({ photoPreviewID: uuid, dataURL: uri }))
+                                // console.log("handleCreatePreviewPhotoDATAURL");
+                                // console.log(uri);
+                            },
+                        });
+                    } else {
+                        toast.info("Không thể tạo ảnh xem trước thiết kế khi không có ảnh để in")
+                    }
+                } else {
+                    toast.info("Không thể tạo ảnh xem trước thiết kế khi không có ảnh nền sản phẩm")
+                }
             } else {
                 toast.info("Bạn chỉ có thể tạo tối đa 5 ảnh xem trước thiết kế")
             }

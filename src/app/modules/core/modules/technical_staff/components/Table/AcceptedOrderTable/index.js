@@ -51,27 +51,10 @@ export const AcceptedOrderTable = (props) => {
 
     const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
-    useEffect(() => {
-        // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-                search()
-            } else if (action == "filter") {
-                loadInitByFilter()
-            }
-
-        } else {
-            if (action == "filter") {
-                loadInitByFilter()
-            }
-        }
-    }, [page, refresh])
-
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
+        console.log("searchAction: " + searchAction)
         if (!first) {
             setPage(1)
             if (keywords && keywords != null && keywords.length > 0) {
@@ -84,8 +67,6 @@ export const AcceptedOrderTable = (props) => {
                 loadInitByFilter()
             }
 
-        } else {
-            setFirst(false)
         }
 
     }, [clickSearch])
@@ -93,18 +74,39 @@ export const AcceptedOrderTable = (props) => {
 
 
     useEffect(() => {
+        console.log("clickFilter")
         if (!first) {
-            console.log("clickFilter")
             setPage(1)
 
             if (action == "filter") {
                 loadInitByFilter()
             }
-        } else {
-            setFirst(false)
         }
 
     }, [clickFilter])
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            }
+            // else if (action == "filter") {
+            //     loadInitByFilter()
+            // }
+
+        } else {
+            if (action == "filter") {
+                loadInitByFilter()
+            }
+        }
+
+        setFirst(false)
+
+
+    }, [page, refresh])
 
 
     const loadInitByFilter = async () => {
@@ -225,9 +227,6 @@ export const AcceptedOrderTable = (props) => {
 
     return (
         <>
-            {/* <p>NewOrderTable</p> */}
-            {/* <Loader loading={loading} /> */}
-
             <TblContainer>
                 <TblHead />
                 <TblBody>

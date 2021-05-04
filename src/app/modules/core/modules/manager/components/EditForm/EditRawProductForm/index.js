@@ -168,6 +168,7 @@ export const EditRawProductForm = (props) => {
     }
 
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageCategoryServices.getAll()).data
             // console.log("response: " + response)
@@ -188,6 +189,7 @@ export const EditRawProductForm = (props) => {
         }
     }
     const edit = async () => {
+        showLoader
         uploadFiles.forEach((file) => {
             console.log("name: " + JSON.stringify(file.name))
             console.log("type: " + JSON.stringify(file.type))
@@ -232,7 +234,7 @@ export const EditRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
-
+        hideLoader()
     }
     return (
         <>

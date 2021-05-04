@@ -44,7 +44,7 @@ export const CategoryTable = (props) => {
     }, [page, refresh])
 
     const loadInit = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageCategoryServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -73,7 +73,7 @@ export const CategoryTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 
@@ -123,6 +123,7 @@ export const CategoryTable = (props) => {
     }
 
     const activeOrDeActive = async (row, event) => {
+        showLoader()
         const data = {
             id: row.categoryID,
             active: !switchCheck[`switchID:${row.categoryID}`]
@@ -152,6 +153,7 @@ export const CategoryTable = (props) => {
                 [event.target.name]: event.target.checked
             })
         }
+        hideLoader()
     }
 
     return (

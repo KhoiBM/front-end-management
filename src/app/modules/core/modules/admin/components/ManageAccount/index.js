@@ -74,14 +74,9 @@ export const ManageAccount = () => {
         }
     )
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
-
-
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             {!openEditForm && !openAddForm &&
                 <Paper elevation={2} className={classes.mainContainer}>

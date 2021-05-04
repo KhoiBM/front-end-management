@@ -5,24 +5,23 @@ import { useLocation } from 'react-router-dom';
 import { ManageRawProductImportation } from '../components/Manage';
 import { useOpendrawer, useLoadingEffect } from 'src/app/utils';
 import { MainBar } from '../../../components';
-import { Loader } from 'src/app/components';
+import { Loader, CanActive } from 'src/app/components';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const ManageRawProductImportationPage = () => {
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
-            {/* <p>ManagerPage</p> */}
-            {/* <CanActive isRole={config.useRoleName.manager} /> */}
-            <Loader loading={loading} />
-            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
-                <ManageRawProductImportation />
-            </MainBar>
+            <CanActive isRole={config.useRoleName.manager}>
+                <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
+                    <Loader loading={loading} />
+                    <ManageRawProductImportation />
+                </MainBar>
+            </CanActive>
         </>
     )
 }

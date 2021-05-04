@@ -56,7 +56,6 @@ const useStyles = makeStyles(theme => ({
 
 
 const ChartRevenuePerService = () => {
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
 
@@ -103,6 +102,7 @@ const ChartRevenuePerService = () => {
 
 
     const loadInit = async () => {
+        showLoader()
         console.log("Loadinit")
         try {
             const response = await (await ManageStatisticServices.viewRevenueOfEachService()).data
@@ -132,12 +132,13 @@ const ChartRevenuePerService = () => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
         }
+        hideLoader()
     }
 
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             <div className={classes.chartContainer}>
 
@@ -153,7 +154,7 @@ const ChartRevenuePerService = () => {
                         },
                         {
                             label: "Năm",
-                            onClick: {}
+                            onClick: () => { }
                         }
                     ]} />
 
@@ -205,125 +206,3 @@ const ChartRevenuePerService = () => {
 export { ChartRevenuePerService }
 
 
-
-
-
-// const { optionsChart, titleChart } = useOptionsRevenueServiceChart()
-
-// const [options, setOptions] = useState(optionsChart)
-
-
-
-
-// options={{
-//     ...options,
-//     title: titleChart("TRONG TUẦN"),
-// }}
-
-// options={{
-//     ...options,
-//     title: titleChart("TRONG THÁNG"),
-// }}
-
-// options={{
-//     ...options,
-//     title: titleChart("TRONG NĂM"),
-// }}
-
-// ,
-//     revenuePerServiceContainer: {
-//         minWidth: 275,
-
-//         // background: "blue",
-//         display: "flex",
-//         alignItems: "center",
-//         gap: theme.spacing(2)
-//     },
-//     titileRevenuePerServiceContainer: {
-//         width: "100%",
-//         height: "50px",
-//         marginBottom: theme.spacing(2),
-//         display: "flex",
-//         justifyContent: "center",
-//         alignItems: "center"
-//     }
-
-
-
-// const intervalID = setInterval(() => {
-//     // setRefresh((prev) => !prev)
-//     loadInit()
-// }, 10000)
-// categories: ["Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"]
-// dataLabels: {
-//     enabled: true,
-//     style: {
-//         colors: ['red']
-//     },
-//     offsetX: 300
-// },
-// dataLabels: {
-//     style: {
-//         fontSize: '200px',
-//         fontWeight: 'bold',
-//     },
-//     background: {
-//         enabled: true,
-//         foreColor: '#000',
-//         borderRadius: 2,
-//         padding: 4,
-//         opacity: 0.9,
-//         borderWidth: 1,
-//         borderColor: '#fff'
-//     },
-// },
-// dataLabels: {
-//     enabled: true,
-//         textAnchor: 'start',
-//             formatter: function (val, opt) {
-//                 return val
-//             },
-//     offsetX: 0,
-//             },
-// , '#69d2e7'
-
-// const [optionsWeek, setOptionsWeek] = useState({
-//     ...options,
-//     title: titleChart("TRONG TUẦN"),
-// }
-// )
-
-
-{/* <Typography variant={"subtitle1"} className={classes.titleChart}>Năm</Typography> */ }
-{/* <Typography variant={"subtitle1"} className={classes.titleChart}>Tháng</Typography> */ }
-{/* <Typography variant={"subtitle1"} className={classes.titleChart} color="textSecondary">Tuần</Typography> */ }
-
-
-
-
-{/* <Button onClick={() => {
-                    dataWeek = ["20.123.123", "21.123.123", "29.123.123", "10.123.123"]
-                    setSeriesWeek(
-                        [
-                            {
-                                name: 'Doanh thu',
-                                data: dataWeek
-                            }
-                        ]
-                    )
-                }} >change series</Button> */}
-
-{/* <div className={classes.revenuePerServiceContainer}>
-                    <Card className={classes.titileRevenuePerServiceContainer}>
-                        <Box className={classes.titileRevenuePerServiceWrapper} >
-                            <Typography variant="h6">
-                                DOANH THU TRÊN MỖI DỊCH VỤ
-                            </Typography>
-
-                        </Box>
-                    </Card>
-                </div> */}
-
-//     // ["12123123", "13123123", "19123123", "10123123", "10123123"]
-// let dataMonth = ["35123123", "39123123", "32123123", "30123123", "30123123"]
-// let dataYear = ["399123123", "310123123", "350123123", "300123123", "300123123"]

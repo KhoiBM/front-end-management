@@ -112,7 +112,6 @@ export const ViewCart = (props) => {
 
     const [orderDetailList, setOrderDetailList] = useState([])
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
@@ -157,7 +156,6 @@ export const ViewCart = (props) => {
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
 
             <div className={classes.cartContainer}>
                 <Grid container spacing={0} className={classes.rootGrid}>

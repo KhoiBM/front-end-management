@@ -117,19 +117,22 @@ export const ViewRawProductInformation = (props) => {
 
 
     useEffect(() => {
+
         if (recordForViewInformation && recordForViewInformation != null) {
+            showLoader()
             const categoryCode = recordForViewInformation.categoryCode
             const rawProductCode = recordForViewInformation.rawProductCode
             const fileKey = `${folder}/${categoryCode}/${rawProductCode}/`
             loadPhotoList(bucketName, fileKey)
             // console.log("loadPhotoList")
         }
+        hideLoader()
     }, [])
 
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             <div className={classes.pageViewInfomationContainer}>
                 <Paper elevation={5} className={classes.pageViewInfomationWrapper}>

@@ -48,8 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
     },
     titleUpload: {
-
-
     },
     photoPreviewCard: {
         width: "100px",
@@ -95,8 +93,7 @@ const useStyles = makeStyles((theme) => ({
         top: theme.spacing(24),
         // width: '100%',
         // height: "auto",
-        minHeight: "75%",
-        maxHeight: "75%",
+        minHeight: "100px",
         overflowY: "scroll !important",
         padding: theme.spacing(1),
         backgroundColor: theme.palette.background.paper,

@@ -205,7 +205,7 @@ const OverallRevenueStatistic = () => {
     }, [])
 
     const loadInit = async () => {
-        // localStorage.setItem("pps-token", "eyJraWQiOiJSTmkrS25iRXEyXC9nWkIwbFhoekt1TnJnekpYaldXb00rV1RtdndTQ1c1ST0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI5MjJmYzNlNi05MTFhLTRjOWEtYThhNy0xNzRjOWNjNTFmNTkiLCJldmVudF9pZCI6ImJlNDM5NTEzLTRjYTItNGNkNC05YTU2LThmNTgwMzRkNzcwYiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2MTY1MTc3MDAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aGVhc3QtMS5hbWF6b25hd3MuY29tXC9hcC1zb3V0aGVhc3QtMV80SWF6OUtFTFMiLCJleHAiOjE2MTY1MjEzMDAsImlhdCI6MTYxNjUxNzcwMCwianRpIjoiYjgzM2MyYjUtMjk3OC00MzhmLTkwNDgtNjZhODgzYmFkYWRkIiwiY2xpZW50X2lkIjoiNThwNnM1aDBqZWJlY29yY2Z1cmhwYnM4MWciLCJ1c2VybmFtZSI6Imtob2libXRlc3QifQ.K6q_nYw53RHT7h2-eB9NUQ5N4XNDdvzRwLWcRGj5Y01p16cqfQcGVG1f5a5y3_EVuPxSZjnao_xNGqEZ9YNAJeytZk4C7_E1ZUqykN4yEeGnA68LHV8rHuq9f4ebdUMlod573Mk1ooH8ateGKWUq6VvaUSyNQ7U4yB1_hi-L6V2Vp6itvEpeNuxhh5yuZhcEjdCfUvl3FDd_MGVl4NmkJd014WtcDiY1SP485T6HtV55ZU94ClNYvhxEXR4etGGoe5bgAEXN8kkcFGo6MOc0dfWJRMebsrKcFqH3cb0UzvkoQ7wnJ6kK8f1qHxcawoWGp7LhEQXGZiTCrjZdra5mlg")
+        showLoader()
         try {
             const response = await (await ManageStatisticServices.viewOverallRevenue()).data
             // console.log("response: " + JSON.stringify(response))
@@ -225,6 +225,7 @@ const OverallRevenueStatistic = () => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        hideLoader()
     }
 
 
@@ -243,32 +244,10 @@ const OverallRevenueStatistic = () => {
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             <div className={classes.overallStatisticRoot}>
-                {/* <div className={classes.overallContainer}>
-                    <Card className={classes.iconExportContainer}>
-                        <Box className={classes.iconExportWrapper} >
-                            <Tooltip TransitionComponent={Zoom} placement="left" title="Xuất doanh thu ra tệp csv">
-                                <IconButton className={classes.iconExportIconButton} >
-                                    <CSVLink filename="DOANH THU.csv" data={getCsvData()} className={classes.iconExport} >
-                                        <BiExport />
-                                    </CSVLink>
-                                </IconButton>
-                            </Tooltip>
-                        </Box>
-                    </Card>
 
-                    <Card className={classes.titleOverallContainer}>
-                        <Box className={classes.titleOverallWrapper} >
-                            <Typography variant="h6">
-                                Doanh thu
-                            </Typography>
-
-                        </Box>
-                    </Card>
-
-                </div> */}
 
                 <div className={classes.CardContainer}>
 

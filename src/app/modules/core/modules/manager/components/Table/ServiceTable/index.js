@@ -47,7 +47,7 @@ export const ServiceTable = (props) => {
 
 
     const loadInit = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageServiceServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -78,7 +78,7 @@ export const ServiceTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 
@@ -131,6 +131,7 @@ export const ServiceTable = (props) => {
     }
 
     const activeOrDeActive = async (row, event) => {
+        showLoader()
         const data = {
             id: row.serviceID,
             active: !switchCheck[`switchID:${row.serviceID}`]
@@ -160,6 +161,7 @@ export const ServiceTable = (props) => {
                 [event.target.name]: event.target.checked
             })
         }
+        hideLoader()
     }
 
     return (

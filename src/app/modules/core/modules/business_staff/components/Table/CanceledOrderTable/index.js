@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
 
 
 export const CanceledOrderTable = (props) => {
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     const classes = useStyles();
@@ -44,13 +43,15 @@ export const CanceledOrderTable = (props) => {
     const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
     useEffect(() => {
+
         loadInit()
+
     }, [page, refresh])
 
 
     const loadInit = async () => {
 
-
+        // showLoader()
         try {
             const data = { filterBy: [config.useStatusOrder.ALL.FILTER[1]], page: page, limit: limit }
             console.log("data: " + JSON.stringify(data))
@@ -74,7 +75,7 @@ export const CanceledOrderTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        // hideLoader()
     }
 
     const loadData = async (response) => {
@@ -114,7 +115,7 @@ export const CanceledOrderTable = (props) => {
 
     const handleCloseModal = () => {
         setViewOrderInformationModal({ isOpen: false })
-        handleRefresh()
+        // handleRefresh()
     }
 
 

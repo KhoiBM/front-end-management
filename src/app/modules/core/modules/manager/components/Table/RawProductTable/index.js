@@ -11,6 +11,7 @@ import { PaginationBar, ConfirmDialog } from 'src/app/modules/core/components';
 import { RiTruckLine, RiInformationLine } from 'react-icons/ri';
 import { NotFound, Loader } from 'src/app/components';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
+import { hi } from 'date-fns/esm/locale';
 
 const useStyles = makeStyles(theme => ({
 
@@ -95,7 +96,7 @@ export const RawProductTable = (props) => {
     }, [clickSearch])
 
     const loadInit = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageRawProductServices.view({ filterBy: "all", page: page, limit: limit })).data
@@ -126,7 +127,7 @@ export const RawProductTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 
@@ -159,7 +160,7 @@ export const RawProductTable = (props) => {
 
 
     const search = async () => {
-
+        showLoader()
         try {
 
             const response = await (await ManageRawProductServices.search({ filterBy: "all", keywords: keywords, page: page, limit: limit })).data
@@ -190,11 +191,11 @@ export const RawProductTable = (props) => {
         } catch (err) {
             toast.error(config.useMessage.fetchApiFailure)
         }
-
+        hideLoader()
     }
 
     const onDelete = async (rawProductID) => {
-
+        showLoader()
         setConfirmDialog({
             ...confirmDialog,
             isOpen: false
@@ -220,7 +221,7 @@ export const RawProductTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        hideLoader()
 
     }
 

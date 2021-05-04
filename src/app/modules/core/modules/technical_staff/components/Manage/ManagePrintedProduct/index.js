@@ -66,12 +66,9 @@ export const ManagePrintedProduct = () => {
 
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             {!openEditForm && !openAddForm && !openViewInformation &&
                 <Paper elevation={2} className={classes.mainContainer}>

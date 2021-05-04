@@ -116,6 +116,7 @@ export const ViewCustomersRawProductInformation = (props) => {
 
     useEffect(() => {
         if (recordForViewInformation && recordForViewInformation != null) {
+            showLoader()
             const categoryCode = recordForViewInformation.categoryCode
             const rawProductCode = recordForViewInformation.rawProductCode
             const fileKey = `${folder}/${categoryCode}/${rawProductCode}/`
@@ -123,7 +124,7 @@ export const ViewCustomersRawProductInformation = (props) => {
 
             loadPhotoList(bucketName, fileKey)
         }
-
+        hideLoader()
     }, [])
 
 

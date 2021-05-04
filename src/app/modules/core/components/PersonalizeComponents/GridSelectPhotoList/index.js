@@ -151,7 +151,6 @@ export const GridSelectPhotoList = (props) => {
 
     return (
         <>
-            {/* {<Loader loading={loading} />} */}
             <Box className={classes.rootContainer} elevation={0}>
 
                 <Grid container className={classes.rootGrid} >

@@ -183,43 +183,43 @@ export const Personalize = (props) => {
                 </DialogTitle>
 
                 <DialogContent className={classes.dialogContent}>
-                    {/* <form noValidate onSubmit={handleSubmit} className={classes.rootForm}> */}
+                    <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
 
-                    <Grid container className={classes.rootGridContainer}>
+                        <Grid container className={classes.rootGridContainer}>
 
 
-                        {/* <Grid item xs={2} sm={2} md={2} className={classes.gridItemSideBar}>
-                            <Box className={classes.uploadZoneWrapper}>
-                                <DropZoneUploadBar
-                                    setUploadFiles={setUploadFiles}
-                                    sizeContainer={{ width: "15vw" }}
+                            <Grid item xs={2} sm={2} md={2} className={classes.gridItemSideBar}>
+                                <Box className={classes.uploadZoneWrapper}>
+                                    <DropZoneUploadBar
+                                        setUploadFiles={setUploadFiles}
+                                        sizeContainer={{ width: "15vw" }}
+                                        dragUrl={dragUrl}
+                                    />
+                                </Box>
+                                <Box className={classes.customersPhotoToPrintWrapper}>
+                                    <GridCustomersPhotoToPrint
+                                        recordForCustomersPhotoToPrint={{ orderCode: recordToUse.orderCode, orderDetailCode: recordToUse.orderDetailCode }}
+                                        sizeContainer={{ width: "15vw" }}
+                                        dragUrl={dragUrl}
+                                    />
+                                </Box>
+
+                            </Grid>
+
+                            <Grid item xs={10} sm={10} md={10} className={classes.gridItemMain}>
+                                <MainPersonalize
+                                    recordForMainPersonalize={recordToUse}
                                     dragUrl={dragUrl}
+                                    stageRef={stageRef}
+                                    handleCloseModal={handleCloseModal}
+                                    setRecordRawProduct={setRecordRawProduct}
                                 />
-                            </Box>
-                            <Box className={classes.customersPhotoToPrintWrapper}>
-                                <GridCustomersPhotoToPrint
-                                    recordForCustomersPhotoToPrint={{ orderCode: recordToUse.orderCode, orderDetailCode: recordToUse.orderDetailCode }}
-                                    sizeContainer={{ width: "15vw" }}
-                                    dragUrl={dragUrl}
-                                />
-                            </Box>
-
-                        </Grid> */}
-
-                        <Grid item xs={10} sm={10} md={10} className={classes.gridItemMain}>
-                            <MainPersonalize
-                                recordForMainPersonalize={recordToUse}
-                                dragUrl={dragUrl}
-                                stageRef={stageRef}
-                                handleCloseModal={handleCloseModal}
-                                setRecordRawProduct={setRecordRawProduct}
-                            />
+                            </Grid>
                         </Grid>
-                    </Grid>
 
 
 
-                    {/* </form> */}
+                    </form>
 
 
                 </DialogContent>

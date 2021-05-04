@@ -40,21 +40,14 @@ const useStyles = makeStyles(theme => ({
 export const ManageNewOrder = () => {
     const classes = useStyles();
 
-
-    // const { recordForViewInformation, setRecordForViewInformation, openViewInformation, setOpenViewInformation, handleViewInformation, handleCloseViewInformation } = useToggleViewInformation()
-
     const { keywords, setKeywords, clickSearch, setClickSearch, searchAction, setSearchAction, handleKeywordsChange } = useSearchHandle()
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
 
             {
-                // !openViewInformation &&
                 <Paper elevation={0} className={classes.mainContainer}>
                     <>
 
@@ -65,13 +58,11 @@ export const ManageNewOrder = () => {
                         </div>
 
                         <NewOrderTable
-                            // handleViewInformation={handleViewInformation}
                             keywords={keywords} setSearchAction={setSearchAction} searchAction={searchAction} clickSearch={clickSearch} setClickSearch={setClickSearch} />
                     </>
                 </Paper>
             }
 
-            {/* {openViewInformation && <ViewOrderInformation recordForViewInformation={recordForViewInformation} handleClose={handleCloseViewInformation} />} */}
 
         </>
     )

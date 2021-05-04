@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import config from 'src/environments/config'
 import { makeStyles, InputLabel, FormControl, MenuItem, Select, Chip, Input, useTheme } from '@material-ui/core'
+import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -49,6 +50,8 @@ function getStyles(ID, recordsSelect, theme) {
 
 export const FilterChipBar = (props) => {
 
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+
     const { recordsSelect, setRecordsSelect, filterList, setFilterList, inputLabel, setAction, setClickFilter } = props
 
     const theme = useTheme();
@@ -64,6 +67,7 @@ export const FilterChipBar = (props) => {
     // console.log("filterList: " + filterList)
 
     const handleFilterChange = (event) => {
+        // showLoader()
         setClickFilter((prev) => !prev)
         setAction("filter")
         // console.log("event.target.value : " + JSON.stringify(event.target.value))
@@ -85,6 +89,7 @@ export const FilterChipBar = (props) => {
         setFilterSelectList(event.target.value.length > 0 ? event.target.value : []);
         setFilterList(event.target.value.length > 0 ? event.target.value : recordsSelect && recordsSelect != null && recordsSelect.length > 0 ? recordsSelect.map((val) => (val.ID)) : []);
         // }
+        // hideLoader()
     }
 
 

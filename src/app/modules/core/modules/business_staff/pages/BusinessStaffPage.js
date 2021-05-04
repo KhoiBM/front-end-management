@@ -6,7 +6,8 @@ import { MainBar } from '../../../components';
 import { useEffect } from 'react';
 
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
-import {CanActive} from "../../../../../components";
+import { Loader, CanActive } from 'src/app/components';
+
 const BusinessStaffPage = () => {
     const userRole = config.useUserRole.businessStaff;
     const { openDrawerByLink } = useOpendrawer()
@@ -19,8 +20,6 @@ const BusinessStaffPage = () => {
         }
     }, [drawerWidth])
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
@@ -28,12 +27,11 @@ const BusinessStaffPage = () => {
     return (
         <>
 
-            {/* <p>BusinessStaffPage</p> */}
-            {/* <Loader loading={loading} /> */}
             <CanActive isRole={config.useRoleName.businessStaff} >
-            <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} drawerWidth={drawerWidth}>
-                <BusinessStaffProcessOrder/>
-            </MainBar>
+                <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} drawerWidth={drawerWidth}>
+                    <Loader loading={loading} />
+                    <BusinessStaffProcessOrder />
+                </MainBar>
             </CanActive>
 
         </>

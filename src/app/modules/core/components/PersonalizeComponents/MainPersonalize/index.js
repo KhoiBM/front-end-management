@@ -86,6 +86,8 @@ const MainPersonalize = (props) => {
 
     const { downloadURI } = useDownLoadURI()
 
+    const [recordForToolBar, setRecordForToolBar] = useState(null)
+
     const [recordForMainStageBar, setRecordForMainStageBar] = useState(null)
 
     const [recordForFooterBarPersonalize, setRecordForFooterBarPersonalize] = useState(null)
@@ -102,31 +104,11 @@ const MainPersonalize = (props) => {
             console.log("customersRawProductUploadFiles:")
             console.log(customersRawProductUploadFiles)
             switch (personalizeType) {
-                case config.usePersonalizeType.createYourOwn: {
-                    setRecordForMainStageBar({
-                        personalizeType
-                    })
-                    setRecordForFooterBarPersonalize({
-                        customersRawProductUploadFiles,
-                        createdBy,
-                        personalizeType
-                    })
-                }
-                    break;
-                case config.usePersonalizeType.studioRawProductDetail: {
-                    setRecordForMainStageBar({
-                        personalizeType
-                    })
-                    setRecordForFooterBarPersonalize({
-                        categoryCode,
-                        rawProductCode,
-                        createdBy,
-                        personalizeType
-                    })
-                }
-                    break;
-
                 case config.usePersonalizeType.technicalCartItem: {
+                    setRecordForToolBar({
+                        orderCode,
+                        orderDetailCode
+                    })
                     setRecordForMainStageBar({
                         personalizeType
                     })
@@ -144,43 +126,7 @@ const MainPersonalize = (props) => {
         }
     }, [recordForMainPersonalize])
 
-    // const handleExport = () => {
-    //     const uri = stageRef.current.toDataURL({
-    //         quality: 1,
-    //         pixelRatio: 2
-    //     });
-    //     console.log(uri);
 
-    //     downloadURI(uri, 'design.png');
-    // };
-
-    // const handleUpload = () => {
-    //     const uri = stageRef.current.toDataURL({
-    //         quality: 1,
-    //         pixelRatio: 2
-    //     });
-    //     console.log(uri);
-
-    //     // const bucketName = config.useConfigAWS.STUDIOBUCKET.BUCKETNAME
-    //     // const folder = "TestUploadFile"
-
-    //     // console.log(`${folder}`)
-
-    //     // const uploadInfo = {
-    //     //     bucketName,
-    //     //     prefix: `${folder}`,
-    //     // }
-
-    //     // const uploadFiles = [img]
-
-    //     // if (uploadFiles.length > 0) {
-    //     //     uploadPhoto(uploadInfo, uploadFiles)
-    //     // } else {
-    //     //     toast.success("Không có tệp để tải lên")
-    //     // }
-
-
-    // };
 
 
     return (
@@ -191,6 +137,7 @@ const MainPersonalize = (props) => {
                     <ToolbarPersonalize stageRef={stageRef}
                         // handleExport={handleExport}
                         // handleUpload={handleUpload}
+                        recordForToolBar={recordForToolBar}
                         handleCloseModal={handleCloseModal}
                         setRecordRawProduct={setRecordRawProduct}
                         photoCustomerUploadList={photoCustomerUploadList}

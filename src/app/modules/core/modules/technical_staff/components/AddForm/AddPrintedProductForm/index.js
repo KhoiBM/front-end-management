@@ -116,19 +116,18 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const initialFValues = {
-    printedProductID: "",
-    orderID: "",
-    rawProductID: "",
+    // printedProductID: "",
+    // orderDetailID: "",
+    orderDetailCode: "",
+    // rawProductID: "",
     printedProductName: "",
     totalQuantityOfPrintedProduct: 1,
     description: "",
     note: "",
-    createdAt: new Date()
 }
 export const AddPrintedProductForm = (props) => {
     const classes = useStyles();
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     const { classesCustomStylesAddEditForm } = useCustomStylesAddEditForm()
@@ -145,45 +144,45 @@ export const AddPrintedProductForm = (props) => {
 
 
     useEffect(() => {
-        loadInit()
+        // loadInit()
     }, [])
 
 
-    const loadInit = async () => {
-        try {
-            const responseOrder = await (await TechnicalStaffProcessOrderServices.getAllOrder()).data
-            const responseRawProduct = await (await ManageRawProductServices.getAllRawProduct()).data
-            let orderRecords = []
-            let recordsRawProduct = []
-            if (responseOrder && responseOrder != null) {
-                if (responseOrder.result == config.useResultStatus.SUCCESS) {
-                    orderRecords = responseOrder.info.records
+    // const loadInit = async () => {
+    //     try {
+    //         const responseOrder = await (await TechnicalStaffProcessOrderServices.getAllOrder()).data
+    //         const responseRawProduct = await (await ManageRawProductServices.getAllRawProduct()).data
+    //         let orderRecords = []
+    //         let recordsRawProduct = []
+    //         if (responseOrder && responseOrder != null) {
+    //             if (responseOrder.result == config.useResultStatus.SUCCESS) {
+    //                 orderRecords = responseOrder.info.records
 
-                } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${responseOrder.errorInfo}`)
-                }
-            } else {
-                throw new Error("responseOrder is null or undefined")
-            }
-            if (responseRawProduct && responseRawProduct != null) {
-                if (responseRawProduct.result == config.useResultStatus.SUCCESS) {
-                    recordsRawProduct = responseRawProduct.info.records
-                } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${responseRawProduct.errorInfo}`)
-                }
-            } else {
-                throw new Error("responseRawProduct is null or undefined")
-            }
+    //             } else {
+    //                 toast.error(`${config.useMessage.resultFailure} + ${responseOrder.errorInfo}`)
+    //             }
+    //         } else {
+    //             throw new Error("responseOrder is null or undefined")
+    //         }
+    //         if (responseRawProduct && responseRawProduct != null) {
+    //             if (responseRawProduct.result == config.useResultStatus.SUCCESS) {
+    //                 recordsRawProduct = responseRawProduct.info.records
+    //             } else {
+    //                 toast.error(`${config.useMessage.resultFailure} + ${responseRawProduct.errorInfo}`)
+    //             }
+    //         } else {
+    //             throw new Error("responseRawProduct is null or undefined")
+    //         }
 
 
-            setFormData({ ...formData, orderID: orderRecords[0].orderID, rawProductID: recordsRawProduct[0].rawProductID })
-            setOrderRecords(orderRecords ? orderRecords : [])
-            setRawProductRecords(recordsRawProduct ? recordsRawProduct : [])
+    //         setFormData({ ...formData, orderID: orderRecords[0].orderID, rawProductID: recordsRawProduct[0].rawProductID })
+    //         setOrderRecords(orderRecords ? orderRecords : [])
+    //         setRawProductRecords(recordsRawProduct ? recordsRawProduct : [])
 
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
-    }
+    //     } catch (err) {
+    //         toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+    //     }
+    // }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -192,14 +191,12 @@ export const AddPrintedProductForm = (props) => {
         if (enableSubmit) {
 
             const data = {
-                printedProductID: "",
-                orderID: formData.orderID,
-                rawProductID: formData.rawProductID,
+                orderDetailCode: formData.orderDetailCode,
+                // rawProductID: formData.rawProductID,
                 printedProductName: formData.printedProductName,
                 totalQuantity: formData.totalQuantityOfPrintedProduct,
                 description: formData.description,
                 note: formData.note,
-                createdAt: new Date()
             }
             console.log("data: " + JSON.stringify(data))
             if (uploadFiles && uploadFiles != null && uploadFiles.length > 0) {
@@ -284,88 +281,18 @@ export const AddPrintedProductForm = (props) => {
                         <Grid container spacing={4} className={classesCustomStylesAddEditForm.rootGridContainer}>
                             <Grid item xs={6} sm={6} md={6} className={classesCustomStylesAddEditForm.gridItem1}>
 
-                                <FormControl variant="outlined" >
-                                    <InputLabel id="orderID-label">
-                                        Đơn hàng
-                                        </InputLabel>
-                                    <Select
-                                        labelId="orderID-label"
-                                        id="orderID"
-                                        value={formData.orderID
-
-                                        }
-                                        onChange={handleInputChange}
-                                        name="orderID"
-                                        labelWidth={80}
-                                        required
-                                    // error={helperValid.orderID}
-                                    >
-                                        {
-                                            orderRecords.map(val =>
-                                                (<MenuItem value={val.orderID} key={val.orderID}>
-                                                    <Box>
-                                                        <Typography>  {`Mã đơn hàng: ${val.orderID}`}</Typography>
-                                                    </Box>
-                                                </MenuItem>))
-                                        }
-
-                                    </Select>
-                                    <FormHelperText style={{
-                                        color: "#f44336",
-                                        marginLeft: "14px",
-                                        marginRight: "14px",
-                                        marginBottom: '16px',
-
-                                    }}>
-                                        {/* {helperValid.orderID} */}
-                                    </FormHelperText>
-                                </FormControl>
 
 
-                                <FormControl variant="outlined" className={classesCustomStylesAddEditForm.formSelectControl}>
-                                    <InputLabel id="rawProductID-label">
-                                        Sản phẩm thô
-                                        </InputLabel>
-                                    <Select
-                                        labelId="rawProductID-label"
-                                        id="rawProductID"
-                                        value={formData.rawProductID
-
-                                        }
-
-                                        onChange={handleInputChange}
-                                        name="rawProductID"
-                                        className={classesCustomStylesAddEditForm.formSelectContainer}
-                                        labelWidth={115}
-                                    // error={helperValid.rawProductID}
-                                    >
-                                        {
-                                            rawProductRecords.map(val =>
-                                                (<MenuItem value={val.rawProductID} key={val.rawProductID}>
-                                                    <Box>
-                                                        <Typography>  {`Mã sản phẩm thô: ${val.rawProductID}`}</Typography>
-                                                        <Typography>  {`Tên sản phẩm thô: ${val.rawProductName}`}</Typography>
-                                                    </Box>
-                                                </MenuItem>))
-                                        }
-
-
-
-                                    </Select>
-                                    <FormHelperText style={{
-                                        color: "#f44336",
-                                        marginLeft: "14px",
-                                        marginRight: "14px",
-                                        marginBottom: '16px'
-
-                                    }}>
-                                        {/* {helperValid.rawProductID} */}
-                                    </FormHelperText>
-
-                                </FormControl>
-
-
-
+                                <TextField
+                                    variant='outlined'
+                                    label="Mã Code đơn hàng chi tiết"
+                                    value={formData.orderDetailCode}
+                                    name='orderDetailCode'
+                                    onChange={handleInputChange}
+                                    error={helperValid.orderDetailCode ? true : false}
+                                    helperText={helperValid.orderDetailCode}
+                                    required
+                                />
 
                                 <TextField
                                     variant='outlined'
@@ -433,3 +360,84 @@ export const AddPrintedProductForm = (props) => {
     )
 }
 
+
+
+// <FormControl variant="outlined" >
+//     <InputLabel id="orderID-label">
+//         Đơn hàng
+//     </InputLabel>
+//     <Select
+//         labelId="orderID-label"
+//         id="orderID"
+//         value={formData.orderID
+
+//         }
+//         onChange={handleInputChange}
+//         name="orderID"
+//         labelWidth={80}
+//         required
+//         error={helperValid.orderID}
+//     >
+//         {
+//             orderRecords.map(val =>
+//                 (<MenuItem value={val.orderID} key={val.orderID}>
+//                     <Box>
+//                         <Typography>  {`Mã đơn hàng: ${val.orderID}`}</Typography>
+//                     </Box>
+//                 </MenuItem>))
+//         }
+
+//     </Select>
+//     <FormHelperText style={{
+//         color: "#f44336",
+//         marginLeft: "14px",
+//         marginRight: "14px",
+//         marginBottom: '16px',
+
+//     }}>
+//         {helperValid.orderID}
+//     </FormHelperText >
+// </FormControl >
+
+
+//     <FormControl variant="outlined" className={classesCustomStylesAddEditForm.formSelectControl}>
+//         <InputLabel id="rawProductID-label">
+//             Sản phẩm thô
+//     </InputLabel>
+//         <Select
+//             labelId="rawProductID-label"
+//             id="rawProductID"
+//             value={formData.rawProductID
+
+//             }
+
+//             onChange={handleInputChange}
+//             name="rawProductID"
+//             className={classesCustomStylesAddEditForm.formSelectContainer}
+//             labelWidth={115}
+//             error={helperValid.rawProductID}
+//         >
+//             {
+//                 rawProductRecords.map(val =>
+//                     (<MenuItem value={val.rawProductID} key={val.rawProductID}>
+//                         <Box>
+//                             <Typography>  {`Mã sản phẩm thô: ${val.rawProductID}`}</Typography>
+//                             <Typography>  {`Tên sản phẩm thô: ${val.rawProductName}`}</Typography>
+//                         </Box>
+//                     </MenuItem>))
+//             }
+
+
+
+//         </Select>
+//         <FormHelperText style={{
+//             color: "#f44336",
+//             marginLeft: "14px",
+//             marginRight: "14px",
+//             marginBottom: '16px'
+
+//         }}>
+//             {helperValid.rawProductID}
+//         </FormHelperText >
+
+//     </FormControl >

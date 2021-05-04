@@ -47,13 +47,10 @@ export const BusinessStaffProcessOrder = () => {
 
     const { TabPanel, TabBar, value, handleChange } = useTab()
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
-
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
+
 
             <Paper elevation={2} className={classes.mainContainer}>
 
@@ -70,7 +67,7 @@ export const BusinessStaffProcessOrder = () => {
                         },
                         {
                             label: "Đơn hàng đã huỷ",
-                            onClick: {}
+                            onClick: () => { }
                         }
                     ]} />
 
@@ -80,13 +77,16 @@ export const BusinessStaffProcessOrder = () => {
                         <ManageNewOrder />
                     </TabPanel>
 
+
                     <TabPanel value={value} index={1}>
                         <ManageAcceptedOrder />
                     </TabPanel>
 
+
                     <TabPanel value={value} index={2}>
                         <ManageCanceledOrder />
                     </TabPanel>
+
 
 
 

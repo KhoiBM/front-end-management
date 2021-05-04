@@ -51,6 +51,7 @@ export const AddCustomersRawProductForm = (props) => {
     }, [])
 
     const loadInit = async () => {
+        showLoader()
         try {
             const response = await (await ManageCategoryServices.getAll()).data
             // console.log("response: " + response)
@@ -71,6 +72,7 @@ export const AddCustomersRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
+        hideLoader()
     }
 
     const handleSubmit = (event) => {
@@ -91,6 +93,7 @@ export const AddCustomersRawProductForm = (props) => {
     }
 
     const add = async () => {
+        showLoader()
         // uploadFiles.forEach((file) => {
         //     console.log("name: " + JSON.stringify(file.name))
         //     console.log("type: " + JSON.stringify(file.type))
@@ -135,12 +138,11 @@ export const AddCustomersRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err} `,)
         }
-
+        hideLoader()
     }
     return (
         <>
             {/* <p>addform</p> */}
-            <Loader loading={loading} />
 
             <div className={classesCustomStylesAddEditForm.pageFormContainer}>
                 <Paper elevation={5} className={classesCustomStylesAddEditForm.pageForm}>

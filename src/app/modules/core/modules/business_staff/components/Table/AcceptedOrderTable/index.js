@@ -55,27 +55,11 @@ export const AcceptedOrderTable = (props) => {
 
     const [viewOrderInformationModal, setViewOrderInformationModal] = useState({ isOpen: false })
 
-    useEffect(() => {
-        // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-                search()
-            } else if (action == "filter") {
-                loadInitByFilter()
-            }
-
-        } else {
-            if (action == "filter") {
-                loadInitByFilter()
-            }
-        }
-    }, [page, refresh])
 
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
+        console.log("searchAction: " + searchAction)
         if (!first) {
             setPage(1)
             if (keywords && keywords != null && keywords.length > 0) {
@@ -88,8 +72,6 @@ export const AcceptedOrderTable = (props) => {
                 loadInitByFilter()
             }
 
-        } else {
-            setFirst(false)
         }
 
     }, [clickSearch])
@@ -104,21 +86,42 @@ export const AcceptedOrderTable = (props) => {
             if (action == "filter") {
                 loadInitByFilter()
             }
-        } else {
-            setFirst(false)
         }
 
     }, [clickFilter])
 
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
+
+        if (keywords && keywords != null && keywords.length > 0) {
+            if (searchAction) {
+                search()
+            }
+            // else if (action == "filter") {
+            //     loadInitByFilter()
+            // }
+
+        } else {
+            if (action == "filter") {
+                loadInitByFilter()
+            }
+        }
+
+        setFirst(false)
+
+
+    }, [page, refresh])
+
+
 
     const loadInitByFilter = async () => {
-
+        // showLoader()
         console.log("action: " + action)
         console.log("filterList:" + JSON.stringify(filterList))
         console.log("Page: " + page)
 
         try {
-
 
             const response = await (await BusinessStaffProcessOrderServices.viewAcceptedOrder({ filterBy: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
@@ -139,7 +142,7 @@ export const AcceptedOrderTable = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        // hideLoader()
     }
 
     const loadData = async (response) => {
@@ -241,6 +244,7 @@ export const AcceptedOrderTable = (props) => {
     }
 
     const checkPayMent = async (orderID, event) => {
+        showLoader()
         const data = {
             orderID: orderID,
             isActive: !switchCheck[`switchID:${orderID}`]
@@ -277,11 +281,12 @@ export const AcceptedOrderTable = (props) => {
                 [event.target.name]: event.target.checked
             })
         }
+        hideLoader()
     }
 
     const sendDemoProduct = async (orderCode) => {
 
-
+        showLoader()
         try {
 
             const response = await (await BusinessStaffProcessOrderServices.sendDemoProduct({ orderCode })).data
@@ -313,7 +318,7 @@ export const AcceptedOrderTable = (props) => {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
 
         }
-
+        hideLoader()
     }
 
 

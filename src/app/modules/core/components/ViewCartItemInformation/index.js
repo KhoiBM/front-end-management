@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
                 // background: 'var(--bg-secondary-color-main)',
                 borderColor: "none !important",
                 borderRadius: "4px",
-                minHeight: "30px !important",
+                // minHeight: "30px !important",
                 height: "auto",
                 background: "#fff",
                 "& .MuiInputBase-inputMultiline": {
@@ -154,7 +154,6 @@ export const ViewCartItemInformation = (props) => {
 
     const { rawProductCode, rawProductName, size, color, unitPrice, servicePrice, quantity, note, createdBy, createdAt, updatedAt } = cartItemDetail
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     useEffect(() => {
@@ -288,27 +287,28 @@ export const ViewCartItemInformation = (props) => {
 
 
                                         />
-                                        <TextField
+                                        {/* <TextField
                                             variant='outlined'
                                             label="Ghi chú"
                                             value={note}
                                             name='note'
                                             multiline
-                                        // rows="10"
+                                            // rows="10"
+                                            className={classes.areaTextField}
 
-                                        />
+                                        /> */}
                                         <TextField
                                             variant='outlined'
                                             label="Ngày tạo"
                                             value={createdAt}
-                                            name='note'
+                                            name='createdAt'
 
                                         />
                                         <TextField
                                             variant='outlined'
                                             label="Ngày sửa đổi"
                                             value={updatedAt}
-                                            name='note'
+                                            name='updatedAt'
 
                                         />
 

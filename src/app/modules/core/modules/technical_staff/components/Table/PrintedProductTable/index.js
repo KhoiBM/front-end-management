@@ -19,15 +19,14 @@ const useStyles = makeStyles(theme => ({
 
 
 export const PrintedProductTable = (props) => {
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
+
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
     const classes = useStyles();
     const { classesCustom } = useCustomStyles()
 
     const { keywords, searchAction, clickSearch } = props
 
-    // const headCells = ['Mã ID', "Mã Code", "Mã ID đơn hàng", "Mã ID sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Mô tả", "Ghi chú", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
-    const headCells = ["Mã Code", "Mã Code đơn hàng", "Mã Code sản phẩm thô", "Tên sản phẩm đã in", "Tổng sản phẩm", "Ngày tạo", "Ngày sửa đổi", "Thao tác"]
+    const headCells = ["Mã Code", "Mã Code đơn hàng chi tiết", "Mã Code sản phẩm thô", "Tên sản phẩm đã in", "Thao tác"]
 
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -44,33 +43,40 @@ export const PrintedProductTable = (props) => {
 
 
 
-    useEffect(() => {
-        // console.log("keywords: " + keywords)
-        // console.log("searchAction: " + searchAction)
-        if (keywords && keywords != null && keywords.length > 0) {
-            if (searchAction) {
-
-                search()
-
-            } else {
-
-                loadInit()
-            }
-        } else {
-
-            loadInit()
-
-        }
-    }, [page, refresh])
 
 
     useEffect(() => {
         // console.log("keywords: " + keywords)
         // console.log("searchAction: " + searchAction)
         setPage(1)
+        if (!first) {
+            if (keywords && keywords != null && keywords.length > 0) {
 
+                if (searchAction) {
+
+                    search()
+
+                } else {
+
+                    loadInit()
+
+                }
+
+            } else {
+
+                loadInit()
+
+            }
+        }
+
+
+    }, [clickSearch])
+
+
+    useEffect(() => {
+        // console.log("keywords: " + keywords)
+        // console.log("searchAction: " + searchAction)
         if (keywords && keywords != null && keywords.length > 0) {
-
             if (searchAction) {
 
                 search()
@@ -78,16 +84,15 @@ export const PrintedProductTable = (props) => {
             } else {
 
                 loadInit()
-
             }
-
         } else {
 
             loadInit()
 
         }
+        setFirst(false)
+    }, [page, refresh])
 
-    }, [clickSearch])
 
 
     const loadInit = async () => {
@@ -222,7 +227,7 @@ export const PrintedProductTable = (props) => {
 
     return (
         <>
-            <Loader loading={loading} />
+
 
             <TblContainer>
                 <TblHead />
@@ -234,18 +239,19 @@ export const PrintedProductTable = (props) => {
                             {/* <StyledTableCell>{row.printedProductID}</StyledTableCell> */}
                             <StyledTableCell>{row.printedProductCode}</StyledTableCell>
                             {/* <StyledTableCell>{row.orderID}</StyledTableCell> */}
-                            <StyledTableCell>{row.orderCode}</StyledTableCell>
+                            {/* <StyledTableCell>{row.orderCode}</StyledTableCell> */}
+                            <StyledTableCell>{row.orderDetailCode}</StyledTableCell>
                             {/* <StyledTableCell>{row.rawProductID}</StyledTableCell> */}
                             <StyledTableCell>{row.rawProductCode}</StyledTableCell>
 
                             <StyledTableCell>{row.printedProductName}</StyledTableCell>
 
-                            <StyledTableCell >{row.totalQuantity}</StyledTableCell>
+                            {/* <StyledTableCell >{row.totalQuantity}</StyledTableCell> */}
                             {/* <StyledTableCell >{row.description}</StyledTableCell> */}
                             {/* <StyledTableCell >{row.note}</StyledTableCell> */}
 
-                            <StyledTableCell >{row.createdAt}</StyledTableCell>
-                            <StyledTableCell >{row.updatedAt}</StyledTableCell>
+                            {/* <StyledTableCell >{row.createdAt}</StyledTableCell> */}
+                            {/* <StyledTableCell >{row.updatedAt}</StyledTableCell> */}
 
                             <StyledTableCell style={{ minWidth: "230px" }}>
                                 <Tooltip TransitionComponent={Zoom} placement="top" title="Xem thông tin chi tiết">
