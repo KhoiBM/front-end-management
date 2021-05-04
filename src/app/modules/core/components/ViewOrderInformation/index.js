@@ -486,9 +486,9 @@ disabled
                 />
                 <TextField
                     variant='outlined'
-                    label="Mã Code khách hàng"
-                    value={formData.customerCode}
-                    name='customerCode'
+                    label="Tên người dùng"
+                    value={formData.username}
+                    name='username'
                     // required
                     disabled
                 />

@@ -13,7 +13,9 @@ const useStyles = makeStyles((theme) => ({
         minHeight: "100px",
         height: "auto",
         position: "absolute",
-        background: "transparent"
+        top: theme.spacing(2),
+        background: "transparent",
+        // border: "1px solid red",
 
     },
     dropZoneUploadWrapper: {
@@ -73,9 +75,6 @@ const useStyles = makeStyles((theme) => ({
 
     },
     photoPreview: {
-        // width: "100px",
-        // height: "100px",
-        // alignSelf: "flex-start",
         objectFit: "contain",
         maxWidth: "80%",
         maxHeight: "80%",
@@ -88,12 +87,12 @@ const useStyles = makeStyles((theme) => ({
         // width: "21.9rem",
         width: props => props.widthContainer ? `${props.widthContainer}` : "21.9rem",
         height: "auto",
-        // background: "red",
+        background: "red",
         position: "absolute",
         top: theme.spacing(24),
         // width: '100%',
         // height: "auto",
-        minHeight: "100px",
+        minHeight: "250px",
         overflowY: "scroll !important",
         padding: theme.spacing(1),
         backgroundColor: theme.palette.background.paper,

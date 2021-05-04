@@ -7,7 +7,6 @@ import zIndex from '@material-ui/core/styles/zIndex';
 import { AcceptedOrderTable } from '../../Table/index'
 import { useTab, useRefresh, useLoadingEffect } from 'src/app/utils';
 import { ManageAcceptedOrder } from '../ManageAcceptedOrder';
-import { Personalize } from '../../Extra/PersonalizeOLD';
 import { Loader } from 'src/app/components';
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const useStyles = makeStyles(theme => ({

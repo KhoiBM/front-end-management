@@ -111,6 +111,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         flexDirection: "column",
         border: "1px solid rgb(0,0,0,0.23)",
+        // border: "1px solid blue",
         overflow: "scroll !important",
 
     },
@@ -121,10 +122,11 @@ const useStyles = makeStyles(theme => ({
         // border: "1px solid rgb(0,0,0,0.23)",
         display: "flex",
         justifyContent: "center",
+        position: "relative"
     },
     customersPhotoToPrintWrapper: {
         width: "100%",
-        height: "50%",
+        height: "49%",
         paddingTop: theme.spacing(1),
         // border: "1px solid rgb(0,0,0,0.23)",
         display: "flex",
@@ -186,8 +188,6 @@ export const Personalize = (props) => {
                     <form noValidate onSubmit={handleSubmit} className={classes.rootForm}>
 
                         <Grid container className={classes.rootGridContainer}>
-
-
                             <Grid item xs={2} sm={2} md={2} className={classes.gridItemSideBar}>
                                 <Box className={classes.uploadZoneWrapper}>
                                     <DropZoneUploadBar
@@ -203,7 +203,6 @@ export const Personalize = (props) => {
                                         dragUrl={dragUrl}
                                     />
                                 </Box>
-
                             </Grid>
 
                             <Grid item xs={10} sm={10} md={10} className={classes.gridItemMain}>

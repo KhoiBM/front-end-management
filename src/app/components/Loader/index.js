@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
         bottom: 0,
         right: 0,
         left: 0,
-        backgroundColor: "red",
+        // backgroundColor: "red",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
