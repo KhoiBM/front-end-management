@@ -28,7 +28,7 @@ export const AccountTable = (props) => {
     const [switchCheck, setSwitchCheck] = useState({});
 
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(2);
+    const [limit, setLimit] = useState(5);
 
     const [records, setRecords] = useState([])
     const [totalPage, setTotalPage] = useState(0);
@@ -42,26 +42,27 @@ export const AccountTable = (props) => {
 
 
     useEffect(() => {
+        console.log("clickFilter")
         if (!first) {
+            setPage(1)
+
             if (action == "filter") {
                 loadInitByFilter()
             }
         }
 
-    }, [page, refresh])
+    }, [clickFilter])
 
 
     useEffect(() => {
-        console.log("clickFilter")
-
-        setPage(1)
 
         if (action == "filter") {
             loadInitByFilter()
         }
-        setFirst(false)
 
-    }, [clickFilter])
+        setFirst(false)
+    }, [page, refresh])
+
 
 
 

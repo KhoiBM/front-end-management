@@ -367,28 +367,30 @@ export const EditAccountForm = (props) => {
                                 </FormControl> */}
 
 
+                                {
+                                    <>
+                                        <FormControl variant="outlined" >
+                                            <InputLabel id="roleID-label">
+                                                Vai trò
+                                            </InputLabel>
+                                            <Select
+                                                labelId="roleID-label"
+                                                id="roleID"
+                                                value={formData.roleID}
+                                                onChange={handleInputChange}
+                                                name="roleID"
+                                                labelWidth={50}
+                                                required
+                                            >
+                                                {
+                                                    recordsRole && recordsRole.map((val, index) => (<MenuItem value={val.roleID} key={val.roleID}>{val.roleName}</MenuItem>))
+                                                }
+                                            </Select>
+                                            <FormHelperText></FormHelperText>
+                                        </FormControl>
+                                    </>
+                                }
 
-                                <>
-                                    <FormControl variant="outlined" >
-                                        <InputLabel id="roleID-label">
-                                            Vai trò
-                                        </InputLabel>
-                                        <Select
-                                            labelId="roleID-label"
-                                            id="roleID"
-                                            value={formData.roleID}
-                                            onChange={handleInputChange}
-                                            name="roleID"
-                                            labelWidth={50}
-                                            required
-                                        >
-                                            {
-                                                recordsRole && recordsRole.map((val, index) => (<MenuItem value={val.roleID} key={val.roleID}>{val.roleName}</MenuItem>))
-                                            }
-                                        </Select>
-                                        <FormHelperText></FormHelperText>
-                                    </FormControl>
-                                </>
 
                                 {/* <div className={classes.switchContainer}> */}
                                 <FormControlLabel
@@ -399,7 +401,8 @@ export const EditAccountForm = (props) => {
                                         checked={formData.active}
                                         onChange={handleInputChange}
                                         name="active"
-                                    />}
+                                    />
+                                    }
                                 />
                                 <FormHelperText>{helperValid.active}</FormHelperText>
                                 {/* </div> */}

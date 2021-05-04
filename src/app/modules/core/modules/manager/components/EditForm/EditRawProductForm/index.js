@@ -187,6 +187,7 @@ export const EditRawProductForm = (props) => {
         } catch (err) {
             toast.error(`${config.useMessage.fetchApiFailure} + ${err}`,)
         }
+        hideLoader()
     }
     const edit = async () => {
         showLoader
