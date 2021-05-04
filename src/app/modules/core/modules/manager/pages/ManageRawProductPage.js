@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import CanActive from 'src/app/components/CanActive'
+// import CanActive from 'src/app/components/CanActive'
 
 import config from 'src/environments/config'
 import { useLocation } from 'react-router-dom'
