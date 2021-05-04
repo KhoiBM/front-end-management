@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-
 export const AccountTable = (props) => {
     const classes = useStyles();
 
@@ -37,8 +36,7 @@ export const AccountTable = (props) => {
 
     const { TblContainer, TblHead, TblBody, StyledTableRow, StyledTableCell } = useTable(records, headCells);
 
-    // const { loading, setLoading, showLoader, hideLoader } = useLoadingEffect()
-    // const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
+    const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
 
     useEffect(() => {
@@ -70,7 +68,7 @@ export const AccountTable = (props) => {
         // console.log("action: " + action)
         // console.log("filterList:" + JSON.stringify(filterList))
         // console.log("Page: " + page)
-
+        showLoader()
         try {
             const response = await (await ManageAccountServices.view({ roleIDList: filterList, page: page, limit: limit })).data
             // console.log("response: " + JSON.stringify(response))
@@ -84,16 +82,16 @@ export const AccountTable = (props) => {
 
 
                 } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+                    // toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
                 }
             } else {
                 throw new Error("Response is null or undefined")
             }
 
         } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+            // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
-
+        hideLoader()
     }
 
     const loadData = async (response) => {
@@ -137,59 +135,55 @@ export const AccountTable = (props) => {
 
 
 
-    const handleChangeSwitch = (event) => {
-        setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
-    };
+    // const handleChangeSwitch = (event) => {
+    //     setSwitchCheck({ ...switchCheck, [event.target.name]: event.target.checked });
+    // };
 
 
-    // console.log("switchCheck: " + JSON.stringify(switchCheck));
-    const handleChangeStatus = (row) => async (event) => {
-        // toast.info(`test switchID:${row.accountID}: ${!switchCheck[`switchID:${row.accountID}`]}`)
-        // if (switchCheck[`switchID:${row.accountID}`]) {
-        //     console.log('deactive')
-        // } else {
-        //     console.log('active')
-        // }
-        const data = {
-            id: row.accountID,
-            active: !switchCheck[`switchID:${row.accountID}`]
-        }
+    // // console.log("switchCheck: " + JSON.stringify(switchCheck));
+    // const handleChangeStatus = (row) => async (event) => {
+    //     // toast.info(`test switchID:${row.accountID}: ${!switchCheck[`switchID:${row.accountID}`]}`)
+    //     // if (switchCheck[`switchID:${row.accountID}`]) {
+    //     //     console.log('deactive')
+    //     // } else {
+    //     //     console.log('active')
+    //     // }
+    //     const data = {
+    //         id: row.accountID,
+    //         active: !switchCheck[`switchID:${row.accountID}`]
+    //     }
 
-        try {
-            const response = switchCheck[`switchID:${row.accountID}`] ? await (await ManageAccountServices.deActive(data)).data : await (await ManageAccountServices.active(data)).data
-            // console.log("response: " + JSON.stringify(response))
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    toast.success(`${!switchCheck[`switchID:${row.accountID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
-                    handleRefresh()
-                    // toast.success("Thành công")
-                } else {
-                    toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
-                    setSwitchCheck({
-                        ...switchCheck,
-                        [event.target.name]: event.target.checked
-                    })
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
+    //     try {
+    //         const response = switchCheck[`switchID:${row.accountID}`] ? await (await ManageAccountServices.deActive(data)).data : await (await ManageAccountServices.active(data)).data
+    //         // console.log("response: " + JSON.stringify(response))
+    //         if (response && response != null) {
+    //             if (response.result == config.useResultStatus.SUCCESS) {
+    //                 toast.success(`${!switchCheck[`switchID:${row.accountID}`] ? "Kích hoạt thành công" : "Vô hiệu hoá thành công"}`)
+    //                 handleRefresh()
+    //                 // toast.success("Thành công")
+    //             } else {
+    //                 toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)
+    //                 setSwitchCheck({
+    //                     ...switchCheck,
+    //                     [event.target.name]: event.target.checked
+    //                 })
+    //             }
+    //         } else {
+    //             throw new Error("Response is null or undefined")
+    //         }
 
-        } catch (err) {
-            toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-            setSwitchCheck({
-                ...switchCheck,
-                [event.target.name]: event.target.checked
-            })
-        }
+    //     } catch (err) {
+    //         toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
+    //         setSwitchCheck({
+    //             ...switchCheck,
+    //             [event.target.name]: event.target.checked
+    //         })
+    //     }
 
-    }
+    // }
 
     return (
         <>
-            {/* <p>AccountTable</p> */}
-            {/* <Loader loading={loading} /> */}
-
-
             <TblContainer>
                 <TblHead />
                 <TblBody>
@@ -204,10 +198,11 @@ export const AccountTable = (props) => {
                                 <Switch
                                     color="primary"
                                     checked={switchCheck[`switchID:${row.accountID}`]}
-                                    onChange={handleChangeSwitch}
+                                    // onChange={handleChangeSwitch}
                                     name={`switchID:${row.accountID}`}
-                                    onClick={handleChangeStatus(row)}
+                                // onClick={handleChangeStatus(row)}
                                 />
+                                {switchCheck[`switchID:${row.accountID}`] ? "đã kích hoạt" : "vô hiệu hoá"}
                             </StyledTableCell>
 
                             <StyledTableCell >{row.createdAt}</StyledTableCell>

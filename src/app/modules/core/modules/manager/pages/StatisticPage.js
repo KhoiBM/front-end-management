@@ -13,15 +13,19 @@ import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle';
 const StatisticPage = () => {
     const userRole = config.useUserRole.manager;
     const { openDrawerByLink } = useOpendrawer()
-
     const { loading, setLoading, showLoader, hideLoader } = useLoaderHandle()
 
     return (
         <>
             <CanActive isRole={config.useRoleName.manager}>
                 <MainBar userRole={userRole} openDrawerByLink={openDrawerByLink} >
+                    {/* 
+                    {loading.status ? */}
                     <Loader loading={loading} />
+                    {/* : */}
                     <ManageStatistic />
+                    {/* } */}
+
                 </MainBar>
             </CanActive>
         </>

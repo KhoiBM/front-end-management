@@ -3,17 +3,18 @@ import { Typography, Box, Paper, makeStyles } from '@material-ui/core'
 const useStyles = makeStyles(theme => ({
     notFoundContainer: {
         width: "100%",
-        height: "100px",
+        height: "auto",
+        minHeight: "100% !important",
         // background: "red",
-        backgroundColor: "#fffbf2",
-        margin: "0 auto",
+        // backgroundColor: "#fffbf2",
         display: 'flex',
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
         right: 0,
-        // top: 0,
-        color: theme.palette.primary.main
+        top: 0,
+        color: theme.palette.primary.main,
+        // border: "1px solid red"
     }
 }));
 export const NotFound = (props) => {

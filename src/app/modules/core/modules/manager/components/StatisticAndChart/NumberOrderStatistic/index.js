@@ -140,8 +140,7 @@ const NumberOrderStatistic = () => {
 
     return (
         <>
-            {/* <Loader loading={loading} /> */}
-
+            {/* {!loading.status && */}
             <div className={classes.chartContainer}>
 
                 <div className={classes.rootTab}>
@@ -200,7 +199,7 @@ const NumberOrderStatistic = () => {
                 </div>
             </div>
 
-
+            {/* } */}
         </>
     )
 }

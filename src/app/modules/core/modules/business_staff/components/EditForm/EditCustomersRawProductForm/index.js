@@ -91,6 +91,7 @@ export const EditCustomersRawProductForm = (props) => {
         }
         hideLoader()
     }
+
     const edit = async () => {
         showLoader()
         uploadFiles.forEach((file) => {

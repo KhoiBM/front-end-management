@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { makeStyles, Slide, DialogContent, DialogTitle, Dialog, Box, Button } from '@material-ui/core';
-import { IconClose } from 'src/app/components';
 import { useDownLoadURI } from 'src/app/utils';
+import { IconClosePreview } from '../IconClosePreview';
 
 const useStyles = makeStyles(theme => ({
 
@@ -147,10 +147,6 @@ export const PreviewDesignedPhoto = (props) => {
         <>
             <Dialog open={isOpen} classes={{ paper: classes.dialog }} className={classes.dialogContainer} TransitionComponent={Transition}>
 
-                {/* 
-                <DialogTitle className={classes.dialogTitle}>
-
-                </DialogTitle> */}
 
                 <DialogContent className={classes.dialogContent}>
                     <Box className={classes.buttonActionWrapper}>
@@ -162,7 +158,8 @@ export const PreviewDesignedPhoto = (props) => {
                          </Button>
 
                         <div className={classes.iconCloseWrapper}>
-                            <IconClose handleClose={handleCloseModal} />
+                            <IconClosePreview handleClose={handleCloseModal} />
+
                         </div>
 
 

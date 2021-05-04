@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import config from 'src/environments/config';
 import { useLocation } from 'react-router-dom';
 import { ManageRawProductImportation } from '../components/Manage';

@@ -240,7 +240,7 @@ const useStatusOrder = {
     "BUSINESS_STAFF": {
         "FILTER": ["Đơn được duyệt", "Hoàn thành mẫu", "Chờ xác nhận mẫu", "Từ chối mẫu",
             "Chấp nhận mẫu", "Hoàn thành in sản phẩm", "Đang lưu trữ", "Đang giao hàng", "Hoàn thành đơn hàng"],
-        "CHANGE": ["Đơn được duyệt", "Huỷ đơn", "Đang làm mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
+        "CHANGE": ["Đơn được duyệt", "Đang làm mẫu", "Chờ xác nhận mẫu", "Đang in sản phẩm", "Đang giao hàng",
             "Hoàn thành đơn hàng"]
     },
     "TECHNICAL_STAFF": {
@@ -274,12 +274,12 @@ const usePersonalizeType = {
     "technicalCartItem": "3"
 }
 
-const useCreateBy = {
+const useCreatedBy = {
     customer: "Khách hàng",
     manager: "Quản lý"
 }
 
-const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS, useStatusOrder, usePersonalizeType, useCreateBy }
+const config = { useApiPath, useRoleName, useResultStatus, useRegex, useUserRole, useStyles, useMessage, useConfigAWS, useStatusOrder, usePersonalizeType, useCreatedBy }
 export default config
 
 
