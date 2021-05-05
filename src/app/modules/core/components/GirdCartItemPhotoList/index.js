@@ -27,13 +27,16 @@ export const GirdCartItemPhotoList = (props) => {
     useEffect(() => {
 
         loadInit()
-
+        return () => {
+            setPhotoList([])
+        }
     }, [recordForGridCartItemPhotoList])
 
 
     const loadInit = async () => {
         if (recordForGridCartItemPhotoList && recordForGridCartItemPhotoList != null) {
             // console.table(recordForGridCartItemPhotoList)
+            setPhotoList([])
             const { orderCode, orderDetailCode, categoryCode, rawProductCode } = recordForGridCartItemPhotoList
 
             let bucketName = ""

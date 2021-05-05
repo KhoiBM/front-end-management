@@ -116,7 +116,7 @@ export const useUploadPhoto = () => {
         if (responseUploadPhotoWithPresignedURL && responseUploadPhotoWithPresignedURL != null) {
             if (responseStatus == 200) {
 
-                toast.success(`Tải lên ảnh ${uploadFile.name} thành công`)
+                // toast.success(`Tải lên ảnh ${uploadFile.name} thành công`)
 
             } else {
                 // toast.error(`uploadPhotoWithPresignedURL:${config.useMessage.resultFailure}`)

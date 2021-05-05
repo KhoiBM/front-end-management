@@ -6,7 +6,7 @@ import useImage from 'use-image';
 import { v4 as uuidv4 } from 'uuid';
 import { v5 as uuidv5 } from 'uuid';
 import deleteIcon from 'src/app/assets/image/cancel.png'
-import { useRefresh } from 'src/app/utils';
+import { useRefresh, useDataUrlToFile } from 'src/app/utils';
 import config from 'src/environments/config';
 const useStyles = makeStyles(theme => ({
     dropStageZone: {
@@ -374,8 +374,33 @@ const URLBGImage = ({ image }) => {
     );
 };
 
+const getDataUri = async (url, callback) => {
+    let image = new Image();
+
+    image.onload = function () {
+        let canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth;
+        canvas.height = this.naturalHeight;
+
+        canvas.getContext('2d').drawImage(this, 0, 0);
+
+
+        // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+        const urlArr = url.split("/")
+        const fileName = urlArr[urlArr.length - 1]
+        console.log("fileName:" + fileName)
+        console.log("fileNameSplit:" + JSON.stringify(fileName.split(".")[1]))
+        callback(canvas.toDataURL(`image/${fileName.split(".")[1]}`), fileName);
+    };
+
+    image.src = url;
+}
+
+
 
 export const StageKonvaContainer = (props) => {
+
+    const { dataURLtoFile } = useDataUrlToFile()
 
 
     const {
@@ -502,7 +527,9 @@ export const StageKonvaContainer = (props) => {
             <div
                 onDrop={async (e) => {
                     e.preventDefault();
-                    if (dragUrl.current && dragUrl.current != null && dragUrl.current.src && dragUrl.current.src != null && dragUrl.current.acceptedFile && dragUrl.current.acceptedFile != null) {
+                    if (dragUrl.current && dragUrl.current != null && dragUrl.current.src && dragUrl.current.src != null
+                        && (dragUrl.current.acceptedFile && dragUrl.current.acceptedFile != null || dragUrl.current.url && dragUrl.current.url != null)
+                    ) {
                         // register event position
                         stageRef.current.setPointersPositions(e);
                         // console.log("PointersPositions:" + stageRef.current.setPointersPositions(e))
@@ -511,27 +538,57 @@ export const StageKonvaContainer = (props) => {
                         // console.log(dragUrl.current)
                         const uuid = await `${uuidv4()}${new Date().getTime()}`
                         const source = dragUrl.current.src
-                        const acceptedFile = dragUrl.current.acceptedFile
-                        console.log("source")
-                        console.log(source)
-                        // console.log("acceptedFile")
-                        // console.log(acceptedFile)
-                        if (source && source != null && acceptedFile && acceptedFile != null) {
-                            await setToPrintInStageImages(
-                                toPrintInStageImages.concat([
-                                    {
-                                        ...stageRef.current.getPointerPosition(),
-                                        src: source,
-                                        acceptedFile,
-                                        id: uuid
-                                    }
-                                ])
-                            );
 
-                            handleRefresh()
-                            dragUrl.current.src = ""
-                            dragUrl.current.acceptedFile = ""
+
+
+                        const concatToPrintImages = async (acceptedFile) => {
+
+                            console.log("source")
+                            console.log(source)
+                            console.log("acceptedFile")
+                            console.log(acceptedFile)
+                            if (source && source != null && acceptedFile && acceptedFile != null) {
+                                await setToPrintInStageImages(
+                                    toPrintInStageImages.concat([
+                                        {
+                                            ...stageRef.current.getPointerPosition(),
+                                            src: source,
+                                            acceptedFile: await acceptedFile,
+                                            id: uuid
+                                        }
+                                    ])
+                                );
+
+                                handleRefresh()
+                                dragUrl.current.src = ""
+                                dragUrl.current.acceptedFile = ""
+                            }
                         }
+
+
+                        if (dragUrl.current.acceptedFile && dragUrl.current.acceptedFile != null) {
+                            let acceptedFile = dragUrl.current.acceptedFile
+                            concatToPrintImages(acceptedFile)
+                        } else if (dragUrl.current.url && dragUrl.current.url != null) {
+
+
+
+                            await getDataUri(dragUrl.current.url, (dataURL, fileName) => {
+
+                                // let acceptedFile =
+
+                                // console.log("acceptedFile: ")
+                                // console.log(acceptedFile)
+
+                                concatToPrintImages(dataURLtoFile(dataURL, fileName))
+
+                            })
+
+
+
+                        }
+
+
                     }
 
 

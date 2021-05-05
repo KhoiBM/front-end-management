@@ -199,9 +199,9 @@ export const HeaderBar = (props) => {
                             Hồ sơ của tôi
                             </MenuItem>
 
-                                <MenuItem onClick={() => {
+                                <MenuItem onClick={async () => {
                                     handleCloseMenuAccount();
-                                    AuthService.signOut()
+                                    await AuthService.signOut()
                                     toast.success("Đăng xuất thành công")
                                     history.push('/auth/signin')
                                 }}>

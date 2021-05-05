@@ -398,7 +398,7 @@ disabled
                 <TextField
                     variant='outlined'
                     label="Trạng thái thanh toán"
-                    value={formData.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
+                    value={formData.statusPayment ? "Đã thanh toán" : "Chưa thanh toán"}
                     name='statusPayment'
                     // required
                     disabled
@@ -550,7 +550,7 @@ disabled
                 <TextField
                     variant='outlined'
                     label="Trạng thái thanh toán"
-                    value={formData.statusPayment ? "Đã thanh toán thành công" : "Chưa thanh toán"}
+                    value={formData.statusPayment ? "Đã thanh toán" : "Chưa thanh toán"}
                     name='statusPayment'
                     // required
                     disabled

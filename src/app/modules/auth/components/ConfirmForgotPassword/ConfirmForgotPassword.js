@@ -1,16 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-
 import { ConfirmFormContainer, ButtonConfirm, IconWrapper, IconLink, InputLabel } from '../../styles/styles'
 import { FormWrapper, InputText } from './ConfirmForgotPasswordElements'
-
 import { RiCloseFill } from 'react-icons/ri'
 import HelperValidation from '../HelperValidation/HelperValidation'
 import { useAuthAction } from 'src/app/stores/actions'
 import { useStore, useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import config from 'src/environments/config'
-
 import { toast } from 'react-toastify'
 import { useQueryURL } from 'src/app/utils'
 import { Loader } from 'src/app/components'
@@ -18,10 +15,9 @@ import { RouteService } from 'src/app/services'
 import { useLoaderHandle } from 'src/app/utils/handles/useLoaderHandle'
 
 const ConfirmForgotPassword = () => {
-    // const { showSnackbar } = useShowSnackbar()
-    let query = useQueryURL();
     const store = useStore()
     const history = useHistory()
+    let location = useLocation();
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({ confirmCode: "", newPassword: "", reNewPassword: "" });
     const [isFirst, setIsFirst] = useState(true)
@@ -44,8 +40,9 @@ const ConfirmForgotPassword = () => {
         }
     }
     const forgotPassword = async (formData, dispatch) => {
+        const username = location.state.username;
         const data = {
-            username: query.get("username"),
+            username,
             confirmCode: formData.confirmCode,
             newPassword: formData.newPassword,
         };

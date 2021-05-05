@@ -41,7 +41,7 @@ export class PhotoServices {
 
         const { bucketName, fileKey } = data
 
-        return useHttpModule().post(`${config.useApiPath.api.photoServices.getPhotoListByLink}`, data)
+        return useHttpModule({ "Cache-Control": 'no-cache' }).post(`${config.useApiPath.api.photoServices.getPhotoListByLink}`, data)
 
     }
 }

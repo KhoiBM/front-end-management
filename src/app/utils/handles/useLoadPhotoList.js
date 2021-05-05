@@ -7,11 +7,6 @@ import { PhotoServices } from 'src/app/services'
 
 export const useLoadPhotoList = (props) => {
 
-    // const [photoList, setPhotoList] = useState([
-    //     photoDemo,
-    //     photoDemo2,
-    //     photoDemo3
-    // ])
     const [photoList, setPhotoList] = useState([
     ])
 
@@ -36,8 +31,8 @@ export const useLoadPhotoList = (props) => {
 
                     // console.trace("photoList:")
                     console.table(photoList)
-
-                    setPhotoList(photoList)
+                    // `
+                    setPhotoList(photoList.map((url) => `${url}`))
                     // toast.success("Thành công")
                 } else {
                     toast.error(`${config.useMessage.resultFailure} + ${response.errorInfo}`)

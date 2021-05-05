@@ -10,6 +10,7 @@ import parse from 'date-fns/parse'
 import { differenceInDays, parseISO } from 'date-fns';
 import differenceInHours from 'date-fns/differenceInHours'
 import { NotificationDialog } from '../NotificationDialog';
+import { useRefresh } from 'src/app/utils';
 const useStyles = makeStyles((theme) => ({
 
     icon: {
@@ -103,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
 export const NotificationBar = () => {
     const classes = useStyles();
 
-    const [refresh, setRefresh] = useState(false)
+    const { refresh, setRefresh, first, setFirst, handleRefresh } = useRefresh()
 
     const [countNoti, setCountNoti] = useState(0)
 
@@ -134,44 +135,12 @@ export const NotificationBar = () => {
     })
 
 
-
-    // console.log("recordsNoti:" + JSON.stringify(recordsNoti))
-
     useEffect(() => {
         loadInit()
-        // console.log("loadNotiInitRefresh")
-    }, [])
+    }, [refresh])
 
     const loadInit = async () => {
         await loadData()
-        await loadCountNoti()
-    }
-
-    const loadCountNoti = async () => {
-
-        try {
-            const response = await (await NotificationServices.countNotificationIsToRead()).data
-
-            // console.log("response: " + response)
-
-            if (response && response != null) {
-                if (response.result == config.useResultStatus.SUCCESS) {
-                    // console.log("countNoti: " + JSON.stringify(response.info.count))
-                    const countNoti = response.info.count
-                    setCountNoti(countNoti ? countNoti : 0)
-
-                    // toast.success("Thành công")
-                } else {
-                    // toast.error(config.useMessage.resultFailure)
-                }
-            } else {
-                throw new Error("Response is null or undefined")
-            }
-
-        } catch (err) {
-            // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
-        }
-
     }
 
     const loadData = async () => {
@@ -185,6 +154,10 @@ export const NotificationBar = () => {
                 if (response.result == config.useResultStatus.SUCCESS) {
 
                     const records = response.info.records
+
+                    // console.log("countNoti: " + JSON.stringify(response.info.count))
+                    const countNoti = response.info.count
+                    setCountNoti(countNoti ? countNoti : 0)
 
                     setRecordsNoti(records && records != null && records.length > 0 ? records.map((notiRecord) => {
                         const parseCreatedAt = parse(notiRecord.createdAt.split('.')[0], 'yyyy-MM-dd HH:mm:ss', new Date())
@@ -233,6 +206,7 @@ export const NotificationBar = () => {
         } catch (err) {
             // toast.error(`${config.useMessage.fetchApiFailure} + ${err}`)
         }
+        handleRefresh()
 
     }
 

@@ -195,6 +195,16 @@ export const MainStageBar = (props) => {
     }, [photoCustomerUploadList])
 
 
+    useEffect(() => {
+
+        console.log("changetoPrintInStageImages");
+
+        console.log("toPrintInStageImages:")
+        console.log(toPrintInStageImages
+        )
+
+    }, [toPrintInStageImages])
+
 
     const handleCreatePreviewPhoto = debounce(async () => {
 
