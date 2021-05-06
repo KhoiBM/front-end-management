@@ -99,14 +99,14 @@ export class NotificationServices {
     }
 
     static isView = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.notification.viewedNoti, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //         }
+        //     }
+        // })
     }
 
 

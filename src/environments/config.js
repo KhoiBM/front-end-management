@@ -16,7 +16,8 @@ const useApiPath = {
             view: "manage/account/get-account-list",
             viewListRole: "manage/account/get-role-list",
             edit: "manage/account/update-account-info",
-            viewAll: "manager/get-all-service"
+            viewAll: "manager/get-all-service",
+            createAccount: "manage/account/create-account"
         },
         "manageServiceServices": {
             view: "manager/view-service",
@@ -75,7 +76,8 @@ const useApiPath = {
             viewPrintedProductList: "technicalstaff/get-printed-product"
         },
         "notification": {
-            viewAndCountNoti: "notification/get-list-notification"
+            viewAndCountNoti: "notification/get-list-notification",
+            viewedNoti: "notification/view"
         }
 
     }

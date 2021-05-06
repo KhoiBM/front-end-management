@@ -195,7 +195,7 @@ export class ManageAccountServices {
     }
 
     static add = (data) => {
-        // return useHttpModule().post(config.useApiPath.api.manageAccountServices., data)
+        return useHttpModule().post(config.useApiPath.api.manageAccountServices.createAccount, data)
         // return Promise.resolve({
         //     data: {
         //         result: config.useResultStatus.SUCCESS,
