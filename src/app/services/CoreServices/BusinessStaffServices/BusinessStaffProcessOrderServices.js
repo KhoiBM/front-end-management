@@ -250,15 +250,15 @@ export class BusinessStaffProcessOrderServices {
     }
 
     static sendDemoProduct = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageOrder.sendEmail, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //
+        //         }
+        //     }
+        // })
     }
 
 

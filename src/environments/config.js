@@ -70,7 +70,8 @@ const useApiPath = {
             viewOrderList: "staff/get-order-list",
             changeStatus: "manage/order/update-order-info",
             viewOrderDetailList: "order/get-list-order-detail",
-            changeStatusPayment: "staff/change-order-status-payment"
+            changeStatusPayment: "staff/change-order-status-payment",
+            sendEmail: "order/send-email-confirm"
         },
         "managePrintedProduct": {
             viewPrintedProductList: "technicalstaff/get-printed-product"
