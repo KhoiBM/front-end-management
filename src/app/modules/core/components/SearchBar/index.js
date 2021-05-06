@@ -7,15 +7,18 @@ import { MdSearch } from 'react-icons/md'
 const useStyles = makeStyles(theme => ({
     searchBarWrapper: {
         position: "relative",
-        // background: "red"
+        // background: "red",
+        zIndex: "100",
     },
     searchBar: {
-        width: "30vmax"
+        width: "30vmax",
+        zIndex: "100",
     },
     iconSearchWrapper: {
         position: "absolute",
         top: 4,
         right: 9,
+        zIndex: "100",
 
     }
 }))
