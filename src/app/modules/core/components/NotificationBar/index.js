@@ -130,7 +130,7 @@ export const NotificationBar = () => {
         content: "",
         actionLink: "",
         type: "",
-        isView: false,
+        view: false,
         createdAt: ""
     })
 
@@ -277,7 +277,7 @@ export const NotificationBar = () => {
                                                             content: noti.content,
                                                             actionLink: noti.actionLink,
                                                             type: noti.type,
-                                                            isView: noti.view,
+                                                            view: noti.view,
                                                             createdAt: noti.createdAt,
                                                             onIsView: (isView) => { onIsView(noti.notificationID, isView) }
                                                         }

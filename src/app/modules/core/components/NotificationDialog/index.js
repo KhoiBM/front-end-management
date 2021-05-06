@@ -66,7 +66,7 @@ export const NotificationDialog = (props) => {
                         <Typography variant={"caption"} color="textSecondary">Ngày tạo: {notificationDialog.createdAt}</Typography>
                         <br />
                         <Typography variant={"caption"} color="textSecondary">
-                            Trạng thái: {`${notificationDialog.isView ? 'đã đọc' : 'chưa đọc'}`}
+                            Trạng thái: {`${notificationDialog.view ? 'đã đọc' : 'chưa đọc'}`}
                         </Typography>
                         <br />
                         <br />
