@@ -285,12 +285,12 @@ export const AcceptedOrderTable = (props) => {
         hideLoader()
     }
 
-    const sendDemoProduct = async (orderCode) => {
+    const sendDemoProduct = async (customerID, orderCode) => {
 
         showLoader()
         try {
 
-            const response = await (await BusinessStaffProcessOrderServices.sendDemoProduct({ orderCode })).data
+            const response = await (await BusinessStaffProcessOrderServices.sendDemoProduct({ customerID, orderCode })).data
             // console.log("response: " + JSON.stringify(response))
             if (response && response != null) {
 
@@ -303,6 +303,7 @@ export const AcceptedOrderTable = (props) => {
                     console.log("sendDemoProduct")
 
                     console.log("orderCode: " + orderCode)
+                    console.log("customerID: " + customerID)
 
                 } else {
 
@@ -436,7 +437,7 @@ export const AcceptedOrderTable = (props) => {
                                     <Button onClick={(event) => {
                                         event.stopPropagation()
                                         // props.handleOpenSendDemoProduct()
-                                        sendDemoProduct(row.orderCode)
+                                        sendDemoProduct(row.customerID, row.orderCode)
                                     }
                                     }>
                                         <RiMailSendLine />
