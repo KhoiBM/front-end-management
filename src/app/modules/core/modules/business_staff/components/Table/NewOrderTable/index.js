@@ -223,7 +223,7 @@ export const NewOrderTable = (props) => {
         showLoader()
         const data = {
             orderID: orderID,
-            isActive: !switchCheck[`switchID:${orderID}`]
+            statusPayment: !switchCheck[`switchID:${orderID}`]
         }
         // toast.dark(`test switchID:${orderID}: ${!switchCheck[`switchID:${orderID}`]}`)
         // if (switchCheck[`switchID:${orderID}`]) {

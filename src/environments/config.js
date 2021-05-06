@@ -9,7 +9,8 @@ const useApiPath = {
         "auth": {
             "signIn": "user/login",
             "forgotPassword": "user/forgot-password",
-            "confirmForgotPassword": "user/confirm-forgot-password"
+            "confirmForgotPassword": "user/confirm-forgot-password",
+            SignOut: "user/logout"
         },
         "manageAccountServices": {
             view: "manage/account/get-account-list",
@@ -67,7 +68,8 @@ const useApiPath = {
         "manageOrder": {
             viewOrderList: "staff/get-order-list",
             changeStatus: "manage/order/update-order-info",
-            viewOrderDetailList: "order/get-list-order-detail"
+            viewOrderDetailList: "order/get-list-order-detail",
+            changeStatusPayment: "staff/change-order-status-payment"
         },
         "managePrintedProduct": {
             viewPrintedProductList: "technicalstaff/get-printed-product"

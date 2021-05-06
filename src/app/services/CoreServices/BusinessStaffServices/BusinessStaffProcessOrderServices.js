@@ -202,15 +202,15 @@ export class BusinessStaffProcessOrderServices {
     // }
 
     static checkPayment = (data) => {
-        // return useHttpModule().post(config.useApiPath.api., data)
-        return Promise.resolve({
-            data: {
-                result: config.useResultStatus.SUCCESS,
-                info: {
-
-                }
-            }
-        })
+        return useHttpModule().post(config.useApiPath.api.manageOrder.changeStatusPayment, data)
+        // return Promise.resolve({
+        //     data: {
+        //         result: config.useResultStatus.SUCCESS,
+        //         info: {
+        //
+        //         }
+        //     }
+        // })
     }
 
     static acceptNewOrder = (data) => {
